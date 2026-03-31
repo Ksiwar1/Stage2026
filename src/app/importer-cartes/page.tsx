@@ -1,18 +1,22 @@
 import styles from "../page.module.css";
 import Link from "next/link";
+import UploadButton from "../../components/UploadButton";
 
 export default function ImporterCartes() {
   return (
     <main className={styles.main}>
       <div className={styles.hero}>
-        <h1 className={styles.title}>Importer des cartes</h1>
+        <h1 className={styles.title}>Importer des Cartes</h1>
         <p className={styles.description}>
-          Chargez rapidement vos lots de cartes depuis un fichier de données CSV ou Excel.
+          Envoyez vos fichiers JSON locaux vers la mémoire du système via notre interface sécurisée. Les fichiers importés seront automatiquement stockés et consultables dans votre Bibliothèque.
         </p>
-        <button className={styles.button_primary}>Sélectionner un fichier (.csv)</button>
       </div>
-      <div className={styles.grid}>
-        <Link href="/menu" className={styles.card}>
+
+      <UploadButton />
+
+      {/* Raccourci de navigation */}
+      <div className={styles.grid} style={{ marginTop: '4rem' }}>
+        <Link href="/menu" className={styles.card} style={{ flexBasis: '100%', maxWidth: '300px', margin: '0 auto' }}>
           <h2>
             <span>&lt;-</span> Retour au menu
           </h2>
