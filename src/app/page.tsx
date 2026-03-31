@@ -7,7 +7,7 @@ export default function Home() {
       <div className={styles.hero}>
         <h1 className={styles.title}>Bonjour</h1>
         <p className={styles.description}>
-          Bienvenue sur votre nouveau projet Next.js.
+          Carte Softavera.
         </p>
       </div>
     </main>
