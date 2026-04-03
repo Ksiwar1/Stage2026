@@ -31,6 +31,7 @@ export interface ParsedProduct {
 export interface ParsedCategory {
   id: string;
   title: string;
+  image?: string | null;
   products: ParsedProduct[];
 }
 
@@ -194,7 +195,7 @@ export default function KioskSimulator({ restaurantName, tree }: { restaurantNam
                             borderRadius: '16px', padding: '1.5rem 1rem', cursor: 'pointer', transition: 'all 0.2s', display: 'flex', flexDirection: 'column', alignItems: 'center'
                           }}
                         >
-                          {opt.image && <img src={opt.image} alt={opt.name} style={{ width: '100px', height: '100px', objectFit: 'contain', marginBottom: '1rem' }} />}
+                          {opt.image && <img src={opt.image} alt={opt.name} onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://recette-setting.softavera.com/nopicture.png'; }} style={{ width: '100px', height: '100px', objectFit: 'contain', marginBottom: '1rem' }} />}
                           <strong style={{ fontSize: '1.2rem', color: '#111827', textTransform: 'uppercase', marginBottom: '0.5rem', textAlign: 'center' }}>{opt.name}</strong>
                           {opt.priceDelta > 0 && <span style={{ background: '#fef3c7', color: '#d97706', padding: '0.3rem 0.8rem', borderRadius: '99px', fontWeight: 'bold' }}>+{opt.priceDelta.toFixed(2)} €</span>}
                         </button>
@@ -256,26 +257,48 @@ export default function KioskSimulator({ restaurantName, tree }: { restaurantNam
       {/* RESTE DE LA PAGE KIOSK (Menu de gauche, Liste, Footer...) */}
       <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
         
-        {/* COLONNE GAUCHE */}
-        <div style={{ width: '22%', minWidth: '220px', background: 'white', boxShadow: '2px 0 10px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column', zIndex: 10 }}>
+        {/* COLONNE GAUCHE (Catégories) */}
+        <div style={{ width: '25%', minWidth: '250px', maxWidth: '300px', background: '#ffffff', boxShadow: '4px 0 15px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', zIndex: 10 }}>
+          <div style={{ padding: '1.5rem 1rem', background: '#F39C12', color: 'white' }}>
+             <h2 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px' }}>Menu</h2>
+          </div>
           <div style={{ flex: 1, overflowY: 'auto' }}>
-            {tree.map(cat => (
-              <button key={cat.id} onClick={() => setActiveCategoryId(cat.id)}
-                style={{
-                  width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                  padding: '1.5rem 1rem', border: 'none', borderBottom: '1px solid #f3f4f6',
-                  borderLeft: activeCategoryId === cat.id ? '6px solid #1A237E' : '6px solid transparent',
-                  background: activeCategoryId === cat.id ? '#f8f9fa' : 'white',
-                  color: activeCategoryId === cat.id ? '#1A237E' : '#4b5563', cursor: 'pointer', transition: 'all 0.2s',
-                }}
-              >
-                <div style={{ width: '60px', height: '60px', marginBottom: '0.8rem', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 2px 5px rgba(0,0,0,0.1)' }}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={`https://api.dicebear.com/9.x/initials/svg?seed=${encodeURIComponent(cat.title)}&backgroundColor=F39C12&textColor=ffffff&bold=true`} alt={cat.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                </div>
-                <strong style={{ fontSize: '1rem', textTransform: 'uppercase', textAlign: 'center', letterSpacing: '0.5px' }}>{cat.title}</strong>
-              </button>
-            ))}
+            {tree.map(cat => {
+              const isActive = activeCategoryId === cat.id;
+              
+              // Gestion intelligente de l'URL image
+              let finalImgUrl = cat.image;
+              if (finalImgUrl && !finalImgUrl.startsWith('http')) {
+                 if (finalImgUrl.toLowerCase() === 'no-pictures.svg') finalImgUrl = null;
+                 else finalImgUrl = `https://beta-catalogue-api.etk360.com/images/${finalImgUrl}`; // Tentative par défaut
+              }
+              if (!finalImgUrl) finalImgUrl = 'https://recette-setting.softavera.com/nopicture.png';
+
+              return (
+                <button key={cat.id} onClick={() => setActiveCategoryId(cat.id)}
+                  style={{
+                    width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start',
+                    padding: '1.2rem 1.5rem', border: 'none', borderBottom: '1px solid #f1f5f9',
+                    borderLeft: isActive ? '6px solid #E67E22' : '6px solid transparent',
+                    background: isActive ? '#fffbeb' : 'white',
+                    color: isActive ? '#b45309' : '#475569', cursor: 'pointer', transition: 'all 0.2s ease-in-out',
+                  }}
+                >
+                  <div style={{ width: '55px', height: '55px', flexShrink: 0, marginRight: '1.2rem', borderRadius: '14px', overflow: 'hidden', background: '#f8fafc', boxShadow: isActive ? '0 4px 10px rgba(230,126,34,0.2)' : 'none', border: '1px solid #e2e8f0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img 
+                       src={finalImgUrl} 
+                       alt={cat.title} 
+                       onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://recette-setting.softavera.com/nopicture.png'; }}
+                       style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '4px' }} 
+                    />
+                  </div>
+                  <strong style={{ fontSize: '1.05rem', textTransform: 'uppercase', textAlign: 'left', lineHeight: '1.2', fontWeight: isActive ? 800 : 600 }}>
+                    {cat.title}
+                  </strong>
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -297,11 +320,11 @@ export default function KioskSimulator({ restaurantName, tree }: { restaurantNam
                   padding: '1.5rem', cursor: 'pointer', transition: 'transform 0.2s'
                 }}
               >
-                <div style={{ width: '100%', height: '220px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '1rem' }}>
-                  {p.image ? (
-                     // eslint-disable-next-line @next/next/no-img-element
-                     <img src={p.image} alt={p.name} style={{ width: '95%', height: '95%', objectFit: 'contain', filter: 'drop-shadow(0 15px 15px rgba(0,0,0,0.15))' }} />
-                  ) : <div style={{ width: '100%', height: '100%', background: '#f9fafb', borderRadius: '8px' }}></div>}
+                <div style={{ width: '100%', height: '220px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '1rem', padding: '1rem' }}>
+                   {/* eslint-disable-next-line @next/next/no-img-element */}
+                   <img src={p.image || 'https://recette-setting.softavera.com/nopicture.png'} alt={p.name} 
+                        onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://recette-setting.softavera.com/nopicture.png'; }}
+                        style={{ width: '100%', height: '100%', objectFit: 'contain', filter: p.image ? 'drop-shadow(0 15px 15px rgba(0,0,0,0.15))' : 'none' }} />
                 </div>
 
                 <div style={{ textAlign: 'center', marginTop: '1.5rem', flexGrow: 1, display: 'flex', flexDirection: 'column', paddingBottom: '0.5rem' }}>

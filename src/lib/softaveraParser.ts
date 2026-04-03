@@ -28,6 +28,7 @@ export interface ParsedProduct {
 export interface ParsedCategory {
   id: string;
   title: string;
+  image?: string | null;
   products: ParsedProduct[];
 }
 
@@ -76,10 +77,15 @@ export function parseETK360Hierarchy(data: any): ParsedCategory[] {
 
   const tree: ParsedCategory[] = [];
 
-  // ÉTAPE 1 : Extraire UNIQUEMENT les catégories racines (celles qui n'ont pas de parent)
+  // ÉTAPE 1 : Extraire UNIQUEMENT les catégories racines et visibles
   const catKeys = Object.keys(data.categories);
   let rawCategories = catKeys.map(k => ({ ...data.categories[k], id: k }))
-    .filter(c => c && c.title && (!c.parent || c.parent === ""));
+    .filter(c => {
+       if (!c || !c.title || (c.parent && c.parent !== "")) return false;
+       if (c.visibilityInfo && c.visibilityInfo.isVisible === false) return false;
+       if (c.isVisible === false) return false;
+       return true;
+    });
     
   // Tri exclusif selon le rang défini dans le fichier JSON (L'ordre natif)
   rawCategories.sort((a, b) => (a.rank || 0) - (b.rank || 0));
@@ -102,9 +108,19 @@ export function parseETK360Hierarchy(data: any): ParsedCategory[] {
     if (parentItems.length === 0) continue;
 
     const catTitle = extractBestName(category, category.title || `Catégorie`);
+    
+    let catImg = null;
+    if (category.img?.dflt?.img) {
+      catImg = category.img.dflt.img;
+      if (catImg === "https://beta-catalogue.etk360.com/no-pictures.svg") catImg = null;
+    } else if (category.img?.url) {
+      catImg = category.img.url;
+    }
+
     const categoryNode: ParsedCategory = {
       id: category.id,
       title: catTitle,
+      image: catImg,
       products: []
     };
 
@@ -222,26 +238,21 @@ export function parseETK360Hierarchy(data: any): ParsedCategory[] {
       categoryNode.products.push(productNode);
     }
 
+    // Fallback: si la catégorie n'a pas d'image, on utilise l'image de son premier produit
+    if (!categoryNode.image && categoryNode.products.length > 0) {
+      const firstImgProduct = categoryNode.products.find(p => p.image);
+      if (firstImgProduct) {
+        categoryNode.image = firstImgProduct.image;
+      }
+    }
+
     if (categoryNode.products.length > 0) {
       tree.push(categoryNode);
     }
   }
 
-  // ÉTAPE 7 : Tri sémantique personnalisé (Demande du client)
-  // Ordre demandé : Menus, Sans Menus, Salades, Menus Enfants, Desserts, Boissons.
-  tree.sort((a, b) => {
-    const getScore = (title: string) => {
-      const t = title.toLowerCase();
-      if (t.includes('enfant')) return 4;
-      if (t.includes('menu') && !t.includes('sans')) return 1;
-      if (t.includes('sans')) return 2;
-      if (t.includes('salade') || t.includes('salde')) return 3;
-      if (t.includes('dessert')) return 5;
-      if (t.includes('boisson')) return 6;
-      return 99; // Catégories non spécifiées à la fin
-    };
-    return getScore(a.title) - getScore(b.title);
-  });
+  // L'ÉTAPE 7 (Tri sémantique) a été retirée pour respecter le "rank" (rang) natif de la catégorie
+
 
   // ÉTAPE 8 : UPSELL GLOBAL SÉLECTIF (Tunnel en 7 étapes intelligent)
   // Collecte des articles disponibles dans la base globale
