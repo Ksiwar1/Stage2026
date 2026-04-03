@@ -3,49 +3,74 @@
   top: 0;
   z-index: 50;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  padding: 1.25rem 0;
-  background: rgba(5, 5, 5, 0.4);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
   animation: fadeInDown 0.8s ease-out forwards;
 }
 
 .container {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: #111827;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logoIcon {
+  width: 32px;
+  height: 32px;
+  background: #2563eb;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+}
+
+.links {
+  display: flex;
   gap: 1.5rem;
   align-items: center;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
 .link {
-  color: #a1a1aa;
+  color: #4b5563; /* Gris moyen lisible */
   font-weight: 600;
-  font-size: 1rem;
-  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem;
   border-radius: 99px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s ease;
   text-decoration: none;
-  background: transparent;
-  border: 1px solid transparent;
 }
 
 .link:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  transform: translateY(-2px);
+  color: #111827; /* Devient noir au survol */
+  background: rgba(0, 0, 0, 0.03);
+  transform: translateY(-1px);
 }
 
 .active {
-  color: #ffffff;
-  background: linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(229, 46, 113, 0.1));
-  border: 1px solid rgba(229, 46, 113, 0.3);
-  box-shadow: 0 0 15px rgba(138, 43, 226, 0.2);
+  color: #2563eb;
+  background: rgba(37, 99, 235, 0.08); /* Effet Blue Light */
+}
+.active:hover {
+  color: #1d4ed8;
 }
 
 @keyframes fadeInDown {
@@ -55,11 +80,7 @@
 
 @media (max-width: 768px) {
   .container {
-    gap: 0.5rem;
-    padding: 0 1rem;
-  }
-  .link {
-    font-size: 0.9rem;
-    padding: 0.5rem 0.8rem;
+    flex-direction: column;
+    gap: 1rem;
   }
 }

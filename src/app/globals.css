@@ -1,11 +1,12 @@
 :root {
-  --background: #050505;
-  --foreground: #ffffff;
-  --primary: #8a2be2;
-  --secondary: #4b0082;
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --gradient-text: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+  --background: #f8f9fa; /* Gris lumière */
+  --foreground: #111827; /* Charcoal/Noir très doux */
+  --primary: #2563eb; /* Bleu Royal Softavera */
+  --primary-hover: #1e40af; /* Bleu Foncé au survol */
+  --secondary: #f3f4f6; /* Accentuation gris-clair */
+  --card-bg: #ffffff; /* Fond pur */
+  --card-border: rgba(0, 0, 0, 0.06); /* Bordure discrète */
+  --gradient-text: linear-gradient(135deg, #111827 0%, #374151 100%);
 }
 
 html,
@@ -17,10 +18,12 @@ body {
   box-sizing: border-box;
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), sans-serif;
+  font-family: var(--font-geist-sans), "Inter", -apple-system, sans-serif;
+  
+  /* Arrière-plan subtil : le fameux éclairage discret SaaS */
   background-image:
-    radial-gradient(circle at 15% 50%, rgba(138, 43, 226, 0.15), transparent 25%),
-    radial-gradient(circle at 85% 30%, rgba(229, 46, 113, 0.12), transparent 25%);
+    radial-gradient(circle at top left, rgba(37, 99, 235, 0.05), transparent 40%),
+    radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.03), transparent 40%);
   background-attachment: fixed;
   min-height: 100vh;
 }

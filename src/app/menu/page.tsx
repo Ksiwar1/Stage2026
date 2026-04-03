@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function MenuPage() {
   return (
-    <main className={styles.main}>
+    <main className={`${styles.main} ${styles.heroImageBg}`}>
       <div className={styles.hero}>
         <h1 className={styles.title}>Tableau de bord</h1>
         <p className={styles.description}>

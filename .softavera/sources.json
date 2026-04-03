@@ -1,0 +1,22 @@
+[
+  {
+    "name": "carte1_smash_up",
+    "url": "https://beta-catalogue-api.etk360.com/api_etk_article_bd/v1//cards/workflowList/franchise_030075_smash_up/7b68eb81-c9ad-4f41-3de9-34507ef92322/3"
+  },
+  {
+    "name": "carte2_o3k",
+    "url": "https://beta-catalogue-api.etk360.com/api_etk_article_bd/v1//cards/workflowList/franchise_030192_o3k/45e95078-ee53-08c0-8f28-9dfc36004c52/3"
+  },
+  {
+    "name": "carte3_grill_station",
+    "url": "https://beta-catalogue-api.etk360.com/api_etk_article_bd/v1//cards/workflowList/franchise_30358_grill_station/bda7a348-b66b-8cb6-aced-ba7b4b2abe71/3"
+  },
+  {
+    "name": "carte4_bsb_franchise",
+    "url": "https://beta-catalogue-api.etk360.com/api_etk_article_bd/v1//cards/workflowList/franchise_bsb_franchise/5d8cad19-68fb-ba12-949d-e1547795ddbf/3"
+  },
+  {
+    "name": "carte5_etoile_orientale",
+    "url": "https://beta-catalogue-api.etk360.com/api_etk_article_bd/v1//cards/workflowList/franchise_019795_l_etoile_orientale/9c743fb3-1762-8f4d-38fd-f7afdad3d30b/3"
+  }
+]

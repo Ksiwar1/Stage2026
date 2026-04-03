@@ -2,116 +2,153 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 6rem 2rem;
+  justify-content: flex-start;
+  min-height: calc(100vh - 80px); /* minus the navbar */
   text-align: center;
+  position: relative;
 }
 
-.hero {
+/* Utilitaire de background partagé pour appliquer l'image floutée aux pages enfants */
+.heroImageBg {
+  background: 
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.9) 60%, rgba(255,255,255,1) 100%),
+    url('/hero-bornes.png');
+  background-size: cover;
+  background-position: center 20%;
+  background-attachment: fixed;
+}
+
+/* Le fond géant Flouté Blanc / Bornes de l'Accueil */
+.heroBackground {
   position: relative;
-  z-index: 1;
-  max-width: 800px;
-  animation: fadeIn 1s ease-out;
+  width: 100%;
+  min-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1.5rem;
+  /* L'image des bornes avec un fort overlay dégradé blanc pour le flouté textuel (allégé) */
+  background: 
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.88) 70%, rgba(255,255,255,1) 100%),
+    url('/hero-bornes.png');
+  background-size: cover;
+  background-position: center 30%;
+  background-attachment: fixed;
+  animation: fadeIn 1.2s ease-out;
+}
+
+/* Conteneur du texte */
+.heroContent {
+  max-width: 850px;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .title {
-  font-size: 4.5rem;
+  font-size: 2.8rem;
   font-weight: 800;
-  line-height: 1.1;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
   margin-bottom: 1.5rem;
-  background: var(--gradient-text);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--foreground);
   animation: slideUp 0.8s ease-out forwards;
 }
 
 .description {
-  font-size: 1.25rem;
-  color: #a1a1aa;
-  margin-bottom: 3.5rem;
-  line-height: 1.6;
+  font-size: 1.1rem;
+  color: #4b5563; /* Gris sombre pro */
+  margin-bottom: 3rem;
+  line-height: 1.5;
+  font-weight: 400;
+  max-width: 700px;
   opacity: 0;
   animation: slideUp 0.8s ease-out 0.2s forwards;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  width: 100%;
-  max-width: 1100px;
-  margin-top: 5rem;
-}
-
-.card {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
-  padding: 2.5rem 2rem;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s ease, box-shadow 0.3s ease;
-  text-align: left;
-  opacity: 0;
-  animation: slideUp 0.8s ease-out 0.4s forwards;
-}
-
-.card:nth-child(2) { animation-delay: 0.5s; }
-.card:nth-child(3) { animation-delay: 0.6s; }
-
-.card:hover {
-  transform: translateY(-8px);
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.6);
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.card h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
+/* Ligne des Boutons */
+.buttonGroup {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.card h2 span {
-  display: inline-block;
-  transition: transform 0.3s ease;
-}
-
-.card:hover h2 span {
-  transform: translateX(6px);
-}
-
-.card p {
-  color: #a1a1aa;
-  line-height: 1.6;
-  margin: 0;
-}
-
-.button_primary {
-  display: inline-block;
-  background: linear-gradient(135deg, var(--primary) 0%, #e52e71 100%);
-  color: white;
-  padding: 1rem 2.5rem;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 1.1rem;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  gap: 1.5rem;
+  margin-bottom: 5rem;
   opacity: 0;
   animation: slideUp 0.8s ease-out 0.3s forwards;
 }
 
-.button_primary:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(229, 46, 113, 0.5);
+.btnPrimary {
+  background: #007aff; /* Bleu très vif Apple/Softavera */
+  color: white;
+  padding: 1.2rem 2.5rem;
+  border-radius: 99px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 10px 15px -3px rgba(0, 122, 255, 0.3);
+}
+.btnPrimary:hover {
+  background: #005bb5;
+  transform: translateY(-2px);
 }
 
+.btnSecondary {
+  background: transparent;
+  color: #007aff;
+  padding: 1.2rem 2.5rem;
+  border-radius: 99px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border: 2px solid #007aff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.btnSecondary:hover {
+  background: rgba(0, 122, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+/* Statistiques */
+.statsContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 4rem;
+  width: 100%;
+  max-width: 900px;
+  opacity: 0;
+  animation: slideUp 0.8s ease-out 0.5s forwards;
+}
+
+.statBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.statNumber {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #007aff;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.05em;
+}
+
+.statLabel {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #4b5563;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Animations */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -123,7 +160,134 @@
 }
 
 @media (max-width: 768px) {
-  .title { font-size: 3rem; }
-  .grid { grid-template-columns: 1fr; margin-top: 3rem; }
-  .main { padding: 4rem 1.5rem; }
+  .title { font-size: 2.5rem; }
+  .description { font-size: 1.15rem; }
+  .buttonGroup { flex-direction: column; width: 100%; }
+  .btnPrimary, .btnSecondary { width: 100%; justify-content: center; }
+  .statsContainer { flex-direction: column; gap: 3rem; }
+}
+
+/* --- Restauration du Tableau de Bord --- */
+.hero {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  animation: fadeIn 1s ease-out;
+  margin: 3rem auto 2rem auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto 4rem auto;
+  padding: 0 1.5rem;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  text-align: left;
+  text-decoration: none;
+  display: block;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(37, 99, 235, 0.2); 
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+}
+
+.card h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #111827;
+}
+
+.card h2 span {
+  display: inline-block;
+  color: #2563eb; 
+  transition: transform 0.3s ease;
+}
+
+.card:hover h2 span {
+  transform: translateX(6px);
+}
+
+.card p {
+  color: #6b7280; 
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* --- Style Premium pour les Boutons d'Action Principaux --- */
+.button_primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #2563eb, #1e40af); /* Dégradé Bleu Softavera */
+  color: #ffffff;
+  padding: 14px 32px;
+  border-radius: 9999px; /* Bouton Pilule très moderne */
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.39);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+}
+
+.button_primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.23);
+  background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+}
+
+.button_primary:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+.button_primary:disabled {
+  background: #cbd5e1;
+  color: #94a3b8;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Bouton retour épuré Softavera */
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.4rem;
+  background-color: white;
+  color: #4b5563;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 99px;
+  text-decoration: none;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+  margin-top: 1.5rem;
+}
+.backButton:hover {
+  transform: translateY(-2px);
+  color: #2563eb;
+  border-color: rgba(37, 99, 235, 0.3);
+  box-shadow: 0 6px 12px -2px rgba(37, 99, 235, 0.15);
 }
