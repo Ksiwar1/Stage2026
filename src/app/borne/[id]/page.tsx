@@ -75,5 +75,5 @@ export default async function BornePage({ params }: { params: Promise<{ id: stri
   }
 
   // Renvoi de la "Base Propre" vers le composant Visuel
-  return <KioskSimulator restaurantName={restaurantName} tree={tree} themeColor={themeColor} />;
+  return <KioskSimulator restaurantName={restaurantName} tree={tree} themeColor={themeColor} catalogData={data} />;
 }

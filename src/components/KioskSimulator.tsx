@@ -2,12 +2,14 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
+import { buildProductTree, ProductTreeNode, StepTreeNode } from '../lib/treeUtils';
 
 export interface ParsedModifier {
   id: string;
   name: string;
   priceDelta: number;
   image: string | null;
+  subSteps?: ParsedStep[];
 }
 
 export interface ParsedStep {
@@ -35,43 +37,32 @@ export interface ParsedCategory {
   products: ParsedProduct[];
 }
 
-// Extension pour supporter notre étape virtuelle "Menu ou Seul"
 export type AppStep = Omit<ParsedStep, 'semanticType'> & { semanticType: string };
 
-function getFunnelSteps(product: ParsedProduct): AppStep[] {
-   const steps: AppStep[] = [];
-   
-   // 1. TAILLE
-   steps.push(...product.steps.filter(s => s.semanticType === 'TAILLE'));
+function getDynamicFunnelStepsFromTree(node: ProductTreeNode | null, selections: Record<string, string[]>): StepTreeNode[] {
+   if (!node) return [];
+   const flatSteps: StepTreeNode[] = [];
 
-   // 2. IS_MENU (Virtuel)
-   const hasMenuElements = product.steps.some(s => s.semanticType === 'FRITES' || s.semanticType === 'BOISSON');
-   if (hasMenuElements) {
-       steps.push({
-           id: 'is_menu', title: 'Votre produit complet ou seul ?', semanticType: 'IS_MENU', minChoices: 1, maxChoices: 1,
-           options: [
-               {id: 'opt_menu', name: 'En Menu (Avec Accompagnements)', priceDelta: 0, image: null},
-               {id: 'opt_seul', name: 'Seul', priceDelta: 0, image: null}
-           ]
-       });
-   }
-   
-   // 3. FRITES
-   steps.push(...product.steps.filter(s => s.semanticType === 'FRITES'));
-   // 4. SAUCES
-   steps.push(...product.steps.filter(s => s.semanticType === 'SAUCES'));
-   // 5. BOISSON
-   steps.push(...product.steps.filter(s => s.semanticType === 'BOISSON'));
-   // 6. DESSERT
-   steps.push(...product.steps.filter(s => s.semanticType === 'DESSERT'));
-   // 7. EXTRAS & UNKNOWN
-   steps.push(...product.steps.filter(s => s.semanticType === 'EXTRAS' || s.semanticType === 'UNKNOWN'));
+   const traverseTree = (currentNode: ProductTreeNode) => {
+      if (!currentNode.steps) return;
+      for (const step of currentNode.steps) {
+         flatSteps.push(step);
+         
+         const selIds = selections[step.stepId] || [];
+         for (const selId of selIds) {
+            const childNode = step.children.find(c => c.productId === selId);
+            if (childNode) {
+               traverseTree(childNode);
+            }
+         }
+      }
+   };
 
-   return steps;
+   traverseTree(node);
+   return flatSteps;
 }
 
-
-export default function KioskSimulator({ restaurantName, tree, themeColor = '#F39C12' }: { restaurantName: string, tree: ParsedCategory[], themeColor?: string }) {
+export default function KioskSimulator({ restaurantName, tree, themeColor = '#F39C12', catalogData }: { restaurantName: string, tree: ParsedCategory[], themeColor?: string, catalogData?: any }) {
   const [activeCategoryId, setActiveCategoryId] = useState<string>(tree[0]?.id || "");
   const activeCategory = tree.find(c => c.id === activeCategoryId);
 
@@ -84,38 +75,38 @@ export default function KioskSimulator({ restaurantName, tree, themeColor = '#F3
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [stepSelections, setStepSelections] = useState<Record<string, string[]>>({});
 
-  const funnelSteps = useMemo(() => selectedProduct ? getFunnelSteps(selectedProduct) : [], [selectedProduct]);
+  const pureTree = useMemo(() => {
+     return selectedProduct && catalogData ? buildProductTree(selectedProduct.id, catalogData) : null;
+  }, [selectedProduct, catalogData]);
 
-  // État actuel "En Menu" (si opt_menu a été cliqué dans l'étape IS_MENU)
-  // S'il n'y a pas d'étape IS_MENU, on assume 'true' pour que les étapes requises gardent leur minChoices.
-  const isMenuSelected = stepSelections['is_menu']?.includes('opt_menu') !== false;
+  // Le tableau `funnelSteps` est mis à jour DYNAMIQUEMENT chaque fois que `stepSelections` change !
+  const funnelSteps = useMemo(() => pureTree ? getDynamicFunnelStepsFromTree(pureTree, stepSelections) : [], [pureTree, stepSelections]);
 
   const startOrder = (product: ParsedProduct) => {
+    // Audit console du nouvel arbre utilitaire brut !
+    const rootTree = catalogData ? buildProductTree(product.id, catalogData) : null;
+    console.log(`\n=== 🌳 BUILD PRODUCT TREE POUR : ${product.name} ===`);
+    console.dir(rootTree, { depth: null });
+    
     setSelectedProduct(product);
     setCurrentStepIndex(0);
-    // Pré-selection du Menu par défaut si dispo
-    const hasMenu = product.steps.some(s => s.semanticType === 'FRITES' || s.semanticType === 'BOISSON');
-    setStepSelections(hasMenu ? { 'is_menu': ['opt_menu'] } : {});
+    setStepSelections({});
   };
 
   const currentStep = funnelSteps[currentStepIndex];
 
-  // Calcul du minChoices contextuel (Optionnel si "Seul")
-  const getContextualMinChoices = (step: AppStep) => {
-      if (step.semanticType === 'FRITES' || step.semanticType === 'BOISSON') {
-          return isMenuSelected ? Math.max(1, step.minChoices) : 0;
-      }
+  const getContextualMinChoices = (step: StepTreeNode) => {
       return step.minChoices;
   };
 
-  const handleOptionClick = (step: AppStep, optId: string) => {
+  const handleOptionClick = (step: StepTreeNode, optId: string) => {
     setStepSelections(prev => {
-      const current = prev[step.id] || [];
+      const current = prev[step.stepId] || [];
       if (current.includes(optId)) {
-        return { ...prev, [step.id]: current.filter(id => id !== optId) };
+        return { ...prev, [step.stepId]: current.filter(id => id !== optId) };
       } else {
-        if (step.maxChoices === 1) return { ...prev, [step.id]: [optId] };
-        else if (current.length < step.maxChoices) return { ...prev, [step.id]: [...current, optId] };
+        if (step.maxChoices === 1) return { ...prev, [step.stepId]: [optId] };
+        else if (current.length < step.maxChoices) return { ...prev, [step.stepId]: [...current, optId] };
         return prev;
       }
     });
@@ -125,17 +116,17 @@ export default function KioskSimulator({ restaurantName, tree, themeColor = '#F3
      if (!selectedProduct) return 0;
      let total = selectedProduct.priceTTC;
      for (const step of funnelSteps) {
-        const selIds = stepSelections[step.id] || [];
+        const selIds = stepSelections[step.stepId] || [];
         for (const optId of selIds) {
-           const opt = step.options.find(o => o.id === optId);
-           if (opt) total += opt.priceDelta;
+           const opt = step.children.find(o => o.productId === optId);
+           if (opt) total += opt.price || 0;
         }
      }
      return total;
   };
 
   const goNextStep = () => {
-    const valid = currentStep ? ((stepSelections[currentStep.id] || []).length >= getContextualMinChoices(currentStep)) : true;
+    const valid = currentStep ? ((stepSelections[currentStep.stepId] || []).length >= getContextualMinChoices(currentStep)) : true;
     if (valid) setCurrentStepIndex(c => c + 1);
     else alert("Veuillez faire les choix obligatoires pour continuer.");
   };
@@ -169,12 +160,18 @@ export default function KioskSimulator({ restaurantName, tree, themeColor = '#F3
 
             <div style={{ flex: 1, overflowY: 'auto', padding: '2rem', background: '#f9fafb', position: 'relative' }}>
               
-              {/* Stepper visuel abstrait */}
-              <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginBottom: '2rem' }}>
-                 {funnelSteps.map((_, i) => (
-                    <div key={i} style={{ width: '40px', height: '6px', borderRadius: '10px', background: i === currentStepIndex ? '#1A237E' : i < currentStepIndex ? '#10b981' : '#e5e7eb' }}></div>
+              {/* Stepper visuel textuel */}
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
+                 {funnelSteps.map((s, i) => (
+                    <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                       <div style={{ width: '50px', height: '6px', borderRadius: '10px', background: i === currentStepIndex ? '#1A237E' : i < currentStepIndex ? '#10b981' : '#e5e7eb' }}></div>
+                       <span style={{ fontSize: '0.8rem', marginTop: '0.5rem', textTransform: 'uppercase', fontWeight: i === currentStepIndex ? 800 : 500, color: i === currentStepIndex ? '#1A237E' : i < currentStepIndex ? '#10b981' : '#9ca3af' }}>{s.title}</span>
+                    </div>
                  ))}
-                 <div style={{ width: '40px', height: '6px', borderRadius: '10px', background: currentStepIndex === funnelSteps.length ? '#1A237E' : '#e5e7eb' }}></div>
+                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <div style={{ width: '50px', height: '6px', borderRadius: '10px', background: currentStepIndex === funnelSteps.length ? '#1A237E' : '#e5e7eb' }}></div>
+                    <span style={{ fontSize: '0.8rem', marginTop: '0.5rem', textTransform: 'uppercase', fontWeight: currentStepIndex === funnelSteps.length ? 800 : 500, color: currentStepIndex === funnelSteps.length ? '#1A237E' : '#9ca3af' }}>Récapitulatif</span>
+                 </div>
               </div>
 
               {currentStepIndex < funnelSteps.length ? (
@@ -186,10 +183,10 @@ export default function KioskSimulator({ restaurantName, tree, themeColor = '#F3
                   </p>
 
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1rem', justifyContent: 'center' }}>
-                    {currentStep.options.map(opt => {
-                      const isSelected = (stepSelections[currentStep.id] || []).includes(opt.id);
+                    {currentStep.children.map(opt => {
+                      const isSelected = (stepSelections[currentStep.stepId] || []).includes(opt.productId);
                       return (
-                        <button key={opt.id} onClick={() => handleOptionClick(currentStep, opt.id)}
+                        <button key={opt.productId} onClick={() => handleOptionClick(currentStep, opt.productId)}
                           style={{
                             background: isSelected ? '#ecfdf5' : 'white', border: isSelected ? '3px solid #10b981' : '1px solid #d1d5db',
                             borderRadius: '16px', padding: '1.5rem 1rem', cursor: 'pointer', transition: 'all 0.2s', display: 'flex', flexDirection: 'column', alignItems: 'center'
@@ -197,7 +194,7 @@ export default function KioskSimulator({ restaurantName, tree, themeColor = '#F3
                         >
                           {opt.image && <img src={opt.image} alt={opt.name} onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://recette-setting.softavera.com/nopicture.png'; }} style={{ width: '100px', height: '100px', objectFit: 'contain', marginBottom: '1rem' }} />}
                           <strong style={{ fontSize: '1.2rem', color: '#111827', textTransform: 'uppercase', marginBottom: '0.5rem', textAlign: 'center' }}>{opt.name}</strong>
-                          {opt.priceDelta > 0 && <span style={{ background: '#fef3c7', color: '#d97706', padding: '0.3rem 0.8rem', borderRadius: '99px', fontWeight: 'bold' }}>+{opt.priceDelta.toFixed(2)} €</span>}
+                          {opt.price ? <span style={{ background: '#fef3c7', color: '#d97706', padding: '0.3rem 0.8rem', borderRadius: '99px', fontWeight: 'bold' }}>+{(opt.price || 0).toFixed(2)} €</span> : null}
                         </button>
                       );
                     })}
@@ -211,12 +208,12 @@ export default function KioskSimulator({ restaurantName, tree, themeColor = '#F3
                      <h3 style={{ margin: '0 0 1rem 0' }}>{selectedProduct.name} - {selectedProduct.priceTTC.toFixed(2)}€</h3>
                      <ul style={{ paddingLeft: '1.5rem', color: '#4b5563' }}>
                         {funnelSteps.map(step => {
-                           const sels = stepSelections[step.id] || [];
+                           const sels = stepSelections[step.stepId] || [];
                            if (sels.length === 0) return null;
                            return sels.map(sid => {
-                               const opt = step.options.find(o => o.id === sid);
+                               const opt = step.children.find(o => o.productId === sid);
                                if (!opt) return null;
-                               return <li key={sid} style={{ marginBottom: '0.5rem' }}>{opt.name} {opt.priceDelta > 0 ? `(+${opt.priceDelta.toFixed(2)}€)` : ''}</li>
+                               return <li key={sid} style={{ marginBottom: '0.5rem' }}>{opt.name} {opt.price > 0 ? `(+${opt.price.toFixed(2)}€)` : ''}</li>
                            });
                         })}
                      </ul>
@@ -240,7 +237,7 @@ export default function KioskSimulator({ restaurantName, tree, themeColor = '#F3
 
               {currentStepIndex < funnelSteps.length ? (
                 <button onClick={goNextStep} style={{ background: '#1A237E', color: 'white', padding: '1rem 3rem', borderRadius: '50px', border: 'none', fontSize: '1.2rem', fontWeight: 900, cursor: 'pointer' }}>
-                  {getContextualMinChoices(currentStep) === 0 && (stepSelections[currentStep.id] || []).length === 0 ? "Passer cette étape" : "Suivant →"}
+                  {getContextualMinChoices(currentStep) === 0 && (stepSelections[currentStep.stepId] || []).length === 0 ? "Passer cette étape" : "Suivant →"}
                 </button>
               ) : (
                 <button onClick={confirmProduct} style={{ background: '#10b981', color: 'white', padding: '1rem 3rem', borderRadius: '50px', border: 'none', fontSize: '1.2rem', fontWeight: 900, cursor: 'pointer' }}>
