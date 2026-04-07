@@ -71,7 +71,7 @@ function getFunnelSteps(product: ParsedProduct): AppStep[] {
 }
 
 
-export default function KioskSimulator({ restaurantName, tree }: { restaurantName: string, tree: ParsedCategory[] }) {
+export default function KioskSimulator({ restaurantName, tree, themeColor = '#F39C12' }: { restaurantName: string, tree: ParsedCategory[], themeColor?: string }) {
   const [activeCategoryId, setActiveCategoryId] = useState<string>(tree[0]?.id || "");
   const activeCategory = tree.find(c => c.id === activeCategoryId);
 
@@ -254,14 +254,25 @@ export default function KioskSimulator({ restaurantName, tree }: { restaurantNam
       )}
       {/* FIN TUNNEL */}
 
+      {/* HEADER GLOBAL UNIFIÉ (Un seul rectangle sans démarcation) */}
+      <div style={{ height: '105px', display: 'flex', flexShrink: 0, background: themeColor, width: '100%', zIndex: 20 }}>
+        {/* Partie Gauche alignée avec la colonne Menu */}
+        <div style={{ width: '25%', minWidth: '250px', maxWidth: '300px', display: 'flex', alignItems: 'center', padding: '0 2rem' }}>
+          <h2 style={{ margin: 0, fontSize: '1.7rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', textShadow: '0 2px 8px rgba(0,0,0,0.4)', color: 'white' }}>Menu</h2>
+        </div>
+        {/* Partie Droite alignée avec les articles */}
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 3rem' }}>
+           <h1 style={{ color: 'white', margin: 0, fontSize: '2.2rem', fontWeight: 900, textTransform: 'uppercase', textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
+              {restaurantName}
+           </h1>
+        </div>
+      </div>
+
       {/* RESTE DE LA PAGE KIOSK (Menu de gauche, Liste, Footer...) */}
       <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
         
         {/* COLONNE GAUCHE (Catégories) */}
         <div style={{ width: '25%', minWidth: '250px', maxWidth: '300px', background: '#ffffff', boxShadow: '4px 0 15px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', zIndex: 10 }}>
-          <div style={{ padding: '1.5rem 1rem', background: '#F39C12', color: 'white' }}>
-             <h2 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px' }}>Menu</h2>
-          </div>
           <div style={{ flex: 1, overflowY: 'auto' }}>
             {tree.map(cat => {
               const isActive = activeCategoryId === cat.id;
@@ -279,9 +290,9 @@ export default function KioskSimulator({ restaurantName, tree }: { restaurantNam
                   style={{
                     width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start',
                     padding: '1.2rem 1.5rem', border: 'none', borderBottom: '1px solid #f1f5f9',
-                    borderLeft: isActive ? '6px solid #E67E22' : '6px solid transparent',
+                    borderLeft: isActive ? `6px solid ${themeColor}` : '6px solid transparent',
                     background: isActive ? '#fffbeb' : 'white',
-                    color: isActive ? '#b45309' : '#475569', cursor: 'pointer', transition: 'all 0.2s ease-in-out',
+                    color: isActive ? '#111827' : '#475569', cursor: 'pointer', transition: 'all 0.2s ease-in-out',
                   }}
                 >
                   <div style={{ width: '55px', height: '55px', flexShrink: 0, marginRight: '1.2rem', borderRadius: '14px', overflow: 'hidden', background: '#f8fafc', boxShadow: isActive ? '0 4px 10px rgba(230,126,34,0.2)' : 'none', border: '1px solid #e2e8f0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -305,13 +316,7 @@ export default function KioskSimulator({ restaurantName, tree }: { restaurantNam
         {/* ZONE PRINCIPALE (Grid produits) */}
         <div style={{ flex: '1', display: 'flex', flexDirection: 'column', overflowY: 'auto', position: 'relative' }}>
           
-          <div style={{ height: '140px', background: 'linear-gradient(135deg, #F39C12, #E67E22)', padding: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-            <h1 style={{ color: 'white', margin: 0, fontSize: '2.5rem', fontWeight: 900, textTransform: 'uppercase', textShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
-              {restaurantName}
-            </h1>
-          </div>
-
-          <div style={{ padding: '2rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem', alignContent: 'start', marginTop: '-40px' }}>
+          <div style={{ padding: '2rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem', alignContent: 'start', marginTop: '20px' }}>
             {activeCategory?.products.map((p, pIndex) => (
               <div key={`${p.id}-${pIndex}`} onClick={() => startOrder(p)}
                 style={{ 

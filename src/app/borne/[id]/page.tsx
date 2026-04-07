@@ -43,6 +43,37 @@ export default async function BornePage({ params }: { params: Promise<{ id: stri
   const rawTitle = fileName.replace('.json', '').replace('carte_', '').replace(/^[0-9_]+/, '').replace(/_/g, ' ');
   const restaurantName = rawTitle ? rawTitle.charAt(0).toUpperCase() + rawTitle.slice(1) : "Borne Interactive";
 
+  // Extraction de la couleur principale (en ignorant les couleurs trop pâles/blanches)
+  let themeColor = '#F39C12'; // Couleur par défaut
+  const colorCounts: Record<string, number> = {};
+  if (data.categories) {
+    Object.values(data.categories).forEach((c: any) => {
+       if (c.color && c.color.startsWith('#')) {
+          colorCounts[c.color] = (colorCounts[c.color] || 0) + 1;
+       }
+    });
+
+    const isPale = (hex: string) => {
+      const c = hex.replace('#', '');
+      if (c.length !== 6) return false;
+      const r = parseInt(c.substring(0, 2), 16);
+      const g = parseInt(c.substring(2, 4), 16);
+      const b = parseInt(c.substring(4, 6), 16);
+      return (r > 200 && g > 200 && b > 200) || (r + g + b > 650);
+    };
+
+    const sortedVibrantColors = Object.keys(colorCounts)
+       .filter(c => !isPale(c))
+       .sort((a, b) => colorCounts[b] - colorCounts[a]);
+
+    if (sortedVibrantColors.length > 0) {
+       themeColor = sortedVibrantColors[0];
+    } else {
+       const sortedAllColors = Object.keys(colorCounts).sort((a, b) => colorCounts[b] - colorCounts[a]);
+       if (sortedAllColors.length > 0) themeColor = sortedAllColors[0];
+    }
+  }
+
   // Renvoi de la "Base Propre" vers le composant Visuel
-  return <KioskSimulator restaurantName={restaurantName} tree={tree} />;
+  return <KioskSimulator restaurantName={restaurantName} tree={tree} themeColor={themeColor} />;
 }
