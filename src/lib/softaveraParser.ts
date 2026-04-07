@@ -79,16 +79,29 @@ export function parseETK360Hierarchy(data: any): ParsedCategory[] {
 
   // ÉTAPE 1 : Extraire UNIQUEMENT les catégories racines et visibles
   const catKeys = Object.keys(data.categories);
-  let rawCategories = catKeys.map(k => ({ ...data.categories[k], id: k }))
+  let rawCategories = catKeys.map(k => {
+      // Injection du rang workflow pour les catégories
+      const wNode = data.workflow ? data.workflow[k] : null;
+      return { 
+         ...data.categories[k], 
+         id: k, 
+         workflowRank: wNode && wNode.rank !== undefined ? wNode.rank : (data.categories[k].rank || 0),
+         inWorkflow: !!wNode
+      };
+    })
     .filter(c => {
        if (!c || !c.title || (c.parent && c.parent !== "")) return false;
        if (c.visibilityInfo && c.visibilityInfo.isVisible === false) return false;
        if (c.isVisible === false) return false;
+       
+       // Si un workflow global existe, on ne garde que les catégories présentes dedans
+       if (data.workflow && !c.inWorkflow) return false;
+       
        return true;
     });
     
-  // Tri exclusif selon le rang défini dans le fichier JSON (L'ordre natif)
-  rawCategories.sort((a, b) => (a.rank || 0) - (b.rank || 0));
+  // Tri exclusif selon le rang défini dans le workflow ETK360
+  rawCategories.sort((a, b) => a.workflowRank - b.workflowRank);
 
   // ÉTAPE 2 : Grouper les articles disponibles selon leur 'parent' ETK (Logique métier du user)
   const itemKeys = Object.keys(data.items);
@@ -124,10 +137,28 @@ export function parseETK360Hierarchy(data: any): ParsedCategory[] {
       products: []
     };
 
-    // ➡️ Algorithme User : les produits DOIVENT être triés par rank local (item.rank).
-    parentItems.sort((a, b) => (a.rank || 0) - (b.rank || 0));
+    // ➡️ Filtre et Tri via le WORKFLOW :
+    // On ne conserve que les articles explicitement présents dans le workflow de la catégorie,
+    // et on leur applique le rang précis défini par ce workflow.
+    const workflowNode = data.workflow?.[category.id];
+    let validItems = [];
+    
+    if (workflowNode && workflowNode.content) {
+       for (const item of parentItems) {
+          const wItem = workflowNode.content[item.id];
+          if (wItem !== undefined) {
+             item.workflowRank = wItem.rank !== undefined ? wItem.rank : (item.rank || 0);
+             validItems.push(item);
+          }
+       }
+       validItems.sort((a, b) => a.workflowRank - b.workflowRank);
+    } else {
+       // Fallback de sécurité si aucun workflow n’est défini pour cette catégorie
+       validItems = [...parentItems];
+       validItems.sort((a, b) => (a.rank || 0) - (b.rank || 0));
+    }
 
-    for (const item of parentItems) {
+    for (const item of validItems) {
       // Ignorer les produits archivés ou explicitement invisibles globaux
       if (item.archive === true) continue;
       if (item.isVisible === false) continue;
