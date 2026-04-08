@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { buildProductTree, ProductTreeNode, StepTreeNode } from '../lib/treeUtils';
 
@@ -39,28 +39,6 @@ export interface ParsedCategory {
 
 export type AppStep = Omit<ParsedStep, 'semanticType'> & { semanticType: string };
 
-function getDynamicFunnelStepsFromTree(node: ProductTreeNode | null, selections: Record<string, string[]>): StepTreeNode[] {
-   if (!node) return [];
-   const flatSteps: StepTreeNode[] = [];
-
-   const traverseTree = (currentNode: ProductTreeNode) => {
-      if (!currentNode.steps) return;
-      for (const step of currentNode.steps) {
-         flatSteps.push(step);
-         
-         const selIds = selections[step.stepId] || [];
-         for (const selId of selIds) {
-            const childNode = step.children.find(c => c.productId === selId);
-            if (childNode) {
-               traverseTree(childNode);
-            }
-         }
-      }
-   };
-
-   traverseTree(node);
-   return flatSteps;
-}
 
 export default function KioskSimulator({ restaurantName, tree, themeColor = '#F39C12', catalogData }: { restaurantName: string, tree: ParsedCategory[], themeColor?: string, catalogData?: any }) {
   const [activeCategoryId, setActiveCategoryId] = useState<string>(tree[0]?.id || "");
@@ -70,44 +48,119 @@ export default function KioskSimulator({ restaurantName, tree, themeColor = '#F3
   const [cartCount, setCartCount] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
 
-  // -- TUNNEL DE COMMANDE --
+  // -- TUNNEL DE COMMANDE (chaque produit a son propre parcours) --
   const [selectedProduct, setSelectedProduct] = useState<ParsedProduct | null>(null);
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [workflowStack, setWorkflowStack] = useState<{ node: ProductTreeNode; stepIndex: number }[]>([]);
   const [stepSelections, setStepSelections] = useState<Record<string, string[]>>({});
 
-  const pureTree = useMemo(() => {
-     return selectedProduct && catalogData ? buildProductTree(selectedProduct.id, catalogData) : null;
-  }, [selectedProduct, catalogData]);
+  const activeWorkflow = workflowStack[workflowStack.length - 1];
+  const funnelSteps = activeWorkflow ? activeWorkflow.node.steps : [];
+  const currentStepIndex = activeWorkflow ? activeWorkflow.stepIndex : 0;
+  const currentStep = funnelSteps[currentStepIndex];
 
-  // Le tableau `funnelSteps` est mis à jour DYNAMIQUEMENT chaque fois que `stepSelections` change !
-  const funnelSteps = useMemo(() => pureTree ? getDynamicFunnelStepsFromTree(pureTree, stepSelections) : [], [pureTree, stepSelections]);
+  const setCurrentStepIndex = (newIndex: number | ((prev: number) => number)) => {
+     setWorkflowStack(prev => {
+        const newStack = [...prev];
+        const last = { ...newStack[newStack.length - 1] };
+        last.stepIndex = typeof newIndex === 'function' ? newIndex(last.stepIndex) : newIndex;
+        newStack[newStack.length - 1] = last;
+        return newStack;
+     });
+  };
+
+  // Pré-sélectionner les ingrédients de composition à chaque nouveau niveau
+  useEffect(() => {
+    if (workflowStack.length === 0) return;
+    const topNode = workflowStack[workflowStack.length - 1].node;
+    const compSteps = topNode.steps.filter(s => s.title.toLowerCase() === 'composition');
+    if (compSteps.length === 0) return;
+
+    setStepSelections(prev => {
+      const updates: Record<string, string[]> = {};
+      for (const step of compSteps) {
+        if (!prev[step.stepId]) {
+          updates[step.stepId] = step.children.map(c => c.productId);
+        }
+      }
+      if (Object.keys(updates).length === 0) return prev;
+      return { ...prev, ...updates };
+    });
+  }, [workflowStack.length]);
+
+  // Retour automatique au parent quand le sous-parcours est terminé
+  useEffect(() => {
+    if (workflowStack.length > 1 && funnelSteps.length > 0 && currentStepIndex >= funnelSteps.length) {
+      setWorkflowStack(prev => {
+        if (prev.length <= 1) return prev;
+        const newStack = prev.slice(0, -1);
+        const last = { ...newStack[newStack.length - 1] };
+        last.stepIndex = last.stepIndex + 1;
+        newStack[newStack.length - 1] = last;
+        return newStack;
+      });
+    }
+  }, [workflowStack.length, currentStepIndex, funnelSteps.length]);
 
   const startOrder = (product: ParsedProduct) => {
-    // Audit console du nouvel arbre utilitaire brut !
     const rootTree = catalogData ? buildProductTree(product.id, catalogData) : null;
     console.log(`\n=== 🌳 BUILD PRODUCT TREE POUR : ${product.name} ===`);
     console.dir(rootTree, { depth: null });
-    
-    setSelectedProduct(product);
-    setCurrentStepIndex(0);
-    setStepSelections({});
-  };
 
-  const currentStep = funnelSteps[currentStepIndex];
+    // Produit simple (pas de parcours) → ajout direct au panier
+    if (!rootTree || rootTree.steps.length === 0) {
+      setCartCount(prev => prev + 1);
+      setCartTotal(prev => prev + product.priceTTC);
+      return;
+    }
+
+    setSelectedProduct(product);
+    setWorkflowStack([{ node: rootTree, stepIndex: 0 }]);
+
+    // Pré-sélectionner les compositions du niveau racine
+    const initialSelections: Record<string, string[]> = {};
+    for (const step of rootTree.steps) {
+      if (step.title.toLowerCase() === 'composition') {
+        initialSelections[step.stepId] = step.children.map(c => c.productId);
+      }
+    }
+    setStepSelections(initialSelections);
+  };
 
   const getContextualMinChoices = (step: StepTreeNode) => {
       return step.minChoices;
   };
 
   const handleOptionClick = (step: StepTreeNode, optId: string) => {
+    const optNode = step.children.find(c => c.productId === optId);
+    if (!optNode) return;
+
     setStepSelections(prev => {
       const current = prev[step.stepId] || [];
-      if (current.includes(optId)) {
+      const isSelected = current.includes(optId);
+
+      const isComp = step.title.toLowerCase() === 'composition';
+
+      if (isSelected) {
+        if (isComp && optNode.isObligatory) return prev;
         return { ...prev, [step.stepId]: current.filter(id => id !== optId) };
       } else {
-        if (step.maxChoices === 1) return { ...prev, [step.stepId]: [optId] };
-        else if (current.length < step.maxChoices) return { ...prev, [step.stepId]: [...current, optId] };
-        return prev;
+        if (isComp) {
+          return { ...prev, [step.stepId]: [...current, optId] };
+        }
+        if (current.length >= step.maxChoices && step.maxChoices !== 1) {
+           return prev;
+        }
+
+        const newSelections = step.maxChoices === 1 ? [optId] : [...current, optId];
+
+        // Si l'option a des sous-étapes, ouvrir son parcours
+        if (optNode.steps && optNode.steps.length > 0) {
+           Promise.resolve().then(() => {
+               setWorkflowStack(oldStack => [...oldStack, { node: optNode, stepIndex: 0 }]);
+           });
+        }
+
+        return { ...prev, [step.stepId]: newSelections };
       }
     });
   };
@@ -115,12 +168,22 @@ export default function KioskSimulator({ restaurantName, tree, themeColor = '#F3
   const calculateCurrentProductTotal = () => {
      if (!selectedProduct) return 0;
      let total = selectedProduct.priceTTC;
-     for (const step of funnelSteps) {
-        const selIds = stepSelections[step.stepId] || [];
-        for (const optId of selIds) {
-           const opt = step.children.find(o => o.productId === optId);
-           if (opt) total += opt.price || 0;
+     const computePrice = (node: ProductTreeNode) => {
+        let nodeTotal = 0;
+        for (const step of node.steps) {
+           const selIds = stepSelections[step.stepId] || [];
+           for (const oId of selIds) {
+              const opt = step.children.find(o => o.productId === oId);
+              if (opt) {
+                 nodeTotal += opt.price || 0;
+                 nodeTotal += computePrice(opt);
+              }
+           }
         }
+        return nodeTotal;
+     };
+     if (workflowStack.length > 0) {
+        total += computePrice(workflowStack[0].node);
      }
      return total;
   };
@@ -132,9 +195,19 @@ export default function KioskSimulator({ restaurantName, tree, themeColor = '#F3
   };
 
   const confirmProduct = () => {
-     setCartCount(prev => prev + 1);
-     setCartTotal(prev => prev + calculateCurrentProductTotal());
-     setSelectedProduct(null);
+     if (workflowStack.length > 1) {
+        setWorkflowStack(prev => {
+           const newStack = prev.slice(0, -1);
+           const last = { ...newStack[newStack.length - 1] };
+           last.stepIndex = last.stepIndex + 1;
+           newStack[newStack.length - 1] = last;
+           return newStack;
+        });
+     } else {
+        setCartCount(prev => prev + 1);
+        setCartTotal(prev => prev + calculateCurrentProductTotal());
+        setSelectedProduct(null);
+     }
   };
 
   return (
@@ -147,78 +220,205 @@ export default function KioskSimulator({ restaurantName, tree, themeColor = '#F3
           zIndex: 100, display: 'flex', justifyContent: 'center', alignItems: 'center', backdropFilter: 'blur(5px)'
         }}>
           <div style={{
-            background: 'white', width: '90%', maxWidth: '1000px', height: '85vh', borderRadius: '24px',
-            display: 'flex', flexDirection: 'column', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.2)'
+            background: 'white', width: '90%', maxWidth: '1000px', height: '90vh', borderRadius: '24px',
+            display: 'flex', flexDirection: 'column', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
+            position: 'relative'
           }}>
             
-            <div style={{ background: 'linear-gradient(135deg, #1A237E, #283593)', color: 'white', padding: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
-                <h2 style={{ margin: 0, fontSize: '1.8rem', textTransform: 'uppercase', fontWeight: 900 }}>{selectedProduct.name}</h2>
-              </div>
-              <button onClick={() => setSelectedProduct(null)} style={{ background: 'rgba(255,255,255,0.2)', border: 'none', color: 'white', fontSize: '1.5rem', width: '50px', height: '50px', borderRadius: '50%', cursor: 'pointer' }}>✕</button>
+            {/* Top Cyan Section */}
+            <div style={{ 
+                background: 'linear-gradient(to bottom, #defaf1, #9cf1d8)', 
+                padding: '2rem 1rem', 
+                position: 'relative',
+                display: 'flex', flexDirection: 'column', alignItems: 'center'
+            }}>
+               {/* Controls */}
+               <div style={{ position: 'absolute', top: '1rem', right: '1.5rem', display: 'flex', gap: '8px' }}>
+                  <button style={{ background: '#d1d5db', color: 'white', border: 'none', borderRadius: '50%', width: '32px', height: '32px', fontSize: '18px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>i</button>
+                  <button onClick={() => setSelectedProduct(null)} style={{ background: '#d1d5db', color: '#4b5563', border: 'none', borderRadius: '50%', width: '32px', height: '32px', fontSize: '18px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>✕</button>
+               </div>
+               
+               <h2 style={{ margin: 0, fontSize: '1.6rem', textTransform: 'uppercase', fontWeight: 900, color: '#111827', marginBottom: '2.5rem', textAlign: 'center' }}>{activeWorkflow ? activeWorkflow.node.name : selectedProduct.name}</h2>
+
+               {/* Step Icons Row */}
+               <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', marginBottom: '2.5rem' }}>
+                 {funnelSteps.map((s, i) => {
+                    const isComp = s.title.toLowerCase().includes('composition');
+                    const stepImg = s.image || s.children[0]?.image || null;
+                    return (
+                        <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                           <div style={{ width: '80px', height: '60px', background: 'transparent', border: isComp ? 'none' : '2px solid #4b5563', borderRadius: '8px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', position: 'relative', overflow: 'hidden' }}>
+                              {isComp ? (
+                                 <div style={{ width: '56px', height: '56px', background: '#4b5563', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                 </div>
+                              ) : stepImg ? (
+                                 <img src={stepImg} alt={s.title}
+                                   onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://recette-setting.softavera.com/nopicture.png'; }}
+                                   style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '4px' }} />
+                              ) : (
+                                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#4b5563" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                              )}
+                              {!isComp && (
+                                 <div style={{ position: 'absolute', bottom: '-10px', right: '-10px', background: '#d1d5db', borderRadius: '50%', width: '24px', height: '24px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                   <span style={{ transform: 'rotate(45deg)', color: '#4b5563', fontWeight: 'bold' }}>+</span>
+                                 </div>
+                              )}
+                           </div>
+                           <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#111827', textTransform: 'uppercase' }}>{s.title}</span>
+                        </div>
+                    );
+                 })}
+               </div>
+
+               {/* Numeric Stepper Row */}
+               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', maxWidth: '400px' }}>
+                 {funnelSteps.map((s, i) => {
+                    const isActive = i === currentStepIndex;
+                    const isPast = i < currentStepIndex;
+                    const isComp = s.title.toLowerCase().includes('composition');
+                    return (
+                      <div key={i} style={{ display: 'flex', alignItems: 'center', flex: i < funnelSteps.length - 1 ? 1 : 0 }}>
+                        {/* Circle */}
+                        <div style={{
+                          width: '40px', height: '40px', borderRadius: '50%', 
+                          background: (isActive || isPast || isComp) ? '#111827' : 'white', 
+                          color: (isActive || isPast || isComp) ? 'white' : '#9ca3af',
+                          border: (isActive || isPast || isComp) ? '2px solid #111827' : '2px solid #d1d5db',
+                          display: 'flex', justifyContent: 'center', alignItems: 'center',
+                          fontWeight: 'bold', fontSize: '1.2rem', zIndex: 2,
+                          boxShadow: isActive ? '0 0 0 4px white, 0 0 0 8px rgba(79, 209, 197, 0.5)' : 'none'
+                        }}>
+                          {isComp ? (
+                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                          ) : (
+                             i + 1
+                          )}
+                        </div>
+                        {/* Line */}
+                        {i < funnelSteps.length - 1 && (
+                          <div style={{
+                            flex: 1, height: '4px', background: isPast ? '#111827' : 'white',
+                            marginLeft: '-4px', marginRight: '-4px', zIndex: 1
+                          }} />
+                        )}
+                      </div>
+                    )
+                 })}
+               </div>
             </div>
 
-            <div style={{ flex: 1, overflowY: 'auto', padding: '2rem', background: '#f9fafb', position: 'relative' }}>
+            <div style={{ flex: 1, overflowY: 'auto', padding: '1rem 2rem', background: '#fff', position: 'relative' }}>
               
-              {/* Stepper visuel textuel */}
-              <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
-                 {funnelSteps.map((s, i) => (
-                    <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                       <div style={{ width: '50px', height: '6px', borderRadius: '10px', background: i === currentStepIndex ? '#1A237E' : i < currentStepIndex ? '#10b981' : '#e5e7eb' }}></div>
-                       <span style={{ fontSize: '0.8rem', marginTop: '0.5rem', textTransform: 'uppercase', fontWeight: i === currentStepIndex ? 800 : 500, color: i === currentStepIndex ? '#1A237E' : i < currentStepIndex ? '#10b981' : '#9ca3af' }}>{s.title}</span>
-                    </div>
-                 ))}
-                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <div style={{ width: '50px', height: '6px', borderRadius: '10px', background: currentStepIndex === funnelSteps.length ? '#1A237E' : '#e5e7eb' }}></div>
-                    <span style={{ fontSize: '0.8rem', marginTop: '0.5rem', textTransform: 'uppercase', fontWeight: currentStepIndex === funnelSteps.length ? 800 : 500, color: currentStepIndex === funnelSteps.length ? '#1A237E' : '#9ca3af' }}>Récapitulatif</span>
-                 </div>
-              </div>
 
               {currentStepIndex < funnelSteps.length ? (
-                // ---------------- AFFICHAGE DE L'ÉTAPE COURANTE ---------------- 
-                <div style={{ animation: 'fadeIn 0.3s' }}>
-                  <h3 style={{ fontSize: '1.8rem', color: '#1A237E', marginTop: 0, textTransform: 'uppercase', textAlign: 'center' }}>{currentStep.title}</h3>
-                  <p style={{ color: '#6b7280', textAlign: 'center', marginBottom: '2rem', fontSize: '1.1rem' }}>
-                    {getContextualMinChoices(currentStep) > 0 ? "Choix obligatoire" : "Optionnel - Vous pouvez passer cette étape"}
-                  </p>
+                <div style={{ animation: 'fadeIn 0.3s', marginTop: '2.5rem' }}>
+                  
+                  {/* Instructions */}
+                  <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+                     <h3 style={{ fontSize: '1.4rem', color: '#111827', margin: '0 0 0.5rem 0' }}>
+                        {currentStep.title.toLowerCase().includes('composition') ? "Souhaitez-vous retirer un ingrédient ?" : `Veuillez choisir votre ${currentStep.title}`}
+                     </h3>
+                     { !currentStep.title.toLowerCase().includes('composition') && (
+                       <p style={{ color: '#4b5563', margin: 0, fontWeight: 600 }}>
+                          ( Min {getContextualMinChoices(currentStep)} :Max {currentStep.maxChoices} )
+                       </p>
+                     )}
+                  </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1rem', justifyContent: 'center' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '2rem', justifyContent: 'center', padding: '0 1rem' }}>
                     {currentStep.children.map(opt => {
-                      const isSelected = (stepSelections[currentStep.stepId] || []).includes(opt.productId);
+                      const isComp = currentStep.title.toLowerCase() === 'composition';
+                      const isIncluded = (stepSelections[currentStep.stepId] || []).includes(opt.productId);
+                      const isSelected = !isComp && isIncluded;
+                      const isLocked = isComp && opt.isObligatory;
+
+                      // Composition : inclus = vert (défaut), retiré = rouge
+                      const borderColor = isComp
+                        ? (isIncluded ? '#10b981' : '#ef4444')
+                        : (isSelected ? '#10b981' : '#e5e7eb');
+
                       return (
-                        <button key={opt.productId} onClick={() => handleOptionClick(currentStep, opt.productId)}
+                        <div key={opt.productId}
+                          onClick={() => !isLocked && handleOptionClick(currentStep, opt.productId)}
                           style={{
-                            background: isSelected ? '#ecfdf5' : 'white', border: isSelected ? '3px solid #10b981' : '1px solid #d1d5db',
-                            borderRadius: '16px', padding: '1.5rem 1rem', cursor: 'pointer', transition: 'all 0.2s', display: 'flex', flexDirection: 'column', alignItems: 'center'
+                            position: 'relative',
+                            background: isComp && !isIncluded ? '#fef2f2' : 'white',
+                            border: `${isComp || isSelected ? '3px' : '1px'} solid ${borderColor}`,
+                            borderRadius: '16px', padding: '1rem',
+                            cursor: isLocked ? 'not-allowed' : 'pointer',
+                            transition: 'all 0.2s',
+                            boxShadow: '0 4px 15px rgba(0,0,0,0.05)',
+                            opacity: isComp && !isIncluded ? 0.6 : 1
                           }}
                         >
-                          {opt.image && <img src={opt.image} alt={opt.name} onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://recette-setting.softavera.com/nopicture.png'; }} style={{ width: '100px', height: '100px', objectFit: 'contain', marginBottom: '1rem' }} />}
-                          <strong style={{ fontSize: '1.2rem', color: '#111827', textTransform: 'uppercase', marginBottom: '0.5rem', textAlign: 'center' }}>{opt.name}</strong>
-                          {opt.price ? <span style={{ background: '#fef3c7', color: '#d97706', padding: '0.3rem 0.8rem', borderRadius: '99px', fontWeight: 'bold' }}>+{(opt.price || 0).toFixed(2)} €</span> : null}
-                        </button>
+                           {/* Badge état top right */}
+                           <div style={{ position: 'absolute', top: '10px', right: '10px', width: '30px', height: '30px', borderRadius: '50%', color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1.1rem', fontWeight: 'bold',
+                             background: isComp
+                               ? (isLocked ? '#9ca3af' : isIncluded ? '#10b981' : '#ef4444')
+                               : (isSelected ? '#10b981' : '#00e5ba')
+                           }}>
+                             {isComp ? (isLocked ? '🔒' : isIncluded ? '✓' : '✕') : (isSelected ? '✓' : '+')}
+                           </div>
+
+                           {/* Info Icon top left */}
+                           <div style={{ position: 'absolute', top: '10px', left: '10px', width: '24px', height: '24px', borderRadius: '50%', background: '#f3f4f6', color: '#9ca3af', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '0.9rem', fontWeight: 'bold' }}>
+                             i
+                           </div>
+
+
+
+                           <div style={{ height: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '1rem' }}>
+                             {opt.image ? (
+                               <img src={opt.image} alt={opt.name} onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://recette-setting.softavera.com/nopicture.png'; }}
+                                 style={{ width: '100%', height: '100%', objectFit: 'contain', filter: isComp && !isIncluded ? 'grayscale(1)' : 'none' }} />
+                             ) : (
+                               <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                             )}
+                           </div>
+                           <div style={{ textAlign: 'center' }}>
+                             <strong style={{ fontSize: '1.1rem', textTransform: 'uppercase', display: 'block', marginBottom: '0.5rem',
+                               color: isComp && !isIncluded ? '#9ca3af' : '#111827',
+                               textDecoration: isComp && !isIncluded ? 'line-through' : 'none'
+                             }}>{opt.name}</strong>
+                             {!isComp && opt.price ? <span style={{ color: '#10b981', fontWeight: 'bold', fontSize: '1.2rem' }}>+{(opt.price || 0).toFixed(2)} €</span> : null}
+                           </div>
+                        </div>
                       );
                     })}
                   </div>
                 </div>
               ) : (
                 // ---------------- RÉCAPITULATIF ---------------- 
-                <div style={{ textAlign: 'center' }}>
-                  <h2 style={{ fontSize: '2.5rem', color: '#1A237E', marginTop: '1rem' }}>✨ RÉCAPITULATIF</h2>
-                  <div style={{ display: 'inline-block', textAlign: 'left', background: 'white', padding: '2rem', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', minWidth: '300px' }}>
-                     <h3 style={{ margin: '0 0 1rem 0' }}>{selectedProduct.name} - {selectedProduct.priceTTC.toFixed(2)}€</h3>
-                     <ul style={{ paddingLeft: '1.5rem', color: '#4b5563' }}>
-                        {funnelSteps.map(step => {
-                           const sels = stepSelections[step.stepId] || [];
-                           if (sels.length === 0) return null;
-                           return sels.map(sid => {
-                               const opt = step.children.find(o => o.productId === sid);
-                               if (!opt) return null;
-                               return <li key={sid} style={{ marginBottom: '0.5rem' }}>{opt.name} {opt.price > 0 ? `(+${opt.price.toFixed(2)}€)` : ''}</li>
-                           });
-                        })}
+                <div style={{ textAlign: 'center', padding: '2rem 0' }}>
+                  <h2 style={{ fontSize: '2.5rem', color: '#10b981', marginTop: '1rem' }}>✨ RÉCAPITULATIF</h2>
+                  <div style={{ display: 'inline-block', textAlign: 'left', background: 'white', padding: '2rem', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', minWidth: '400px' }}>
+                     <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.4rem' }}>{selectedProduct.name} - {selectedProduct.priceTTC.toFixed(2)}€</h3>
+                     <ul style={{ paddingLeft: '1.5rem', color: '#4b5563', fontSize: '1.1rem' }}>
+                        {(() => {
+                           const renderRecapNode = (node: ProductTreeNode, depth = 0, visited = new Set<string>()): React.ReactElement[] => {
+                              if (visited.has(node.productId)) return [];
+                              visited.add(node.productId);
+                              let elements: React.ReactElement[] = [];
+                              for (const step of node.steps) {
+                                 if (step.title.toLowerCase() === 'composition') continue; // skip composition in recap
+                                 const sels = stepSelections[step.stepId] || [];
+                                 for (const sid of sels) {
+                                    const opt = step.children.find(o => o.productId === sid);
+                                    if (opt) {
+                                       const keyStr = `${depth}-${step.stepId}-${sid}-${node.productId}`;
+                                       elements.push(<li key={keyStr} style={{ marginBottom: '0.8rem', marginLeft: depth > 0 ? `${depth * 15}px` : '0', listStyleType: depth > 0 ? 'circle' : 'disc' }}>{opt.name} {opt.price > 0 ? `(+${opt.price.toFixed(2)}€)` : ''}</li>);
+                                       elements = elements.concat(renderRecapNode(opt, depth + 1, new Set(visited)));
+                                    }
+                                 }
+                              }
+                              return elements;
+                           };
+                           return workflowStack.length > 0 ? renderRecapNode(workflowStack[0].node) : null;
+                        })()}
                      </ul>
-                     <hr style={{ border: 'none', borderTop: '2px dashed #e5e7eb', margin: '1.5rem 0' }}/>
-                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.5rem', fontWeight: 900, color: '#10b981' }}>
+                     <hr style={{ border: 'none', borderTop: '2px dashed #e5e7eb', margin: '2rem 0' }}/>
+                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.8rem', fontWeight: 900, color: '#10b981' }}>
                         <span>TOTAL</span>
                         <span>{calculateCurrentProductTotal().toFixed(2)} €</span>
                      </div>
@@ -227,21 +427,24 @@ export default function KioskSimulator({ restaurantName, tree, themeColor = '#F3
               )}
             </div>
 
-            <div style={{ padding: '1.5rem 2rem', background: 'white', borderTop: '1px solid #e5e7eb', display: 'flex', justifyContent: 'space-between' }}>
-              <button 
-                onClick={() => { if (currentStepIndex > 0) setCurrentStepIndex(c => c - 1); }}
-                style={{ visibility: currentStepIndex > 0 ? 'visible' : 'hidden', background: '#f3f4f6', padding: '1rem 2rem', borderRadius: '50px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', color: '#4b5563' }}
-              >
-                ← Précédent
-              </button>
+            {/* Bottom Actions */}
+            <div style={{ padding: '1.5rem 2rem', background: 'white', borderTop: '1px solid #f3f4f6', display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 10 }}>
+              <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                <button
+                  onClick={() => { if (currentStepIndex > 0) setCurrentStepIndex(c => c - 1); }}
+                  style={{ visibility: currentStepIndex > 0 ? 'visible' : 'hidden', background: '#f3f4f6', padding: '1rem 2rem', borderRadius: '8px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', color: '#4b5563' }}
+                >
+                  ← Précédent
+                </button>
+              </div>
 
               {currentStepIndex < funnelSteps.length ? (
-                <button onClick={goNextStep} style={{ background: '#1A237E', color: 'white', padding: '1rem 3rem', borderRadius: '50px', border: 'none', fontSize: '1.2rem', fontWeight: 900, cursor: 'pointer' }}>
+                <button onClick={goNextStep} style={{ background: '#10b981', color: 'white', padding: '1rem 3rem', borderRadius: '8px', border: 'none', fontSize: '1.2rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 15px rgba(16, 185, 129, 0.4)' }}>
                   {getContextualMinChoices(currentStep) === 0 && (stepSelections[currentStep.stepId] || []).length === 0 ? "Passer cette étape" : "Suivant →"}
                 </button>
               ) : (
-                <button onClick={confirmProduct} style={{ background: '#10b981', color: 'white', padding: '1rem 3rem', borderRadius: '50px', border: 'none', fontSize: '1.2rem', fontWeight: 900, cursor: 'pointer' }}>
-                  Valider mon menu
+                <button onClick={confirmProduct} style={{ background: '#10b981', color: 'white', padding: '1rem 3rem', borderRadius: '8px', border: 'none', fontSize: '1.2rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 15px rgba(16, 185, 129, 0.4)' }}>
+                  {workflowStack.length > 1 ? "Terminer" : "Valider mon menu"}
                 </button>
               )}
             </div>

@@ -5,6 +5,7 @@ export interface ProductTreeNode {
   image: string | null;
   modifierId: string | null;
   steps: StepTreeNode[];
+  isObligatory?: boolean;
 }
 
 export interface StepTreeNode {
@@ -14,6 +15,7 @@ export interface StepTreeNode {
   minChoices: number;
   maxChoices: number;
   children: ProductTreeNode[];
+  image?: string | null;
 }
 
 /**
@@ -85,6 +87,53 @@ export function buildProductTree(
     steps: []
   };
 
+  // 2b. Étape Composition de base via basicComp (ingrédients retirables)
+  const basicComp = productRef?.basicComp;
+  if (basicComp && typeof basicComp === 'object') {
+    const ingEntries = Object.entries(basicComp)
+      .filter(([, v]: [string, any]) => v?.isVisible !== false)
+      .sort(([, a]: [string, any], [, b]: [string, any]) => (a?.rank || 0) - (b?.rank || 0));
+
+    if (ingEntries.length > 0) {
+      const compositionStep: StepTreeNode = {
+        stepId: `composition_${productId}`,
+        title: 'Composition',
+        rank: -1,
+        minChoices: 0,
+        maxChoices: ingEntries.length,
+        children: []
+      };
+
+      for (const [ingId, ingMeta] of ingEntries as [string, any][]) {
+        const ingRef = data.items?.[ingId];
+        const ingName = ingRef
+          ? (ingRef.displayName?.dflt?.nameDef || ingRef.trads?.fr || ingRef.title || ingRef.name || `Item ${ingId}`)
+          : `Item ${ingId}`;
+
+        let ingImage: string | null = null;
+        if (ingRef?.img?.dflt?.img && ingRef.img.dflt.img !== 'https://beta-catalogue.etk360.com/no-pictures.svg') {
+          ingImage = ingRef.img.dflt.img;
+        } else if (ingRef?.img?.url) {
+          ingImage = ingRef.img.url;
+        }
+
+        compositionStep.children.push({
+          productId: ingId,
+          name: ingName,
+          price: 0,
+          image: ingImage,
+          modifierId: null,
+          steps: [],
+          isObligatory: ingMeta?.isObligatory === true
+        });
+      }
+
+      if (compositionStep.children.length > 0) {
+        node.steps.unshift(compositionStep);
+      }
+    }
+  }
+
   // 3 & 4. Déploiement Anti-boucle
   if (activeModifierId && !visitedModifierIds.has(activeModifierId)) {
       visitedModifierIds.add(activeModifierId);
@@ -108,13 +157,21 @@ export function buildProductTree(
                   if (sNode.ovr.maxChoices !== undefined) maxChoices = sNode.ovr.maxChoices;
                }
 
+               let stepImage: string | null = null;
+               if (stepInfos.img?.dflt?.img && stepInfos.img.dflt.img !== 'https://beta-catalogue.etk360.com/no-pictures.svg') {
+                  stepImage = stepInfos.img.dflt.img;
+               } else if (stepInfos.img?.url) {
+                  stepImage = stepInfos.img.url;
+               }
+
                const stepNode: StepTreeNode = {
                   stepId,
                   title,
                   rank: sNode.rank || 0,
                   minChoices,
                   maxChoices,
-                  children: []
+                  children: [],
+                  image: stepImage
                };
 
                // Les items peuvent être dans la surcharge du `modifier` ou dans la définition globale de la `step`
