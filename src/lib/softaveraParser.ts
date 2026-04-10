@@ -14,7 +14,7 @@ export interface ParsedStep {
   title: string;
   minChoices: number;
   maxChoices: number;
-  semanticType: 'TAILLE' | 'FRITES' | 'SAUCES' | 'BOISSON' | 'DESSERT' | 'EXTRAS' | 'UNKNOWN';
+  semanticType: 'TAILLE' | 'FRITES' | 'SAUCES' | 'BOISSON' | 'DESSERT' | 'EXTRAS' | 'OPTION_GLOBALE' | 'UNKNOWN';
   options: ParsedModifier[];
 }
 
@@ -112,6 +112,61 @@ function extractBasicCompStep(productId: string, itemObj: any, data: any): Parse
     }
   }
   return null;
+}
+
+/**
+ * Extrait les dimensions dynamiques (ex: Tailles) définies dans .opt du produit
+ * pour forcer leur sélection avant tout le reste du parcours.
+ */
+function extractGlobalOptionsStep(productId: string, itemObj: any, data: any): ParsedStep[] {
+  if (!itemObj.opt || Object.keys(itemObj.opt).length === 0) return [];
+  
+  const steps: ParsedStep[] = [];
+  
+  for (const dimId of Object.keys(itemObj.opt)) {
+     const dimDef = data.opt && data.opt[dimId];
+     if (!dimDef) continue;
+     
+     const allowedValues = itemObj.opt[dimId] as string[];
+     if (!Array.isArray(allowedValues) || allowedValues.length === 0) continue;
+     
+     const options: ParsedModifier[] = [];
+     for (const valId of allowedValues) {
+        const valDef = dimDef.values && dimDef.values[valId];
+        if (valDef) {
+           options.push({
+             id: valId,
+             name: valDef.title || valId,
+             priceDelta: 0, // MVP
+             image: null
+           });
+        }
+     }
+     
+     if (options.length > 0) {
+        options.sort((a, b) => {
+           const defA = dimDef.values[a.id];
+           const defB = dimDef.values[b.id];
+           return (defA?.rank || 0) - (defB?.rank || 0);
+        });
+
+        let cleanedTitle = dimDef.title || dimDef.displayName?.dflt?.nameDef || "Option";
+        // Nettoyage de "Taille _FANTA_000005" -> "Taille"
+        if (cleanedTitle.includes('_')) {
+           cleanedTitle = cleanedTitle.split('_')[0].trim();
+        }
+
+        steps.push({
+           id: dimId,
+           title: cleanedTitle,
+           minChoices: 1,
+           maxChoices: 1,
+           semanticType: 'OPTION_GLOBALE',
+           options: options
+        });
+     }
+  }
+  return steps;
 }
 
 /**
@@ -440,6 +495,14 @@ export function parseETK360Hierarchy(data: any): ParsedCategory[] {
           if (compStep) {
              productNode.steps.unshift(compStep);
           }
+
+          // Options globales isolées AVANT tout (Taille de la pizza, etc.)
+          const globalOptSteps = extractGlobalOptionsStep(iNode.id, itemObj, data);
+          if (globalOptSteps.length > 0) {
+             productNode.steps.unshift(...globalOptSteps);
+          }
+
+
 
           // Résolution de l'affichage à 0€ des Menus Composables (ex: menus basés sur des étapes payantes)
           if (productNode.priceTTC === 0 && productNode.steps.length > 0) {

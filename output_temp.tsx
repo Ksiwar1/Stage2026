@@ -10,7 +10,6 @@ export interface ParsedModifier {
   priceDelta: number;
   image: string | null;
   subSteps?: ParsedStep[];
-  isObligatory?: boolean;
 }
 
 export interface ParsedStep {
@@ -29,7 +28,6 @@ export interface ParsedProduct {
   image: string | null;
   description: string;
   steps: ParsedStep[];
-  modifierId?: string | null;
 }
 
 export interface ParsedCategory {
@@ -42,7 +40,7 @@ export interface ParsedCategory {
 export type AppStep = Omit<ParsedStep, 'semanticType'> & { semanticType: string };
 
 
-export default function KioskSimulator({ restaurantName, tree, themePalette = { primary: '#F39C12', secondary: '#1A237E', text: '#111827', onPrimary: 'white' }, catalogData }: { restaurantName: string, tree: ParsedCategory[], themePalette?: { primary: string, secondary: string, text: string, onPrimary: string }, catalogData?: any }) {
+export default function KioskSimulator({ restaurantName, tree, themeColor = '#F39C12', catalogData }: { restaurantName: string, tree: ParsedCategory[], themeColor?: string, catalogData?: any }) {
   const [activeCategoryId, setActiveCategoryId] = useState<string>(tree[0]?.id || "");
   const activeCategory = tree.find(c => c.id === activeCategoryId);
 
@@ -55,31 +53,10 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
   const [workflowStack, setWorkflowStack] = useState<{ node: ProductTreeNode; stepIndex: number }[]>([]);
   const [stepSelections, setStepSelections] = useState<Record<string, string[]>>({});
 
-  const activeWorkflow = workflowStack.length > 0 ? workflowStack[workflowStack.length - 1] : null;
-  const currentStepIndex = activeWorkflow ? activeWorkflow.stepIndex : 0;
+  const activeWorkflow = workflowStack[workflowStack.length - 1];
   const funnelSteps = activeWorkflow ? activeWorkflow.node.steps : [];
+  const currentStepIndex = activeWorkflow ? activeWorkflow.stepIndex : 0;
   const currentStep = funnelSteps[currentStepIndex];
-  const isGlobalOptionPhase = currentStep?.semanticType === 'OPTION_GLOBALE';
-
-  // Derive breadcrumb array from workflowStack
-  const breadcrumb = workflowStack.flatMap((level, index) => {
-    const steps = level.node.steps || [];
-    const elements: string[] = [];
-
-    // On affiche le produit de base uniquement à la racine
-    if (index === 0) {
-       elements.push(level.node.name);
-    }
-
-    // On affiche toutes les étapes traversées dans ce niveau, jusqu'à l'étape actuelle
-    for (let i = 0; i <= level.stepIndex; i++) {
-       if (steps[i] && steps[i].title) {
-          elements.push(steps[i].title);
-       }
-    }
-
-    return elements;
-  }).filter(Boolean);
 
   const setCurrentStepIndex = (newIndex: number | ((prev: number) => number)) => {
      setWorkflowStack(prev => {
@@ -110,36 +87,23 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
     });
   }, [workflowStack.length]);
 
-  // Fin du retour automatique (laissé à la discrétion de l'utilisateur)
-
-  // Helpers pour convertir les entités abstraites (ParsedProduct) issues de l'AST en ProductTreeNode consu par l'UI
-  const mapParsedStepToNode = (step: ParsedStep): StepTreeNode => {
-    return {
-      stepId: step.id,
-      title: step.title,
-      rank: 0,
-      minChoices: step.minChoices,
-      maxChoices: step.maxChoices,
-      semanticType: step.semanticType,
-      children: step.options.map(mapParsedProductToNode)
-    };
-  };
-
-  const mapParsedProductToNode = (item: ParsedProduct | ParsedModifier): ProductTreeNode => {
-    return {
-      productId: item.id,
-      name: item.name,
-      price: 'priceTTC' in item ? item.priceTTC : item.priceDelta,
-      image: item.image,
-      modifierId: 'modifierId' in item ? item.modifierId : null,
-      steps: ('steps' in item ? item.steps : item.subSteps || []).map(mapParsedStepToNode),
-      isObligatory: 'isObligatory' in item ? item.isObligatory : false
-    };
-  };
+  // Retour automatique au parent quand le sous-parcours est terminé
+  useEffect(() => {
+    if (workflowStack.length > 1 && funnelSteps.length > 0 && currentStepIndex >= funnelSteps.length) {
+      setWorkflowStack(prev => {
+        if (prev.length <= 1) return prev;
+        const newStack = prev.slice(0, -1);
+        const last = { ...newStack[newStack.length - 1] };
+        last.stepIndex = last.stepIndex + 1;
+        newStack[newStack.length - 1] = last;
+        return newStack;
+      });
+    }
+  }, [workflowStack.length, currentStepIndex, funnelSteps.length]);
 
   const startOrder = (product: ParsedProduct) => {
-    const rootTree = mapParsedProductToNode(product);
-    console.log(`\n=== 🌳 PARSED PRODUCT TREE POUR : ${product.name} ===`);
+    const rootTree = catalogData ? buildProductTree(product.id, catalogData) : null;
+    console.log(`\n=== 🌳 BUILD PRODUCT TREE POUR : ${product.name} ===`);
     console.dir(rootTree, { depth: null });
 
     // Produit simple (pas de parcours) → ajout direct au panier
@@ -192,14 +156,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
         // Si l'option a des sous-étapes, ouvrir son parcours
         if (optNode.steps && optNode.steps.length > 0) {
            Promise.resolve().then(() => {
-               setWorkflowStack(oldStack => {
-                  const currentTop = oldStack[oldStack.length - 1];
-                  // Anti-redondance (double-click ou React Strict mode anomaly)
-                  if (currentTop && currentTop.node.productId === optNode.productId) {
-                     return oldStack;
-                  }
-                  return [...oldStack, { node: optNode, stepIndex: 0 }];
-               });
+               setWorkflowStack(oldStack => [...oldStack, { node: optNode, stepIndex: 0 }]);
            });
         }
 
@@ -233,26 +190,8 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
 
   const goNextStep = () => {
     const valid = currentStep ? ((stepSelections[currentStep.stepId] || []).length >= getContextualMinChoices(currentStep)) : true;
-    if (valid) {
-       const nextIndex = currentStepIndex + 1;
-       if (nextIndex >= funnelSteps.length && workflowStack.length > 1) {
-          // Suppression du récapitulatif pour les sous-produits : on remonte directement au parent
-          setWorkflowStack(prev => {
-             const newStack = prev.slice(0, -1);
-             const last = { ...newStack[newStack.length - 1] };
-             // On s'assure qu'on n'avance que si le parent n'est pas déjà à la fin
-             // Mais si le retour automatique doit avancer le parent ? 
-             // Un sous-parcours fait partie d'une étape du parent, valider le sous-parcours ne signifie pas forcément valider l'étape du parent (qui peut nécessiter d'autres choix).
-             // On laisse l'utilisateur valider l'étape parente quand il le souhaite.
-             // On revient simplement à l'index actuel du parent !
-             return newStack;
-          });
-       } else {
-          setCurrentStepIndex(nextIndex);
-       }
-    } else {
-       alert("Veuillez faire les choix obligatoires pour continuer.");
-    }
+    if (valid) setCurrentStepIndex(c => c + 1);
+    else alert("Veuillez faire les choix obligatoires pour continuer.");
   };
 
   const confirmProduct = () => {
@@ -272,7 +211,6 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
   };
 
   return (
-    <div style={{ '--color-primary': themePalette.primary, '--color-secondary': themePalette.secondary, '--color-text': themePalette.text, '--color-on-primary': themePalette.onPrimary } as React.CSSProperties}>
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw', background: '#F5F5F0', fontFamily: 'sans-serif', overflow: 'hidden' }}>
       
       {/* TUNNEL MODAL */}
@@ -302,10 +240,8 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                
                <h2 style={{ margin: 0, fontSize: '1.6rem', textTransform: 'uppercase', fontWeight: 900, color: '#111827', marginBottom: '2.5rem', textAlign: 'center' }}>{activeWorkflow ? activeWorkflow.node.name : selectedProduct.name}</h2>
 
-               {!isGlobalOptionPhase && (
-                 <>
-                   {/* Step Icons Row */}
-                   <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', marginBottom: '2.5rem' }}>
+               {/* Step Icons Row */}
+               <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', marginBottom: '2.5rem' }}>
                  {funnelSteps.map((s, i) => {
                     const isComp = s.title.toLowerCase().includes('composition');
                     const stepImg = s.image || s.children[0]?.image || null;
@@ -314,11 +250,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                            <div style={{ width: '80px', height: '60px', background: 'transparent', border: isComp ? 'none' : '2px solid #4b5563', borderRadius: '8px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', position: 'relative', overflow: 'hidden' }}>
                               {isComp ? (
                                  <div style={{ width: '56px', height: '56px', background: '#4b5563', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                      <line x1="4" y1="6" x2="20" y2="6"></line>
-                                      <line x1="4" y1="12" x2="20" y2="12"></line>
-                                      <line x1="4" y1="18" x2="20" y2="18"></line>
-                                    </svg>
+                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                  </div>
                               ) : stepImg ? (
                                  <img src={stepImg} alt={s.title}
@@ -350,15 +282,15 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                         {/* Circle */}
                         <div style={{
                           width: '40px', height: '40px', borderRadius: '50%', 
-                          background: (isActive || isPast) ? '#111827' : 'white', 
-                          color: (isActive || isPast) ? 'white' : '#9ca3af',
-                          border: (isActive || isPast) ? '2px solid #111827' : '2px solid #d1d5db',
+                          background: (isActive || isPast || isComp) ? '#111827' : 'white', 
+                          color: (isActive || isPast || isComp) ? 'white' : '#9ca3af',
+                          border: (isActive || isPast || isComp) ? '2px solid #111827' : '2px solid #d1d5db',
                           display: 'flex', justifyContent: 'center', alignItems: 'center',
                           fontWeight: 'bold', fontSize: '1.2rem', zIndex: 2,
                           boxShadow: isActive ? '0 0 0 4px white, 0 0 0 8px rgba(79, 209, 197, 0.5)' : 'none'
                         }}>
-                          {isPast ? (
-                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                          {isComp ? (
+                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
                           ) : (
                              i + 1
                           )}
@@ -374,31 +306,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                     )
                  })}
                </div>
-                 </>
-               )}
             </div>
-
-            {/* Breadcrumb Section */}
-            {!isGlobalOptionPhase && currentStepIndex < funnelSteps.length && (
-              <div style={{ padding: '0.5rem 2rem', background: 'white', display: 'flex', gap: '0.5rem', alignItems: 'center', fontSize: '0.75rem', fontWeight: 700, color: '#6b7280', flexWrap: 'wrap', borderBottom: '1px solid #f3f4f6' }}>
-                 {breadcrumb.map((bcItem, idx) => {
-                    const isLast = idx === breadcrumb.length - 1;
-                    return (
-                       <React.Fragment key={idx}>
-                         {idx > 0 && <span style={{ opacity: 0.5 }}>/</span>}
-                         <span style={{
-                           background: isLast ? 'var(--color-primary)' : '#f3f4f6',
-                           color: isLast ? 'var(--color-on-primary)' : '#374151',
-                           padding: '4px 8px',
-                           borderRadius: '6px',
-                           textTransform: 'uppercase',
-                           letterSpacing: '0.5px'
-                         }}>{bcItem}</span>
-                       </React.Fragment>
-                    );
-                 })}
-              </div>
-            )}
 
             <div style={{ flex: 1, overflowY: 'auto', padding: '1rem 2rem', background: '#fff', position: 'relative' }}>
               
@@ -413,7 +321,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                      </h3>
                      { !currentStep.title.toLowerCase().includes('composition') && (
                        <p style={{ color: '#4b5563', margin: 0, fontWeight: 600 }}>
-                          {(stepSelections[currentStep.stepId] || []).length}/{currentStep.maxChoices} sélectionné{(stepSelections[currentStep.stepId] || []).length > 1 ? 's' : ''}
+                          ( Min {getContextualMinChoices(currentStep)} :Max {currentStep.maxChoices} )
                        </p>
                      )}
                   </div>
@@ -427,8 +335,8 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
 
                       // Composition : inclus = vert (défaut), retiré = rouge
                       const borderColor = isComp
-                        ? (isIncluded ? 'var(--color-primary)' : '#ef4444')
-                        : (isSelected ? 'var(--color-primary)' : '#e5e7eb');
+                        ? (isIncluded ? '#10b981' : '#ef4444')
+                        : (isSelected ? '#10b981' : '#e5e7eb');
 
                       return (
                         <div key={opt.productId}
@@ -445,10 +353,10 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                           }}
                         >
                            {/* Badge état top right */}
-                           <div style={{ position: 'absolute', top: '10px', right: '10px', width: '30px', height: '30px', borderRadius: '50%', color: 'var(--color-on-primary)', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1.1rem', fontWeight: 'bold',
+                           <div style={{ position: 'absolute', top: '10px', right: '10px', width: '30px', height: '30px', borderRadius: '50%', color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1.1rem', fontWeight: 'bold',
                              background: isComp
-                               ? (isLocked ? '#9ca3af' : isIncluded ? 'var(--color-primary)' : '#ef4444')
-                               : (isSelected ? 'var(--color-primary)' : 'var(--color-secondary)')
+                               ? (isLocked ? '#9ca3af' : isIncluded ? '#10b981' : '#ef4444')
+                               : (isSelected ? '#10b981' : '#00e5ba')
                            }}>
                              {isComp ? (isLocked ? '🔒' : isIncluded ? '✓' : '✕') : (isSelected ? '✓' : '+')}
                            </div>
@@ -473,7 +381,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                                color: isComp && !isIncluded ? '#9ca3af' : '#111827',
                                textDecoration: isComp && !isIncluded ? 'line-through' : 'none'
                              }}>{opt.name}</strong>
-                             {!isComp && opt.price ? <span style={{ color: 'var(--color-text)', fontWeight: 'bold', fontSize: '1.2rem' }}>+{(opt.price || 0).toFixed(2)} €</span> : null}
+                             {!isComp && opt.price ? <span style={{ color: '#10b981', fontWeight: 'bold', fontSize: '1.2rem' }}>+{(opt.price || 0).toFixed(2)} €</span> : null}
                            </div>
                         </div>
                       );
@@ -483,7 +391,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
               ) : (
                 // ---------------- RÉCAPITULATIF ---------------- 
                 <div style={{ textAlign: 'center', padding: '2rem 0' }}>
-                  <h2 style={{ fontSize: '2.5rem', color: 'var(--color-text)', marginTop: '1rem' }}>✨ RÉCAPITULATIF</h2>
+                  <h2 style={{ fontSize: '2.5rem', color: '#10b981', marginTop: '1rem' }}>✨ RÉCAPITULATIF</h2>
                   <div style={{ display: 'inline-block', textAlign: 'left', background: 'white', padding: '2rem', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', minWidth: '400px' }}>
                      <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.4rem' }}>{selectedProduct.name} - {selectedProduct.priceTTC.toFixed(2)}€</h3>
                      <ul style={{ paddingLeft: '1.5rem', color: '#4b5563', fontSize: '1.1rem' }}>
@@ -510,7 +418,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                         })()}
                      </ul>
                      <hr style={{ border: 'none', borderTop: '2px dashed #e5e7eb', margin: '2rem 0' }}/>
-                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.8rem', fontWeight: 900, color: 'var(--color-text)' }}>
+                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.8rem', fontWeight: 900, color: '#10b981' }}>
                         <span>TOTAL</span>
                         <span>{calculateCurrentProductTotal().toFixed(2)} €</span>
                      </div>
@@ -523,25 +431,19 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
             <div style={{ padding: '1.5rem 2rem', background: 'white', borderTop: '1px solid #f3f4f6', display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 10 }}>
               <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
                 <button
-                  onClick={() => { 
-                     if (currentStepIndex > 0) {
-                        setCurrentStepIndex(c => (c as number) - 1);
-                     } else if (workflowStack.length > 1) {
-                        setWorkflowStack(prev => prev.slice(0, -1));
-                     }
-                  }}
-                  style={{ visibility: (currentStepIndex > 0 || workflowStack.length > 1) ? 'visible' : 'hidden', background: '#f3f4f6', padding: '1rem 2rem', borderRadius: '8px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', color: '#4b5563' }}
+                  onClick={() => { if (currentStepIndex > 0) setCurrentStepIndex(c => c - 1); }}
+                  style={{ visibility: currentStepIndex > 0 ? 'visible' : 'hidden', background: '#f3f4f6', padding: '1rem 2rem', borderRadius: '8px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', color: '#4b5563' }}
                 >
                   ← Précédent
                 </button>
               </div>
 
               {currentStepIndex < funnelSteps.length ? (
-                <button onClick={goNextStep} style={{ background: 'var(--color-primary)', color: 'var(--color-on-primary)', padding: '1rem 3rem', borderRadius: '8px', border: 'none', fontSize: '1.2rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)' }}>
+                <button onClick={goNextStep} style={{ background: '#10b981', color: 'white', padding: '1rem 3rem', borderRadius: '8px', border: 'none', fontSize: '1.2rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 15px rgba(16, 185, 129, 0.4)' }}>
                   {getContextualMinChoices(currentStep) === 0 && (stepSelections[currentStep.stepId] || []).length === 0 ? "Passer cette étape" : "Suivant →"}
                 </button>
               ) : (
-                <button onClick={confirmProduct} style={{ background: 'var(--color-primary)', color: 'var(--color-on-primary)', padding: '1rem 3rem', borderRadius: '8px', border: 'none', fontSize: '1.2rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)' }}>
+                <button onClick={confirmProduct} style={{ background: '#10b981', color: 'white', padding: '1rem 3rem', borderRadius: '8px', border: 'none', fontSize: '1.2rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 15px rgba(16, 185, 129, 0.4)' }}>
                   {workflowStack.length > 1 ? "Terminer" : "Valider mon menu"}
                 </button>
               )}
@@ -553,10 +455,10 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
       {/* FIN TUNNEL */}
 
       {/* HEADER GLOBAL UNIFIÉ (Un seul rectangle sans démarcation) */}
-      <div style={{ height: '105px', display: 'flex', flexShrink: 0, background: 'var(--color-primary)', width: '100%', zIndex: 20 }}>
+      <div style={{ height: '105px', display: 'flex', flexShrink: 0, background: themeColor, width: '100%', zIndex: 20 }}>
         {/* Partie Gauche alignée avec la colonne Menu */}
         <div style={{ width: '25%', minWidth: '250px', maxWidth: '300px', display: 'flex', alignItems: 'center', padding: '0 2rem' }}>
-          <h2 style={{ margin: 0, fontSize: '1.7rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', textShadow: '0 2px 8px rgba(0,0,0,0.4)', color: 'var(--color-on-primary)' }}>Menu</h2>
+          <h2 style={{ margin: 0, fontSize: '1.7rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', textShadow: '0 2px 8px rgba(0,0,0,0.4)', color: 'white' }}>Menu</h2>
         </div>
         {/* Partie Droite alignée avec les articles */}
         <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 3rem' }}>
@@ -588,7 +490,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                   style={{
                     width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start',
                     padding: '1.2rem 1.5rem', border: 'none', borderBottom: '1px solid #f1f5f9',
-                    borderLeft: isActive ? '6px solid var(--color-primary)' : '6px solid transparent',
+                    borderLeft: isActive ? `6px solid ${themeColor}` : '6px solid transparent',
                     background: isActive ? '#fffbeb' : 'white',
                     color: isActive ? '#111827' : '#475569', cursor: 'pointer', transition: 'all 0.2s ease-in-out',
                   }}
@@ -631,10 +533,10 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                 </div>
 
                 <div style={{ textAlign: 'center', marginTop: '1.5rem', flexGrow: 1, display: 'flex', flexDirection: 'column', paddingBottom: '0.5rem' }}>
-                  <h3 style={{ margin: '0 0 0.8rem 0', fontSize: '1.25rem', fontWeight: 900, color: 'var(--color-text)', textTransform: 'uppercase', minHeight: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <h3 style={{ margin: '0 0 0.8rem 0', fontSize: '1.25rem', fontWeight: 900, color: '#1A237E', textTransform: 'uppercase', minHeight: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                      {p.name || 'Produit inconnu'}
                   </h3>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--color-text)' }}>{(p.priceTTC || 0).toFixed(2)} €</div>
+                  <div style={{ fontSize: '1.5rem', fontWeight: 900, color: '#1A237E' }}>{(p.priceTTC || 0).toFixed(2)} €</div>
                   {p.description && <p style={{ margin: '0.8rem 0 0 0', fontSize: '0.85rem', color: '#6b7280', lineHeight: 1.4, opacity: 0.8 }}>{p.description}</p>}
                 </div>
               </div>
@@ -645,7 +547,6 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
 
       {/* PIED DE PAGE */}
       {/* Footer supprimé à la demande de l'utilisateur */}
-    </div>
     </div>
   );
 }
