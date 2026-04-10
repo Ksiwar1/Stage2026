@@ -426,7 +426,7 @@ export function parseETK360Hierarchy(data: any): ParsedCategory[] {
   // Étape 1 : Parcourir les noeuds racines (Les Familles / Workflows)
   for (const wNodeId of rootWorkflowIds) {
       const wNode = data.workflow[wNodeId];
-      if (wNode.type !== 'categories') continue;
+      if (wNode.type && wNode.type !== 'categories') continue;
       
       const catObj = data.categories[wNodeId];
       if (!catObj) continue;
@@ -447,9 +447,9 @@ export function parseETK360Hierarchy(data: any): ParsedCategory[] {
           workflowRank: wNode.rank !== undefined ? wNode.rank : (catObj.rank || 0)
       };
 
-      // Étape 2 : Explorer le content pour trouver les Articles inclus
+      // Étape 2 : Explorer le content pour trouver les Articles inclus (Tolérance IA if type missing)
       const contentKeys = Object.keys(wNode.content || {});
-      const itemNodes = contentKeys.map(k => ({ id: k, ...wNode.content[k] })).filter(n => n.type === 'items');
+      const itemNodes = contentKeys.map(k => ({ id: k, ...wNode.content[k] })).filter(n => n.type === 'items' || !n.type);
       
       // Tri par le rank du workflow AST
       itemNodes.sort((a, b) => (a.rank || 0) - (b.rank || 0));

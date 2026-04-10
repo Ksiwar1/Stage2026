@@ -1,11 +1,29 @@
+'use client';
 import { VisualCardSummary } from "../lib/memory";
 import Link from 'next/link';
+import { useState } from 'react';
+import { deleteCarteAction } from '../app/actions/deleteCarteAction';
 
 export default function CarteVisuelle({ summary }: { summary: VisualCardSummary }) {
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleDelete = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!window.confirm(`Êtes-vous sûr de vouloir supprimer définitivement la carte : ${summary.nomFichier} ?`)) return;
+    
+    setIsDeleting(true);
+    const res = await deleteCarteAction(summary.nomFichier);
+    if (!res?.success) {
+      alert("Erreur lors de la suppression: " + res?.error);
+      setIsDeleting(false);
+    }
+  };
   if (summary.type === 'ERROR') {
     return (
-      <div style={{ background: '#fee2e2', border: '1px solid #ef4444', padding: '1.5rem', borderRadius: '12px' }}>
-        <h3 style={{ margin: 0, color: '#991b1b' }}>❌ {summary.nomFichier}</h3>
+      <div style={{ background: '#fee2e2', border: '1px solid #ef4444', padding: '1.5rem', borderRadius: '12px', position: 'relative', opacity: isDeleting ? 0.5 : 1 }}>
+        <button onClick={handleDelete} style={{ position: 'absolute', top: '0.5rem', right: '0.5rem', background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '1.2rem' }} title="Supprimer">🗑️</button>
+        <h3 style={{ margin: 0, color: '#991b1b', paddingRight: '2rem' }}>❌ {summary.nomFichier}</h3>
         <p style={{ margin: 0, color: '#b91c1c', fontSize: '0.9rem' }}>Fichier corrompu ou illisible.</p>
       </div>
     );
@@ -13,7 +31,7 @@ export default function CarteVisuelle({ summary }: { summary: VisualCardSummary 
 
   if (summary.type === 'ETK360_CATALOG') {
     return (
-      <Link href={`/borne/${summary.nomFichier.replace('.json', '')}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block', height: '100%', transition: 'transform 0.2s', ...({ '&:hover': { transform: 'translateY(-5px)' } } as any) }}>
+      <Link href={`/borne/${summary.nomFichier.replace('.json', '')}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block', height: '100%', transition: 'transform 0.2s', opacity: isDeleting ? 0.5 : 1, ...({ '&:hover': { transform: 'translateY(-5px)' } } as any) }}>
         <div style={{
           background: 'white',
           border: '1px solid #e5e7eb',
@@ -27,9 +45,17 @@ export default function CarteVisuelle({ summary }: { summary: VisualCardSummary 
           {/* En-tête de la carte avec Image Hero / Logo */}
           <div style={{ padding: '0', display: 'flex', flexDirection: 'column', alignItems: 'center', background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)', flexGrow: 1, position: 'relative' }}>
 
-            <div style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'rgba(0,0,0,0.05)', padding: '0.4rem 0.8rem', borderRadius: '99px', fontSize: '0.75rem', fontWeight: 600, color: '#475569' }}>
+            <div style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'rgba(0,0,0,0.05)', padding: '0.4rem 0.8rem', borderRadius: '99px', fontSize: '0.75rem', fontWeight: 600, color: '#475569', zIndex: 20 }}>
               {summary.itemCount} articles
             </div>
+
+            <button 
+              onClick={handleDelete}
+              style={{ position: 'absolute', top: '1rem', left: '1rem', background: 'white', border: '1px solid #ef4444', padding: '0.4rem', borderRadius: '50%', color: '#ef4444', cursor: 'pointer', zIndex: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 5px rgba(0,0,0,0.1)'}}
+              title="Supprimer la carte"
+            >
+              🗑️
+            </button>
 
             <div style={{
               width: '100%',
@@ -77,9 +103,12 @@ export default function CarteVisuelle({ summary }: { summary: VisualCardSummary 
       boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)',
       display: 'flex',
       flexDirection: 'column',
-      gap: '1rem'
+      gap: '1rem',
+      position: 'relative',
+      opacity: isDeleting ? 0.5 : 1
     }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <button onClick={handleDelete} style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '1.2rem' }} title="Supprimer">🗑️</button>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', paddingRight: '2rem' }}>
         <h3 style={{ margin: 0, fontSize: '1.1rem', color: '#111827', wordBreak: 'break-all' }}>📄 {summary.titre || summary.nomFichier}</h3>
         {summary.statut && (
           <span style={{

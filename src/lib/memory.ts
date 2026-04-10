@@ -28,37 +28,103 @@ export function getCartesMemory(): MemoryFile[] {
   });
 }
 
-// Fonction utilitaire clé en main pour fabriquer le "Prompt" de l'IA (Few-Shot Injection)
-// On limite la taille totale pour ne pas dépasser les limites des LLM
-const MAX_PROMPT_CHARS = 12000;
-
+// Désormais, on n'utilise PLUS le few-shot brutal avec slice() car il détruit le JSON.
+// On injecte un Master Schema parfait.
 export function getPromptSystemForAI(): string {
-  const memory = getCartesMemory();
+  return `Tu es l'architecte JSON expert du système de kiosque ETK360.
+Ta mission stricte est de générer une carte de restaurant hyper complète, interactive, et multicatégorie au format JSON pur. 
+Tu ne dois renvoyer QUE le JSON final (sans balises markdown autour du texte ni blabla).
 
-  // Trier par taille croissante pour privilégier les petits exemples
-  const sorted = [...memory].sort((a, b) => a.contenu.length - b.contenu.length);
+Voici le MASTER TEMPLATE de la structure ultime ETK360.
+Pour créer une carte valide interactif (ex: un vrai Kiosque McDonald's, O'Tacos, etc), tu dois TOUJOURS structurer ton JSON comme cet exemple. L'exemple présente un Menu (avec 3 étapes obligatoires de choix) et une Boisson individuelle avec des Tailles.
 
-  let memoryStrings = '';
-  let totalChars = 0;
-
-  for (const f of sorted) {
-    // Tronquer chaque fichier à 4000 caractères max
-    const truncated = f.contenu.length > 4000
-      ? f.contenu.slice(0, 4000) + '\n... [tronqué]'
-      : f.contenu;
-
-    if (totalChars + truncated.length > MAX_PROMPT_CHARS) break;
-
-    memoryStrings += `--- EXEMPLE: ${f.nomFichier} ---\n${truncated}\n--- FIN ---\n\n`;
-    totalChars += truncated.length;
+{
+  "workflow": {
+    "cat_menus": {
+      "type": "categories",
+      "rank": 1,
+      "content": {
+        "item_menu_burger": { "type": "items", "rank": 1 }
+      }
+    },
+    "cat_boissons": {
+      "type": "categories",
+      "rank": 2,
+      "content": {
+        "item_coca": { "type": "items", "rank": 1 }
+      }
+    }
+  },
+  "categories": {
+    "cat_menus": { "title": "Nos Menus", "isVisible": true, "img": { "dflt": { "img": "https://loremflickr.com/400/400/combo,meal" } } },
+    "cat_boissons": { "title": "Bvgs & Boissons", "isVisible": true, "img": { "dflt": { "img": "https://loremflickr.com/400/400/drink,beverage" } } }
+  },
+  "items": {
+    "item_menu_burger": {
+      "title": "Menu Classic Smash Burger",
+      "price": { "dflt": { "ttc": 12.50 } },
+      "modifier": "mod_menu_burger_steps",
+      "img": { "dflt": { "img": "https://loremflickr.com/400/400/burger,fries" } }
+    },
+    "item_coca": {
+      "title": "Coca-Cola Original",
+      "price": { "dflt": { "ttc": 2.50 } },
+      "opt": { "dim_taille_boisson": [ "val_33cl", "val_50cl" ] },
+      "img": { "dflt": { "img": "https://loremflickr.com/400/400/cola,drink" } }
+    },
+    "item_frites": { "title": "Frites Classiques", "price": { "dflt": { "ttc": 0 } }, "img": { "dflt": { "img": "https://loremflickr.com/400/400/fries" } } },
+    "item_potatoes": { "title": "Potatoes Croustillantes", "price": { "dflt": { "ttc": 0.50 } }, "img": { "dflt": { "img": "https://loremflickr.com/400/400/potatoes,fried" } } },
+    "item_sauce_mayo": { "title": "Mayonnaise", "price": { "dflt": { "ttc": 0 } }, "img": { "dflt": { "img": "https://loremflickr.com/400/400/mayo,sauce" } } },
+    "item_sauce_ket": { "title": "Ketchup", "price": { "dflt": { "ttc": 0 } }, "img": { "dflt": { "img": "https://loremflickr.com/400/400/ketchup,sauce" } } }
+  },
+  "opt": {
+    "dim_taille_boisson": {
+      "title": "Taille de votre boisson",
+      "values": {
+        "val_33cl": { "title": "Normale (33 cl)", "rank": 1 },
+        "val_50cl": { "title": "Maxi (50 cl)", "rank": 2, "priceDelta": 0.50 }
+      }
+    }
+  },
+  "modifier": {
+    "mod_menu_burger_steps": {
+      "steps": {
+        "step_choix_boisson": { "rank": 1 },
+        "step_choix_accompagnement": { "rank": 2 },
+        "step_choix_sauce": { "rank": 3 }
+      }
+    }
+  },
+  "steps": {
+    "step_choix_boisson": {
+      "title": "1. Choisissez votre boisson froide",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": { "item_coca": {} }
+    },
+    "step_choix_accompagnement": {
+      "title": "2. Votre accompagnement",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": { "item_frites": {}, "item_potatoes": {} }
+    },
+    "step_choix_sauce": {
+      "title": "3. Choisir vos sauces (Max 2)",
+      "minChoices": 0,
+      "maxChoices": 2,
+      "items": { "item_sauce_mayo": {}, "item_sauce_ket": {} }
+    }
   }
+}
 
-  return `Tu es un générateur de cartes expert pour une application Next.js.
-Voici des exemples de cartes existantes du projet (extraits) :
+RÈGLES VITALES :
+1. TON JSON DOIT CONSTRUIRE UN PARCOURS IMMERSIF COMPLET (Au minimum 2 catégories, au moins un produit "Menu" complexe avec son dictionnaire de "modifier" / "steps")! Ne fais pas juste un simple catalogue statique de produits isolés.
+2. Chaque étape (steps) doit pointer vers de multiples "items" valides s'il y a un choix à faire (Exemple: choix du parfum, de la viande, du type).
+3. TOUS les IDs (ex: \`item_XXX\`, \`cat_XXX\`) utilisés doivent obligatoirement exister à la racine (items, categories).
+4. S'il s'agit d'une option globale qui ne nécessite pas d'étapes multiples, utilise un objet "opt" lié au produit.
+5. INTELLIGENCE VISUELLE : Pour chaque objet généré dans "categories" et "items" tu DOIS obligatoirement ajouter la propriété \`img\` avec une URL d'image factice "loremflickr.com". Suis strictement cette convention : \`"img": { "dflt": { "img": "https://loremflickr.com/400/400/{motcle}" } }\` et remplace \`{motcle}\` par un ou deux mots-clés EN ANGLAIS hyper ciblés (ex: pizza, soda, fries, cake). Sans espace (uniquement virgule si deux mots). Ne laisse AUCUNE image vide.
 
-${memoryStrings}
-
-Instruction absolue : Quand on te demandera de générer une nouvelle carte, tu DOIS te baser exactement sur les structures ci-dessus. Ta réponse ne doit contenir QUE le JSON de la nouvelle carte demandée, sans aucune explication ou blabla supplémentaire.`;
+Génère la machinerie complète ETK360 la plus pertinente pour la demande suivante :`;
 }
 
 export interface VisualCardSummary {
