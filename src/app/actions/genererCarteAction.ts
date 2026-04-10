@@ -18,7 +18,7 @@ export async function genererUneNouvelleCarte(data: FormData) {
   const promptFinal = `${promptSysteme}\n\nL'utilisateur demande : "Génère-moi une nouvelle carte traitant du sujet suivant : ${sujetDemande}". Réponds UNIQUEMENT avec le JSON de la carte, strictement sans aucun texte avant ni après, et sans le formater dans un bloc markdown (pas de \`\`\`json). On doit pouvoir le parser directement via JSON.parse.`;
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     const result = await model.generateContent(promptFinal);
     let jsonResponse = result.response.text() || "";
 
