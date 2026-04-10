@@ -14,6 +14,7 @@ export interface StepTreeNode {
   rank: number;
   minChoices: number;
   maxChoices: number;
+  semanticType?: string;
   children: ProductTreeNode[];
   image?: string | null;
 }
@@ -142,9 +143,14 @@ export function buildProductTree(
       if (modObj && modObj.steps) {
          const stepKeys = Object.keys(modObj.steps);
          if (stepKeys.length > 0) {
-            const stepsToProcess = stepKeys.map(k => ({ stepId: k, ...modObj.steps[k] }));
-            stepsToProcess.sort((a, b) => (a.rank || 0) - (b.rank || 0));
-
+            const stepsToProcess = stepKeys.map(k => {
+               const stepInfos = data.opt?.[k] || data.steps?.[k] || {};
+               const localRank = modObj.steps[k]?.rank;
+               const extractedRank = localRank !== undefined ? localRank : (stepInfos.rank || 0);
+               return { stepId: k, computedRank: extractedRank, ...modObj.steps[k] };
+            });
+            // On rétablit le tri basé sur le "rank" (le rang configuré dans le catalogue) qui dicte le véritable ordre d'affichage (Exemple : TEST10 avant E1)
+            stepsToProcess.sort((a, b) => a.computedRank - b.computedRank);
             for (const sNode of stepsToProcess) {
                const stepId = sNode.stepId;
                const stepInfos = data.opt?.[stepId] || data.steps?.[stepId] || {};

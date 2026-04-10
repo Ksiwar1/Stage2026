@@ -6,6 +6,7 @@ export interface ParsedModifier {
   priceDelta: number;
   image: string | null;
   subSteps?: ParsedStep[];
+  isObligatory?: boolean;
 }
 
 export interface ParsedStep {
@@ -24,6 +25,7 @@ export interface ParsedProduct {
   image: string | null;
   description: string;
   steps: ParsedStep[];
+  modifierId?: string | null;
 }
 
 export interface ParsedCategory {
@@ -67,6 +69,49 @@ function extractBestName(obj: any, fallback: string = "Inconnu"): string {
   if (obj?.title) return obj.title;
   if (obj?.name) return obj.name;
   return fallback;
+}
+
+function extractBasicCompStep(productId: string, itemObj: any, data: any): ParsedStep | null {
+  const basicComp = itemObj?.basicComp;
+  if (basicComp && typeof basicComp === 'object') {
+    const ingEntries = Object.entries(basicComp)
+      .filter(([, v]: [string, any]) => v?.isVisible !== false)
+      .sort(([, a]: [string, any], [, b]: [string, any]) => (a?.rank || 0) - (b?.rank || 0));
+
+    if (ingEntries.length > 0) {
+      const compositionStep: ParsedStep = {
+        id: `composition_${productId}`,
+        title: 'Composition',
+        minChoices: 0,
+        maxChoices: ingEntries.length,
+        semanticType: 'UNKNOWN',
+        options: []
+      };
+
+      for (const [ingId, ingMeta] of ingEntries as [string, any][]) {
+        const ingRef = data.items?.[ingId];
+        const ingName = ingRef ? extractBestName(ingRef, `Item ${ingId}`).trim() : `Item ${ingId}`;
+
+        let ingImg = ingRef?.img?.dflt?.img || ingRef?.img?.url || null;
+        if (ingImg === "https://beta-catalogue.etk360.com/no-pictures.svg" || ingImg === "https://dev-catalogue.softavera.com/no-pictures.svg") {
+           ingImg = null;
+        }
+
+        compositionStep.options.push({
+          id: ingId,
+          name: ingName,
+          priceDelta: 0,
+          image: ingImg,
+          isObligatory: (ingMeta as any)?.isObligatory === true
+        });
+      }
+
+      if (compositionStep.options.length > 0) {
+        return compositionStep;
+      }
+    }
+  }
+  return null;
 }
 
 /**
@@ -130,7 +175,11 @@ function buildRecursiveSteps(modifierId: string, data: any, visitedModifierIds: 
      };
 
      // Étape 4 : Parcourir les items
-     const itemsMap = sNode.items;
+     let itemsMap = sNode.items;
+     if (!itemsMap || Object.keys(itemsMap).length === 0) {
+        itemsMap = stepInfos.stepItems || stepInfos.values || stepInfos.items || {};
+     }
+
      if (itemsMap && typeof itemsMap === 'object') {
         const itemKeys = Object.keys(itemsMap);
         for (const productId of itemKeys) {
@@ -158,6 +207,9 @@ function buildRecursiveSteps(modifierId: string, data: any, visitedModifierIds: 
               image: optImg,
            };
 
+           // Ajout de la Composition de base sur l'option, si existante
+           const compStep = extractBasicCompStep(productId, optProductRef, data);
+
            // Étape 5 : Récursion
            // itemsMap contient `productId` comme clé et `modifierId` ou null comme valeur
            const itemModifierId = typeof itemVal === 'string' ? itemVal : (itemVal && (itemVal as any).modifier ? (itemVal as any).modifier : null);
@@ -166,6 +218,11 @@ function buildRecursiveSteps(modifierId: string, data: any, visitedModifierIds: 
               // On passe un clone du Set visited pour l'anti-boucle sur cette branche
               const newVisited = new Set(visitedModifierIds);
               option.subSteps = buildRecursiveSteps(itemModifierId, data, newVisited);
+           }
+
+           if (compStep) {
+               if (!option.subSteps) option.subSteps = [];
+               option.subSteps.unshift(compStep);
            }
 
            step.options.push(option);
@@ -178,208 +235,244 @@ function buildRecursiveSteps(modifierId: string, data: any, visitedModifierIds: 
   return parsedSteps;
 }
 
+function parseLegacySteps(itemObj: any, data: any): ParsedStep[] {
+   const steps: ParsedStep[] = [];
+   for (const stepId of itemObj.steps) {
+      const stepObj = data.opt?.[stepId] || data.steps?.[stepId];
+      if (!stepObj) continue;
+      
+      const stepValues = stepObj.values || stepObj.items || stepObj.stepItems;
+      if (!stepValues || typeof stepValues !== 'object') continue;
+
+      const t = (extractBestName(stepObj, stepObj.title || "Choix")).toLowerCase();
+      let sType: any = 'UNKNOWN';
+      if (t.includes('taille') || t.includes('format')) sType = 'TAILLE';
+      else if (t.includes('frite') || t.includes('side')) sType = 'FRITES';
+      else if (t.includes('sauce') || t.includes('dip')) sType = 'SAUCES';
+      else if (t.includes('boisson') || t.includes('drink')) sType = 'BOISSON';
+      else if (t.includes('dessert') || t.includes('glace')) sType = 'DESSERT';
+
+      const stepNode: ParsedStep = {
+         id: stepId,
+         title: extractBestName(stepObj, stepObj.title || "Choix"),
+         minChoices: stepObj.minChoices || 0,
+         maxChoices: stepObj.maxChoices || 1,
+         semanticType: sType,
+         options: []
+      };
+
+      const valueKeys = Object.keys(stepValues);
+      const rawValues = valueKeys.map(k => ({ ...stepValues[k], id: k }));
+      rawValues.sort((a, b) => (a.rank || 0) - (b.rank || 0));
+
+      for (const valObj of rawValues) {
+         const optProductRef = data.items[valObj.id];
+         let optImg = optProductRef?.img?.dflt?.img || optProductRef?.img?.url || null;
+         if (optImg === "https://beta-catalogue.etk360.com/no-pictures.svg") optImg = null;
+
+         stepNode.options.push({
+            id: valObj.id,
+            name: optProductRef ? extractBestName(optProductRef, "Option").trim() : `Item ${valObj.id}`,
+            priceDelta: Number(valObj.priceStep) || 0,
+            image: optImg
+         });
+      }
+      steps.push(stepNode);
+   }
+   return steps;
+}
+
 /**
- * Parseur Séquentiel Hybride basé exclusivement sur la logique data.workflow (Récursif)
+ * Ancienne logique de parsing de secours si la racine workflow n'est pas trouvée (très anciens menus)
+ */
+function parseLegacyETK360Hierarchy(data: any): ParsedCategory[] {
+   const tree: ParsedCategory[] = [];
+   const rawCategories = Object.keys(data.categories)
+      .map(k => ({ ...data.categories[k], id: k, workflowRank: data.categories[k].rank || 0 }))
+      .filter(c => c.title && !(c.parent && c.parent !== "") && c.visibilityInfo?.isVisible !== false && c.isVisible !== false);
+   
+   rawCategories.sort((a, b) => a.workflowRank - b.workflowRank);
+   
+   const itemsByParent: Record<string, any[]> = {};
+   for (const [id, item] of Object.entries(data.items as Record<string, any>)) {
+      if (item.parent) {
+         if (!itemsByParent[item.parent]) itemsByParent[item.parent] = [];
+         itemsByParent[item.parent].push({ ...item, id });
+      }
+   }
+
+   for (const category of rawCategories) {
+      const parentItems = itemsByParent[category.id] || [];
+      if (parentItems.length === 0) continue;
+
+      parentItems.sort((a, b) => (a.rank || 0) - (b.rank || 0));
+
+      let catImg = category.img?.dflt?.img || category.img?.url || null;
+      if (catImg === "https://beta-catalogue.etk360.com/no-pictures.svg") catImg = null;
+
+      const categoryNode: ParsedCategory = {
+         id: category.id,
+         title: extractBestName(category, "Catégorie"),
+         image: catImg,
+         products: []
+      };
+
+      for (const item of parentItems) {
+         if (item.archive === true || item.isVisible === false) continue;
+         let desc = typeof item.description === 'string' ? item.description : (item.description?.dflt?.nameDef || item.desc || "");
+         if (desc === "[object Object]") desc = "";
+         let imageUrl = item.img?.dflt?.img || item.img?.url || null;
+         if (imageUrl === "https://beta-catalogue.etk360.com/no-pictures.svg") imageUrl = null;
+
+         const productNode: ParsedProduct = {
+            id: item.id,
+            name: extractBestName(item, "Produit").trim(),
+            priceTTC: extractBestPrice(item),
+            image: imageUrl,
+            description: desc,
+            steps: [],
+            modifierId: item.modifier || null
+         };
+
+         if (item.modifier) productNode.steps = buildRecursiveSteps(item.modifier, data);
+         else if (item.steps && Array.isArray(item.steps)) productNode.steps = parseLegacySteps(item, data);
+
+         const compStep = extractBasicCompStep(item.id, item, data);
+         if (compStep) {
+             productNode.steps.unshift(compStep);
+         }
+
+         categoryNode.products.push(productNode);
+      }
+
+      if (!categoryNode.image && categoryNode.products.length > 0) {
+         const firstImg = categoryNode.products.find(p => p.image);
+         if (firstImg) categoryNode.image = firstImg.image;
+      }
+      if (categoryNode.products.length > 0) tree.push(categoryNode);
+   }
+   return tree;
+}
+
+/**
+ * Parseur Séquentiel Pur basé exclusivement sur l'Arbre de Syntaxe Abstrait (data.workflow) !
  */
 export function parseETK360Hierarchy(data: any): ParsedCategory[] {
   if (!data || !data.categories || !data.items || typeof data.items !== 'object') return [];
 
+  // Fallback si pas de workflow du tout !
+  if (!data.workflow || Object.keys(data.workflow).length === 0) {
+      return parseLegacyETK360Hierarchy(data); 
+  }
+
   const tree: ParsedCategory[] = [];
+  const rootWorkflowIds = Object.keys(data.workflow);
 
-  // ÉTAPE 1 : Extraire UNIQUEMENT les catégories racines et visibles
-  const catKeys = Object.keys(data.categories);
-  let rawCategories = catKeys.map(k => {
-      // Injection du rang workflow pour les catégories
-      const wNode = data.workflow ? data.workflow[k] : null;
-      return { 
-         ...data.categories[k], 
-         id: k, 
-         workflowRank: wNode && wNode.rank !== undefined ? wNode.rank : (data.categories[k].rank || 0),
-         inWorkflow: !!wNode
-      };
-    })
-    .filter(c => {
-       if (!c || !c.title || (c.parent && c.parent !== "")) return false;
-       if (c.visibilityInfo && c.visibilityInfo.isVisible === false) return false;
-       if (c.isVisible === false) return false;
-       
-       // Si un workflow global existe, on ne garde que les catégories présentes dedans
-       if (data.workflow && !c.inWorkflow) return false;
-       
-       return true;
-    });
-    
-  // Tri exclusif selon le rang défini dans le workflow ETK360
-  rawCategories.sort((a, b) => (a.workflowRank || 0) - (b.workflowRank || 0));
-
-  // ÉTAPE 2 : Grouper les articles disponibles selon leur 'parent' ETK
-  const itemKeys = Object.keys(data.items);
-  const rawItems = itemKeys.map(k => ({ ...data.items[k], id: k }));
-  
-  const itemsByParent: Record<string, any[]> = {};
-  for (const item of rawItems) {
-    if (item.parent) {
-      if (!itemsByParent[item.parent]) itemsByParent[item.parent] = [];
-      itemsByParent[item.parent].push(item);
-    }
-  }
-
-  // ÉTAPE 3 : Reconstruction Finale par Catégorie Principale
-  for (const category of rawCategories) {
-    const parentItems = itemsByParent[category.id] || [];
-    if (parentItems.length === 0) continue;
-
-    const catTitle = extractBestName(category, category.title || `Catégorie`);
-    
-    let catImg = null;
-    if (category.img?.dflt?.img) {
-      catImg = category.img.dflt.img;
-      if (catImg === "https://beta-catalogue.etk360.com/no-pictures.svg") catImg = null;
-    } else if (category.img?.url) {
-      catImg = category.img.url;
-    }
-
-    const categoryNode: ParsedCategory = {
-      id: category.id,
-      title: catTitle,
-      image: catImg,
-      products: []
-    };
-
-    // ➡️ Filtre et Tri via le WORKFLOW pour forcer l'ordre des produits de la catégorie
-    const workflowNode = data.workflow?.[category.id];
-    let validItems = [];
-    
-    if (workflowNode && workflowNode.content) {
-       for (const item of parentItems) {
-          const wItem = workflowNode.content[item.id];
-          if (wItem !== undefined) {
-             item.workflowRank = wItem.rank !== undefined ? wItem.rank : (item.rank || 0);
-             item.workflowModifierId = wItem.modifier || null;
-             validItems.push(item);
-          }
-       }
-       validItems.sort((a, b) => a.workflowRank - b.workflowRank);
-    } else {
-       validItems = [...parentItems];
-       validItems.sort((a, b) => (a.rank || 0) - (b.rank || 0));
-    }
-
-    for (const item of validItems) {
-      // Ignorer les produits archivés ou explicitement invisibles globaux
-      if (item.archive === true) continue;
-      if (item.isVisible === false) continue;
-
-      let desc = "";
-      if (typeof item.description === 'string') desc = item.description;
-      else if (item.description?.dflt?.nameDef) desc = item.description.dflt.nameDef;
-      else if (item.desc) desc = item.desc;
-      if (desc === "[object Object]") desc = "";
-
-      let imageUrl = null;
-      if (item.img?.dflt?.img) {
-        imageUrl = item.img.dflt.img;
-        if (imageUrl === "https://beta-catalogue.etk360.com/no-pictures.svg") imageUrl = null;
-      } else if (item.img?.url) {
-        imageUrl = item.img.url;
-      }
-
-      const productNode: ParsedProduct = {
-        id: item.id,
-        name: extractBestName(item, "Produit sans nom").trim(),
-        priceTTC: extractBestPrice(item),
-        image: imageUrl,
-        description: desc,
-        steps: []
-      };
-
-      // INIT DU PARCOURS RECURSIF DES MODIFIERS
-      // Le produit possède éventuellement un workflowModifierId hérité de son noeud catégorie
-      let startModifierId = item.workflowModifierId;
-
-      // Sinon, il est défini au niveau du produit lui-même dans son objet "item" (base ETK360 native)
-      if (!startModifierId && item.modifier) {
-         startModifierId = item.modifier;
-      }
+  // Étape 1 : Parcourir les noeuds racines (Les Familles / Workflows)
+  for (const wNodeId of rootWorkflowIds) {
+      const wNode = data.workflow[wNodeId];
+      if (wNode.type !== 'categories') continue;
       
-      // Lancement de l'arbre complet avec protection anti-boucle
-      if (startModifierId) {
-         productNode.steps = buildRecursiveSteps(startModifierId, data);
-      } else if (item.steps && Array.isArray(item.steps) && item.steps.length > 0) {
-         // Fallback legacy (très rare désormais si la carte utilise le mode Modifier) : on lit le tableau standard non-récursif des anciennes cartes
-         for (const stepId of item.steps) {
-            const stepObj = data.opt?.[stepId] || data.steps?.[stepId];
-            if (!stepObj) continue;
-            
-            const stepValues = stepObj.values || stepObj.items || stepObj.stepItems;
-            if (!stepValues || typeof stepValues !== 'object') continue;
+      const catObj = data.categories[wNodeId];
+      if (!catObj) continue;
+      
+      // Filtres de visibilité
+      if (catObj.archive === true || catObj.isVisible === false) continue;
+      if (catObj.visibilityInfo?.isVisible === false) continue;
 
-            const t = (extractBestName(stepObj, stepObj.title || "Choix")).toLowerCase();
-            let sType: any = 'UNKNOWN';
-            if (t.includes('taille') || t.includes('format')) sType = 'TAILLE';
-            else if (t.includes('frite') || t.includes('side')) sType = 'FRITES';
-            else if (t.includes('sauce') || t.includes('dip')) sType = 'SAUCES';
-            else if (t.includes('boisson') || t.includes('drink')) sType = 'BOISSON';
-            else if (t.includes('dessert') || t.includes('glace')) sType = 'DESSERT';
+      let title = extractBestName(catObj, catObj.title || "Catégorie");
+      let image = catObj.img?.dflt?.img || catObj.img?.url || null;
+      if (image === "https://beta-catalogue.etk360.com/no-pictures.svg") image = null;
 
-            const stepNode: ParsedStep = {
-               id: stepId,
-               title: extractBestName(stepObj, stepObj.title || "Choix"),
-               minChoices: stepObj.minChoices || 0,
-               maxChoices: stepObj.maxChoices || 1,
-               semanticType: sType,
-               options: []
-            };
+      const categoryNode: ParsedCategory = {
+          id: wNodeId,
+          title,
+          image,
+          products: [],
+          workflowRank: wNode.rank !== undefined ? wNode.rank : (catObj.rank || 0)
+      };
 
-            const valueKeys = Object.keys(stepValues);
-            const rawValues = valueKeys.map(k => ({ ...stepValues[k], id: k }));
-            rawValues.sort((a, b) => (a.rank || 0) - (b.rank || 0));
+      // Étape 2 : Explorer le content pour trouver les Articles inclus
+      const contentKeys = Object.keys(wNode.content || {});
+      const itemNodes = contentKeys.map(k => ({ id: k, ...wNode.content[k] })).filter(n => n.type === 'items');
+      
+      // Tri par le rank du workflow AST
+      itemNodes.sort((a, b) => (a.rank || 0) - (b.rank || 0));
 
-            for (const valObj of rawValues) {
-               const optProductRef = data.items[valObj.id];
-               let optImg = optProductRef?.img?.dflt?.img || optProductRef?.img?.url || null;
-               if (optImg === "https://beta-catalogue.etk360.com/no-pictures.svg") optImg = null;
+      for (const iNode of itemNodes) {
+          const itemObj = data.items[iNode.id];
+          if (!itemObj) continue;
+          if (itemObj.archive === true || itemObj.isVisible === false) continue;
 
-               stepNode.options.push({
-                  id: valObj.id,
-                  name: optProductRef ? extractBestName(optProductRef, "Option").trim() : `Item ${valObj.id}`,
-                  priceDelta: Number(valObj.priceStep) || 0,
-                  image: optImg
-               });
-            }
-            productNode.steps.push(stepNode);
-         }
+          let desc = "";
+          if (typeof itemObj.description === 'string') desc = itemObj.description;
+          else if (itemObj.description?.dflt?.nameDef) desc = itemObj.description.dflt.nameDef;
+          else if (itemObj.desc) desc = itemObj.desc;
+          if (desc === "[object Object]") desc = "";
+
+          let imgUrl = itemObj.img?.dflt?.img || itemObj.img?.url || null;
+          if (imgUrl === "https://beta-catalogue.etk360.com/no-pictures.svg") imgUrl = null;
+
+          // Étape 3 : S'enfoncer dans le content de l'Article pour extraire le sous-parcours (Le Modifier) !
+          const itemContentKeys = Object.keys(iNode.content || {});
+          const modNodes = itemContentKeys.map(k => ({ id: k, ...iNode.content[k] })).filter(n => n.type === 'modifier');
+          
+          let startModifierId = modNodes.length > 0 ? modNodes[0].id : itemObj.modifier;
+
+          const productNode: ParsedProduct = {
+              id: iNode.id,
+              name: extractBestName(itemObj, "Produit sans nom").trim(),
+              priceTTC: extractBestPrice(itemObj),
+              image: imgUrl,
+              description: desc,
+              steps: [],
+              modifierId: startModifierId || null,
+          };
+
+          // Lancement récursif pour les options 
+          if (startModifierId) {
+             productNode.steps = buildRecursiveSteps(startModifierId, data);
+          } else if (itemObj.steps && Array.isArray(itemObj.steps) && itemObj.steps.length > 0) {
+             productNode.steps = parseLegacySteps(itemObj, data);
+          }
+
+          const compStep = extractBasicCompStep(iNode.id, itemObj, data);
+          if (compStep) {
+             productNode.steps.unshift(compStep);
+          }
+
+          // Résolution de l'affichage à 0€ des Menus Composables (ex: menus basés sur des étapes payantes)
+          if (productNode.priceTTC === 0 && productNode.steps.length > 0) {
+             let startingPrice = 0;
+             for (const step of productNode.steps) {
+                if (step.minChoices > 0 && step.options.length > 0) {
+                   const minPriceDelta = Math.min(...step.options.map(o => o.priceDelta));
+                   if (minPriceDelta > 0) {
+                      startingPrice += (minPriceDelta * step.minChoices);
+                   }
+                }
+             }
+             if (startingPrice > 0) {
+                productNode.priceTTC = startingPrice;
+             }
+          }
+
+          categoryNode.products.push(productNode);
       }
 
-      // Résolution de l'affichage à 0€ des Menus Composables (ex: menus basés sur des étapes payantes)
-      if (productNode.priceTTC === 0 && productNode.steps.length > 0) {
-         let startingPrice = 0;
-         for (const step of productNode.steps) {
-            if (step.minChoices > 0 && step.options.length > 0) {
-               const minPriceDelta = Math.min(...step.options.map(o => o.priceDelta));
-               if (minPriceDelta > 0) {
-                  startingPrice += (minPriceDelta * step.minChoices);
-               }
-            }
-         }
-         if (startingPrice > 0) {
-            productNode.priceTTC = startingPrice;
-         }
+      if (!categoryNode.image && categoryNode.products.length > 0) {
+         const firstImgProduct = categoryNode.products.find(p => p.image);
+         if (firstImgProduct) categoryNode.image = firstImgProduct.image;
       }
 
-      categoryNode.products.push(productNode);
-    }
-
-    if (!categoryNode.image && categoryNode.products.length > 0) {
-      const firstImgProduct = categoryNode.products.find(p => p.image);
-      if (firstImgProduct) categoryNode.image = firstImgProduct.image;
-    }
-
-    if (categoryNode.products.length > 0) {
-      tree.push(categoryNode);
-    }
+      if (categoryNode.products.length > 0) {
+         tree.push(categoryNode);
+      }
   }
 
+  // Tri final des catégories par leur rang workflow
+  tree.sort((a, b) => (a.workflowRank || 0) - (b.workflowRank || 0));
+  
   return tree;
 }
 
