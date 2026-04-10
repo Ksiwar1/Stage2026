@@ -1,11 +1,11 @@
 'use server';
 
 import { getPromptSystemForAI } from "../../lib/memory";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import Groq from "groq-sdk";
 import fs from "fs";
 import path from "path";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || "" });
 
 export async function genererUneNouvelleCarte(data: FormData) {
   const sujetDemande = data.get("sujet") as string;
@@ -18,11 +18,20 @@ export async function genererUneNouvelleCarte(data: FormData) {
   const promptFinal = `${promptSysteme}\n\nL'utilisateur demande : "Génère-moi une nouvelle carte traitant du sujet suivant : ${sujetDemande}". Réponds UNIQUEMENT avec le JSON de la carte, strictement sans aucun texte avant ni après, et sans le formater dans un bloc markdown (pas de \`\`\`json). On doit pouvoir le parser directement via JSON.parse.`;
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    const result = await model.generateContent(promptFinal);
-    let jsonResponse = result.response.text() || "";
+    const chatCompletion = await groq.chat.completions.create({
+      messages: [
+        { role: "system", content: "Tu réponds UNIQUEMENT en JSON valide, sans texte ni markdown autour." },
+        { role: "user", content: promptFinal },
+      ],
+      model: "llama-3.3-70b-versatile",
+      temperature: 0.7,
+      max_tokens: 8000,
+      response_format: { type: "json_object" },
+    });
 
-    // Nettoyage agressif pour assurer le parse JSON et enlever les codes markdown si l'IA est bavarde
+    let jsonResponse = chatCompletion.choices[0]?.message?.content || "";
+
+    // Nettoyage au cas où
     jsonResponse = jsonResponse.replace(/```json/gi, "").replace(/```/g, "").trim();
 
     // Vérifier la syntaxe
@@ -41,7 +50,7 @@ export async function genererUneNouvelleCarte(data: FormData) {
     return JSON.stringify({ success: true, json: jsonResponse, savedPath: null });
 
   } catch (error: any) {
-    console.error("Erreur Gemini Génération:", error);
-    return JSON.stringify({ success: false, error: "Erreur Gemini IA : " + error.message });
+    console.error("Erreur Groq Génération:", error);
+    return JSON.stringify({ success: false, error: "Erreur Groq IA : " + error.message });
   }
 }

@@ -29,16 +29,36 @@ export function getCartesMemory(): MemoryFile[] {
 }
 
 // Fonction utilitaire clé en main pour fabriquer le "Prompt" de l'IA (Few-Shot Injection)
+// On limite la taille totale pour ne pas dépasser les limites des LLM
+const MAX_PROMPT_CHARS = 12000;
+
 export function getPromptSystemForAI(): string {
   const memory = getCartesMemory();
-  const memoryStrings = memory.map(f => `--- DÉBUT FICHIER: ${f.nomFichier} ---\n${f.contenu}\n--- FIN FICHIER ---`).join('\n\n');
+
+  // Trier par taille croissante pour privilégier les petits exemples
+  const sorted = [...memory].sort((a, b) => a.contenu.length - b.contenu.length);
+
+  let memoryStrings = '';
+  let totalChars = 0;
+
+  for (const f of sorted) {
+    // Tronquer chaque fichier à 4000 caractères max
+    const truncated = f.contenu.length > 4000
+      ? f.contenu.slice(0, 4000) + '\n... [tronqué]'
+      : f.contenu;
+
+    if (totalChars + truncated.length > MAX_PROMPT_CHARS) break;
+
+    memoryStrings += `--- EXEMPLE: ${f.nomFichier} ---\n${truncated}\n--- FIN ---\n\n`;
+    totalChars += truncated.length;
+  }
 
   return `Tu es un générateur de cartes expert pour une application Next.js.
-Voici la base de données (mémoire intégrée) des cartes existantes du projet :
+Voici des exemples de cartes existantes du projet (extraits) :
 
 ${memoryStrings}
 
-Instruction absolue : Quand on te demandera de générer une nouvelle carte, tu DOIS te baser exactement sur les structures ci-dessus. Ta réponse ne doit contenir QUE le code (le fichier JS équivalent) de la nouvelle carte demandée, sans aucune explication ou blabla supplémentaire.`;
+Instruction absolue : Quand on te demandera de générer une nouvelle carte, tu DOIS te baser exactement sur les structures ci-dessus. Ta réponse ne doit contenir QUE le JSON de la nouvelle carte demandée, sans aucune explication ou blabla supplémentaire.`;
 }
 
 export interface VisualCardSummary {
