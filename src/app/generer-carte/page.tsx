@@ -7,10 +7,17 @@ import { genererUneNouvelleCarte } from "../actions/genererCarteAction";
 import KioskSimulator from "../../components/KioskSimulator";
 import { parseETK360Hierarchy } from "../../lib/softaveraParser";
 
+const AI_PROVIDERS = [
+  { value: "groq", label: "Groq (Llama 3.3 70B)", icon: "🟢", tag: "Gratuit" },
+  { value: "gemini", label: "Gemini 2.0 Flash", icon: "🔵", tag: "Gratuit" },
+  { value: "claude", label: "Claude Sonnet", icon: "🟠", tag: "Payant" },
+];
+
 export default function GenererCarte() {
   const [resultat, setResultat] = useState<{ success: boolean; json?: string; savedPath?: string | null; error?: string } | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
-  
+  const [selectedAI, setSelectedAI] = useState("groq");
+
   // States Modal Visualisation
   const [isVisualizing, setIsVisualizing] = useState<boolean>(false);
   const [parsedTree, setParsedTree] = useState<any[]>([]);
@@ -70,15 +77,54 @@ export default function GenererCarte() {
       <div className={styles.hero}>
         <h1 className={styles.title}>Générateur de cartes</h1>
         <p className={styles.description}>
-          L'Intelligence Artificielle de Google (Gemini) est connectée à vos cartes. Tapez un sujet et laissez la magie opérer.
+          L'Intelligence Artificielle est connectée à vos cartes. Tapez un sujet et laissez la magie opérer.
         </p>
-        
+
+        {/* Sélecteur AI Provider */}
+        <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
+          {AI_PROVIDERS.map((ai) => (
+            <button
+              key={ai.value}
+              type="button"
+              onClick={() => setSelectedAI(ai.value)}
+              style={{
+                padding: '0.6rem 1.2rem',
+                borderRadius: '999px',
+                border: selectedAI === ai.value ? '2px solid #4f46e5' : '2px solid #e5e7eb',
+                background: selectedAI === ai.value ? '#eef2ff' : '#ffffff',
+                color: selectedAI === ai.value ? '#4f46e5' : '#6b7280',
+                fontWeight: selectedAI === ai.value ? 700 : 500,
+                cursor: 'pointer',
+                fontSize: '0.9rem',
+                transition: 'all 0.2s ease',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+              }}
+            >
+              <span>{ai.icon}</span>
+              <span>{ai.label}</span>
+              <span style={{
+                fontSize: '0.7rem',
+                padding: '0.15rem 0.4rem',
+                borderRadius: '999px',
+                background: ai.tag === "Gratuit" ? '#dcfce7' : '#fef3c7',
+                color: ai.tag === "Gratuit" ? '#166534' : '#92400e',
+                fontWeight: 600,
+              }}>
+                {ai.tag}
+              </span>
+            </button>
+          ))}
+        </div>
+
         <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '1rem', flexDirection: 'column', width: '100%', maxWidth: '450px', margin: '0 auto' }}>
-          <input 
-            type="text" 
-            name="sujet" 
-            placeholder="Ex : Carte de fidélité pour fast-food..." 
-            required 
+          <input type="hidden" name="ai_type" value={selectedAI} />
+          <input
+            type="text"
+            name="sujet"
+            placeholder="Ex : Carte de fidélité pour fast-food..."
+            required
             style={{ padding: '1.2rem', borderRadius: '12px', border: '1px solid #d1d5db', fontSize: '1.05rem', background: '#ffffff', color: '#111827', boxShadow: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.03)' }}
           />
 
@@ -88,7 +134,7 @@ export default function GenererCarte() {
           </label>
 
           <button type="submit" disabled={isGenerating} className={styles.button_primary} style={{ opacity: isGenerating ? 0.7 : 1 }}>
-            {isGenerating ? "✨ Gemini réfléchit..." : "🌟 Générer par IA"}
+            {isGenerating ? `${AI_PROVIDERS.find(a => a.value === selectedAI)?.icon} ${AI_PROVIDERS.find(a => a.value === selectedAI)?.label} réfléchit...` : "🌟 Générer par IA"}
           </button>
         </form>
 
