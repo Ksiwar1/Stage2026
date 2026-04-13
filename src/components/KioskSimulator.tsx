@@ -274,45 +274,91 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
 
   if (!diningOption) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: '100%', background: themePalette.primary, fontFamily: 'sans-serif' }}>
-        <div style={{ width: '100%', maxWidth: '420px', height: '90%', maxHeight: '700px', background: 'white', borderRadius: '12px', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '3rem 2rem', position: 'relative', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)' }}>
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100%', 
+        width: '100%', 
+        background: `radial-gradient(circle at top left, ${themePalette.secondary} 0%, ${themePalette.primary} 100%)`, 
+        fontFamily: 'sans-serif',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        <div style={{ position: 'absolute', top: '-10%', right: '-5%', width: '40vw', height: '40vw', background: 'white', opacity: 0.1, borderRadius: '50%', filter: 'blur(100px)' }} />
+        <div style={{ position: 'absolute', bottom: '-15%', left: '-10%', width: '50vw', height: '50vw', background: themePalette.secondary, opacity: 0.4, borderRadius: '50%', filter: 'blur(120px)' }} />
+
+        <div style={{ 
+          width: '90%', 
+          maxWidth: '550px', 
+          background: 'rgba(255, 255, 255, 0.95)', 
+          backdropFilter: 'blur(24px)',
+          WebkitBackdropFilter: 'blur(24px)',
+          borderRadius: '24px', 
+          display: 'flex', 
+          flexDirection: 'column', 
+          alignItems: 'center', 
+          padding: '4rem 2.5rem', 
+          position: 'relative', 
+          boxShadow: '0 30px 60px -12px rgba(0, 0, 0, 0.3), border: 1px solid rgba(255,255,255,0.5)',
+          zIndex: 10
+        }}>
           
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <h1 style={{ fontWeight: 900, fontSize: '1.8rem', margin: '0 0 0.2rem 0', color: themePalette.primary, letterSpacing: '0.5px' }}>{restaurantName.toUpperCase()}</h1>
-            <p style={{ margin: 0, fontStyle: 'italic', fontSize: '1.1rem', color: themePalette.text, fontFamily: 'cursive' }}>Bienvenue</p>
+            <h1 style={{ fontWeight: 900, fontSize: '2.4rem', margin: '0 0 0.5rem 0', color: themePalette.secondary, letterSpacing: '-0.5px' }}>{restaurantName.toUpperCase()}</h1>
+            <p style={{ margin: 0, fontSize: '1.2rem', color: '#64748b', fontWeight: 500 }}>Faites votre choix pour commencer</p>
           </div>
 
-          <h2 style={{ fontSize: '1.3rem', fontWeight: 500, color: themePalette.text, marginBottom: '3rem' }}>Commander ici</h2>
-
-          <div style={{ display: 'flex', gap: '1.5rem', width: '100%', justifyContent: 'center' }}>
-            <button 
+          <div style={{ display: 'flex', gap: '2rem', width: '100%', justifyContent: 'center', marginBottom: '3rem' }}>
+            <div 
               onClick={() => setDiningOption('sur_place')}
-              style={{ flex: 1, height: '140px', background: '#fafafa', border: `2px solid ${themePalette.primary}`, borderRadius: '12px', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.1s', padding: '1rem', color: themePalette.primary }}>
-                <span style={{ fontSize: '3rem', marginBottom: '1rem' }}>🍽️</span> 
-                <span style={{ fontSize: '1rem', fontWeight: 700 }}>Sur place</span>
-            </button>
-            <button 
+              onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-4px)'}
+              onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+              style={{ 
+                flex: 1, 
+                height: '180px', 
+                background: '#ffffff', 
+                borderRadius: '20px', 
+                cursor: 'pointer', 
+                display: 'flex', 
+                flexDirection: 'column', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                transition: 'all 0.2s', 
+                padding: '1rem', 
+                color: themePalette.secondary,
+                boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)'
+              }}>
+                <span style={{ fontSize: '4rem', marginBottom: '1rem' }}>🍽️</span> 
+                <span style={{ fontSize: '1.2rem', fontWeight: 800 }}>SUR PLACE</span>
+            </div>
+            <div 
               onClick={() => setDiningOption('emporter')}
-              style={{ flex: 1, height: '140px', background: '#fafafa', border: `2px solid ${themePalette.primary}`, borderRadius: '12px', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.1s', padding: '1rem', color: themePalette.primary }}>
-                <span style={{ fontSize: '3rem', marginBottom: '1rem' }}>🛍️</span>
-                <span style={{ fontSize: '1rem', fontWeight: 700 }}>Emporter</span>
-            </button>
-          </div>
-
-          <div style={{ margin: 'auto 0 2rem 0', width: '100%' }}>
-            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '2.5rem' }}>
-              <button style={{ flex: 1, padding: '0.6rem', background: 'white', color: themePalette.text, border: '1px solid #d1d5db', borderRadius: '4px', cursor: 'pointer', fontSize: '0.9rem' }}>Abandonner</button>
-              <button style={{ flex: 1, padding: '0.6rem', background: '#f3f4f6', color: themePalette.text, border: '1px solid #d1d5db', borderRadius: '4px', cursor: 'pointer', fontSize: '0.9rem' }}>Retour</button>
+              onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-4px)'}
+              onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+              style={{ 
+                flex: 1, 
+                height: '180px', 
+                background: '#ffffff', 
+                borderRadius: '20px', 
+                cursor: 'pointer', 
+                display: 'flex', 
+                flexDirection: 'column', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                transition: 'all 0.2s', 
+                padding: '1rem', 
+                color: themePalette.secondary,
+                boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)'
+              }}>
+                <span style={{ fontSize: '4rem', marginBottom: '1rem' }}>🛍️</span>
+                <span style={{ fontSize: '1.2rem', fontWeight: 800 }}>À EMPORTER</span>
             </div>
-            
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', fontSize: '0.65rem', fontWeight: 700, color: themePalette.text }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer' }}><span style={{ fontSize: '1.2rem'}}>🇬🇧</span> English</div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer' }}><span style={{ fontSize: '1.2rem'}}>🇫🇷</span> French</div>
-            </div>
           </div>
-
-          <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', color: themePalette.text, cursor: 'pointer', fontSize: '1.2rem', opacity: 0.5 }}>
-             💡
+          
+          <div style={{ opacity: 0.6, fontSize: '0.9rem', color: '#64748b', display: 'flex', gap: '1.5rem' }}>
+             <span style={{ cursor: 'pointer', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.4rem' }}><span style={{ fontSize: '1.2rem'}}>🇬🇧</span> English</span>
+             <span style={{ cursor: 'pointer', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.4rem', color: themePalette.primary }}><span style={{ fontSize: '1.2rem'}}>🇫🇷</span> French</span>
           </div>
         </div>
       </div>

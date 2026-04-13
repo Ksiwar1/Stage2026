@@ -23,11 +23,13 @@ export default function GenererCarte() {
   const [parsedTree, setParsedTree] = useState<any[]>([]);
   const [rawData, setRawData] = useState<any>(null);
   const [libraryCards, setLibraryCards] = useState<string[]>([]);
+  const [submittedRestaurantName, setSubmittedRestaurantName] = useState<string>("RESTAURANT IA");
 
   // States Wizard Assistant
   const [activeTab, setActiveTab] = useState<"libre" | "wizard">("libre");
   const [wizardStep, setWizardStep] = useState(1);
   const [wizardData, setWizardData] = useState({
+    restaurantName: "",
     theme: "",
     typeLabel: "",
     categories: [] as string[],
@@ -49,12 +51,15 @@ export default function GenererCarte() {
       
       if (activeTab === "wizard") {
         const compiledSubject = `Je veux un vrai restaurant de type ${wizardData.typeLabel}. Catégories requises : ${wizardData.categories.join(", ")}. 
-Format de vente : ${wizardData.structure === "menus" ? "Créer absolument des Formules Menus complexes avec des étapes de choix obligatoires. Règle absolue pour l'ordre des steps (utiliser le 'rank'): 1. Viande/Base, 2. Sauces, 3. Frites/Accompagnement, 4. Boisson, 5. Dessert. ATTENTION : Tu dois obligatoirement Lier et Déclarer TOUS ces steps à l'intérieur du bloc 'steps' de ton 'modifier' de Menu, sinon le client n'aura pas le droit de choisir sa boisson !" : "Uniquement des produits simples en vente directe, sans format menu."} 
+Format de vente : ${wizardData.structure === "menus" ? "Créer absolument des Formules Menus complexes avec des étapes de choix obligatoires. Règle absolue pour l'ordre des steps (utiliser le 'rank'): 1. Viande/Base, 2. Sauces, 3. Frites/Accompagnement, 4. Boisson, 5. Dessert. ATTENTION : Garde bien la DÉFINITION du contenu des 'steps' (avec leurs 'items' et 'minChoices') EXCLUSIVEMENT à la racine du JSON. Dans le 'modifier', tu fais juste le lien avec le 'rank'." : "Uniquement des produits simples en vente directe, sans format menu."} 
 Options à inclure globalement : ${wizardData.options.join(", ")}. 
 ATTENTION : Génère un large choix (ex: 3 à 4 produits différents par catégorie, plusieurs choix de viandes, plusieurs boissons). N'oublie pas de définir tous tes items dans le dictionnaire "items".`;
         formData.set("sujet", compiledSubject);
         formData.set("sourceInspiration", wizardData.theme);
+        if (wizardData.restaurantName) formData.set("restaurantName", wizardData.restaurantName);
       }
+
+      setSubmittedRestaurantName((formData.get("restaurantName") as string) || "RESTAURANT IA");
 
       const codeGenereStr = await genererUneNouvelleCarte(formData);
       const data = JSON.parse(codeGenereStr);
@@ -193,6 +198,13 @@ ATTENTION : Génère un large choix (ex: 3 à 4 produits différents par catégo
               <p style={{ textAlign: 'center', margin: '0.5rem 0', fontWeight: 700, color: '#64748b' }}>OU / ET</p>
 
               <input
+                type="text"
+                name="restaurantName"
+                placeholder="Nom du Restaurant (Ex: Pizza Roma)"
+                style={{ padding: '1.2rem', borderRadius: '12px', border: '1px solid #d1d5db', fontSize: '1.05rem', background: '#ffffff', color: '#111827', boxShadow: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.03)' }}
+              />
+
+              <input
                 id="sujet-input"
                 type="text"
                 name="sujet"
@@ -215,7 +227,16 @@ ATTENTION : Génère un large choix (ex: 3 à 4 produits différents par catégo
             <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}>
                {wizardStep === 1 && (
                  <div>
-                   <h3 style={{ margin: '0 0 1rem 0', color: '#1e293b' }}>Étape 1/4 : Type de restaurant ?</h3>
+                   <h3 style={{ margin: '0 0 1rem 0', color: '#1e293b' }}>Étape 1/4 : Restaurant</h3>
+                   <input
+                     type="text"
+                     value={wizardData.restaurantName}
+                     onChange={(e) => setWizardData({...wizardData, restaurantName: e.target.value})}
+                     placeholder="Nom de l'enseigne (Ex: O'Tacos)"
+                     style={{ width: '100%', padding: '1rem', borderRadius: '8px', border: '1px solid #cbd5e1', marginBottom: '1.5rem', fontSize: '1rem' }}
+                   />
+
+                   <h3 style={{ margin: '0 0 1rem 0', color: '#1e293b' }}>Type de restaurant ?</h3>
                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                       {[
                         { label: 'Fast-Food / Burger', val: 'carte1_smash_up.json' },
@@ -364,7 +385,7 @@ ATTENTION : Génère un large choix (ex: 3 à 4 produits différents par catégo
            </div>
            <div style={{ flex: 1, position: 'relative', background: '#f9fafb', overflow: 'hidden' }}>
               <KioskSimulator 
-                 restaurantName="Restaurant IA"
+                 restaurantName={submittedRestaurantName}
                  tree={parsedTree} 
                  catalogData={rawData}
                  themePalette={{ primary: '#4f46e5', secondary: '#4338ca', text: '#111827', onPrimary: 'white' }} 

@@ -25,6 +25,32 @@ export function validateETK360Code(jsonString: string): string[] {
 
   if (errors.length > 0) return errors;
 
+  // 2.5 Validation du Workflow (Catégories et Items)
+  if (data.workflow) {
+    const workflowKeys = Object.keys(data.workflow);
+    for (const catKey of workflowKeys) {
+      const workflowNode = data.workflow[catKey];
+      
+      if (!data.categories || !data.categories[catKey]) {
+        errors.push(`ERREUR WORKFLOW : La catégorie '${catKey}' est déclarée dans le workflow mais n'existe pas dans le dictionnaire racine 'categories'.`);
+      }
+
+      if (workflowNode.content && typeof workflowNode.content === 'object') {
+         const contentKeys = Object.keys(workflowNode.content);
+         if (contentKeys.length === 0) {
+            errors.push(`ERREUR WORKFLOW : La catégorie '${catKey}' dans le workflow est vide (son bloc 'content' ne contient aucun item).`);
+         }
+         for (const itemKey of contentKeys) {
+            if (!data.items || !data.items[itemKey]) {
+               errors.push(`ERREUR WORKFLOW : L'item '${itemKey}' est placé dans le workflow de la catégorie '${catKey}', mais il n'existe pas dans le dictionnaire racine 'items'.`);
+            }
+         }
+      } else {
+         errors.push(`ERREUR WORKFLOW : La catégorie '${catKey}' dans le workflow est mal formée (il lui manque un dictionnaire 'content' listant ses items).`);
+      }
+    }
+  }
+
   // 3. Validation des liaisons Items -> Modifiers
   const itemKeys = Object.keys(data.items || {});
   let atLeastOneModifier = false;

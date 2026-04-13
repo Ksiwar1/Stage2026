@@ -30,7 +30,7 @@ export function getCartesMemory(): MemoryFile[] {
 
 // Désormais, on n'utilise PLUS le few-shot brutal avec slice() car il détruit le JSON.
 // On injecte un Master Schema parfait.
-export function getPromptSystemForAI(sourceCatalogName?: string, secondaryInspirations: string[] = [], hasImage = false): string {
+export function getPromptSystemForAI(sourceCatalogName?: string, secondaryInspirations: string[] = [], hasImage = false, phase: 1 | 2 = 1): string {
   const ocrAddon = hasImage ? `\n\n📌 MODE VISION / OCR ACTIF : L'utilisateur a fourni la photo d'un menu complet. Ton rôle prioritaire est d'agir comme un OCR intelligent:\n - Lis précisément toutes les catégories, les noms de produits, et SURTOUT LES PRIX figurant sur l'image.\n - RAPPEL STRICT: Modélise UNIQUEMENT ce que tu vois sur l'image ou en inférant logiquement le menu à partir de celle-ci, tout en respectant scrupuleusement la structure de mon exemple ETK360.\n - Ne génère pas de produits hors-sujet qui ne sont pas sur l'image.` : "";
 
   // Construction du RAG avec les modèles secondaires !
@@ -45,44 +45,13 @@ export function getPromptSystemForAI(sourceCatalogName?: string, secondaryInspir
      }
   }
 
+  let baseTemplate = "";
   if (sourceCatalogName && sourceCatalogName !== 'generique') {
     const extractedTemplate = extractTemplateFromCatalogue(path.join(process.cwd(), '.softavera', 'carte', sourceCatalogName));
-    if (extractedTemplate) {
-      return `Tu es l'architecte JSON expert du système de kiosque ETK360.
-Ta mission stricte est de générer une carte de restaurant hyper complète, interactive, et multicatégorie au format JSON pur. 
-Tu ne dois renvoyer QUE le JSON final (sans balises markdown autour du texte ni blabla).
-${ocrAddon}
-
-MA RÉFÉRENCE PRINCIPALE (TON MODÈLE MÂÎTRE) :
-Tu dois t'en inspirer PROFONDÉMENT. Produis un parcours complet calqué sur CE modèle prioritaire :
-
-\`\`\`json
-${extractedTemplate}
-\`\`\`${secondaryContext}
-
-RÈGLES VITALES :
-1. TON JSON DOIT CONSTRUIRE UN PARCOURS IMMERSIF COMPLET (Au minimum 2 catégories, au moins un produit "Menu" complexe avec son dictionnaire de "modifier" / "steps")!
-2. ATTENTION AUX TITRES : Tu dois IMPÉRATIVEMENT remplacer les "NOM_CATEGORIE_A_REMPLACER" par tes propres noms. NE JAMAIS utiliser d'encodage URL (%20) dans le texte normal.
-3. ATTENTION AUX PRIX : Invente des tarifs cohérents ! { "dflt": { "ttc": 12.50 } }. Ne conserve aucun produit à 0.00€.
-4. RÈGLE D'OR SUR LES IDS : Absolument TOUS les identifiants présents à l'intérieur de tes 'steps' DOIVENT obligatoirement exister à la racine "items". Ne crée JAMAIS un identifiant fantôme.
-5. RÈGLE D'OR SUR L'ORDRE DES ÉTAPES : Si tu crées un Menu avec "steps", utilise la propriété "rank" pour respecter l'ordre logique d'une commande française : d'abord Viande (1), puis Sauces (2), Frites (3), Boisson (4), Dessert (5).
-6. S'il s'agit d'une option globale qui ne nécessite pas d'étapes multiples, utilise un objet "opt" lié au produit.
-7. INTELLIGENCE VISUELLE : Pour chaque objet généré dans "categories" et "items" tu DOIS obligatoirement ajouter la propriété \`img\` avec une URL d'image générée dynamiquement \`"img": { "dflt": { "img": "https://image.pollinations.ai/prompt/{prompt_anglais}" } }\`. Ne laisses AUCUNE image vide.
-
-Génère la machinerie complète ETK360 la plus pertinente pour la demande suivante :`;
-    }
-  }
-
-  return `Tu es l'architecte JSON expert du système de kiosque ETK360.
-Ta mission stricte est de générer une carte de restaurant hyper complète, interactive, et multicatégorie au format JSON pur. 
-Tu ne dois renvoyer QUE le JSON final (sans balises markdown autour du texte ni blabla).
-${ocrAddon}
-
-Voici le MASTER TEMPLATE de la structure ultime ETK360.
-Pour créer une carte valide interactif, tu dois TOUJOURS structurer ton JSON comme cet exemple. L'exemple présente un Menu (avec 3 étapes obligatoires de choix) et une Boisson individuelle avec des Tailles.
-
-\`\`\`json
-{
+    if (extractedTemplate) baseTemplate = extractedTemplate;
+  } else {
+    // Le Generique master template
+    baseTemplate = `{
   "workflow": {
     "cat_menus": {
       "type": "categories",
@@ -100,33 +69,30 @@ Pour créer une carte valide interactif, tu dois TOUJOURS structurer ton JSON co
     }
   },
   "categories": {
-    "cat_menus": { "title": "Nos Menus", "isVisible": true, "img": { "dflt": { "img": "https://image.pollinations.ai/prompt/fast%20food%20combo%20meal" } } },
-    "cat_boissons": { "title": "Bvgs & Boissons", "isVisible": true, "img": { "dflt": { "img": "https://image.pollinations.ai/prompt/refreshing%20soda%20drink%20glass" } } }
+    "cat_menus": { "title": "Nos Menus", "isVisible": true },
+    "cat_boissons": { "title": "Boissons", "isVisible": true }
   },
   "items": {
     "item_menu_burger": {
-      "title": "Menu Classic Smash Burger",
-      "price": { "dflt": { "ttc": 12.50 } },
-      "modifier": "mod_menu_burger_steps",
-      "img": { "dflt": { "img": "https://image.pollinations.ai/prompt/classic%20smash%20burger%20with%20french%20fries" } }
+      "title": "Menu Classic",
+      "modifier": "mod_menu_burger_steps"
     },
     "item_coca": {
-      "title": "Coca-Cola Original",
+      "title": "Coca Cola",
       "price": { "dflt": { "ttc": 2.50 } },
-      "opt": { "dim_taille_boisson": [ "val_33cl", "val_50cl" ] },
-      "img": { "dflt": { "img": "https://image.pollinations.ai/prompt/coca%20cola%20soda%20glass%20with%20ice" } }
+      "opt": { "dim_taille_boisson": [ "val_33cl", "val_50cl" ] }
     },
-    "item_frites": { "title": "Frites Classiques", "price": { "dflt": { "ttc": 0 } }, "img": { "dflt": { "img": "https://image.pollinations.ai/prompt/crispy%20french%20fries" } } },
-    "item_potatoes": { "title": "Potatoes Croustillantes", "price": { "dflt": { "ttc": 0.50 } }, "img": { "dflt": { "img": "https://image.pollinations.ai/prompt/crispy%20potato%20wedges" } } },
-    "item_sauce_mayo": { "title": "Mayonnaise", "price": { "dflt": { "ttc": 0 } }, "img": { "dflt": { "img": "https://image.pollinations.ai/prompt/mayonnaise%20sauce%20cup" } } },
-    "item_sauce_ket": { "title": "Ketchup", "price": { "dflt": { "ttc": 0 } }, "img": { "dflt": { "img": "https://image.pollinations.ai/prompt/ketchup%20sauce%20cup" } } }
+    "item_frites": { "title": "Frites Classiques" },
+    "item_potatoes": { "title": "Potatoes Croustillantes" },
+    "item_sauce_mayo": { "title": "Mayonnaise" },
+    "item_sauce_ket": { "title": "Ketchup" }
   },
   "opt": {
     "dim_taille_boisson": {
       "title": "Taille de votre boisson",
       "values": {
-        "val_33cl": { "title": "Normale (33 cl)", "rank": 1 },
-        "val_50cl": { "title": "Maxi (50 cl)", "rank": 2, "priceDelta": 0.50 }
+        "val_33cl": { "title": "Normale", "rank": 1 },
+        "val_50cl": { "title": "Maxi", "rank": 2, "priceDelta": 0.50 }
       }
     }
   },
@@ -141,36 +107,75 @@ Pour créer une carte valide interactif, tu dois TOUJOURS structurer ton JSON co
   },
   "steps": {
     "step_choix_boisson": {
-      "title": "1. Choisissez votre boisson froide",
+      "title": "Choisissez votre boisson",
       "minChoices": 1,
       "maxChoices": 1,
       "items": { "item_coca": {} }
     },
     "step_choix_accompagnement": {
-      "title": "2. Votre accompagnement",
+      "title": "Votre accompagnement",
       "minChoices": 1,
       "maxChoices": 1,
       "items": { "item_frites": {}, "item_potatoes": {} }
     },
     "step_choix_sauce": {
-      "title": "3. Choisir vos sauces (Max 2)",
+      "title": "Choisir vos sauces",
       "minChoices": 0,
       "maxChoices": 2,
       "items": { "item_sauce_mayo": {}, "item_sauce_ket": {} }
     }
   }
-}
-\`\`\`${secondaryContext}
+}`;
+  }
 
-RÈGLES VITALES :
-1. TON JSON DOIT CONSTRUIRE UN PARCOURS IMMERSIF COMPLET (Au minimum 2 catégories, au moins un produit "Menu" complexe avec son dictionnaire de "modifier" / "steps")! Ne fais pas juste un simple catalogue statique de produits isolés.
-2. Chaque étape (steps) doit pointer vers de multiples "items" valides s'il y a un choix à faire (Exemple: choix du parfum, de la viande, du type).
-3. RÈGLE D'OR SUR LES IDS : Absolument TOUS les identifiants présents à l'intérieur de tes 'steps' DOIVENT obligatoirement exister à la racine "items".
-4. RÈGLE D'OR SUR L'ORDRE DES ÉTAPES : Si tu crées un Menu avec "steps", utilise la propriété "rank" (1, 2, 3...) pour respecter l'ordre logique d'une commande française : d'abord Viande, puis Sauces, Frites, Boisson, Dessert.
+  if (phase === 1) {
+    return `Tu es l'architecte JSON expert du système de kiosque ETK360.
+Ta mission est d'effectuer la PHASE 1 de génération : CONSTRUIRE LE WORKFLOW ABSTRAIT.
+Tu ne dois renvoyer QUE le JSON final (sans balises markdown autour du texte ni blabla).
+${ocrAddon}
+
+MA RÉFÉRENCE PRINCIPALE (TON MODÈLE MÂÎTRE) :
+Tu dois t'en inspirer PROFONDÉMENT. 
+\`\`\`json
+${baseTemplate}
+\`\`\`
+${secondaryContext}
+
+RÈGLES VITALES PHASE 1 :
+1. TON JSON DOIT CONSTRUIRE UN PARCOURS ABSTRAIT (Génère UNIQUEMENT les objets "workflow", "categories", et les attributs "modifier" liés).
+2. NE METS AUCUN PRIX, AUCUNE IMAGE. On ne veut que la structure des IDs.
+3. Chaque identifiant de catégorie dans "workflow" doit correspondre exactement au dictionnaire "categories".
+4. Chaque ID de produit listé dans "workflow -> content" doit obligatoirement inclure l'affectation de son "modifier" si c'est un menu complexe, ou "opt" si c'est simplement quelques tailles/variantes.
+5. Produis un Json contenant uniqument "workflow", "categories" (et Optionellement un mapping abstrait "modifier" contenant les steps vide d'items).
+
+Génère l'architecture abstraite ETK360 la plus pertinente pour la demande suivante :`;
+  }
+
+  // PHASE 2 (Enrichissement)
+  return `Tu es l'architecte JSON expert du système de kiosque ETK360.
+Ta mission est d'effectuer la PHASE 2 de génération : L'ENRICHISSEMENT COMPLET.
+L'utilisateur te fournit en entrée l'Architecture Abstraite parfaite (Le Squelette). 
+Ton rôle est de remplir cette architecture en créant les dictionnaires ("items", "steps", "opt", "modifier" manquants) avec les vrais produits et prix.
+Tu ne dois renvoyer QUE le JSON final (sans balises markdown autour du texte ni blabla).
+${ocrAddon}
+
+MA RÉFÉRENCE PRINCIPALE (TON MODÈLE MÂÎTRE) :
+Pour savoir COMMENT formater un dictionnaire 'steps', 'items' ou 'opt', voici la structure parfaite que tu dois imiter :
+${baseTemplate ? `\`\`\`json\n${baseTemplate}\n\`\`\`` : "Aucun modèle maître, crée l'architecture Standard ETK360."}
+
+${secondaryContext}
+
+RÈGLES VITALES PHASE 2 :
+1. Tu dois respecter SCRUPULEUSEMENT le Squelette de la Phase 1 passé en argument. Tout ID de produit listé dans le workflow de la Phase 1 doit TOUJOURS apparaître à la racine de "items". De même, le dictionnaire "steps" doit être OBLIGATOIREMENT défini à la RACINE du JSON final, et JAMAIS à l'intérieur de "modifier".
+2. ATTENTION AUX PRIX : Invente des tarifs cohérents ! { "dflt": { "ttc": 12.50 } }. Ne conserve aucun produit à 0.00€.
+3. RÈGLE D'OR SUR LES IDS : Absolument TOUS les identifiants présents à l'intérieur de tes 'steps' DOIVENT obligatoirement exister à la racine "items". Ne crée JAMAIS un identifiant fantôme.
+4. RÈGLE D'OR SUR L'ORDRE DES ÉTAPES : Si tu crées un Menu avec "steps", utilise la propriété "rank" pour respecter l'ordre logique d'une commande française : d'abord Viande (1), puis Sauces (2), Frites (3), Boisson (4), Dessert (5).
 5. S'il s'agit d'une option globale qui ne nécessite pas d'étapes multiples, utilise un objet "opt" lié au produit.
-6. INTELLIGENCE VISUELLE : Pour chaque objet généré dans "categories" et "items" tu DOIS obligatoirement ajouter la propriété \`img\` avec une URL d'image générée dynamiquement \`"img": { "dflt": { "img": "https://image.pollinations.ai/prompt/{prompt_anglais}" } }\`. Ne laisses AUCUNE image vide.
+6. INTELLIGENCE VISUELLE : Pour chaque objet tu DOIS obligatoirement ajouter l'URL \`"img": { "dflt": { "img": "https://image.pollinations.ai/prompt/{prompt_anglais}" } }\`. Ne laisses AUCUNE image vide.
+7. Chaque Step doit OBLIGATOIREMENT avoir au moins 2 options (items) pour qu'il y ait un choix.
 
-Génère la machinerie complète ETK360 la plus pertinente pour la demande suivante :`;
+Voici le Squelette Abstrait généré à l'étape 1 dont tu dois hériter et compléter :
+`;
 }
 
 export interface VisualCardSummary {

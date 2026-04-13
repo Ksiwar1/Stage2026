@@ -40,8 +40,17 @@ export default async function BornePage({ params }: { params: Promise<{ id: stri
     );
   }
 
-  const rawTitle = fileName.replace('.json', '').replace('carte_', '').replace(/^[0-9_]+/, '').replace(/_/g, ' ');
-  const restaurantName = rawTitle ? rawTitle.charAt(0).toUpperCase() + rawTitle.slice(1) : "Borne Interactive";
+  const rawTitle = fileName
+    .replace('.json', '')
+    .replace('carte_', '')
+    .replace('ia_', '')
+    .replace(/_[0-9]+$/, '')
+    .replace(/^[0-9_]+/, '')
+    .replace(/_/g, ' ')
+    .trim();
+  const restaurantName = rawTitle 
+    ? rawTitle.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+    : "Borne Interactive";
 
   // Extraction de la palette de couleurs principale et secondaire depuis les items
   let themePalette = { primary: '#F39C12', secondary: '#1A237E', text: '#111827', onPrimary: 'white' }; // Couleurs par défaut

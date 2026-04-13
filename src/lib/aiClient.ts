@@ -29,7 +29,7 @@ export async function generateAIResponse(
   switch (aiType) {
     case "groq": {
       const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || "" });
-      const completion = await groq.chat.completions.create({
+      const payload = {
         model: "llama-3.1-8b-instant",
         messages: [
           { role: "system", content: systemPrompt },
@@ -37,15 +37,28 @@ export async function generateAIResponse(
         ],
         temperature,
         max_tokens: 2500,
-        response_format: { type: "json_object" },
-      });
-      return completion.choices[0]?.message?.content || "";
+        response_format: { type: "json_object" } as any,
+      };
+
+      try {
+        const completion = await groq.chat.completions.create(payload);
+        return completion.choices[0]?.message?.content || "";
+      } catch (error: any) {
+        if (error?.status === 429 || error?.message?.includes("429")) {
+          console.warn(`[RATE LIMIT] Groq Free Tier saturé (6000 TPM). Pause de 15s pour le rolling window...`);
+          await new Promise(resolve => setTimeout(resolve, 15000));
+          console.log(`[RATE LIMIT] Reprise...`);
+          const retryCompletion = await groq.chat.completions.create(payload);
+          return retryCompletion.choices[0]?.message?.content || "";
+        }
+        throw error;
+      }
     }
 
     case "gemini": {
       const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
       const model = genAI.getGenerativeModel({
-        model: "gemini-1.5-flash-latest",
+        model: "gemini-1.5-flash",
         systemInstruction: systemPrompt,
       });
 
