@@ -56,26 +56,26 @@ Pour créer une carte valide interactif (ex: un vrai Kiosque McDonald's, O'Tacos
     }
   },
   "categories": {
-    "cat_menus": { "title": "Nos Menus", "isVisible": true, "img": { "dflt": { "img": "https://loremflickr.com/400/400/combo,meal" } } },
-    "cat_boissons": { "title": "Bvgs & Boissons", "isVisible": true, "img": { "dflt": { "img": "https://loremflickr.com/400/400/drink,beverage" } } }
+    "cat_menus": { "title": "Nos Menus", "isVisible": true, "img": { "dflt": { "img": "https://image.pollinations.ai/prompt/fast%20food%20combo%20meal" } } },
+    "cat_boissons": { "title": "Bvgs & Boissons", "isVisible": true, "img": { "dflt": { "img": "https://image.pollinations.ai/prompt/refreshing%20soda%20drink%20glass" } } }
   },
   "items": {
     "item_menu_burger": {
       "title": "Menu Classic Smash Burger",
       "price": { "dflt": { "ttc": 12.50 } },
       "modifier": "mod_menu_burger_steps",
-      "img": { "dflt": { "img": "https://loremflickr.com/400/400/burger,fries" } }
+      "img": { "dflt": { "img": "https://image.pollinations.ai/prompt/classic%20smash%20burger%20with%20french%20fries" } }
     },
     "item_coca": {
       "title": "Coca-Cola Original",
       "price": { "dflt": { "ttc": 2.50 } },
       "opt": { "dim_taille_boisson": [ "val_33cl", "val_50cl" ] },
-      "img": { "dflt": { "img": "https://loremflickr.com/400/400/cola,drink" } }
+      "img": { "dflt": { "img": "https://image.pollinations.ai/prompt/coca%20cola%20soda%20glass%20with%20ice" } }
     },
-    "item_frites": { "title": "Frites Classiques", "price": { "dflt": { "ttc": 0 } }, "img": { "dflt": { "img": "https://loremflickr.com/400/400/fries" } } },
-    "item_potatoes": { "title": "Potatoes Croustillantes", "price": { "dflt": { "ttc": 0.50 } }, "img": { "dflt": { "img": "https://loremflickr.com/400/400/potatoes,fried" } } },
-    "item_sauce_mayo": { "title": "Mayonnaise", "price": { "dflt": { "ttc": 0 } }, "img": { "dflt": { "img": "https://loremflickr.com/400/400/mayo,sauce" } } },
-    "item_sauce_ket": { "title": "Ketchup", "price": { "dflt": { "ttc": 0 } }, "img": { "dflt": { "img": "https://loremflickr.com/400/400/ketchup,sauce" } } }
+    "item_frites": { "title": "Frites Classiques", "price": { "dflt": { "ttc": 0 } }, "img": { "dflt": { "img": "https://image.pollinations.ai/prompt/crispy%20french%20fries" } } },
+    "item_potatoes": { "title": "Potatoes Croustillantes", "price": { "dflt": { "ttc": 0.50 } }, "img": { "dflt": { "img": "https://image.pollinations.ai/prompt/crispy%20potato%20wedges" } } },
+    "item_sauce_mayo": { "title": "Mayonnaise", "price": { "dflt": { "ttc": 0 } }, "img": { "dflt": { "img": "https://image.pollinations.ai/prompt/mayonnaise%20sauce%20cup" } } },
+    "item_sauce_ket": { "title": "Ketchup", "price": { "dflt": { "ttc": 0 } }, "img": { "dflt": { "img": "https://image.pollinations.ai/prompt/ketchup%20sauce%20cup" } } }
   },
   "opt": {
     "dim_taille_boisson": {
@@ -122,7 +122,7 @@ RÈGLES VITALES :
 2. Chaque étape (steps) doit pointer vers de multiples "items" valides s'il y a un choix à faire (Exemple: choix du parfum, de la viande, du type).
 3. TOUS les IDs (ex: \`item_XXX\`, \`cat_XXX\`) utilisés doivent obligatoirement exister à la racine (items, categories).
 4. S'il s'agit d'une option globale qui ne nécessite pas d'étapes multiples, utilise un objet "opt" lié au produit.
-5. INTELLIGENCE VISUELLE : Pour chaque objet généré dans "categories" et "items" tu DOIS obligatoirement ajouter la propriété \`img\` avec une URL d'image factice "loremflickr.com". Suis strictement cette convention : \`"img": { "dflt": { "img": "https://loremflickr.com/400/400/{motcle}" } }\` et remplace \`{motcle}\` par un ou deux mots-clés EN ANGLAIS hyper ciblés (ex: pizza, soda, fries, cake). Sans espace (uniquement virgule si deux mots). Ne laisse AUCUNE image vide.
+5. INTELLIGENCE VISUELLE : Pour chaque objet généré dans "categories" et "items" tu DOIS obligatoirement ajouter la propriété \`img\` avec une URL d'image générée dynamiquement. Suis STRICTEMENT cette convention : \`"img": { "dflt": { "img": "https://image.pollinations.ai/prompt/{prompt_anglais}" } }\` et remplace \`{prompt_anglais}\` par une description ANGLAISE du produit très ciblée et réaliste (ex: delicious%20pizza, tasty%20burger, fresh%20soda). Encode obligatoirement les espaces avec %20. Laisse Pollinations renvoyer une image standard optimisée. Ne met SURTOUT PAS de paramètres comme width ou height à la fin. Ne laisse AUCUNE image vide.
 
 Génère la machinerie complète ETK360 la plus pertinente pour la demande suivante :`;
 }

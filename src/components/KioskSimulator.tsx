@@ -43,6 +43,7 @@ export type AppStep = Omit<ParsedStep, 'semanticType'> & { semanticType: string 
 
 
 export default function KioskSimulator({ restaurantName, tree, themePalette = { primary: '#F39C12', secondary: '#1A237E', text: '#111827', onPrimary: 'white' }, catalogData }: { restaurantName: string, tree: ParsedCategory[], themePalette?: { primary: string, secondary: string, text: string, onPrimary: string }, catalogData?: any }) {
+  const [diningOption, setDiningOption] = useState<'sur_place' | 'emporter' | null>(null);
   const [activeCategoryId, setActiveCategoryId] = useState<string>(tree[0]?.id || "");
   const activeCategory = tree.find(c => c.id === activeCategoryId);
 
@@ -270,6 +271,53 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
         setSelectedProduct(null);
      }
   };
+
+  if (!diningOption) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: '100%', background: '#111827', fontFamily: 'sans-serif' }}>
+        <div style={{ width: '100%', maxWidth: '420px', height: '90%', maxHeight: '700px', background: 'white', borderRadius: '4px', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '3rem 2rem', position: 'relative', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)' }}>
+          
+          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <h1 style={{ fontWeight: 900, fontSize: '1.4rem', margin: '0 0 0.2rem 0', color: '#111827', letterSpacing: '0.5px' }}>THE KIOSK</h1>
+            <p style={{ margin: 0, fontStyle: 'italic', fontSize: '1.1rem', color: '#111827', fontFamily: 'cursive' }}>By ETK</p>
+          </div>
+
+          <h2 style={{ fontSize: '1.3rem', fontWeight: 500, color: '#1f2937', marginBottom: '3rem' }}>Commander ici</h2>
+
+          <div style={{ display: 'flex', gap: '1.5rem', width: '100%', justifyContent: 'center' }}>
+            <button 
+              onClick={() => setDiningOption('sur_place')}
+              style={{ flex: 1, height: '140px', background: '#fafafa', border: '1px solid #f1f5f9', borderRadius: '12px', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.1s', padding: '1rem' }}>
+                <span style={{ fontSize: '3rem', marginBottom: '1rem' }}>🍽️</span> 
+                <span style={{ fontSize: '0.9rem', fontWeight: 500, color: '#374151' }}>Sur place</span>
+            </button>
+            <button 
+              onClick={() => setDiningOption('emporter')}
+              style={{ flex: 1, height: '140px', background: '#fafafa', border: '1px solid #f1f5f9', borderRadius: '12px', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.1s', padding: '1rem' }}>
+                <span style={{ fontSize: '3rem', marginBottom: '1rem' }}>🛍️</span>
+                <span style={{ fontSize: '0.9rem', fontWeight: 500, color: '#374151' }}>Emporter</span>
+            </button>
+          </div>
+
+          <div style={{ margin: 'auto 0 2rem 0', width: '100%' }}>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '2.5rem' }}>
+              <button style={{ flex: 1, padding: '0.6rem', background: 'white', color: '#374151', border: '1px solid #d1d5db', borderRadius: '4px', cursor: 'pointer', fontSize: '0.9rem' }}>Abandonner</button>
+              <button style={{ flex: 1, padding: '0.6rem', background: '#f3f4f6', color: '#374151', border: '1px solid #d1d5db', borderRadius: '4px', cursor: 'pointer', fontSize: '0.9rem' }}>Retour</button>
+            </div>
+            
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', fontSize: '0.65rem', fontWeight: 700, color: '#111827' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer' }}><span style={{ fontSize: '1.2rem'}}>🇬🇧</span> English</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer' }}><span style={{ fontSize: '1.2rem'}}>🇫🇷</span> French</div>
+            </div>
+          </div>
+
+          <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', color: '#6b7280', cursor: 'pointer', fontSize: '1.2rem' }}>
+             💡
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={{ '--color-primary': themePalette.primary, '--color-secondary': themePalette.secondary, '--color-text': themePalette.text, '--color-on-primary': themePalette.onPrimary } as React.CSSProperties}>

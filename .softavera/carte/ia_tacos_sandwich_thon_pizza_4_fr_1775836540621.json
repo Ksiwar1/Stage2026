@@ -1,0 +1,223 @@
+{
+  "workflow": {
+    "cat_menus": {
+      "type": "categories",
+      "rank": 1,
+      "content": {
+        "item_menu_tacos": { "type": "items", "rank": 1 },
+        "item_menu_sandwich_thon": { "type": "items", "rank": 2 },
+        "item_menu_pizza_4_fromages": { "type": "items", "rank": 3 }
+      }
+    },
+    "cat_boissons": {
+      "type": "categories",
+      "rank": 2,
+      "content": {
+        "item_coca": { "type": "items", "rank": 1 },
+        "item_fanta": { "type": "items", "rank": 2 }
+      }
+    }
+  },
+  "categories": {
+    "cat_menus": {
+      "title": "Nos Menus",
+      "isVisible": true,
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/delicious%20tacos%20and%20burritos"
+        }
+      }
+    },
+    "cat_boissons": {
+      "title": "Bvgs & Boissons",
+      "isVisible": true,
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/tasty%20and%20refreshing%20beverages"
+        }
+      }
+    }
+  },
+  "items": {
+    "item_menu_tacos": {
+      "title": "Menu Tacos",
+      "price": {
+        "dflt": {
+          "ttc": 8.99
+        }
+      },
+      "modifier": "mod_menu_tacos_steps",
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/tasty%20tacos%20with%20different%20toppings"
+        }
+      }
+    },
+    "item_menu_sandwich_thon": {
+      "title": "Menu Sandwich Thon",
+      "price": {
+        "dflt": {
+          "ttc": 9.99
+        }
+      },
+      "modifier": "mod_menu_sandwich_steps",
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/delicious%20tuna%20sandwich%20with%20vegetables"
+        }
+      }
+    },
+    "item_menu_pizza_4_fromages": {
+      "title": "Menu Pizza 4 Fromages",
+      "price": {
+        "dflt": {
+          "ttc": 11.99
+        }
+      },
+      "modifier": "mod_menu_pizza_steps",
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/delicious%20pizza%20with%20four%20different%20cheeses"
+        }
+      }
+    },
+    "item_coca": {
+      "title": "Coca-Cola Original",
+      "price": {
+        "dflt": {
+          "ttc": 2.50
+        }
+      },
+      "opt": {
+        "dim_taille_boisson": [
+          "val_33cl",
+          "val_50cl"
+        ]
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/tasty%20and%20refreshing%20coca%20cola"
+        }
+      }
+    },
+    "item_fanta": {
+      "title": "Fanta Orange",
+      "price": {
+        "dflt": {
+          "ttc": 2.50
+        }
+      },
+      "opt": {
+        "dim_taille_boisson": [
+          "val_33cl",
+          "val_50cl"
+        ]
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/tasty%20and%20refreshing%20fanta%20orange"
+        }
+      }
+    }
+  },
+  "opt": {
+    "dim_taille_boisson": {
+      "title": "Taille de votre boisson",
+      "values": {
+        "val_33cl": {
+          "title": "Normale (33 cl)",
+          "rank": 1
+        },
+        "val_50cl": {
+          "title": "Maxi (50 cl)",
+          "rank": 2,
+          "priceDelta": 0.50
+        }
+      }
+    }
+  },
+  "modifier": {
+    "mod_menu_tacos_steps": {
+      "steps": {
+        "step_choix_boisson": {
+          "rank": 1
+        },
+        "step_choix_proteines": {
+          "rank": 2
+        },
+        "step_choix_toppings": {
+          "rank": 3
+        }
+      }
+    },
+    "mod_menu_sandwich_steps": {
+      "steps": {
+        "step_choix_boisson": {
+          "rank": 1
+        },
+        "step_choix_proteines": {
+          "rank": 2
+        },
+        "step_choix_legumes": {
+          "rank": 3
+        }
+      }
+    },
+    "mod_menu_pizza_steps": {
+      "steps": {
+        "step_choix_boisson": {
+          "rank": 1
+        },
+        "step_choix_fromages": {
+          "rank": 2
+        },
+        "step_choix_legumes": {
+          "rank": 3
+        }
+      }
+    }
+  },
+  "steps": {
+    "step_choix_boisson": {
+      "title": "1. Choisissez votre boisson",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "item_coca": {},
+        "item_fanta": {}
+      }
+    },
+    "step_choix_proteines": {
+      "title": "2. Choisissez vos proteines",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "item_menu_tacos_proteines": {}
+      }
+    },
+    "step_choix_toppings": {
+      "title": "3. Choisissez vos toppings",
+      "minChoices": 0,
+      "maxChoices": 2,
+      "items": {
+        "item_menu_tacos_toppings": {}
+      }
+    },
+    "step_choix_legumes": {
+      "title": "2. Choisissez vos legumes",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "item_menu_sandwich_legumes": {}
+      }
+    },
+    "step_choix_fromages": {
+      "title": "2. Choisissez vos fromages",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "item_menu_pizza_fromages": {}
+      }
+    }
+  }
+}
