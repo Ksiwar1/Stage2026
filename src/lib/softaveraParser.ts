@@ -41,11 +41,14 @@ export interface ParsedCategory {
  */
 function extractBestPrice(rawItem: any): number {
   let priceTTC = 0;
-  if (typeof rawItem.price?.ttc === 'number' && rawItem.price.ttc > 0) priceTTC = rawItem.price.ttc;
-  else if (typeof rawItem.price?.dflt === 'number' && rawItem.price.dflt > 0) priceTTC = rawItem.price.dflt;
-  else if (typeof rawItem.price?.ht === 'number' && rawItem.price.ht > 0) priceTTC = rawItem.price.ht * 1.1;
+  if (!rawItem || !rawItem.price) return 0;
+
+  if (typeof rawItem.price.ttc === 'number' && rawItem.price.ttc > 0) priceTTC = rawItem.price.ttc;
+  else if (typeof rawItem.price.dflt === 'number' && rawItem.price.dflt > 0) priceTTC = rawItem.price.dflt;
+  else if (typeof rawItem.price.dflt === 'object' && typeof rawItem.price.dflt.ttc === 'number') priceTTC = rawItem.price.dflt.ttc;
+  else if (typeof rawItem.price.ht === 'number' && rawItem.price.ht > 0) priceTTC = rawItem.price.ht * 1.1;
   
-  if (priceTTC === 0 && rawItem.price?.advanced && typeof rawItem.price.advanced === 'object') {
+  if (priceTTC === 0 && rawItem.price.advanced && typeof rawItem.price.advanced === 'object') {
     const advKeys = Object.keys(rawItem.price.advanced);
     for (const ak of advKeys) {
       const tarifObj = rawItem.price.advanced[ak];

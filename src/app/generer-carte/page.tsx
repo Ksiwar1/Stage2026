@@ -2,13 +2,13 @@
 
 import styles from "../page.module.css";
 import Link from "next/link";
-import { useState } from "react";
-import { genererUneNouvelleCarte } from "../actions/genererCarteAction";
+import { useState, useEffect } from "react";
+import { genererUneNouvelleCarte, getAvailableLibraryCards } from "../actions/genererCarteAction";
 import KioskSimulator from "../../components/KioskSimulator";
 import { parseETK360Hierarchy } from "../../lib/softaveraParser";
 
 const AI_PROVIDERS = [
-  { value: "groq", label: "Groq (Llama 3.3 70B)", icon: "🟢", tag: "Gratuit" },
+  { value: "groq", label: "Groq (Llama 3.1 8B)", icon: "🟢", tag: "Gratuit" },
   { value: "gemini", label: "Gemini 2.0 Flash", icon: "🔵", tag: "Gratuit" },
   { value: "claude", label: "Claude Sonnet", icon: "🟠", tag: "Payant" },
 ];
@@ -22,6 +22,22 @@ export default function GenererCarte() {
   const [isVisualizing, setIsVisualizing] = useState<boolean>(false);
   const [parsedTree, setParsedTree] = useState<any[]>([]);
   const [rawData, setRawData] = useState<any>(null);
+  const [libraryCards, setLibraryCards] = useState<string[]>([]);
+
+  // States Wizard Assistant
+  const [activeTab, setActiveTab] = useState<"libre" | "wizard">("libre");
+  const [wizardStep, setWizardStep] = useState(1);
+  const [wizardData, setWizardData] = useState({
+    theme: "",
+    typeLabel: "",
+    categories: [] as string[],
+    structure: "produits",
+    options: [] as string[]
+  });
+
+  useEffect(() => {
+    getAvailableLibraryCards().then(setLibraryCards).catch(console.error);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,6 +46,16 @@ export default function GenererCarte() {
 
     try {
       const formData = new FormData(e.currentTarget);
+      
+      if (activeTab === "wizard") {
+        const compiledSubject = `Je veux un vrai restaurant de type ${wizardData.typeLabel}. Catégories requises : ${wizardData.categories.join(", ")}. 
+Format de vente : ${wizardData.structure === "menus" ? "Créer absolument des Formules Menus complexes avec des étapes de choix obligatoires. Règle absolue pour l'ordre des steps (utiliser le 'rank'): 1. Viande/Base, 2. Sauces, 3. Frites/Accompagnement, 4. Boisson, 5. Dessert. ATTENTION : Tu dois obligatoirement Lier et Déclarer TOUS ces steps à l'intérieur du bloc 'steps' de ton 'modifier' de Menu, sinon le client n'aura pas le droit de choisir sa boisson !" : "Uniquement des produits simples en vente directe, sans format menu."} 
+Options à inclure globalement : ${wizardData.options.join(", ")}. 
+ATTENTION : Génère un large choix (ex: 3 à 4 produits différents par catégorie, plusieurs choix de viandes, plusieurs boissons). N'oublie pas de définir tous tes items dans le dictionnaire "items".`;
+        formData.set("sujet", compiledSubject);
+        formData.set("sourceInspiration", wizardData.theme);
+      }
+
       const codeGenereStr = await genererUneNouvelleCarte(formData);
       const data = JSON.parse(codeGenereStr);
       setResultat(data);
@@ -118,23 +144,165 @@ export default function GenererCarte() {
           ))}
         </div>
 
-        <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '1rem', flexDirection: 'column', width: '100%', maxWidth: '450px', margin: '0 auto' }}>
+        <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', marginBottom: '2rem' }}>
+           <button 
+              onClick={() => setActiveTab("libre")}
+              style={{ padding: '0.8rem 1.5rem', borderRadius: '8px', border: 'none', background: activeTab === "libre" ? '#4f46e5' : '#e2e8f0', color: activeTab === "libre" ? 'white' : '#64748b', fontWeight: 600, cursor: 'pointer', transition: '0.2s' }}
+           >
+              ✏️ Mode Libre & OCR
+           </button>
+           <button 
+              onClick={() => setActiveTab("wizard")}
+              style={{ padding: '0.8rem 1.5rem', borderRadius: '8px', border: 'none', background: activeTab === "wizard" ? '#4f46e5' : '#e2e8f0', color: activeTab === "wizard" ? 'white' : '#64748b', fontWeight: 600, cursor: 'pointer', transition: '0.2s' }}
+           >
+              🪄 Assistant Guidé
+           </button>
+        </div>
+
+        <form onSubmit={handleSubmit} encType="multipart/form-data" style={{ display: 'flex', gap: '1rem', flexDirection: 'column', width: '100%', maxWidth: '450px', margin: '0 auto' }}>
           <input type="hidden" name="ai_type" value={selectedAI} />
-          <input
-            type="text"
-            name="sujet"
-            placeholder="Ex : Carte de fidélité pour fast-food..."
-            required
-            style={{ padding: '1.2rem', borderRadius: '12px', border: '1px solid #d1d5db', fontSize: '1.05rem', background: '#ffffff', color: '#111827', boxShadow: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.03)' }}
-          />
+          <input type="hidden" name="sauvegarder" value="on" />
 
-          <label style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: '#4b5563', fontSize: '0.95rem', cursor: 'pointer', padding: '0.5rem 0' }}>
-            <input type="checkbox" name="sauvegarder" style={{ width: '1.2rem', height: '1.2rem', accentColor: '#2563eb' }} defaultChecked />
-            Sauvegarder physiquement dans le projet
-          </label>
+          {activeTab === "libre" ? (
+            <>
+              <div style={{ padding: '2rem', border: '2px dashed #cbd5e1', borderRadius: '12px', textAlign: 'center', background: '#f8fafc', cursor: 'pointer', position: 'relative' }}>
+                 <label style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', color: '#475569' }}>
+                   <span style={{ fontSize: '2rem' }}>📸</span>
+                   <span style={{ fontWeight: 600 }}>Importer une photo de menu</span>
+                   <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>Optionnel : L'IA lira l'image (OCR) pour générer la carte.</span>
+                   <input 
+                     type="file" 
+                     name="menuImage" 
+                     accept="image/*" 
+                     onChange={(e) => {
+                       const file = e.target.files?.[0];
+                       if (file) {
+                         const url = URL.createObjectURL(file);
+                         const previewImg = document.getElementById('image-preview') as HTMLImageElement;
+                         if (previewImg) { previewImg.src = url; previewImg.style.display = 'block'; }
+                         const subInput = document.getElementById('sujet-input') as HTMLInputElement;
+                         if (subInput) subInput.required = false;
+                       }
+                     }}
+                     style={{ position: 'absolute', inset: 0, opacity: 0, cursor: 'pointer' }}
+                   />
+                 </label>
+                 <img id="image-preview" style={{ display: 'none', width: '100%', maxHeight: '200px', objectFit: 'contain', marginTop: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0' }} alt="Aperçu du menu" />
+              </div>
 
-          <button type="submit" disabled={isGenerating} className={styles.button_primary} style={{ opacity: isGenerating ? 0.7 : 1 }}>
-            {isGenerating ? `${AI_PROVIDERS.find(a => a.value === selectedAI)?.icon} ${AI_PROVIDERS.find(a => a.value === selectedAI)?.label} réfléchit...` : "🌟 Générer par IA"}
+              <p style={{ textAlign: 'center', margin: '0.5rem 0', fontWeight: 700, color: '#64748b' }}>OU / ET</p>
+
+              <input
+                id="sujet-input"
+                type="text"
+                name="sujet"
+                placeholder="Ex : Carte de fidélité pour fast-food..."
+                required={activeTab === "libre"}
+                style={{ padding: '1.2rem', borderRadius: '12px', border: '1px solid #d1d5db', fontSize: '1.05rem', background: '#ffffff', color: '#111827', boxShadow: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.03)' }}
+              />
+
+              <select 
+                name="sourceInspiration"
+                style={{ padding: '1rem', borderRadius: '12px', border: '1px solid #d1d5db', fontSize: '1rem', background: '#f8fafc', color: '#334155', outline: 'none' }}
+              >
+                <option value="generique">💡 Architecture ETK360 Standard (Générique)</option>
+                {libraryCards.map(file => (
+                   <option key={file} value={file}>🎯 S'inspirer de : {file.replace('.json', '')}</option>
+                ))}
+              </select>
+            </>
+          ) : (
+            <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}>
+               {wizardStep === 1 && (
+                 <div>
+                   <h3 style={{ margin: '0 0 1rem 0', color: '#1e293b' }}>Étape 1/4 : Type de restaurant ?</h3>
+                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                      {[
+                        { label: 'Fast-Food / Burger', val: 'carte1_smash_up.json' },
+                        { label: 'Pizzeria / Grill', val: 'carte3_grill_station.json' },
+                        { label: 'Tacos / Kebab', val: 'carte5_etoile_orientale.json' },
+                        { label: 'Standard ETK360', val: 'generique' }
+                      ].map(t => (
+                        <button key={t.val} type="button" onClick={() => { setWizardData({...wizardData, theme: t.val, typeLabel: t.label}); setWizardStep(2); }} style={{ padding: '1rem', borderRadius: '8px', border: '1px solid #cbd5e1', background: '#f8fafc', cursor: 'pointer', textAlign: 'left', fontWeight: 600, color: '#334155' }}>
+                          🌮 {t.label}
+                        </button>
+                      ))}
+                   </div>
+                 </div>
+               )}
+
+               {wizardStep === 2 && (
+                 <div>
+                   <h3 style={{ margin: '0 0 1rem 0', color: '#1e293b' }}>Étape 2/4 : Catégories à proposer ?</h3>
+                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1rem' }}>
+                      {['Burgers/Sandwichs', 'Pizzas', 'Boissons', 'Desserts', 'Accompagnements'].map(c => (
+                         <label key={c} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.5rem', background: '#f1f5f9', borderRadius: '6px', cursor: 'pointer' }}>
+                           <input type="checkbox" checked={wizardData.categories.includes(c)} onChange={(e) => {
+                              const newCat = e.target.checked ? [...wizardData.categories, c] : wizardData.categories.filter(x => x !== c);
+                              setWizardData({...wizardData, categories: newCat});
+                           }} style={{ width: '1.2rem', height: '1.2rem' }}/>
+                           <span style={{ color: '#475569', fontWeight: 500 }}>{c}</span>
+                         </label>
+                      ))}
+                   </div>
+                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <button type="button" onClick={() => setWizardStep(1)} style={{ padding: '0.5rem 1rem', borderRadius: '6px', cursor: 'pointer' }}>Retour</button>
+                      <button type="button" onClick={() => setWizardStep(3)} disabled={wizardData.categories.length === 0} style={{ padding: '0.5rem 1rem', background: '#4f46e5', color: 'white', borderRadius: '6px', cursor: 'pointer', opacity: wizardData.categories.length === 0 ? 0.5 : 1 }}>Suivant</button>
+                   </div>
+                 </div>
+               )}
+
+               {wizardStep === 3 && (
+                 <div>
+                   <h3 style={{ margin: '0 0 1rem 0', color: '#1e293b' }}>Étape 3/4 : Structure de la vente ?</h3>
+                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1rem' }}>
+                      <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', padding: '1rem', background: wizardData.structure === 'produits' ? '#e0e7ff' : '#f1f5f9', border: wizardData.structure === 'produits' ? '2px solid #4f46e5' : '2px solid transparent', borderRadius: '8px', cursor: 'pointer' }}>
+                        <input type="radio" checked={wizardData.structure === 'produits'} onChange={() => setWizardData({...wizardData, structure: 'produits'})} style={{ marginTop: '0.2rem' }} />
+                        <div>
+                           <div style={{ fontWeight: 600, color: '#1e293b' }}>Produits Simples Uniquement</div>
+                           <div style={{ fontSize: '0.85rem', color: '#64748b' }}>Ex: Achats directs.</div>
+                        </div>
+                      </label>
+                      <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', padding: '1rem', background: wizardData.structure === 'menus' ? '#e0e7ff' : '#f1f5f9', border: wizardData.structure === 'menus' ? '2px solid #4f46e5' : '2px solid transparent', borderRadius: '8px', cursor: 'pointer' }}>
+                        <input type="radio" checked={wizardData.structure === 'menus'} onChange={() => setWizardData({...wizardData, structure: 'menus'})} style={{ marginTop: '0.2rem' }} />
+                        <div>
+                           <div style={{ fontWeight: 600, color: '#1e293b' }}>Intégrer des Formules Menus</div>
+                           <div style={{ fontSize: '0.85rem', color: '#64748b' }}>Ex: Étapes de choix pour la boisson/sauce.</div>
+                        </div>
+                      </label>
+                   </div>
+                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <button type="button" onClick={() => setWizardStep(2)} style={{ padding: '0.5rem 1rem', borderRadius: '6px', cursor: 'pointer' }}>Retour</button>
+                      <button type="button" onClick={() => setWizardStep(4)} style={{ padding: '0.5rem 1rem', background: '#4f46e5', color: 'white', borderRadius: '6px', cursor: 'pointer' }}>Suivant</button>
+                   </div>
+                 </div>
+               )}
+
+               {wizardStep === 4 && (
+                 <div>
+                   <h3 style={{ margin: '0 0 1rem 0', color: '#1e293b' }}>Étape 4/4 : Options requises ?</h3>
+                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1rem' }}>
+                      {['Tailles (S, M, L)', 'Sauces au choix', 'Cuisson de la viande', 'Ingrédients Supplémentaires'].map(o => (
+                         <label key={o} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.5rem', background: '#f1f5f9', borderRadius: '6px', cursor: 'pointer' }}>
+                           <input type="checkbox" checked={wizardData.options.includes(o)} onChange={(e) => {
+                              const newOpt = e.target.checked ? [...wizardData.options, o] : wizardData.options.filter(x => x !== o);
+                              setWizardData({...wizardData, options: newOpt});
+                           }} style={{ width: '1.2rem', height: '1.2rem' }}/>
+                           <span style={{ color: '#475569', fontWeight: 500 }}>{o}</span>
+                         </label>
+                      ))}
+                   </div>
+                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <button type="button" onClick={() => setWizardStep(3)} style={{ padding: '0.5rem 1rem', borderRadius: '6px', cursor: 'pointer' }}>Retour</button>
+                      <span style={{ color: '#059669', fontWeight: 600 }}>✨ Prêt à générer !</span>
+                   </div>
+                 </div>
+               )}
+            </div>
+          )}
+
+          <button type="submit" disabled={isGenerating || (activeTab === "wizard" && wizardStep !== 4)} className={styles.button_primary} style={{ opacity: isGenerating || (activeTab === "wizard" && wizardStep !== 4) ? 0.5 : 1, marginTop: '1rem' }}>
+            {isGenerating ? `${AI_PROVIDERS.find(a => a.value === selectedAI)?.icon} Génération (Patience ~40s)...` : "🌟 Générer la Carte"}
           </button>
         </form>
 
