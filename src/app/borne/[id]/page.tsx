@@ -52,11 +52,29 @@ export default async function BornePage({ params }: { params: Promise<{ id: stri
     ? rawTitle.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
     : "Borne Interactive";
 
-  // Extraction de la palette de couleurs principale et secondaire depuis les items
-  let themePalette = { primary: '#F39C12', secondary: '#1A237E', text: '#111827', onPrimary: 'white' }; // Couleurs par défaut
-  const colorCounts: Record<string, number> = {};
+  let themePalette = { primary: '#F39C12', secondary: '#1A237E', background: '#F8FAFC', surface: '#FFFFFF', text: '#111827', onPrimary: 'white' };
   
-  if (data.items) {
+  if (data.theme && Array.isArray(data.theme.palette) && data.theme.palette.length >= 2) {
+     const p = data.theme.palette;
+     themePalette = {
+        background: p[0] || themePalette.background,
+        surface: p[1] || themePalette.surface,
+        primary: p[2] || themePalette.primary,
+        text: p[3] || themePalette.text,
+        onPrimary: p[4] || themePalette.onPrimary,
+        secondary: p[2] || themePalette.secondary 
+     };
+  } else if (data.theme && typeof data.theme === 'object' && !Array.isArray(data.theme.palette)) {
+     themePalette = {
+        primary: data.theme.primary || themePalette.primary,
+        secondary: data.theme.secondary || themePalette.secondary,
+        background: data.theme.background || themePalette.background,
+        surface: themePalette.surface,
+        text: data.theme.text || data.theme.primary || themePalette.text,
+        onPrimary: 'white'
+     };
+  } else if (data.items) {
+    const colorCounts: Record<string, number> = {};
     Object.values(data.items).forEach((item: any) => {
        if (item.color && typeof item.color === 'string' && item.color.startsWith('#')) {
           const color = item.color.trim().toUpperCase();

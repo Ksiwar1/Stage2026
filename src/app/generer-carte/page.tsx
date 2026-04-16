@@ -3,7 +3,7 @@
 import styles from "../page.module.css";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { genererUneNouvelleCarte, getAvailableLibraryCards } from "../actions/genererCarteAction";
+import { genererArchitectureAction, enrichirCarteAction, getAvailableLibraryCards } from "../actions/genererCarteAction";
 import KioskSimulator from "../../components/KioskSimulator";
 import { parseETK360Hierarchy } from "../../lib/softaveraParser";
 
@@ -16,6 +16,7 @@ const AI_PROVIDERS = [
 export default function GenererCarte() {
   const [resultat, setResultat] = useState<{ success: boolean; json?: string; savedPath?: string | null; error?: string } | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [generationStepText, setGenerationStepText] = useState<string>("");
   const [selectedAI, setSelectedAI] = useState("groq");
 
   // States Modal Visualisation
@@ -34,7 +35,8 @@ export default function GenererCarte() {
     typeLabel: "",
     categories: [] as string[],
     structure: "produits",
-    options: [] as string[]
+    options: [] as string[],
+    palette: ""
   });
 
   useEffect(() => {
@@ -44,6 +46,7 @@ export default function GenererCarte() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsGenerating(true);
+    setGenerationStepText("🏗️ 1/2 : Création de l'architecture du parcours...");
     setResultat(null);
 
     try {
@@ -51,8 +54,9 @@ export default function GenererCarte() {
       
       if (activeTab === "wizard") {
         const compiledSubject = `Je veux un vrai restaurant de type ${wizardData.typeLabel}. Catégories requises : ${wizardData.categories.join(", ")}. 
-Format de vente : ${wizardData.structure === "menus" ? "Créer absolument des Formules Menus complexes avec des étapes de choix obligatoires. Règle absolue pour l'ordre des steps (utiliser le 'rank'): 1. Viande/Base, 2. Sauces, 3. Frites/Accompagnement, 4. Boisson, 5. Dessert. ATTENTION : Garde bien la DÉFINITION du contenu des 'steps' (avec leurs 'items' et 'minChoices') EXCLUSIVEMENT à la racine du JSON. Dans le 'modifier', tu fais juste le lien avec le 'rank'." : "Uniquement des produits simples en vente directe, sans format menu."} 
+Format de vente : ${wizardData.structure === "menus" ? "Créer absolument des Formules Menus complexes avec des étapes de choix obligatoires. Règle absolue pour l'ordre des steps (utiliser le 'rank'): 1. Viande/Base, 2. Frites/Accompagnement, 3. Sauces, 4. Boisson, 5. Dessert. ATTENTION : Garde bien la DÉFINITION du contenu des 'steps' (avec leurs 'items' et 'minChoices') EXCLUSIVEMENT à la racine du JSON. Dans le 'modifier', tu fais juste le lien avec le 'rank'." : "Uniquement des produits simples en vente directe, sans format menu."} 
 Options à inclure globalement : ${wizardData.options.join(", ")}. 
+${wizardData.palette ? `PALETTE GRAPHIQUE STRICTE (N'invente aucune couleur) : ${wizardData.palette}` : ""}
 ATTENTION : Génère un large choix (ex: 3 à 4 produits différents par catégorie, plusieurs choix de viandes, plusieurs boissons). N'oublie pas de définir tous tes items dans le dictionnaire "items".`;
         formData.set("sujet", compiledSubject);
         formData.set("sourceInspiration", wizardData.theme);
@@ -61,8 +65,24 @@ ATTENTION : Génère un large choix (ex: 3 à 4 produits différents par catégo
 
       setSubmittedRestaurantName((formData.get("restaurantName") as string) || "RESTAURANT IA");
 
-      const codeGenereStr = await genererUneNouvelleCarte(formData);
-      const data = JSON.parse(codeGenereStr);
+      // Étape 1 : Architecture
+      const archRes = await genererArchitectureAction(formData);
+      if (!archRes.success || !archRes.architectureJson) {
+         setResultat({ success: false, error: archRes.error || "Échec inattendu de la Phase 1." });
+         setIsGenerating(false);
+         setGenerationStepText("");
+         return;
+      }
+
+      // Étape 2 : Produits (Enrichissement)
+      setGenerationStepText("🍔 2/2 : Ajout des produits et options (Patience)...");
+      const enrichResStr = await enrichirCarteAction(
+         formData, 
+         archRes.architectureJson, 
+         archRes.activeSourceInspiration || "", 
+         archRes.activeSecondaryInspirations || []
+      );
+      const data = JSON.parse(enrichResStr);
       setResultat(data);
       
       // Stockage préventif
@@ -79,6 +99,7 @@ ATTENTION : Génère un large choix (ex: 3 à 4 produits différents par catégo
       setResultat({ success: false, error: "Erreur technique côté client lors de la réception." });
     } finally {
       setIsGenerating(false);
+      setGenerationStepText("");
     }
   };
 
@@ -254,7 +275,7 @@ ATTENTION : Génère un large choix (ex: 3 à 4 produits différents par catégo
 
                {wizardStep === 2 && (
                  <div>
-                   <h3 style={{ margin: '0 0 1rem 0', color: '#1e293b' }}>Étape 2/4 : Catégories à proposer ?</h3>
+                   <h3 style={{ margin: '0 0 1rem 0', color: '#1e293b' }}>Étape 2/5 : Catégories à proposer ?</h3>
                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1rem' }}>
                       {['Burgers/Sandwichs', 'Pizzas', 'Boissons', 'Desserts', 'Accompagnements'].map(c => (
                          <label key={c} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.5rem', background: '#f1f5f9', borderRadius: '6px', cursor: 'pointer' }}>
@@ -275,7 +296,7 @@ ATTENTION : Génère un large choix (ex: 3 à 4 produits différents par catégo
 
                {wizardStep === 3 && (
                  <div>
-                   <h3 style={{ margin: '0 0 1rem 0', color: '#1e293b' }}>Étape 3/4 : Structure de la vente ?</h3>
+                   <h3 style={{ margin: '0 0 1rem 0', color: '#1e293b' }}>Étape 3/5 : Structure de la vente ?</h3>
                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1rem' }}>
                       <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', padding: '1rem', background: wizardData.structure === 'produits' ? '#e0e7ff' : '#f1f5f9', border: wizardData.structure === 'produits' ? '2px solid #4f46e5' : '2px solid transparent', borderRadius: '8px', cursor: 'pointer' }}>
                         <input type="radio" checked={wizardData.structure === 'produits'} onChange={() => setWizardData({...wizardData, structure: 'produits'})} style={{ marginTop: '0.2rem' }} />
@@ -301,7 +322,35 @@ ATTENTION : Génère un large choix (ex: 3 à 4 produits différents par catégo
 
                {wizardStep === 4 && (
                  <div>
-                   <h3 style={{ margin: '0 0 1rem 0', color: '#1e293b' }}>Étape 4/4 : Options requises ?</h3>
+                   <h3 style={{ margin: '0 0 1rem 0', color: '#1e293b' }}>Étape 4/5 : Ambiance Visuelle ?</h3>
+                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '1rem' }}>
+                      {[
+                        { label: 'Minimaliste (N&B)', val: '["#FFFFFF","#F9F9F9","#000000","#333333","#E0E0E0"]', colors: ['#FFFFFF', '#F9F9F9', '#000000', '#333333', '#E0E0E0'] },
+                        { label: 'Cyberpunk (Néon)', val: '["#0B0C10","#1F2833","#66FCF1","#C5C6C7","#45A29E"]', colors: ['#0B0C10', '#1F2833', '#66FCF1', '#C5C6C7', '#45A29E'] },
+                        { label: 'Terre & Nature', val: '["#2E3B32","#DFD4B8","#B58F66","#D9D9D9","#8F250C"]', colors: ['#2E3B32', '#DFD4B8', '#B58F66', '#D9D9D9', '#8F250C'] },
+                        { label: 'Fast-Food (Rouge)', val: '["#FFFFFF","#FFFBEB","#DC2626","#111827","#FBBF24"]', colors: ['#FFFFFF', '#FFFBEB', '#DC2626', '#111827', '#FBBF24'] },
+                      ].map(p => (
+                        <label key={p.label} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', padding: '0.75rem', background: wizardData.palette === p.val ? '#e0e7ff' : '#f1f5f9', border: wizardData.palette === p.val ? '2px solid #4f46e5' : '2px solid transparent', borderRadius: '8px', cursor: 'pointer', textAlign: 'center' }}>
+                          <input type="radio" checked={wizardData.palette === p.val} onChange={() => setWizardData({...wizardData, palette: p.val})} style={{ display: 'none' }} />
+                          <div style={{ display: 'flex', justifyContent: 'center', gap: '0.2rem' }}>
+                            {p.colors.map((c, i) => (
+                               <div key={i} style={{ width: '16px', height: '16px', borderRadius: '50%', background: c, border: c === '#FFFFFF' ? '1px solid #e2e8f0' : 'none' }} />
+                            ))}
+                          </div>
+                          <span style={{ fontWeight: 600, color: '#1e293b', fontSize: '0.85rem' }}>{p.label}</span>
+                        </label>
+                      ))}
+                   </div>
+                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <button type="button" onClick={() => setWizardStep(3)} style={{ padding: '0.5rem 1rem', borderRadius: '6px', cursor: 'pointer' }}>Retour</button>
+                      <button type="button" onClick={() => setWizardStep(5)} disabled={!wizardData.palette} style={{ padding: '0.5rem 1rem', background: '#4f46e5', color: 'white', borderRadius: '6px', cursor: 'pointer', opacity: !wizardData.palette ? 0.5 : 1 }}>Suivant</button>
+                   </div>
+                 </div>
+               )}
+
+               {wizardStep === 5 && (
+                 <div>
+                   <h3 style={{ margin: '0 0 1rem 0', color: '#1e293b' }}>Étape 5/5 : Options requises ?</h3>
                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1rem' }}>
                       {['Tailles (S, M, L)', 'Sauces au choix', 'Cuisson de la viande', 'Ingrédients Supplémentaires'].map(o => (
                          <label key={o} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.5rem', background: '#f1f5f9', borderRadius: '6px', cursor: 'pointer' }}>
@@ -314,7 +363,7 @@ ATTENTION : Génère un large choix (ex: 3 à 4 produits différents par catégo
                       ))}
                    </div>
                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <button type="button" onClick={() => setWizardStep(3)} style={{ padding: '0.5rem 1rem', borderRadius: '6px', cursor: 'pointer' }}>Retour</button>
+                      <button type="button" onClick={() => setWizardStep(4)} style={{ padding: '0.5rem 1rem', borderRadius: '6px', cursor: 'pointer' }}>Retour</button>
                       <span style={{ color: '#059669', fontWeight: 600 }}>✨ Prêt à générer !</span>
                    </div>
                  </div>
@@ -322,8 +371,8 @@ ATTENTION : Génère un large choix (ex: 3 à 4 produits différents par catégo
             </div>
           )}
 
-          <button type="submit" disabled={isGenerating || (activeTab === "wizard" && wizardStep !== 4)} className={styles.button_primary} style={{ opacity: isGenerating || (activeTab === "wizard" && wizardStep !== 4) ? 0.5 : 1, marginTop: '1rem' }}>
-            {isGenerating ? `${AI_PROVIDERS.find(a => a.value === selectedAI)?.icon} Génération (Patience ~40s)...` : "🌟 Générer la Carte"}
+          <button type="submit" disabled={isGenerating || (activeTab === "wizard" && wizardStep !== 5)} className={styles.button_primary} style={{ opacity: isGenerating || (activeTab === "wizard" && wizardStep !== 5) ? 0.5 : 1, marginTop: '1rem' }}>
+            {isGenerating ? generationStepText : "🌟 Générer la Carte"}
           </button>
         </form>
 
@@ -370,7 +419,17 @@ ATTENTION : Génère un large choix (ex: 3 à 4 produits différents par catégo
       )}
 
 
-
+      {/* MODAL DE CHARGEMENT IA */}
+      {isGenerating && (
+        <div className={styles.loadingOverlay}>
+          <div className={styles.spinnerContainer}>
+            <div className={styles.spinner}></div>
+            <div className={styles.spinnerCenter}>✨</div>
+          </div>
+          <h2 className={styles.loadingText}>Création en cours...</h2>
+          <div className={styles.loadingSubtext}>{generationStepText}</div>
+        </div>
+      )}
 
       {/* MODAL SIMULATEUR */}
       {isVisualizing && (

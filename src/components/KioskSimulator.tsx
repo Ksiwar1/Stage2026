@@ -42,7 +42,7 @@ export interface ParsedCategory {
 export type AppStep = Omit<ParsedStep, 'semanticType'> & { semanticType: string };
 
 
-export default function KioskSimulator({ restaurantName, tree, themePalette = { primary: '#F39C12', secondary: '#1A237E', text: '#111827', onPrimary: 'white' }, catalogData }: { restaurantName: string, tree: ParsedCategory[], themePalette?: { primary: string, secondary: string, text: string, onPrimary: string }, catalogData?: any }) {
+export default function KioskSimulator({ restaurantName, tree, themePalette = { primary: '#F39C12', secondary: '#1A237E', background: '#F8FAFC', surface: '#FFFFFF', text: '#111827', onPrimary: 'white' }, catalogData }: { restaurantName: string, tree: ParsedCategory[], themePalette?: { primary: string, secondary: string, background?: string, surface?: string, text: string, onPrimary: string }, catalogData?: any }) {
   const [diningOption, setDiningOption] = useState<'sur_place' | 'emporter' | null>(null);
   const [activeCategoryId, setActiveCategoryId] = useState<string>(tree[0]?.id || "");
   const activeCategory = tree.find(c => c.id === activeCategoryId);
@@ -366,8 +366,8 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
   }
 
   return (
-    <div style={{ '--color-primary': themePalette.primary, '--color-secondary': themePalette.secondary, '--color-text': themePalette.text, '--color-on-primary': themePalette.onPrimary } as React.CSSProperties}>
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw', background: '#F5F5F0', fontFamily: 'sans-serif', overflow: 'hidden' }}>
+    <div style={{ '--color-primary': themePalette.primary, '--color-secondary': themePalette.secondary, '--color-background': themePalette.background, '--color-surface': themePalette.surface, '--color-text': themePalette.text, '--color-on-primary': themePalette.onPrimary } as React.CSSProperties}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw', background: 'var(--color-background)', fontFamily: 'sans-serif', overflow: 'hidden' }}>
       
       {/* TUNNEL MODAL */}
       {selectedProduct && (
@@ -376,7 +376,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
           zIndex: 100, display: 'flex', justifyContent: 'center', alignItems: 'center', backdropFilter: 'blur(5px)'
         }}>
           <div style={{
-            background: 'white', width: '90%', maxWidth: '1000px', height: '90vh', borderRadius: '24px',
+            background: 'var(--color-surface)', width: '90%', maxWidth: '1000px', height: '90vh', borderRadius: '24px',
             display: 'flex', flexDirection: 'column', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
             position: 'relative'
           }}>
@@ -664,7 +664,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
       <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
         
         {/* COLONNE GAUCHE (Catégories) */}
-        <div style={{ width: '25%', minWidth: '250px', maxWidth: '300px', background: '#ffffff', boxShadow: '4px 0 15px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', zIndex: 10 }}>
+        <div style={{ width: '25%', minWidth: '250px', maxWidth: '300px', background: 'var(--color-surface)', boxShadow: '4px 0 15px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', zIndex: 10 }}>
           <div style={{ flex: 1, overflowY: 'auto' }}>
             {tree.map(cat => {
               const isActive = activeCategoryId === cat.id;
@@ -712,7 +712,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
             {activeCategory?.products.map((p, pIndex) => (
               <div key={`${p.id}-${pIndex}`} onClick={() => startOrder(p)}
                 style={{ 
-                  background: 'white', borderRadius: '16px', position: 'relative', overflow: 'hidden', 
+                  background: 'var(--color-surface)', borderRadius: '16px', position: 'relative', overflow: 'hidden', 
                   boxShadow: '0 8px 20px rgba(0,0,0,0.06)', display: 'flex', flexDirection: 'column', 
                   padding: '1.5rem', cursor: 'pointer', transition: 'transform 0.2s'
                 }}

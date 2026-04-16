@@ -36,7 +36,7 @@ export function getPromptSystemForAI(sourceCatalogName?: string, secondaryInspir
   // Construction du RAG avec les modèles secondaires !
   let secondaryContext = "";
   if (secondaryInspirations.length > 0) {
-     const extractions = secondaryInspirations.map(file => extractTemplateFromCatalogue(path.join(process.cwd(), '.softavera', 'carte', file))).filter(t => t);
+     const extractions = secondaryInspirations.map(file => extractLightStructureFromCatalogue(path.join(process.cwd(), '.softavera', 'carte', file))).filter(t => t);
      if (extractions.length > 0) {
         secondaryContext = `\n\nPOUR TON INSPIRATION STRUCTURELLE (RAG), voici ${extractions.length} autre(s) méthode(s) validée(s) dans notre librairie. Inspires-en toi pour les patterns complexes :\n`;
         extractions.forEach((ext, i) => {
@@ -47,11 +47,19 @@ export function getPromptSystemForAI(sourceCatalogName?: string, secondaryInspir
 
   let baseTemplate = "";
   if (sourceCatalogName && sourceCatalogName !== 'generique') {
-    const extractedTemplate = extractTemplateFromCatalogue(path.join(process.cwd(), '.softavera', 'carte', sourceCatalogName));
-    if (extractedTemplate) baseTemplate = extractedTemplate;
+    if (phase === 1) {
+       const extractedTemplate = extractLightStructureFromCatalogue(path.join(process.cwd(), '.softavera', 'carte', sourceCatalogName));
+       if (extractedTemplate) baseTemplate = extractedTemplate;
+    } else {
+       const extractedTemplate = extractTemplateFromCatalogue(path.join(process.cwd(), '.softavera', 'carte', sourceCatalogName));
+       if (extractedTemplate) baseTemplate = extractedTemplate;
+    }
   } else {
     // Le Generique master template
     baseTemplate = `{
+  "theme": {
+    "palette": ["#4F46E5", "#10B981", "#F59E0B", "#F3F4F6", "#111827"]
+  },
   "workflow": {
     "cat_menus": {
       "type": "categories",
@@ -80,21 +88,14 @@ export function getPromptSystemForAI(sourceCatalogName?: string, secondaryInspir
     "item_coca": {
       "title": "Coca Cola",
       "price": { "dflt": { "ttc": 2.50 } },
-      "opt": { "dim_taille_boisson": [ "val_33cl", "val_50cl" ] }
+      "modifier": "mod_boisson_taille"
     },
+    "item_coca_33cl": { "title": "Normale 33cl", "price": { "dflt": { "ttc": 0 } } },
+    "item_coca_50cl": { "title": "Maxi 50cl", "price": { "dflt": { "ttc": 0.50 } } },
     "item_frites": { "title": "Frites Classiques" },
     "item_potatoes": { "title": "Potatoes Croustillantes" },
     "item_sauce_mayo": { "title": "Mayonnaise" },
     "item_sauce_ket": { "title": "Ketchup" }
-  },
-  "opt": {
-    "dim_taille_boisson": {
-      "title": "Taille de votre boisson",
-      "values": {
-        "val_33cl": { "title": "Normale", "rank": 1 },
-        "val_50cl": { "title": "Maxi", "rank": 2, "priceDelta": 0.50 }
-      }
-    }
   },
   "modifier": {
     "mod_menu_burger_steps": {
@@ -102,6 +103,11 @@ export function getPromptSystemForAI(sourceCatalogName?: string, secondaryInspir
         "step_choix_boisson": { "rank": 1 },
         "step_choix_accompagnement": { "rank": 2 },
         "step_choix_sauce": { "rank": 3 }
+      }
+    },
+    "mod_boisson_taille": {
+      "steps": {
+        "step_taille_boisson": { "rank": 1 }
       }
     }
   },
@@ -123,6 +129,12 @@ export function getPromptSystemForAI(sourceCatalogName?: string, secondaryInspir
       "minChoices": 0,
       "maxChoices": 2,
       "items": { "item_sauce_mayo": {}, "item_sauce_ket": {} }
+    },
+    "step_taille_boisson": {
+      "title": "Taille de votre boisson",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": { "item_coca_33cl": {}, "item_coca_50cl": {} }
     }
   }
 }`;
@@ -140,41 +152,57 @@ Tu dois t'en inspirer PROFONDÉMENT.
 ${baseTemplate}
 \`\`\`
 ${secondaryContext}
+Génère la structure d'une carte de restaurant pour le sujet suivant :
 
-RÈGLES VITALES PHASE 1 :
-1. TON JSON DOIT CONSTRUIRE UN PARCOURS ABSTRAIT (Génère UNIQUEMENT les objets "workflow", "categories", et les attributs "modifier" liés).
-2. NE METS AUCUN PRIX, AUCUNE IMAGE. On ne veut que la structure des IDs.
-3. Chaque identifiant de catégorie dans "workflow" doit correspondre exactement au dictionnaire "categories".
-4. Chaque ID de produit listé dans "workflow -> content" doit obligatoirement inclure l'affectation de son "modifier" si c'est un menu complexe, ou "opt" si c'est simplement quelques tailles/variantes.
-5. Produis un Json contenant uniqument "workflow", "categories" (et Optionellement un mapping abstrait "modifier" contenant les steps vide d'items).
+Contraintes :
+- Générer uniquement : "theme", "workflow", "categories".
+- Ne génère aucun item, modifier ou option. Laisse les 'content' vides.
+- Le workflow doit représenter un parcours utilisateur réel (borne de commande).
+- Respecter le format exact des dictionnaires de l'architecture ETK360 (Modèle Maître ci-dessus).
+- Si une "PALETTE GRAPHIQUE" est précisée, l'injecter dans "theme" (format: { "palette": [...] }).
 
-Génère l'architecture abstraite ETK360 la plus pertinente pour la demande suivante :`;
+Sujet demandé :`;
   }
 
   // PHASE 2 (Enrichissement)
   return `Tu es l'architecte JSON expert du système de kiosque ETK360.
-Ta mission est d'effectuer la PHASE 2 de génération : L'ENRICHISSEMENT COMPLET.
-L'utilisateur te fournit en entrée l'Architecture Abstraite parfaite (Le Squelette). 
-Ton rôle est de remplir cette architecture en créant les dictionnaires ("items", "steps", "opt", "modifier" manquants) avec les vrais produits et prix.
+Ta mission est d'effectuer la PHASE 2 : FUSION ET ENRICHISSEMENT.
+L'utilisateur te fournit en entrée l'Architecture (Le Squelette). 
+Ton rôle est d'ASSEMBLER ET FUSIONNER le Modèle Maître avec l'Inspiration RAG pour répondre à la demande. NE CRÉE PAS DE STRUCTURE LIBREMENT. Tu dois utiliser et copier à l'identique ("copier / coller intelligent") les types de steps, modifiers et items existants dans les modèles fournis en ne modifiant que ce qui est strictement nécessaire pour fusionner l'ensemble.
+Tu vas créer les dictionnaires ("items", "steps", "modifier") avec la même logique hiérarchique que celle des modèles fournis.
 Tu ne dois renvoyer QUE le JSON final (sans balises markdown autour du texte ni blabla).
 ${ocrAddon}
 
 MA RÉFÉRENCE PRINCIPALE (TON MODÈLE MÂÎTRE) :
-Pour savoir COMMENT formater un dictionnaire 'steps', 'items' ou 'opt', voici la structure parfaite que tu dois imiter :
-${baseTemplate ? `\`\`\`json\n${baseTemplate}\n\`\`\`` : "Aucun modèle maître, crée l'architecture Standard ETK360."}
+Voici la structure parfaite que tu dois copier et adapter au nouveau sujet :
+${baseTemplate ? `\`\`\`json\n${baseTemplate}\n\`\`\`` : "Aucun modèle maître."}
 
-${secondaryContext}
+Tu vas complèter la carte en générant :
+- items
+- modifier
+- steps
 
-RÈGLES VITALES PHASE 2 :
-1. Tu dois respecter SCRUPULEUSEMENT le Squelette de la Phase 1 passé en argument. Tout ID de produit listé dans le workflow de la Phase 1 doit TOUJOURS apparaître à la racine de "items". De même, le dictionnaire "steps" doit être OBLIGATOIREMENT défini à la RACINE du JSON final, et JAMAIS à l'intérieur de "modifier".
-2. ATTENTION AUX PRIX : Invente des tarifs cohérents ! { "dflt": { "ttc": 12.50 } }. Ne conserve aucun produit à 0.00€.
-3. RÈGLE D'OR SUR LES IDS : Absolument TOUS les identifiants présents à l'intérieur de tes 'steps' DOIVENT obligatoirement exister à la racine "items". Ne crée JAMAIS un identifiant fantôme.
-4. RÈGLE D'OR SUR L'ORDRE DES ÉTAPES : Si tu crées un Menu avec "steps", utilise la propriété "rank" pour respecter l'ordre logique d'une commande française : d'abord Viande (1), puis Sauces (2), Frites (3), Boisson (4), Dessert (5).
-5. S'il s'agit d'une option globale qui ne nécessite pas d'étapes multiples, utilise un objet "opt" lié au produit.
-6. INTELLIGENCE VISUELLE : Pour chaque objet tu DOIS obligatoirement ajouter l'URL \`"img": { "dflt": { "img": "https://image.pollinations.ai/prompt/{prompt_anglais}" } }\`. Ne laisses AUCUNE image vide.
-7. Chaque Step doit OBLIGATOIREMENT avoir au moins 2 options (items) pour qu'il y ait un choix.
+RÈGLES D'OR STRUCTURELLES: 
+- INTERDICTION ABSOLUE D'UTILISER LE MOT-CLÉ "opt".
+- OBLIGATION GLOBALE DE PREMIER NIVEAU : Les 3 nouveaux dictionnaires ("items", "modifier", "steps") que tu dois générer DOIVENT OBLIGATOIREMENT ÊTRE PLACÉS À LA RACINE GLOBALE DU JSON (au tout premier niveau, exactement à côté de "workflow" et "categories"). NE LES INCLUS JAMAIS À L'INTÉRIEUR DU WORKFLOW !
+- COHÉRENCE ABSOLUE DES IDENTIFIANTS (TRÈS IMPORTANT) : Le dictionnaire 'items' que tu vas générer doit IMPÉRATIVEMENT redéclarer TOUS les identifiants qui ont été déclarés dans les tableaux 'content' du 'workflow' de l'Architecture de base. Ne génère pas d'identifiants aléatoires ! Chaque identifiant déclaré dans le workflow DOIT avoir sa définition produit dans 'items'. Pense bien à donner des noms logiques liés à la catégorie (ex: Des VRAIES frites dans la catégorie Frites).
+- Tu dois REPRODUIRE exactement la structure du Modèle Maître, sans en inventer une nouvelle: pointage d'IDs (Cross-Referencing) : un produit "Menu" pointe vers un ID de "modifier", qui pointe vers des IDs de "steps", qui pointent inversement vers des IDs d'"items" existants à la racine.
 
-Voici le Squelette Abstrait généré à l'étape 1 dont tu dois hériter et compléter :
+Contraintes :
+- Ne génère JAMAIS de "opt" ou une autre structure personnalisée.
+- On change uniquement les noms (produits, catégories) et le contenu (prix), mais JAMAIS la structure générale du référencement croisé.
+- PERFORMANCES (TRÈS IMPORTANT) : Génère MAXIMUM 3 à 5 items par catégorie. Ne crée jamais de listes de 20 produits. Reste concis.
+- PERFORMANCES : Génère MAXIMUM 2 à 3 options par 'steps' (ex: juste 2 tailles, 2 sauces, etc).
+- Chaque catégorie doit pointer vers le dictionnaire items.
+- Un maximum d'items doit contenir au moins un modifier pour suivre la logique imposée.
+- Chaque modifier doit pointer vers des steps.
+- Chaque step doit lister ses options minimalistes (déclarées dans le dictionnaire "items" à la racine).
+- REGLE D'IMAGE INTELLIGENTE : Pour tout objet, ajoute la propriété "img": { "dflt": { "img": "https://image.pollinations.ai/prompt/[NOM_DU_PRODUIT_TRADUIT_EN_ANGLAIS_SANS_ESPACE]" } }. Exemple pour "Frites Cheddar" : '.../prompt/cheddar_fries'. Pour "Burger Poulet" : '.../prompt/chicken_burger'. L'image sera hautement réaliste.
+
+Respecte strictement la boucle infinie ETK360 :
+workflow → categories → items → modifier → steps → items
+
+Voici le squelette de la carte (généré à l'étape 1) dont tu dois hériter :
 `;
 }
 
@@ -269,6 +297,57 @@ export function getCartesVisualSummary(): VisualCardSummary[] {
 
   return summaries;
 }
+export function extractLightStructureFromCatalogue(catalogPath: string): string | null {
+  try {
+    if (!fs.existsSync(catalogPath)) return null;
+    const content = fs.readFileSync(catalogPath, 'utf-8');
+    const data = JSON.parse(content);
+    if (!data.workflow || !data.categories) return null;
+
+    // Purge the deeply nested "content" loops inside workflow to keep only structural buckets
+    const cleanWorkflow: any = {};
+    for (const key of Object.keys(data.workflow)) {
+       const node = data.workflow[key];
+       if (node.type === 'categories') {
+          cleanWorkflow[key] = { type: 'categories', rank: node.rank };
+          if (node.content) cleanWorkflow[key].content = {};
+       } else {
+          // If wrapper exist (like work_base -> category)
+          const subKeys = Object.keys(node);
+          if (subKeys.length > 0 && node[subKeys[0]]?.type === 'categories') {
+             cleanWorkflow[key] = {};
+             for (const sK of subKeys) {
+                cleanWorkflow[key][sK] = { type: 'categories', rank: node[sK].rank };
+                if (node[sK].content) cleanWorkflow[key][sK].content = {};
+             }
+          }
+       }
+    }
+
+    const skeleton: any = {
+       workflow: cleanWorkflow,
+       categories: Object.keys(data.categories).slice(0, 15).reduce((acc: any, k) => {
+          acc[k] = { title: data.categories[k].title };
+          return acc;
+       }, {})
+    };
+
+    if (data.steps) {
+       skeleton.steps = Object.keys(data.steps).slice(0, 15).reduce((acc: any, k) => {
+          acc[k] = { 
+            title: data.steps[k].title, 
+            minChoices: data.steps[k].minChoices, 
+            maxChoices: data.steps[k].maxChoices 
+          };
+          return acc;
+       }, {});
+    }
+
+    return JSON.stringify(skeleton, null, 0);
+  } catch (err) {
+    return null;
+  }
+}
 
 export function extractTemplateFromCatalogue(catalogPath: string): string | null {
   try {
@@ -358,7 +437,7 @@ export function extractTemplateFromCatalogue(catalogPath: string): string | null
     }
     
     // 5. Recursive Traversal Algorithm
-    const traverseItem = (itemId: string) => {
+    const traverseItem = (itemId: string, depth: number = 0) => {
       if (skeleton.items[itemId]) return;
       if (!data.items[itemId]) return;
       const it = { ...data.items[itemId] };
@@ -368,42 +447,44 @@ export function extractTemplateFromCatalogue(catalogPath: string): string | null
       it.title = "NOM_PRODUIT_A_REMPLACER"; // Forcer un titre explicite pour l'IA
       skeleton.items[itemId] = it;
 
-      if (it.modifier) {
-         traverseModifier(it.modifier);
-      }
-      if (it.opt) {
-         Object.keys(it.opt).forEach(traverseOpt);
+      if (it.modifier && depth < 1) {
+         traverseModifier(it.modifier, depth);
       }
     };
 
-    const traverseModifier = (modId: string) => {
+    const traverseModifier = (modId: string, depth: number) => {
       if (skeleton.modifier[modId]) return;
       if (!data.modifier?.[modId]) return;
-      skeleton.modifier[modId] = data.modifier[modId];
-      if (data.modifier[modId].steps) {
-         Object.keys(data.modifier[modId].steps).forEach(traverseStep);
+      
+      const modData = { ...data.modifier[modId] };
+      if (modData.steps) {
+         const selection = Object.keys(modData.steps).slice(0, 2); // Capped at 2 steps
+         const subSteps: any = {};
+         selection.forEach(k => {
+             subSteps[k] = modData.steps[k];
+             traverseStep(k, depth);
+         });
+         modData.steps = subSteps;
       }
+      skeleton.modifier[modId] = modData;
     };
 
-    const traverseStep = (stepId: string) => {
+    const traverseStep = (stepId: string, depth: number) => {
       if (skeleton.steps[stepId]) return;
       if (!data.steps?.[stepId]) return;
-      skeleton.steps[stepId] = data.steps[stepId];
       
-      if (data.steps[stepId].opt) {
-         Object.keys(data.steps[stepId].opt).forEach(traverseOpt);
+      const stepData = { ...data.steps[stepId] };
+      if (stepData.items) {
+         const selection = Object.keys(stepData.items).slice(0, 2);
+         const subItems: any = {};
+         selection.forEach(id => {
+             subItems[id] = stepData.items[id];
+             traverseItem(id, depth + 1);
+         });
+         stepData.items = subItems;
       }
-      if (data.steps[stepId].items) {
-         Object.keys(data.steps[stepId].items).forEach(traverseItem);
-      }
+      skeleton.steps[stepId] = stepData;
     };
-
-    const traverseOpt = (optKey: string) => {
-      if (skeleton.opt[optKey]) return;
-      if (!data.opt?.[optKey]) return;
-      skeleton.opt[optKey] = data.opt[optKey];
-    };
-
     // Begin injection
     if (complexItemId) traverseItem(complexItemId);
     if (simpleItemId) traverseItem(simpleItemId);
@@ -415,8 +496,14 @@ export function extractTemplateFromCatalogue(catalogPath: string): string | null
     const targetContentContainer = isWrapperLevel ? skeleton.workflow["work_base"][firstCatId] : skeleton.workflow[firstCatId];
     if (targetContentContainer && targetContentContainer.content) {
        targetContentContainer.content = {};
-       if (complexItemId) targetContentContainer.content[complexItemId] = { type: 'items', rank: 1 };
-       if (simpleItemId) targetContentContainer.content[simpleItemId] = { type: 'items', rank: 2 };
+       if (complexItemId) {
+          targetContentContainer.content[complexItemId] = { type: 'items', rank: 1 };
+          if (data.items[complexItemId].modifier) targetContentContainer.content[complexItemId].modifier = data.items[complexItemId].modifier;
+       }
+       if (simpleItemId) {
+          targetContentContainer.content[simpleItemId] = { type: 'items', rank: 2 };
+          if (data.items[simpleItemId].modifier) targetContentContainer.content[simpleItemId].modifier = data.items[simpleItemId].modifier;
+       }
     }
 
     // Cleanup empty containers

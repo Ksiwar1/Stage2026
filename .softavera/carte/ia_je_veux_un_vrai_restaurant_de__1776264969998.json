@@ -1,0 +1,1068 @@
+{
+  "theme": {
+    "palette": [
+      "#FFFFFF",
+      "#FFFBEB",
+      "#DC2626",
+      "#111827",
+      "#FBBF24"
+    ]
+  },
+  "workflow": {
+    "cat_pizzas": {
+      "type": "categories",
+      "rank": 1,
+      "content": {
+        "item_pizza_hawaiien": {
+          "type": "items",
+          "rank": 1,
+          "modifier": "mod_pizza_viande"
+        },
+        "item_pizza_margherita": {
+          "type": "items",
+          "rank": 2,
+          "modifier": "mod_pizza_viande"
+        },
+        "item_pizza_quattro_formaggi": {
+          "type": "items",
+          "rank": 3,
+          "modifier": "mod_pizza_viande"
+        },
+        "item_pizza_pepperoni": {
+          "type": "items",
+          "rank": 4,
+          "modifier": "mod_pizza_viande"
+        },
+        "item_pizza_ananas_et_jambon": {
+          "type": "items",
+          "rank": 5,
+          "modifier": "mod_pizza_viande"
+        },
+        "item_pizza_provençale": {
+          "type": "items",
+          "rank": 6,
+          "modifier": "mod_pizza_viande"
+        }
+      }
+    },
+    "cat_boissons": {
+      "type": "categories",
+      "rank": 2,
+      "content": {
+        "item_coca": {
+          "type": "items",
+          "rank": 1
+        },
+        "item_coca_33cl": {
+          "type": "items",
+          "rank": 2
+        },
+        "item_coca_50cl": {
+          "type": "items",
+          "rank": 3
+        },
+        "item_fanta_rouge": {
+          "type": "items",
+          "rank": 4
+        },
+        "item_orangina": {
+          "type": "items",
+          "rank": 5
+        },
+        "item_soda_lime": {
+          "type": "items",
+          "rank": 6
+        }
+      }
+    },
+    "cat_frites": {
+      "type": "categories",
+      "rank": 3,
+      "content": {
+        "item_frites_classiques": {
+          "type": "items",
+          "rank": 1
+        },
+        "item_frites_au_furikake": {
+          "type": "items",
+          "rank": 2
+        },
+        "item_frites_au_paprika": {
+          "type": "items",
+          "rank": 3
+        }
+      }
+    },
+    "cat_desserts": {
+      "type": "categories",
+      "rank": 4,
+      "content": {
+        "item_tarte_tatin": {
+          "type": "items",
+          "rank": 1
+        },
+        "item_mille_feuille": {
+          "type": "items",
+          "rank": 2
+        },
+        "item_creme_brulee": {
+          "type": "items",
+          "rank": 3
+        }
+      }
+    }
+  },
+  "categories": {
+    "cat_pizzas": {
+      "title": "Pizzas",
+      "isVisible": true
+    },
+    "cat_boissons": {
+      "title": "Boissons",
+      "isVisible": true
+    },
+    "cat_frites": {
+      "title": "Frites",
+      "isVisible": true
+    },
+    "cat_desserts": {
+      "title": "Desserts",
+      "isVisible": true
+    }
+  },
+  "items": {
+    "item_pizza_hawaiien": {
+      "title": "Hawaiien",
+      "price": {
+        "dflt": {
+          "ttc": 15.99
+        }
+      },
+      "modifier": "mod_pizza_viande",
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/pizza"
+        }
+      }
+    },
+    "item_pizza_margherita": {
+      "title": "Margherita",
+      "price": {
+        "dflt": {
+          "ttc": 12.99
+        }
+      },
+      "modifier": "mod_pizza_viande",
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/pizza"
+        }
+      }
+    },
+    "item_pizza_quattro_formaggi": {
+      "title": "Quattro Formaggi",
+      "price": {
+        "dflt": {
+          "ttc": 16.99
+        }
+      },
+      "modifier": "mod_pizza_viande",
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/pizza"
+        }
+      }
+    },
+    "item_pizza_pepperoni": {
+      "title": "Pepperoni",
+      "price": {
+        "dflt": {
+          "ttc": 14.99
+        }
+      },
+      "modifier": "mod_pizza_viande",
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/pizza"
+        }
+      }
+    },
+    "item_pizza_ananas_et_jambon": {
+      "title": "Ananas et Jambon",
+      "price": {
+        "dflt": {
+          "ttc": 14.99
+        }
+      },
+      "modifier": "mod_pizza_viande",
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/pizza"
+        }
+      }
+    },
+    "item_pizza_provençale": {
+      "title": "Provençale",
+      "price": {
+        "dflt": {
+          "ttc": 15.99
+        }
+      },
+      "modifier": "mod_patched_247847"
+    },
+    "item_coca": {
+      "id": 590,
+      "type": "items",
+      "title": "Produit Récupéré",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/food"
+        }
+      },
+      "modifier": "mod_patched_413748"
+    },
+    "item_coca_33cl": {
+      "id": 236,
+      "type": "items",
+      "title": "Produit Récupéré",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/food"
+        }
+      },
+      "modifier": "mod_patched_403396"
+    },
+    "item_coca_50cl": {
+      "id": 384,
+      "type": "items",
+      "title": "Produit Récupéré",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/food"
+        }
+      },
+      "modifier": "mod_patched_408444"
+    },
+    "item_fanta_rouge": {
+      "id": 533,
+      "type": "items",
+      "title": "Produit Récupéré",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/food"
+        }
+      },
+      "modifier": "mod_patched_498433"
+    },
+    "item_orangina": {
+      "id": 457,
+      "type": "items",
+      "title": "Produit Récupéré",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/food"
+        }
+      },
+      "modifier": "mod_patched_55667"
+    },
+    "item_soda_lime": {
+      "id": 502,
+      "type": "items",
+      "title": "Produit Récupéré",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/food"
+        }
+      },
+      "modifier": "mod_patched_306438"
+    },
+    "item_frites_classiques": {
+      "id": 308,
+      "type": "items",
+      "title": "Produit Récupéré",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/food"
+        }
+      },
+      "modifier": "mod_patched_971018"
+    },
+    "item_frites_au_furikake": {
+      "id": 794,
+      "type": "items",
+      "title": "Produit Récupéré",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/food"
+        }
+      },
+      "modifier": "mod_patched_427438"
+    },
+    "item_frites_au_paprika": {
+      "id": 454,
+      "type": "items",
+      "title": "Produit Récupéré",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/food"
+        }
+      },
+      "modifier": "mod_patched_485110"
+    },
+    "item_tarte_tatin": {
+      "id": 150,
+      "type": "items",
+      "title": "Produit Récupéré",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/food"
+        }
+      },
+      "modifier": "mod_patched_493457"
+    },
+    "item_mille_feuille": {
+      "id": 699,
+      "type": "items",
+      "title": "Produit Récupéré",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/food"
+        }
+      },
+      "modifier": "mod_patched_193705"
+    },
+    "item_creme_brulee": {
+      "id": 510,
+      "type": "items",
+      "title": "Produit Récupéré",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/food"
+        }
+      },
+      "modifier": "mod_patched_427391"
+    },
+    "step_patched_987326_opt_1": {
+      "id": 5097,
+      "type": "items",
+      "title": "Option Standard 1",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_987326_opt_2": {
+      "id": 5393,
+      "type": "items",
+      "title": "Option Standard 2",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_812696_opt_1": {
+      "id": 5783,
+      "type": "items",
+      "title": "Option Standard 1",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_812696_opt_2": {
+      "id": 5769,
+      "type": "items",
+      "title": "Option Standard 2",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_774869_opt_1": {
+      "id": 5252,
+      "type": "items",
+      "title": "Option Standard 1",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_774869_opt_2": {
+      "id": 5152,
+      "type": "items",
+      "title": "Option Standard 2",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_955346_opt_1": {
+      "id": 5448,
+      "type": "items",
+      "title": "Option Standard 1",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_955346_opt_2": {
+      "id": 5002,
+      "type": "items",
+      "title": "Option Standard 2",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_101014_opt_1": {
+      "id": 5375,
+      "type": "items",
+      "title": "Option Standard 1",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_101014_opt_2": {
+      "id": 5028,
+      "type": "items",
+      "title": "Option Standard 2",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_871694_opt_1": {
+      "id": 5337,
+      "type": "items",
+      "title": "Option Standard 1",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_871694_opt_2": {
+      "id": 5194,
+      "type": "items",
+      "title": "Option Standard 2",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_798564_opt_1": {
+      "id": 5651,
+      "type": "items",
+      "title": "Option Standard 1",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_798564_opt_2": {
+      "id": 5454,
+      "type": "items",
+      "title": "Option Standard 2",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_617831_opt_1": {
+      "id": 5895,
+      "type": "items",
+      "title": "Option Standard 1",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_617831_opt_2": {
+      "id": 5418,
+      "type": "items",
+      "title": "Option Standard 2",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_406652_opt_1": {
+      "id": 5473,
+      "type": "items",
+      "title": "Option Standard 1",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_406652_opt_2": {
+      "id": 5462,
+      "type": "items",
+      "title": "Option Standard 2",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_295691_opt_1": {
+      "id": 5049,
+      "type": "items",
+      "title": "Option Standard 1",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_295691_opt_2": {
+      "id": 5288,
+      "type": "items",
+      "title": "Option Standard 2",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_184950_opt_1": {
+      "id": 5873,
+      "type": "items",
+      "title": "Option Standard 1",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_184950_opt_2": {
+      "id": 5666,
+      "type": "items",
+      "title": "Option Standard 2",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_645284_opt_1": {
+      "id": 5608,
+      "type": "items",
+      "title": "Option Standard 1",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_645284_opt_2": {
+      "id": 5676,
+      "type": "items",
+      "title": "Option Standard 2",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_415350_opt_1": {
+      "id": 5290,
+      "type": "items",
+      "title": "Option Standard 1",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_415350_opt_2": {
+      "id": 5123,
+      "type": "items",
+      "title": "Option Standard 2",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_78992_opt_1": {
+      "id": 5675,
+      "type": "items",
+      "title": "Option Standard 1",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_78992_opt_2": {
+      "id": 5871,
+      "type": "items",
+      "title": "Option Standard 2",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    }
+  },
+  "modifier": {
+    "mod_pizza_viande": {
+      "title": "Options pour Hawaiien",
+      "steps": {
+        "step_patched_987326": {
+          "rank": 1
+        }
+      }
+    },
+    "mod_patched_247847": {
+      "title": "Options pour Provençale",
+      "steps": {
+        "step_patched_812696": {
+          "rank": 1
+        }
+      }
+    },
+    "mod_patched_413748": {
+      "title": "Options pour Produit Récupéré",
+      "steps": {
+        "step_patched_774869": {
+          "rank": 1
+        }
+      }
+    },
+    "mod_patched_403396": {
+      "title": "Options pour Produit Récupéré",
+      "steps": {
+        "step_patched_955346": {
+          "rank": 1
+        }
+      }
+    },
+    "mod_patched_408444": {
+      "title": "Options pour Produit Récupéré",
+      "steps": {
+        "step_patched_101014": {
+          "rank": 1
+        }
+      }
+    },
+    "mod_patched_498433": {
+      "title": "Options pour Produit Récupéré",
+      "steps": {
+        "step_patched_871694": {
+          "rank": 1
+        }
+      }
+    },
+    "mod_patched_55667": {
+      "title": "Options pour Produit Récupéré",
+      "steps": {
+        "step_patched_798564": {
+          "rank": 1
+        }
+      }
+    },
+    "mod_patched_306438": {
+      "title": "Options pour Produit Récupéré",
+      "steps": {
+        "step_patched_617831": {
+          "rank": 1
+        }
+      }
+    },
+    "mod_patched_971018": {
+      "title": "Options pour Produit Récupéré",
+      "steps": {
+        "step_patched_406652": {
+          "rank": 1
+        }
+      }
+    },
+    "mod_patched_427438": {
+      "title": "Options pour Produit Récupéré",
+      "steps": {
+        "step_patched_295691": {
+          "rank": 1
+        }
+      }
+    },
+    "mod_patched_485110": {
+      "title": "Options pour Produit Récupéré",
+      "steps": {
+        "step_patched_184950": {
+          "rank": 1
+        }
+      }
+    },
+    "mod_patched_493457": {
+      "title": "Options pour Produit Récupéré",
+      "steps": {
+        "step_patched_645284": {
+          "rank": 1
+        }
+      }
+    },
+    "mod_patched_193705": {
+      "title": "Options pour Produit Récupéré",
+      "steps": {
+        "step_patched_415350": {
+          "rank": 1
+        }
+      }
+    },
+    "mod_patched_427391": {
+      "title": "Options pour Produit Récupéré",
+      "steps": {
+        "step_patched_78992": {
+          "rank": 1
+        }
+      }
+    }
+  },
+  "steps": {
+    "step_patched_987326": {
+      "title": "Étape de Choix",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "step_patched_987326_opt_1": {},
+        "step_patched_987326_opt_2": {}
+      }
+    },
+    "step_patched_812696": {
+      "title": "Étape de Choix",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "step_patched_812696_opt_1": {},
+        "step_patched_812696_opt_2": {}
+      }
+    },
+    "step_patched_774869": {
+      "title": "Étape de Choix",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "step_patched_774869_opt_1": {},
+        "step_patched_774869_opt_2": {}
+      }
+    },
+    "step_patched_955346": {
+      "title": "Étape de Choix",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "step_patched_955346_opt_1": {},
+        "step_patched_955346_opt_2": {}
+      }
+    },
+    "step_patched_101014": {
+      "title": "Étape de Choix",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "step_patched_101014_opt_1": {},
+        "step_patched_101014_opt_2": {}
+      }
+    },
+    "step_patched_871694": {
+      "title": "Étape de Choix",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "step_patched_871694_opt_1": {},
+        "step_patched_871694_opt_2": {}
+      }
+    },
+    "step_patched_798564": {
+      "title": "Étape de Choix",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "step_patched_798564_opt_1": {},
+        "step_patched_798564_opt_2": {}
+      }
+    },
+    "step_patched_617831": {
+      "title": "Étape de Choix",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "step_patched_617831_opt_1": {},
+        "step_patched_617831_opt_2": {}
+      }
+    },
+    "step_patched_406652": {
+      "title": "Étape de Choix",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "step_patched_406652_opt_1": {},
+        "step_patched_406652_opt_2": {}
+      }
+    },
+    "step_patched_295691": {
+      "title": "Étape de Choix",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "step_patched_295691_opt_1": {},
+        "step_patched_295691_opt_2": {}
+      }
+    },
+    "step_patched_184950": {
+      "title": "Étape de Choix",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "step_patched_184950_opt_1": {},
+        "step_patched_184950_opt_2": {}
+      }
+    },
+    "step_patched_645284": {
+      "title": "Étape de Choix",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "step_patched_645284_opt_1": {},
+        "step_patched_645284_opt_2": {}
+      }
+    },
+    "step_patched_415350": {
+      "title": "Étape de Choix",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "step_patched_415350_opt_1": {},
+        "step_patched_415350_opt_2": {}
+      }
+    },
+    "step_patched_78992": {
+      "title": "Étape de Choix",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "step_patched_78992_opt_1": {},
+        "step_patched_78992_opt_2": {}
+      }
+    }
+  }
+}

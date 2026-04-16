@@ -1,0 +1,264 @@
+{
+  "theme":{
+      "palette":[
+         "#4F46E5",
+         "#10B981",
+         "#F59E0B",
+         "#F3F4F6",
+         "#111827"
+      ],
+      "img":{
+         "dflt":{
+            "img":"https://image.pollinations.ai/prompt/time%20square"
+         }
+      }
+   },
+   "workflow":{
+      "cat_boissons_froides":{
+         "type":"categories",
+         "rank":1,
+         "content":{
+            "item_coca_claire":{
+               "type":"items",
+               "rank":1,
+               "modifier":"mod_menu_coca_claire_steps"
+            },
+            "item_fanta_orange":{
+               "type":"items",
+               "rank":2,
+               "modifier":"mod_menu_fanta_orange_steps"
+            },
+            "item_orangina":{
+               "type":"items",
+               "rank":3,
+               "modifier":"mod_menu_orangina_steps"
+            }
+         }
+      },
+      "cat_boissons_chaudes":{
+         "type":"categories",
+         "rank":2,
+         "content":{
+            "item_the": {
+               "type": "items",
+               "rank": 1,
+               "modifier": "mod_menu_the_steps"
+            },
+            "item_café_noir": {
+               "type": "items",
+               "rank": 2,
+               "modifier": "mod_menu_café_noir_steps"
+            }
+         }
+      }
+   },
+   "categories":{
+      "cat_boissons_froides":{
+         "title":"Boissons Froides Time Square",
+         "isVisible":true
+      },
+      "cat_boissons_chaudes":{
+         "title":"Boissons Chaudes Time Square",
+         "isVisible":true
+      }
+   },
+   "items":{
+      "item_coca_claire":{
+         "title":"Coca Claire",
+         "price":{
+            "dflt":{
+               "ttc":2.50
+            }
+         },
+         "img":{
+            "dflt":{
+               "img":"https://image.pollinations.ai/prompt/time%20square%20coca%20claire"
+            }
+         },
+         "opt":{
+            "dim_taille_boisson":{
+               "title":"Taille de votre boisson",
+               "values":{
+                  "val_33cl":{
+                     "title":"Normale",
+                     "rank":1,
+                     "priceDelta":{
+                        "dflt":{
+                           "ttc":0.00
+                        }
+                     },
+                     "img":{
+                        "dflt":{
+                           "img":"https://image.pollinations.ai/prompt/time%20square%20coca%20claire%2033cl"
+                        }
+                     }
+                  },
+                  "val_50cl":{
+                     "title":"Maxi",
+                     "rank":2,
+                     "priceDelta":{
+                        "dflt":{
+                           "ttc":0.50
+                        }
+                     },
+                     "img":{
+                        "dflt":{
+                           "img":"https://image.pollinations.ai/prompt/time%20square%20coca%20claire%2050cl"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "item_fanta_orange":{
+         "title":"Fanta Orange",
+         "price":{
+            "dflt":{
+               "ttc":2.00
+            }
+         },
+         "img":{
+            "dflt":{
+               "img":"https://image.pollinations.ai/prompt/time%20square%20fanta%20orange"
+            }
+         },
+         "opt":{
+            "dim_taille_boisson":{
+               "title":"Taille de votre boisson",
+               "values":{
+                  "val_33cl":{
+                     "title":"Normale",
+                     "rank":1,
+                     "priceDelta":{
+                        "dflt":{
+                           "ttc":0.00
+                        }
+                     },
+                     "img":{
+                        "dflt":{
+                           "img":"https://image.pollinations.ai/prompt/time%20square%20fanta%20orange%2033cl"
+                        }
+                     }
+                  },
+                  "val_50cl":{
+                     "title":"Maxi",
+                     "rank":2,
+                     "priceDelta":{
+                        "dflt":{
+                           "ttc":0.50
+                        }
+                     },
+                     "img":{
+                        "dflt":{
+                           "img":"https://image.pollinations.ai/prompt/time%20square%20fanta%20orange%2050cl"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "item_orangina":{
+         "title":"Orangina",
+         "price":{
+            "dflt":{
+               "ttc":2.50
+            }
+         },
+         "img":{
+            "dflt":{
+               "img":"https://image.pollinations.ai/prompt/time%20square%20orangina"
+            }
+         },
+         "opt":{
+            "dim_taille_boisson":{
+               "title":"Taille de votre boisson",
+               "values":{
+                  "val_33cl":{
+                     "title":"Normale",
+                     "rank":1,
+                     "priceDelta":{
+                        "dflt":{
+                           "ttc":0.00
+                        }
+                     },
+                     "img":{
+                        "dflt":{
+                           "img":"https://image.pollinations.ai/prompt/time%20square%20orangina%2033cl"
+                        }
+                     }
+                  },
+                  "val_50cl":{
+                     "title":"Maxi",
+                     "rank":2,
+                     "priceDelta":{
+                        "dflt":{
+                           "ttc":0.50
+                        }
+                     },
+                     "img":{
+                        "dflt":{
+                           "img":"https://image.pollinations.ai/prompt/time%20square%20orangina%2050cl"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "item_the": {
+         "title": "The",
+         "price": {
+            "dflt": {
+               "ttc": 2.00
+            }
+         },
+         "img": {
+            "dflt": {
+               "img": "https://image.pollinations.ai/prompt/time%20square%20the"
+            }
+         },
+         "opt": {
+            "dim_taille_boisson": {
+               "title": "Taille de votre boisson",
+               "values": {
+                  "val_33cl": {
+                     "title": "Normale",
+                     "rank": 1,
+                     "priceDelta": {
+                        "dflt": {
+                           "ttc": 0.00
+                        }
+                     },
+                     "img": {
+                        "dflt": {
+                           "img": "https://image.pollinations.ai/prompt/time%20square%20the%2033cl"
+                        }
+                     }
+                  },
+                  "val_50cl": {
+                     "title": "Maxi",
+                     "rank": 2,
+                     "priceDelta": {
+                        "dflt": {
+                           "ttc": 0.50
+                        }
+                     },
+                     "img": {
+                        "dflt": {
+                           "img": "https://image.pollinations.ai/prompt/time%20square%20the%2050cl"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "item_café_noir": {
+         "title": "Café Noir",
+         "price": {
+            "dflt": {
+               "ttc": 2.00
+            }
+         }}}}

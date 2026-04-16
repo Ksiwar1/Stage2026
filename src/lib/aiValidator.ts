@@ -111,5 +111,50 @@ export function validateETK360Code(jsonString: string): string[] {
     }
   }
 
+  // 6. Chasse aux Orphelins (Garbage / Structure cassée)
+  const usedSteps = new Set<string>();
+  const usedItems = new Set<string>();
+
+  // Collecter les Items du Workflow
+  if (data.workflow) {
+    for (const catKey of Object.keys(data.workflow)) {
+      if (data.workflow[catKey].content) {
+        Object.keys(data.workflow[catKey].content).forEach(i => usedItems.add(i));
+      }
+    }
+  }
+
+  // Collecter les Steps des Modifiers
+  if (data.modifier) {
+    for (const modKey of Object.keys(data.modifier)) {
+      if (data.modifier[modKey].steps) {
+         Object.keys(data.modifier[modKey].steps).forEach(s => usedSteps.add(s));
+      }
+    }
+  }
+
+  // Règle des Steps orphelins
+  if (data.steps) {
+    for (const stepKey of Object.keys(data.steps)) {
+      if (!usedSteps.has(stepKey)) {
+        errors.push(`ERREUR ORPHELIN : Le step '${stepKey}' est défini à la racine mais n'est relié à AUCUN modifier ! Tu dois le lier dans un 'modifier > steps'.`);
+      } else {
+        // Collecter les Items des Steps
+        if (data.steps[stepKey].items) {
+           Object.keys(data.steps[stepKey].items).forEach(i => usedItems.add(i));
+        }
+      }
+    }
+  }
+
+  // Règle des Items orphelins
+  if (data.items) {
+    for (const itemKey of Object.keys(data.items)) {
+      if (!usedItems.has(itemKey)) {
+        errors.push(`ERREUR ORPHELIN : Le produit '${itemKey}' est existant dans 'items', mais il est introuvable dans le 'workflow' et dans vos 'steps'. Veuillez l'intégrer au flux ou le supprimer.`);
+      }
+    }
+  }
+
   return errors;
 }

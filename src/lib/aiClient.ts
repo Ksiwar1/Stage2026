@@ -15,7 +15,8 @@ export async function generateAIResponse(
   userPrompt: string,
   temperature = 0.7,
   aiTypeOverride?: string,
-  base64Image?: { mimeType: string; data: string }
+  base64Image?: { mimeType: string; data: string },
+  maxTokens: number = 2500
 ): Promise<string> {
   let aiType = getAIType(aiTypeOverride);
 
@@ -36,7 +37,7 @@ export async function generateAIResponse(
           { role: "user", content: userPrompt },
         ],
         temperature,
-        max_tokens: 2500,
+        max_tokens: maxTokens,
         response_format: { type: "json_object" } as any,
       };
 
@@ -44,12 +45,19 @@ export async function generateAIResponse(
         const completion = await groq.chat.completions.create(payload);
         return completion.choices[0]?.message?.content || "";
       } catch (error: any) {
-        if (error?.status === 429 || error?.message?.includes("429")) {
-          console.warn(`[RATE LIMIT] Groq Free Tier saturé (6000 TPM). Pause de 15s pour le rolling window...`);
-          await new Promise(resolve => setTimeout(resolve, 15000));
-          console.log(`[RATE LIMIT] Reprise...`);
-          const retryCompletion = await groq.chat.completions.create(payload);
-          return retryCompletion.choices[0]?.message?.content || "";
+        if (error?.status === 429 || error?.status === 413 || error?.message?.includes("429") || error?.message?.includes("413") || error?.message?.includes("Connection error") || error?.code === 'ECONNRESET') {
+          console.warn(`[RATE LIMIT / TIMEOUT] Groq Free Tier saturé ou Perte de Connexion. Pause de 20s pour purger le rolling window/récupérer le réseau...`);
+          await new Promise(resolve => setTimeout(resolve, 20000));
+          console.log(`[RATE LIMIT] Reprise Groq...`);
+          try {
+             const retryCompletion = await groq.chat.completions.create(payload);
+             return retryCompletion.choices[0]?.message?.content || "";
+          } catch (retryError: any) {
+             console.warn(`[RATE LIMIT SECOND ÉCHEC] Toujours saturé. Pause ultime de 25s...`);
+             await new Promise(resolve => setTimeout(resolve, 25000));
+             const finalCompletion = await groq.chat.completions.create(payload);
+             return finalCompletion.choices[0]?.message?.content || "";
+          }
         }
         throw error;
       }
@@ -58,7 +66,7 @@ export async function generateAIResponse(
     case "gemini": {
       const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
       const model = genAI.getGenerativeModel({
-        model: "gemini-1.5-flash",
+        model: "gemini-2.0-flash",
         systemInstruction: systemPrompt,
       });
 
@@ -69,8 +77,37 @@ export async function generateAIResponse(
         });
       }
 
-      const result = await model.generateContent(content);
-      return result.response.text() || "";
+      try {
+        const result = await model.generateContent(content);
+        return result.response.text() || "";
+      } catch (error: any) {
+        if (error?.status === 429 || error?.status === 503 || error?.message?.includes("429") || error?.message?.includes("503")) {
+          console.warn(`[RATE LIMIT / 503 OVERLOAD] Quota 'gemini-2.0-flash' dépassé ou API saturée. Tentative de Fallback sur 'gemini-2.5-flash' ou 'gemini-2.0-flash-lite'...`);
+          try {
+             // Fallback 1: gemini-2.5-flash
+             const fbModel1 = genAI.getGenerativeModel({ model: "gemini-2.5-flash", systemInstruction: systemPrompt });
+             const fbRes1 = await fbModel1.generateContent(content);
+             return fbRes1.response.text() || "";
+          } catch (e1: any) {
+             try {
+                // Fallback 2: gemini-2.0-flash-lite
+                const fbModel2 = genAI.getGenerativeModel({ model: "gemini-2.0-flash-lite", systemInstruction: systemPrompt });
+                const fbRes2 = await fbModel2.generateContent(content);
+                return fbRes2.response.text() || "";
+             } catch (e2: any) {
+                // Fallback 3 : Attente forcée
+                const match = error?.message?.match(/Please retry in ([\d.]+)s/);
+                const sleepSeconds = match ? parseFloat(match[1]) : 60;
+                const sleepMs = Math.ceil((sleepSeconds + 1) * 1000);
+                console.warn(`[RATE LIMIT] Tous les modèles de secours ont échoué. Pause obligatoire de ${Math.round(sleepMs/1000)}s...`);
+                await new Promise(resolve => setTimeout(resolve, sleepMs));
+                const retryResult = await model.generateContent(content);
+                return retryResult.response.text() || "";
+             }
+          }
+        }
+        throw error;
+      }
     }
 
     case "claude": {

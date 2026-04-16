@@ -1,0 +1,161 @@
+{
+  "workflow": {
+    "9f85c0a9-2b0e-4a4d-9d9b-6f9b4f3f4b8a": {
+      "type": "categories",
+      "rank": 15,
+      "content": {},
+      "idCard": 1,
+      "title": "Pizzas",
+      "isVisible": true,
+      "isNameShow": true,
+      "color": "#FFFBEB",
+      "items": [
+        "pizzaPepperoni",
+        "pizzaHawai",
+        "pizzaQuattroFormaggi"
+      ]
+    },
+    "3f4f4f4f-4f4f-4f4f-4f4f-4f4f4f4f4f9": {
+      "type": "categories",
+      "rank": 1,
+      "content": {},
+      "idCard": 1,
+      "title": "Boissons",
+      "isVisible": true,
+      "isNameShow": true,
+      "color": "#111827",
+      "items": [
+        "sodaCola",
+        "sodaFanta",
+        "the"
+      ]
+    },
+    "5e5e5e5e-5e5e-5e5e-5e5e-5e5e5e5e5e": {
+      "type": "categories",
+      "rank": 14,
+      "content": {}
+    },
+    "2a2a2a2a-2a2a-2a2a-2a2a-2a2a2a2a2a": {
+      "type": "categories",
+      "rank": 2,
+      "content": {}
+    },
+    "0f0f0f0f-0f0f-0f0f-0f0f-0f0f0f0f0f": {
+      "type": "categories",
+      "rank": 12,
+      "content": {}
+    },
+    "7e7e7e7e-7e7e-7e7e-7e7e-7e7e7e7e7e": {
+      "type": "categories",
+      "rank": 8,
+      "content": {}
+    },
+    "9e9e9e9e-9e9e-9e9e-9e9e-9e9e9e9e9e": {
+      "type": "categories",
+      "rank": 6,
+      "content": {}
+    },
+    "c3c3c3c3-c3c3-c3c3-c3c3-c3c3c3c3c3": {
+      "type": "categories",
+      "rank": 10,
+      "content": {}
+    }
+  },
+  "items": {
+    "pizzaPepperoni": {
+      "id": 1,
+      "rank": 2,
+      "title": "Pizza Pepperoni",
+      "color": "#FFFBEB",
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/pepperoni_pizza"
+        }
+      },
+      "price": {
+        "ht": 12.99,
+        "dflt": 14.99,
+        "advanced": {
+          "6c7a8a5d-0f2f-4a2d-8a7a-2a7a8a8a8a5d": {
+            "ht": 12.99,
+            "ttc": 14.99,
+            "tva": 10,
+            "schedule": [],
+            "methodePrice": ""
+          }
+        }
+      },
+      "modifiers": [
+        {
+          "id": "viande",
+          "rank": 1,
+          "title": "Viande/Base",
+          "items": [
+            {
+              "id": "base",
+              "rank": 1,
+              "title": "Base",
+              "minChoices": 1,
+              "items": [
+                "baseTomate",
+                "baseMozzarella"
+              ]
+            }
+          ]
+        }
+      ],
+      "modifier": "mod_patched_897060"
+    },
+    "step_patched_341330_opt_1": {
+      "id": 5086,
+      "type": "items",
+      "title": "Option Standard 1",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    },
+    "step_patched_341330_opt_2": {
+      "id": 5778,
+      "type": "items",
+      "title": "Option Standard 2",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/option"
+        }
+      }
+    }
+  },
+  "modifier": {
+    "mod_patched_897060": {
+      "title": "Options pour Pizza Pepperoni",
+      "steps": {
+        "step_patched_341330": {
+          "rank": 1
+        }
+      }
+    }
+  },
+  "steps": {
+    "step_patched_341330": {
+      "title": "Étape de Choix",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "step_patched_341330_opt_1": {},
+        "step_patched_341330_opt_2": {}
+      }
+    }
+  }
+}
