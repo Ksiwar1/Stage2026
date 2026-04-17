@@ -182,6 +182,8 @@ Tu vas complèter la carte en générant :
 - modifier
 - steps
 
+🚨 RÈGLE VITALE DE MAPPING 🚨 : Tu dois OBLIGATOIREMENT créer dans ton dictionnaire "items" les produits avec les IDENTIFIANTS EXACTS (ex: "item_gen_pizza") qui ont été pré-déclarés dans le 'workflow' qui t'a été fourni en entrée. Ne crée jamais de nouvel identifiant. S'il te manque des identifiants dans le workflow, inventes-en de manière logique.
+
 RÈGLES D'OR STRUCTURELLES: 
 - INTERDICTION ABSOLUE D'UTILISER LE MOT-CLÉ "opt".
 - OBLIGATION GLOBALE DE PREMIER NIVEAU : Les 3 nouveaux dictionnaires ("items", "modifier", "steps") que tu dois générer DOIVENT OBLIGATOIREMENT ÊTRE PLACÉS À LA RACINE GLOBALE DU JSON (au tout premier niveau, exactement à côté de "workflow" et "categories"). NE LES INCLUS JAMAIS À L'INTÉRIEUR DU WORKFLOW !

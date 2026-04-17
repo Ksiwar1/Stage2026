@@ -7,22 +7,44 @@ export function patchETK360Structure(data: any): any {
   if (!data.steps) data.steps = {};
   if (!data.theme) data.theme = { palette: ["#4F46E5", "#10B981", "#F59E0B"] };
 
-  if (!data.categories) {
-    data.categories = {};
-    if (data.workflow) {
-        Object.keys(data.workflow).forEach(wKey => {
-            if (data.workflow[wKey] && data.workflow[wKey].type === 'categories') {
-                data.categories[wKey] = {
-                    title: data.workflow[wKey].title || wKey,
-                    isVisible: true
-                };
-            }
-        });
-    }
-  }
-
   // Fonction utilitaire pour générer des IDs uniques robustes
   const generateId = (prefix: string) => `${prefix}_patched_${Math.floor(Math.random() * 1000000)}`;
+
+  // 0. FIX IA HALLUCINATION "NESTED WORKFLOW" (Llama 8B place "categories" et "items" dans "workflow")
+  if (data.workflow) {
+      const topLevelKeysToUnpack = ['categories', 'items', 'modifier', 'steps', 'theme'];
+      topLevelKeysToUnpack.forEach(key => {
+          if (data.workflow[key] && typeof data.workflow[key] === 'object') {
+              if (!data[key]) data[key] = {};
+              Object.assign(data[key], data.workflow[key]);
+              
+              // Move nested nodes back up if they are workflow category nodes
+              if (key === 'categories') {
+                  const actualWorkflow: any = {};
+                  Object.keys(data.workflow[key]).forEach(catKey => {
+                      actualWorkflow[catKey] = data.workflow[key][catKey];
+                  });
+                  Object.assign(data.workflow, actualWorkflow);
+              }
+              delete data.workflow[key];
+          }
+      });
+  }
+
+  // 0.B RECONSTRUCTION DES CATÉGORIES MANQUANTES
+  if (!data.categories) data.categories = {};
+  if (data.workflow) {
+      Object.keys(data.workflow).forEach(wKey => {
+          if (data.workflow[wKey] && data.workflow[wKey].type === 'categories') {
+              if (!data.categories[wKey]) {
+                  data.categories[wKey] = {
+                      title: data.workflow[wKey].title || wKey,
+                      isVisible: true
+                  };
+              }
+          }
+      });
+  }
 
   // 1. CHASSE AUX FANTÔMES DANS LE WORKFLOW (Eviter Crash Parseur)
   if (data.workflow) {
@@ -44,12 +66,23 @@ export function patchETK360Structure(data: any): any {
 
     Object.keys(data.workflow).forEach(catKey => {
        const wNode = data.workflow[catKey];
+       
+       if (wNode && wNode.type === 'categories') {
+           if (!wNode.content) wNode.content = {};
+           
+           // Si la catégorie est vide, on injecte de force un pointer de produit fantôme pour que l'AutoHealer la peuple
+           if (Object.keys(wNode.content).length === 0) {
+               const fallbackKey = `item_gen_${catKey.substring(0, 5)}_${Math.floor(Math.random() * 900)}`;
+               wNode.content[fallbackKey] = { type: 'items', rank: 1 };
+           }
+       }
+
        if (wNode && wNode.content) {
           Object.keys(wNode.content).forEach(itemKey => {
              if (!data.items[itemKey]) {
-                let catTitle = "Plate";
-                if (data.categories && data.categories[catKey] && data.categories[catKey].content && data.categories[catKey].content.title) {
-                   catTitle = data.categories[catKey].content.title;
+                let catTitle = "Inconnu";
+                if (data.categories && data.categories[catKey] && data.categories[catKey].title) {
+                   catTitle = data.categories[catKey].title;
                 }
                 const encodedImg = encodeURIComponent(catTitle.trim().replace(/\s+/g, '_'));
 

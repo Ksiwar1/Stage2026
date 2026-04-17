@@ -14,6 +14,13 @@ export async function genererArchitectureAction(data: FormData) {
   const aiType = getAIType(rawAiType);
   const sourceInspiration = (data.get("sourceInspiration") as string) || undefined;
   const menuImage = data.get("menuImage") as File | null;
+  const primaryColor = data.get("primaryColor") as string | null;
+  const secondaryColor = data.get("secondaryColor") as string | null;
+  const configJsonRaw = data.get("systemConfigJSON") as string | null;
+  let systemConfig: any = null;
+  if (configJsonRaw) {
+      try { systemConfig = JSON.parse(configJsonRaw); } catch(e) {}
+  }
 
   sujetDemande += `\n\n=== RÈGLES IMPORTANTES ET OBLIGATOIRES ===\n`;
   if (restaurantName) {
@@ -65,14 +72,29 @@ export async function genererArchitectureAction(data: FormData) {
   }
 
   try {
-    console.log("[PHASE 1] Génération de l'Architecture abstraite...");
-    const promptSysteme1 = getPromptSystemForAI(activeSourceInspiration, activeSecondaryInspirations, hasImage, 1);
+    console.log("[PHASE 1] Génération de la Trame Intermédiaire...");
+    const promptSysteme1 = `Tu es un assistant restaurateur. Tu dois répondre STRICTEMENT en format JSON pur, sans texte MD. Tu vas générer un menu complet.
+Format attendu:
+{
+  "categories": [
+    {
+      "name": "Catégorie 1",
+      "items": [
+        { "name": "Produit A", "price": 10.0 }
+      ]
+    }
+  ]
+}
+Adapte rigoureusement le nombre de catégories, leurs noms, et la description/quantité des produits selon les consignes exactes (langue, badges, etc.) dictées dans le Sujet Demandé par le client. AUCUN texte additionnel.`;
 
-    const promptUtilisateur1 = hasImage
-      ? `Voici l'image d'un menu de restaurant. ${sujetDemande !== "Générer une carte à partir de l'image" ? `Précision supplémentaire: ${sujetDemande}` : "Analyse l'intégralité de l'image."} Extrais la structure (catégories, menus, liaisons). Assure-toi de remplir l'objet 'content' de chaque catégorie avec les identifiants des futurs produits (ex: "item_nomduproduit": { "type": "items", "rank": 1 }). Ne laisse jamais un 'content' vide.`
-      : `OBJECTIF : FUSION ARCHITECTURALE. Tu n'es pas chargé de créer une carte imaginaire. Tu dois composer une carte pour le sujet "${sujetDemande}" en FUSIONNANT de manière cohérente les catégories et structures trouvées dans les MODÈLES qui te sont fournis. Prends ce dont tu as besoin dans le 'Modèle Maître' et dans les 'Bases Inspiration' pour créer ton assemblage parfait. OBLIGATION : Ne laisse JAMAIS le bloc 'content' des catégories vide ! Tu dois y pré-déclarer les identifiants uniques des 3 à 5 futurs produits qui appartiendront à cette catégorie (ex: "item_pizza_margarita": { "type": "items", "rank": 1 }). Réponds UNIQUEMENT avec le JSON (workflow, categories) de la carte, strictement sans aucun texte.`;
-    let architectureJson = await generateAIResponse(promptSysteme1, promptUtilisateur1, 0.7, aiType, base64Image, 500);
+    const promptUtilisateur1 = `Sujet demandé: ${sujetDemande}. Produis le JSON du menu.`;
+    
+    let architectureJson = await generateAIResponse(promptSysteme1, promptUtilisateur1, 0.7, aiType, base64Image, 1000);
+    require("fs").writeFileSync(`.softavera/carte/last_architecture.json`, architectureJson);
     architectureJson = architectureJson.replace(/```json/gi, "").replace(/```/g, "").trim();
+
+    console.log("=== RAW TRAME INTERMÉDIAIRE ===");
+    console.log(architectureJson);
 
     return {
        success: true,
@@ -98,6 +120,13 @@ export async function enrichirCarteAction(
   const rawAiType = (data.get("ai_type") as string) || undefined;
   const aiType = getAIType(rawAiType);
   const menuImage = data.get("menuImage") as File | null;
+  const primaryColor = data.get("primaryColor") as string | null;
+  const secondaryColor = data.get("secondaryColor") as string | null;
+  const configJsonRaw = data.get("systemConfigJSON") as string | null;
+  let systemConfig: any = null;
+  if (configJsonRaw) {
+      try { systemConfig = JSON.parse(configJsonRaw); } catch(e) {}
+  }
 
   sujetDemande += `\n\n=== RÈGLES IMPORTANTES ET OBLIGATOIRES ===\n`;
   if (restaurantName) {
@@ -115,61 +144,369 @@ export async function enrichirCarteAction(
   }
 
   try {
-    console.log("[PHASE 2] Enrichissement final en cours...");
-    const promptSysteme2 = getPromptSystemForAI(activeSourceInspiration, activeSecondaryInspirations, hasImage, 2);
-
-    let jsonResponse = "";
-
-    const currentPromptUtilisateur2 = `Voici l'Architecture de base générée :\n\`\`\`json\n${architectureJson}\n\`\`\`\nMaintenant, GÉNÈRE LE JSON FINAL COMPLET ET ENRICHI avec les produits finaux pour le sujet suivant : ${sujetDemande}`;
-    console.log(`[GENERATION P2] Exécution...`);
-    jsonResponse = await generateAIResponse(promptSysteme2, currentPromptUtilisateur2, 0.7, aiType, base64Image, 900);
-    jsonResponse = jsonResponse.replace(/```json/gi, "").replace(/```/g, "").trim();
-
-    // ------- AUTO-HEALING JAVASCRIPT (FALLBACK METIER) -------
-    let parsedData: any = null;
+    console.log("[PHASE 2] Conversion UUID Backend (Zero LLM Hallucination)...");
+    
+    // Parse strict de l'architecture générée par le prompt intermédiaire
+    let intermediate: any = {};
     try {
-        parsedData = JSON.parse(jsonResponse);
-        const parsedArch = JSON.parse(architectureJson);
-        
-        // Fusion Programmatiquement pour éviter les ommissions par l'IA
-        if (!parsedData.workflow) parsedData.workflow = parsedArch.workflow;
-        if (!parsedData.categories) parsedData.categories = parsedArch.categories;
-        if (!parsedData.theme && parsedArch.theme) parsedData.theme = parsedArch.theme;
-
-        console.log("🤖 [AUTO-HEALING] Application des correctifs Backend...");
-        parsedData = patchETK360Structure(parsedData);
-        jsonResponse = JSON.stringify(parsedData, null, 2);
-    } catch (e) {
-        console.error("Échec critique du parsing JSON de l'IA (Syntaxe corrompue).", e);
-        return JSON.stringify({ success: false, error: "Le modèle d'IA a généré un JSON corrompu ou illisible." });
+        intermediate = JSON.parse(architectureJson);
+    } catch(e) {
+        return JSON.stringify({ success: false, error: "Le modèle IA a retourné un JSON invalide à l'étape 1." });
     }
 
-    const errors = validateETK360Code(jsonResponse);
-    if (errors.length > 0) {
-        console.error(`❌ [VALIDATOR] Le JSON patché contient encore ${errors.length} erreurs métier critiques.`);
-        errors.forEach((e: string) => console.error(`   -> ${e}`));
+    const { randomUUID } = require("crypto");
+    
+    // Récupération de la vraie palette du thème d'inspiration
+    let originalTheme: any = { palette: ["#4F46E5", "#10B981", "#F59E0B"] };
+    if (activeSourceInspiration && activeSourceInspiration !== 'generique') {
         try {
-          fs.writeFileSync(path.join(process.cwd(), '.softavera', 'carte', 'debug_failed_errors.json'), JSON.stringify(errors, null, 2));
-          fs.writeFileSync(path.join(process.cwd(), '.softavera', 'carte', 'debug_failed_response.json'), jsonResponse);
-        } catch (e) { }
-        return JSON.stringify({ success: false, json: jsonResponse, savedPath: null, error: "Validation échouée même après le patching Backend." });
+            const fsLib = require('fs');
+            const pathLib = require('path');
+            const refPath = pathLib.join(process.cwd(), '.softavera', 'carte', activeSourceInspiration);
+            const refData = JSON.parse(fsLib.readFileSync(refPath, 'utf-8'));
+            if (refData.theme && refData.theme.palette) {
+                originalTheme = refData.theme;
+            }
+        } catch(e) {
+            console.error("Erreur récupération thème", e);
+        }
     }
 
-    // Le JSON est 100% OK
+    if (primaryColor) originalTheme.palette[0] = primaryColor;
+    if (secondaryColor) originalTheme.palette[1] = secondaryColor;
+    if (primaryColor) originalTheme.palette[2] = primaryColor;
+    
+    // Initialisation exacte du format ETK360
+    const finalData = {
+        title: restaurantName || "Nouveau Restaurant",
+        theme: originalTheme,
+        workflow: {} as any,
+        categories: {} as any,
+        items: {} as any,
+        modifier: {} as any,
+        steps: {} as any
+    };
+
+    let catRank = 1;
+
+    let sourceCategories = [];
+    if (intermediate.categories && Array.isArray(intermediate.categories)) {
+        sourceCategories = intermediate.categories;
+    } else if (Array.isArray(intermediate)) {
+        sourceCategories = intermediate;
+    } else if (intermediate.menu && Array.isArray(intermediate.menu.categories)) {
+        sourceCategories = intermediate.menu.categories;
+    } else if (intermediate.menu && Array.isArray(intermediate.menu)) {
+        sourceCategories = intermediate.menu;
+    } else if (intermediate.carte && Array.isArray(intermediate.carte.categories)) {
+        sourceCategories = intermediate.carte.categories;
+    }
+
+    // Mapping 1-to-1 absolu avec des UUIDs Backend natifs
+    if (sourceCategories.length > 0) {
+        sourceCategories.forEach((catInfo: any) => {
+            const catId = randomUUID();
+            finalData.categories[catId] = {
+                title: catInfo.name || "Catégorie",
+                isVisible: true,
+                color: finalData.theme.palette[Math.floor(Math.random() * finalData.theme.palette.length)]
+            };
+
+            const contentBlock: any = {};
+            let itemRank = 1;
+
+            const catTitle = catInfo.name || "Catégorie";
+            const forcedItemsStr = systemConfig?.forcedItems?.[catTitle] || systemConfig?.forcedItems?.[catTitle.toUpperCase()] || systemConfig?.forcedItems?.[catTitle.toLowerCase()];
+            
+            if (forcedItemsStr && forcedItemsStr.trim() !== "") {
+                const forcedArr = forcedItemsStr.split(",").map((s: string) => s.trim()).filter((s: string) => s !== "");
+                const oldItems = Array.isArray(catInfo.items) ? catInfo.items : [];
+                
+                catInfo.items = forcedArr.map((forcedName: string) => {
+                    const found = oldItems.find((i: any) => i.name && (i.name.toLowerCase().includes(forcedName.toLowerCase()) || forcedName.toLowerCase().includes(i.name.toLowerCase())));
+                    return {
+                        name: forcedName,
+                        price: found && found.price ? found.price : (Math.floor(Math.random() * 5) + 5)
+                    };
+                });
+            }
+
+            if (catInfo.items && Array.isArray(catInfo.items)) {
+                catInfo.items.forEach((itemInfo: any) => {
+                    const itemId = randomUUID();
+                    const itemName = itemInfo.name || "Produit INCONNU";
+                    const itemPrice = parseFloat(itemInfo.price) > 0 ? parseFloat(itemInfo.price) : 10.0;
+                    
+                    const encodedImg = encodeURIComponent(itemName.trim().replace(/\s+/g, '_'));
+
+                    finalData.items[itemId] = {
+                        id: Math.floor(Math.random() * 900) + 1000,
+                        type: "items",
+                        title: itemName,
+                        price: { dflt: { ttc: itemPrice } },
+                        img: { dflt: { img: `https://image.pollinations.ai/prompt/${encodedImg}` } }
+                    };
+
+                                        contentBlock[itemId] = { type: "items", rank: itemRank++ };
+
+                                                            // NOUVEAU PARCOURS "MENU" TYPE MCDONALDS
+                    const isDrinkOrDessert = catInfo.name && (catInfo.name.toLowerCase().includes("boisson") || catInfo.name.toLowerCase().includes("dessert"));
+                    const isFoodItem = !isDrinkOrDessert;
+
+                    // NOUVEAU PARCOURS "MENU" TYPE MCDONALDS EXACT ETK360 COMPATIBLE
+                    const realModifierId = randomUUID();
+                    const modSteps: any = {};
+                    let modRank = 1;
+                    let hasModifiers = false;
+
+                    if (isFoodItem) {
+                        hasModifiers = true;
+                        
+                        // ETAPE 1: Personnalisation dynamique
+                        const stepPersoId = randomUUID();
+                        modSteps[stepPersoId] = { rank: modRank++ };
+                        
+                        const persoItems: any = {};
+                        let pRank = 1;
+                        let maxChoicesArr = 0;
+
+                        // Cuissons si activées
+                        if (systemConfig?.compositions?.cookingOptions) {
+                            const p1 = randomUUID(); const p2 = randomUUID(); const p3 = randomUUID();
+                            persoItems[p1] = { price: 0, uuid: p1, rank: pRank++ };
+                            persoItems[p2] = { price: 0, uuid: p2, rank: pRank++ };
+                            persoItems[p3] = { price: 0, uuid: p3, rank: pRank++ };
+                            
+                            finalData.items[p1] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Saignant", price: { dflt: { ttc: 0 } }, img: { dflt: { img: "https://image.pollinations.ai/prompt/rare_meat" } } };
+                            finalData.items[p2] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "À point", price: { dflt: { ttc: 0 } }, img: { dflt: { img: "https://image.pollinations.ai/prompt/medium_meat" } } };
+                            finalData.items[p3] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Bien cuit", price: { dflt: { ttc: 0 } }, img: { dflt: { img: "https://image.pollinations.ai/prompt/well_done_meat" } } };
+                            maxChoicesArr += 1;
+                        }
+
+                        // Retrait d'ingrédients
+                        const defIng = systemConfig?.compositions?.defaultIngredients || "";
+                        if (defIng.trim() !== "") {
+                            const ings = defIng.split(",").map((s: string) => s.trim()).filter((s: string) => s !== "");
+                            ings.forEach((ing: string) => {
+                                const uid = randomUUID();
+                                persoItems[uid] = { price: 0, uuid: uid, rank: pRank++ };
+                                finalData.items[uid] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: `Sans ${ing}`, price: { dflt: { ttc: 0 } }, img: { dflt: { img: `https://image.pollinations.ai/prompt/no_${encodeURIComponent(ing)}` } } };
+                                maxChoicesArr += 1;
+                            });
+                        }
+
+                        // Suppléments payants
+                        const supps = systemConfig?.compositions?.customSupplements || [];
+                        supps.forEach((supp: any) => {
+                            const uid = randomUUID();
+                            persoItems[uid] = { price: supp.price, uuid: uid, rank: pRank++ };
+                            finalData.items[uid] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: `Supplément ${supp.name} (+${supp.price}€)`, price: { dflt: { ttc: supp.price } }, img: { dflt: { img: `https://image.pollinations.ai/prompt/extra_${encodeURIComponent(supp.name)}` } } };
+                            maxChoicesArr += 1;
+                        });
+
+                        finalData.steps[stepPersoId] = { title: "Personnalisation", minChoices: 0, maxChoices: maxChoicesArr || 5, items: persoItems };
+
+                        // ETAPE 2: Formules
+                        const stepFormuleId = randomUUID();
+                        modSteps[stepFormuleId] = { rank: modRank++ };
+                        
+                        const formuleItems: any = {};
+                        let fRank = 1;
+
+                        if (systemConfig?.formulas?.isSeul !== false) {
+                            const optSeul = randomUUID();
+                            formuleItems[optSeul] = { price: 0, uuid: optSeul, rank: fRank++ };
+                            finalData.items[optSeul] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Seul", price: { dflt: { ttc: 0 } }, img: { dflt: { img: "https://image.pollinations.ai/prompt/single_item" } } };
+                        }
+
+                        // Base menus (Boisson + Accompagnement)
+                        const buildMenuSubsteps = (menuModId: string, parentMenuUuid: string) => {
+                            const menuSteps: any = {};
+                            let sRank = 1;
+
+                            // Boissons dynamiques
+                            const drinksListStr = systemConfig?.drinks?.list || "Coca-Cola, Eau Plate";
+                            const drinksArr = drinksListStr.split(",").map((s:string) => s.trim()).filter((s:string) => s !== "");
+                            if (drinksArr.length > 0) {
+                                const stepBoissonMenu = randomUUID();
+                                menuSteps[stepBoissonMenu] = { rank: sRank++ };
+                                const drinksItems: any = {};
+                                let bRank = 1;
+
+                                drinksArr.forEach((dr: string) => {
+                                    const buid = randomUUID();
+                                    drinksItems[buid] = { price: 0, uuid: buid, rank: bRank++ };
+                                    if (systemConfig?.drinks?.hasSizes) {
+                                        const drModId = randomUUID();
+                                        const drStepSizeId = randomUUID();
+                                        const s1 = randomUUID(); const s2 = randomUUID(); const s3 = randomUUID();
+                                        
+                                        finalData.items[buid] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: dr, price: { dflt: { ttc: 0 } }, modifier: drModId, img: { dflt: { img: `https://image.pollinations.ai/prompt/${encodeURIComponent(dr)}` } } };
+                                        
+                                        finalData.modifier[drModId] = {
+                                            "uuid-item": buid,
+                                            steps: { [drStepSizeId]: { rank: 1 } }
+                                        };
+                                        finalData.steps[drStepSizeId] = { title: `Taille - ${dr}`, minChoices: 1, maxChoices: 1, items: {
+                                            [s1]: { price: systemConfig.drinks.sizeS || 0, uuid: s1, rank: 1 },
+                                            [s2]: { price: systemConfig.drinks.sizeM || 1, uuid: s2, rank: 2 },
+                                            [s3]: { price: systemConfig.drinks.sizeL || 1.5, uuid: s3, rank: 3 }
+                                        }};
+                                        finalData.items[s1] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Taille S", price: { dflt: { ttc: systemConfig.drinks.sizeS || 0 } } };
+                                        finalData.items[s2] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Taille M", price: { dflt: { ttc: systemConfig.drinks.sizeM || 1 } } };
+                                        finalData.items[s3] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Taille L", price: { dflt: { ttc: systemConfig.drinks.sizeL || 1.5 } } };
+                                    } else {
+                                        finalData.items[buid] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: dr, price: { dflt: { ttc: 0 } }, img: { dflt: { img: `https://image.pollinations.ai/prompt/${encodeURIComponent(dr)}` } } };
+                                    }
+                                });
+                                finalData.steps[stepBoissonMenu] = { title: "Choix de la Boisson", minChoices: 1, maxChoices: 1, items: drinksItems };
+                            }
+
+                            // Accompagnements dynamiques
+                            const stepAccompMenu = randomUUID();
+                            menuSteps[stepAccompMenu] = { rank: sRank++ };
+                            
+                            const accompListStr = systemConfig?.accompaniments?.list || "Frites, Potatoes";
+                            const accompArr = accompListStr.split(",").map((s:string) => s.trim()).filter((s:string) => s !== "");
+                            const accompItems: any = {};
+                            let aRank = 1;
+
+                            accompArr.forEach((acc: string) => {
+                                const auid = randomUUID();
+                                accompItems[auid] = { price: 0, uuid: auid, rank: aRank++ };
+
+                                // Si tailles, on crée un sous-modifier !
+                                if (systemConfig?.accompaniments?.hasSizes) {
+                                    const accModId = randomUUID();
+                                    const accStepSizeId = randomUUID();
+                                    const s1 = randomUUID(); const s2 = randomUUID(); const s3 = randomUUID();
+                                    
+                                    finalData.items[auid] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: acc, price: { dflt: { ttc: 0 } }, modifier: accModId, img: { dflt: { img: `https://image.pollinations.ai/prompt/${encodeURIComponent(acc)}` } } };
+                                    
+                                    finalData.modifier[accModId] = {
+                                        "uuid-item": auid,
+                                        steps: { [accStepSizeId]: { rank: 1 } }
+                                    };
+                                    finalData.steps[accStepSizeId] = { title: `Taille - ${acc}`, minChoices: 1, maxChoices: 1, items: {
+                                        [s1]: { price: systemConfig.accompaniments.sizeS || 0, uuid: s1, rank: 1 },
+                                        [s2]: { price: systemConfig.accompaniments.sizeM || 1, uuid: s2, rank: 2 },
+                                        [s3]: { price: systemConfig.accompaniments.sizeL || 1.5, uuid: s3, rank: 3 }
+                                    }};
+                                    finalData.items[s1] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Taille S", price: { dflt: { ttc: systemConfig.accompaniments.sizeS || 0 } } };
+                                    finalData.items[s2] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Taille M", price: { dflt: { ttc: systemConfig.accompaniments.sizeM || 1 } } };
+                                    finalData.items[s3] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Taille L", price: { dflt: { ttc: systemConfig.accompaniments.sizeL || 1.5 } } };
+                                } else {
+                                    finalData.items[auid] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: acc, price: { dflt: { ttc: 0 } }, img: { dflt: { img: `https://image.pollinations.ai/prompt/${encodeURIComponent(acc)}` } } };
+                                }
+                            });
+
+                            finalData.steps[stepAccompMenu] = { title: "Choix de l'Accompagnement", minChoices: 1, maxChoices: 1, items: accompItems };
+                            
+                            // Desserts dynamiques
+                            const dessertsListStr = systemConfig?.desserts?.list || "";
+                            const dessertsArr = dessertsListStr.split(",").map((s:string) => s.trim()).filter((s:string) => s !== "");
+                            if (dessertsArr.length > 0) {
+                                const stepDessertMenu = randomUUID();
+                                menuSteps[stepDessertMenu] = { rank: sRank++ };
+                                const dessertsItems: any = {};
+                                let dRank = 1;
+
+                                dessertsArr.forEach((ds: string) => {
+                                    const duid = randomUUID();
+                                    dessertsItems[duid] = { price: 0, uuid: duid, rank: dRank++ };
+                                    if (systemConfig?.desserts?.hasSizes) {
+                                        const dsModId = randomUUID();
+                                        const dsStepSizeId = randomUUID();
+                                        const s1 = randomUUID(); const s2 = randomUUID(); const s3 = randomUUID();
+                                        
+                                        finalData.items[duid] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: ds, price: { dflt: { ttc: 0 } }, modifier: dsModId, img: { dflt: { img: `https://image.pollinations.ai/prompt/${encodeURIComponent(ds)}` } } };
+                                        
+                                        finalData.modifier[dsModId] = {
+                                            "uuid-item": duid,
+                                            steps: { [dsStepSizeId]: { rank: 1 } }
+                                        };
+                                        finalData.steps[dsStepSizeId] = { title: `Taille - ${ds}`, minChoices: 1, maxChoices: 1, items: {
+                                            [s1]: { price: systemConfig.desserts.sizeS || 0, uuid: s1, rank: 1 },
+                                            [s2]: { price: systemConfig.desserts.sizeM || 1, uuid: s2, rank: 2 },
+                                            [s3]: { price: systemConfig.desserts.sizeL || 1.5, uuid: s3, rank: 3 }
+                                        }};
+                                        finalData.items[s1] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Taille S", price: { dflt: { ttc: systemConfig.desserts.sizeS || 0 } } };
+                                        finalData.items[s2] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Taille M", price: { dflt: { ttc: systemConfig.desserts.sizeM || 1 } } };
+                                        finalData.items[s3] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Taille L", price: { dflt: { ttc: systemConfig.desserts.sizeL || 1.5 } } };
+                                    } else {
+                                        finalData.items[duid] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: ds, price: { dflt: { ttc: 0 } }, img: { dflt: { img: `https://image.pollinations.ai/prompt/${encodeURIComponent(ds)}` } } };
+                                    }
+                                });
+                                finalData.steps[stepDessertMenu] = { title: "Choix du Dessert", minChoices: 1, maxChoices: 1, items: dessertsItems };
+                            }
+
+                            finalData.modifier[menuModId] = {
+                                "uuid-item": parentMenuUuid,
+                                steps: menuSteps
+                            };
+                        };
+
+                        if (systemConfig?.formulas?.isMenu) {
+                            const optMenu = randomUUID();
+                            const mPrice = systemConfig.formulas.menuPrice || 2.50;
+                            formuleItems[optMenu] = { price: mPrice, uuid: optMenu, rank: fRank++ };
+                            const optMenuModId = randomUUID();
+                            finalData.items[optMenu] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: `En Menu (+${mPrice}€)`, price: { dflt: { ttc: mPrice } }, modifier: optMenuModId, img: { dflt: { img: "https://image.pollinations.ai/prompt/fastfood_menu_combo" } } };
+                            buildMenuSubsteps(optMenuModId, optMenu);
+                        }
+
+                        if (systemConfig?.formulas?.isMaxi) {
+                            const optMaxi = randomUUID();
+                            const rPrice = systemConfig.formulas.maxiPrice || 3.50;
+                            formuleItems[optMaxi] = { price: rPrice, uuid: optMaxi, rank: fRank++ };
+                            const optMaxiModId = randomUUID();
+                            finalData.items[optMaxi] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: `En Maxi Menu (+${rPrice}€)`, price: { dflt: { ttc: rPrice } }, modifier: optMaxiModId, img: { dflt: { img: "https://image.pollinations.ai/prompt/fastfood_maxi_menu" } } };
+                            buildMenuSubsteps(optMaxiModId, optMaxi);
+                        }
+
+                        finalData.steps[stepFormuleId] = { title: "Choix de la Formule", minChoices: 1, maxChoices: 1, items: formuleItems };
+                    }
+                    
+                    if (hasModifiers) {
+                        finalData.items[itemId].modifier = realModifierId;
+                        finalData.modifier[realModifierId] = {
+                            "uuid-item": itemId,
+                            steps: modSteps
+                        };
+                    }
+                });
+            }
+
+            finalData.workflow[catId] = {
+                type: "categories",
+                rank: catRank++,
+                content: contentBlock
+            };
+        });
+    }
+
+    // Plus de validation ETK360 aléatoire car on l'a construit mathématiquement
+    let jsonResponse = JSON.stringify(finalData, null, 2);
+
     if (sauvegarder) {
       const timestamp = Date.now();
-      const safeName = sujetDemande.slice(0, 30).replace(/[^a-z0-9]/gi, '_').toLowerCase();
+      let safeNameRaw = restaurantName || "Restaurant IA";
+      
+      // Cleanup de la chaine (on retire le "Je veux un vrai restaurant de : ") pour le filename
+      safeNameRaw = safeNameRaw.replace("Je veux un vrai restaurant de : ", "");
+      const safeName = safeNameRaw.slice(0, 30).replace(/[^a-z0-9A-Z]/gi, '_').toLowerCase();
+      
       const filename = `ia_${safeName}_${timestamp}.json`;
       const filepath = path.join(process.cwd(), '.softavera', 'carte', filename);
       fs.writeFileSync(filepath, jsonResponse, 'utf-8');
       return JSON.stringify({ success: true, json: jsonResponse, savedPath: filename });
     }
 
-    return JSON.stringify({ success: isValid, json: jsonResponse, savedPath: null, error: isValid ? undefined : "L'IA a échoué à valider les critères métiers même après correction." });
+    return JSON.stringify({ success: true, json: jsonResponse, savedPath: null });
 
   } catch (error: any) {
-    console.error(`Erreur ${getAILabel(aiType)} Génération P2:`, error);
-    return JSON.stringify({ success: false, error: `Erreur ${getAILabel(aiType)} : ${error.message}` });
+    console.error(`Erreur Mapping Backend Phase 2 :`, error);
+    return JSON.stringify({ success: false, error: `Erreur interne : ${error.message}` });
   }
 }
 

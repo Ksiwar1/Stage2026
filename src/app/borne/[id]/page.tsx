@@ -57,12 +57,12 @@ export default async function BornePage({ params }: { params: Promise<{ id: stri
   if (data.theme && Array.isArray(data.theme.palette) && data.theme.palette.length >= 2) {
      const p = data.theme.palette;
      themePalette = {
-        background: p[0] || themePalette.background,
-        surface: p[1] || themePalette.surface,
-        primary: p[2] || themePalette.primary,
-        text: p[3] || themePalette.text,
-        onPrimary: p[4] || themePalette.onPrimary,
-        secondary: p[2] || themePalette.secondary 
+        background: data.theme.background || themePalette.background,
+        surface: data.theme.surface || themePalette.surface,
+        primary: data.theme.primary || p[0] || p[2] || themePalette.primary,
+        text: data.theme.text || p[3] || themePalette.text,
+        onPrimary: data.theme.onPrimary || p[4] || themePalette.onPrimary,
+        secondary: data.theme.secondary || p[1] || p[5] || p[2] || themePalette.secondary 
      };
   } else if (data.theme && typeof data.theme === 'object' && !Array.isArray(data.theme.palette)) {
      themePalette = {

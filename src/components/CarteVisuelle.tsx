@@ -30,6 +30,13 @@ export default function CarteVisuelle({ summary }: { summary: VisualCardSummary 
   }
 
   if (summary.type === 'ETK360_CATALOG') {
+    let displayName = summary.restaurantName;
+    if (!displayName) {
+       displayName = summary.nomFichier.replace('.json', '').replace(/^ia_*/, '').replace(/_/g, ' ');
+       if (displayName.trim() === '' || displayName.startsWith('INSTRUCTIONS STRUCT')) {
+           displayName = "Restaurant IA";
+       }
+    }
     return (
       <Link href={`/borne/${summary.nomFichier.replace('.json', '')}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block', height: '100%', transition: 'transform 0.2s', opacity: isDeleting ? 0.5 : 1, ...({ '&:hover': { transform: 'translateY(-5px)' } } as any) }}>
         <div style={{
@@ -74,14 +81,14 @@ export default function CarteVisuelle({ summary }: { summary: VisualCardSummary 
                 <img src={summary.logoUrl} alt="Logo Restaurant" style={{ width: '80px', height: '80px', objectFit: 'contain', background: 'white', padding: '0.5rem', borderRadius: '16px', boxShadow: '0 10px 25px rgba(0,0,0,0.2)', zIndex: 10 }} />
               ) : (
                 <div style={{ width: '80px', height: '80px', background: '#3b82f6', color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '16px', fontSize: '2rem', fontWeight: 900, boxShadow: '0 10px 25px rgba(59,130,246,0.4)', zIndex: 10, textTransform: 'uppercase' }}>
-                  {(summary.restaurantName || "R").charAt(0)}
+                  {(displayName || "R").charAt(0)}
                 </div>
               )}
             </div>
 
             <div style={{ padding: '1.5rem', textAlign: 'center', width: '100%' }}>
               <h3 style={{ margin: '0 0 0.5rem 0', fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', textTransform: 'uppercase', letterSpacing: '-0.02em' }}>
-                {summary.restaurantName || summary.nomFichier.replace('.json', '')}
+                {displayName}
               </h3>
               <p style={{ margin: 0, fontSize: '0.85rem', color: '#64748b', fontWeight: 500 }}>
                 {summary.nomFichier.includes('franchise') ? 'Franchise ETK360' : 'Boutique ETK360'}

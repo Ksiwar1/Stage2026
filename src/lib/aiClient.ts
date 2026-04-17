@@ -66,7 +66,7 @@ export async function generateAIResponse(
     case "gemini": {
       const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
       const model = genAI.getGenerativeModel({
-        model: "gemini-2.0-flash",
+        model: "gemini-2.5-flash",
         systemInstruction: systemPrompt,
       });
 
@@ -77,37 +77,38 @@ export async function generateAIResponse(
         });
       }
 
-      try {
-        const result = await model.generateContent(content);
-        return result.response.text() || "";
-      } catch (error: any) {
-        if (error?.status === 429 || error?.status === 503 || error?.message?.includes("429") || error?.message?.includes("503")) {
-          console.warn(`[RATE LIMIT / 503 OVERLOAD] Quota 'gemini-2.0-flash' dépassé ou API saturée. Tentative de Fallback sur 'gemini-2.5-flash' ou 'gemini-2.0-flash-lite'...`);
-          try {
-             // Fallback 1: gemini-2.5-flash
-             const fbModel1 = genAI.getGenerativeModel({ model: "gemini-2.5-flash", systemInstruction: systemPrompt });
-             const fbRes1 = await fbModel1.generateContent(content);
-             return fbRes1.response.text() || "";
-          } catch (e1: any) {
-             try {
-                // Fallback 2: gemini-2.0-flash-lite
-                const fbModel2 = genAI.getGenerativeModel({ model: "gemini-2.0-flash-lite", systemInstruction: systemPrompt });
-                const fbRes2 = await fbModel2.generateContent(content);
-                return fbRes2.response.text() || "";
-             } catch (e2: any) {
-                // Fallback 3 : Attente forcée
-                const match = error?.message?.match(/Please retry in ([\d.]+)s/);
-                const sleepSeconds = match ? parseFloat(match[1]) : 60;
-                const sleepMs = Math.ceil((sleepSeconds + 1) * 1000);
-                console.warn(`[RATE LIMIT] Tous les modèles de secours ont échoué. Pause obligatoire de ${Math.round(sleepMs/1000)}s...`);
-                await new Promise(resolve => setTimeout(resolve, sleepMs));
-                const retryResult = await model.generateContent(content);
-                return retryResult.response.text() || "";
-             }
+      const executeGemini = async (attempt: number = 1): Promise<string> => {
+        try {
+          const result = await model.generateContent(content);
+          return result.response.text() || "";
+        } catch (error: any) {
+          if ((error?.status === 503 || error?.message?.includes("503")) && attempt <= 3) {
+            const delayMs = Math.pow(2, attempt - 1) * 1000; // 1s, 2s, 4s
+            console.warn(`[GEMINI 503 ERROR] API saturée. Tentative ${attempt}/3 dans ${delayMs}ms...`);
+            await new Promise(resolve => setTimeout(resolve, delayMs));
+            return executeGemini(attempt + 1);
           }
+          if (error?.status === 429 || error?.message?.includes("429")) {
+            console.warn(`[RATE LIMIT] Quota 'gemini-2.5-flash' dépassé. Tentative de Fallback sur 'gemini-2.5-flash'...`);
+            try {
+               const fbModel = genAI.getGenerativeModel({ model: "gemini-2.5-flash", systemInstruction: systemPrompt });
+               const fbRes = await fbModel.generateContent(content);
+               return fbRes.response.text() || "";
+            } catch (e2: any) {
+               const match = error?.message?.match(/Please retry in ([\d.]+)s/);
+               const sleepSeconds = match ? parseFloat(match[1]) : 60;
+               const sleepMs = Math.ceil((sleepSeconds + 1) * 1000);
+               console.warn(`[RATE LIMIT] Fallback échoué. Pause de ${Math.round(sleepMs/1000)}s...`);
+               await new Promise(resolve => setTimeout(resolve, sleepMs));
+               const retryResult = await model.generateContent(content);
+               return retryResult.response.text() || "";
+            }
+          }
+          throw error;
         }
-        throw error;
-      }
+      };
+
+      return executeGemini();
     }
 
     case "claude": {

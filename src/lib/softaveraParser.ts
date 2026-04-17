@@ -270,7 +270,7 @@ function buildRecursiveSteps(modifierId: string, data: any, visitedModifierIds: 
 
            // Étape 5 : Récursion
            // itemsMap contient `productId` comme clé et `modifierId` ou null comme valeur
-           const itemModifierId = typeof itemVal === 'string' ? itemVal : (itemVal && (itemVal as any).modifier ? (itemVal as any).modifier : null);
+           const itemModifierId = typeof itemVal === 'string' ? itemVal : (itemVal && (itemVal as any).modifier ? (itemVal as any).modifier : (optProductRef?.modifier || null));
            
            if (itemModifierId) {
               // On passe un clone du Set visited pour l'anti-boucle sur cette branche
