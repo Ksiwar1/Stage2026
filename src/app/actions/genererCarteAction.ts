@@ -24,8 +24,16 @@ export async function genererArchitectureAction(data: FormData) {
 
   sujetDemande += `\n\n=== RÈGLES IMPORTANTES ET OBLIGATOIRES ===\n`;
   if (restaurantName) {
-    sujetDemande += `- Nom du restaurant : "${restaurantName}". Ce nom doit être utilisé dans la carte, apparaître dans les titres, descriptions ou le branding.\n- Le design, le nom des menus et des produits doivent absolument être stylistiquement et culturellement cohérents avec l'identité "${restaurantName}".\n`;
+    sujetDemande += `- Nom du restaurant : "${restaurantName}". Ce nom qualifie l'établissement.\n`;
   }
+  
+  if (menuImage && menuImage.size > 0) {
+      sujetDemande += `- ⚠️ PRIORITÉ IMAGE OCR ⚠️ : Tu dois extraire FIDÈLEMENT le menu joint en image. N'invente AUCUN produit, AUCUNE catégorie qui ne soit pas sur l'image. NE MODIFIE PAS les noms des produits pour essayer d'être créatif avec le nom de l'établissement. L'image fournie est la VÉRITÉ ABSOLUE pour le contenu textuel et tarifaire.\n`;
+      sujetDemande += `- Ignore les "Catégories obligatoires" du prompt si elles contredisent le contenu de l'image. L'image prime.\n`;
+  } else if (restaurantName) {
+      sujetDemande += `- Le design, le nom des menus et des produits doivent absolument être stylistiquement et culturellement cohérents avec l'identité "${restaurantName}". Laisse libre cours à ta créativité !\n`;
+  }
+  
   sujetDemande += `- STRUCTURE STRICTE : workflow, categories, items, modifier, steps, opt. AUCUNE DE CES PARTIES NE DOIT ÊTRE VIDE.\n`;
 
   let base64Image: { mimeType: string; data: string } | undefined = undefined;
@@ -496,8 +504,16 @@ export async function enrichirCarteAction(
       safeNameRaw = safeNameRaw.replace("Je veux un vrai restaurant de : ", "");
       const safeName = safeNameRaw.slice(0, 30).replace(/[^a-z0-9A-Z]/gi, '_').toLowerCase();
       
-      const filename = `ia_${safeName}_${timestamp}.json`;
-      const filepath = path.join(process.cwd(), '.softavera', 'carte', filename);
+      let filename = `ia_${safeName}.json`;
+      let filepath = path.join(process.cwd(), '.softavera', 'carte', filename);
+      let counter = 1;
+      
+      while (fs.existsSync(filepath)) {
+          counter++;
+          filename = `ia_${safeName}_${counter}.json`;
+          filepath = path.join(process.cwd(), '.softavera', 'carte', filename);
+      }
+      
       fs.writeFileSync(filepath, jsonResponse, 'utf-8');
       return JSON.stringify({ success: true, json: jsonResponse, savedPath: filename });
     }
