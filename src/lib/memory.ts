@@ -146,6 +146,8 @@ Ta mission est d'effectuer la PHASE 1 de génération : CONSTRUIRE LE WORKFLOW A
 Tu ne dois renvoyer QUE le JSON final (sans balises markdown autour du texte ni blabla).
 ${ocrAddon}
 
+🚨 RÈGLE STYLISTIQUE OBLIGATOIRE 🚨 : Tu DOIS obligatoirement commencer le titre de CHAQUE catégorie par un Emoji représentatif correspondant au thème (ex: "🍕 Pizzas", "🥤 Boissons fraîches", "🥗 Salades", "🍰 Desserts"). Ceci est vital pour le design de l'application UI.
+
 MA RÉFÉRENCE PRINCIPALE (TON MODÈLE MÂÎTRE) :
 Tu dois t'en inspirer PROFONDÉMENT. 
 \`\`\`json
@@ -518,6 +520,41 @@ export function extractTemplateFromCatalogue(catalogPath: string): string | null
     return JSON.stringify(skeleton);
   } catch (e) {
     console.error("ETK Template Extraction Error :", e);
+    return null;
+  }
+}
+
+export function extractTrueDataFromCatalogue(catalogPath: string): string | null {
+  try {
+    if (!fs.existsSync(catalogPath)) return null;
+    const content = fs.readFileSync(catalogPath, 'utf-8');
+    const data = JSON.parse(content);
+    
+    let catStr = "";
+    if (data.categories) {
+       for (const [catId, catObj] of Object.entries<any>(data.categories)) {
+           if (catObj.archive === true || catObj.visibilityInfo?.isVisible === false || catObj.isVisible === false) continue;
+           catStr += `[${catId}]:${catObj.title || catObj.name || catId}\n`;
+       }
+    }
+
+    let itemStr = "";
+    if (data.items) {
+       let itemCount = 0;
+       for (const [itemId, itemObj] of Object.entries<any>(data.items)) {
+           if (itemObj.archive === true || itemObj.visibilityInfo?.isVisible === false || itemObj.isVisible === false) continue;
+           
+           // Limite augmentée d'éléments mais format string compressé
+           if (itemCount > 250) break; 
+           let name = itemObj.displayName?.dflt?.nameDef || itemObj.title || itemObj.name || itemId;
+           itemStr += `[${itemId}]:${name}\n`;
+           itemCount++;
+       }
+    }
+
+    return `\n-- CATALOGUE DISPONIBLE (MAPPAGE STRICT) --\nCATEGORIES:\n${catStr}PRODUITS:\n${itemStr}`;
+  } catch (e) {
+    console.error("ETK True Data Extraction Error :", e);
     return null;
   }
 }

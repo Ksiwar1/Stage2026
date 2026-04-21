@@ -1,6 +1,6 @@
 'use server';
 
-import { getPromptSystemForAI } from "../../lib/memory";
+import { extractTrueDataFromCatalogue } from "../../lib/memory";
 import { generateAIResponse, getAILabel, getAIType } from "../../lib/aiClient";
 import { validateETK360Code } from "../../lib/aiValidator";
 import { patchETK360Structure } from "../../lib/autoHealer";
@@ -49,25 +49,56 @@ export async function genererArchitectureAction(data: FormData) {
     };
   }
 
+  const themeMap: Record<string, string> = {
+      'fastfood': 'carte1_smash_up.json',
+      'pizzeria': 'carte3_grill_station.json',
+      'tacos': 'carte4_bsb_franchise.json',
+      'gastronomique': 'carte5_etoile_orientale.json',
+      'standard': 'carte2_o3k.json'
+  };
   let activeSourceInspiration = sourceInspiration;
+  if (activeSourceInspiration && themeMap[activeSourceInspiration]) {
+      activeSourceInspiration = themeMap[activeSourceInspiration];
+  }
   let activeSecondaryInspirations: string[] = [];
   const maxSecondary = (aiType === "groq") ? 1 : 2;
   const availableDocs = await getAvailableLibraryCards();
+  const fsLib = require('fs');
+  const pathLib = require('path');
+
+  // RAG Semantic Profiling
+  const docsDescriptions = availableDocs.map(f => {
+      try {
+          const content = JSON.parse(fsLib.readFileSync(pathLib.join(process.cwd(), '.softavera', 'carte', f), 'utf-8'));
+          const catTitles = content.categories ? Object.values(content.categories).map((c:any) => c.title).slice(0, 3).join(", ") : "Inconnu";
+          return `${f} (Thème: ${content.title || 'Inconnu'} | Catégories: ${catTitles})`;
+      } catch(e) { return f; }
+  });
 
   if (!activeSourceInspiration || activeSourceInspiration === 'generique') {
     console.log("[RAG] Auto-sélection intelligente des templates algorithmiques...");
-    const ragSys = `Tu es un agent RAG. Fichiers templates existants : ${availableDocs.join(", ")}. La demande métier est : "${sujetDemande}". Réponds UNIQUEMENT en string listant le PRIX ou LE MEILLEUR fichier, suivi d'éventuels autres intéressants (ex: "carte_pizza.json, carte_burger.json"). Aucun blabla. Si la demande est trop exotique, renvoie "generique".`;
+    const ragSys = `Tu es un agent RAG expert en Data Structuration.
+Ton objectif est de choisir la carte existante qui correspond structurellement le mieux à la demande du client.
+Fichiers templates disponibles :
+${docsDescriptions.join("\n")}
+
+La demande métier (Type de resto) est : "${sujetDemande}". 
+Réponds UNIQUEMENT par le texte brut, en listant le MEILLEUR fichier de base pour fusionner la structure, suivi d'éventuels 1 ou 2 autres intéressants, séparés par des virgules (ex: "ia_pizza.json, ia_sandwich.json"). 
+Si et seulement si absolument AUCUNE carte de la liste ne permet une bonne base structurelle pour la demande, renvoie "generique".`;
+    
     try {
       const ragRes = await generateAIResponse(ragSys, "Analyse le RAG", 0.1, "gemini");
-      const selectedFiles = ragRes.replace(/```/g, "").split(',').map(s => s.trim());
+      const selectedFiles = ragRes.replace(/```(json)?/gi, "").replace(/\n/g, ",").split(',').map(s => s.trim());
       const validFiles = selectedFiles.filter(f => availableDocs.includes(f));
 
       if (validFiles.length > 0) {
         activeSourceInspiration = validFiles[0];
         activeSecondaryInspirations = validFiles.slice(1, maxSecondary + 1);
+        console.log(`[RAG] BASE SÉLECTIONNÉE : ${activeSourceInspiration}`);
       } else {
         activeSourceInspiration = 'generique';
         activeSecondaryInspirations = availableDocs.slice(0, maxSecondary);
+        console.log(`[RAG] BASE GÉNÉRIQUE (Aucun match trouvé)`);
       }
     } catch (e) {
       activeSourceInspiration = 'generique';
@@ -80,25 +111,29 @@ export async function genererArchitectureAction(data: FormData) {
   }
 
   try {
+        const trueDataStr = extractTrueDataFromCatalogue(pathLib.join(process.cwd(), '.softavera', 'carte', activeSourceInspiration));
+    let trueDataSection = "";
+    if (trueDataStr) {
+        trueDataSection = `\nVOICI LA SEULE BASE DE DONNÉES DE PRODUITS AUTORISÉE (La Source de Vérité) :\n\`\`\`json\n${trueDataStr}\n\`\`\`\n\nRÈGLES ABSOLUES :\n1. Tu ne dois utiliser QUE les identifiants présents dans 'AVAILABLE_ITEMS'.\n2. N'invente AUCUN produit qui n'est pas dans cette liste. L'invention de prix, de noms ou d'IDs est strictement interdite.\n3. Si la demande du client ou l'OCR mentionne un produit absent de la liste, trouve le produit le plus proche sémantiquement dans la liste.\n`;
+    }
+
     console.log("[PHASE 1] Génération de la Trame Intermédiaire...");
-    const promptSysteme1 = `Tu es un assistant restaurateur. Tu dois répondre STRICTEMENT en format JSON pur, sans texte MD. Tu vas générer un menu complet.
+    const promptSysteme1 = `Tu es un assistant restaurateur. Tu dois répondre STRICTEMENT en format JSON pur, sans texte MD. Tu vas créer un mappage de menu.${trueDataSection}
 Format attendu:
 {
   "categories": [
     {
       "name": "Catégorie 1",
-      "items": [
-        { "name": "Produit A", "price": 10.0 }
-      ]
+      "itemIds": ["id_item_real_1", "id_item_real_2"]
     }
   ]
 }
-Adapte rigoureusement le nombre de catégories, leurs noms, et la description/quantité des produits selon les consignes exactes (langue, badges, etc.) dictées dans le Sujet Demandé par le client. AUCUN texte additionnel.`;
+INSTRUCTION EXTRÊMEMENT CRITIQUE: Tu dois OBLIGATOIREMENT générer EXACTEMENT les catégories demandées par l'utilisateur du début à la fin (ex: Menus, Boissons, Desserts). Interdiction ABSOLUE d'en oublier une seule ! Si une catégorie est vide d'items, tu retournes quand même la catégorie avec "itemIds": [].
+AUCUN texte additionnel.`;
 
     const promptUtilisateur1 = `Sujet demandé: ${sujetDemande}. Produis le JSON du menu.`;
     
     let architectureJson = await generateAIResponse(promptSysteme1, promptUtilisateur1, 0.7, aiType, base64Image, 1000);
-    require("fs").writeFileSync(`.softavera/carte/last_architecture.json`, architectureJson);
     architectureJson = architectureJson.replace(/```json/gi, "").replace(/```/g, "").trim();
 
     console.log("=== RAW TRAME INTERMÉDIAIRE ===");
@@ -195,303 +230,283 @@ export async function enrichirCarteAction(
         steps: {} as any
     };
 
-    let catRank = 1;
-
     let sourceCategories = [];
     if (intermediate.categories && Array.isArray(intermediate.categories)) {
         sourceCategories = intermediate.categories;
     } else if (Array.isArray(intermediate)) {
         sourceCategories = intermediate;
-    } else if (intermediate.menu && Array.isArray(intermediate.menu.categories)) {
-        sourceCategories = intermediate.menu.categories;
-    } else if (intermediate.menu && Array.isArray(intermediate.menu)) {
-        sourceCategories = intermediate.menu;
-    } else if (intermediate.carte && Array.isArray(intermediate.carte.categories)) {
-        sourceCategories = intermediate.carte.categories;
+    } else {
+        const findCategoriesNode = (obj: any): any[] | null => {
+            if (!obj || typeof obj !== 'object') return null;
+            if (obj.categories && Array.isArray(obj.categories)) return obj.categories;
+            for (const key in obj) {
+                if (Array.isArray(obj[key])) { 
+                    if (obj[key].length > 0 && Array.isArray(obj[key][0].items)) return obj[key];
+                }
+                const res = findCategoriesNode(obj[key]);
+                if (res) return res;
+            }
+            return null;
+        };
+        const found = findCategoriesNode(intermediate);
+        if (found) sourceCategories = found;
     }
 
-    // Mapping 1-to-1 absolu avec des UUIDs Backend natifs
-    if (sourceCategories.length > 0) {
-        sourceCategories.forEach((catInfo: any) => {
-            const catId = randomUUID();
-            finalData.categories[catId] = {
-                title: catInfo.name || "Catégorie",
-                isVisible: true,
-                color: finalData.theme.palette[Math.floor(Math.random() * finalData.theme.palette.length)]
-            };
+    const fsLib = require('fs');
+    const pathLib = require('path');
 
-            const contentBlock: any = {};
-            let itemRank = 1;
+    // === 1. BUILD MEMORY POOLS (MULTI-MAP SPLICING) ===
+    let memoryWorkflow: any = {};
+    let memoryCategories: any = {};
+    let memoryModifiers: any = {};
+    let memorySteps: any = {};
+    let memoryItems: any = {};
+    let memoryWorkflowMeta: any[] = []; // To easily scan for modifiers
 
-            const catTitle = catInfo.name || "Catégorie";
-            const forcedItemsStr = systemConfig?.forcedItems?.[catTitle] || systemConfig?.forcedItems?.[catTitle.toUpperCase()] || systemConfig?.forcedItems?.[catTitle.toLowerCase()];
+    const allInspirations = [];
+    if (activeSourceInspiration && activeSourceInspiration !== 'generique') allInspirations.push(activeSourceInspiration);
+    activeSecondaryInspirations.forEach((f:string) => {
+        if (!allInspirations.includes(f)) allInspirations.push(f);
+    });
+
+    allInspirations.forEach((f, index) => {
+        try {
+            const data = JSON.parse(fsLib.readFileSync(pathLib.join(process.cwd(), '.softavera', 'carte', f), 'utf-8'));
+            if (index === 0) { // BaseMap
+               memoryWorkflow = data.workflow || {};
+            }
+            Object.assign(memoryCategories, data.categories || {});
+            Object.assign(memoryModifiers, data.modifier || {});
+            Object.assign(memorySteps, data.steps || {});
+            Object.assign(memoryItems, data.items || {});
             
-            if (forcedItemsStr && forcedItemsStr.trim() !== "") {
-                const forcedArr = forcedItemsStr.split(",").map((s: string) => s.trim()).filter((s: string) => s !== "");
-                const oldItems = Array.isArray(catInfo.items) ? catInfo.items : [];
+            // Build a meta-structure to find modifiers easily
+            if (data.workflow) {
+                Object.keys(data.workflow).forEach(wCatId => {
+                   const wfCat = data.workflow[wCatId];
+                   const catTitle = (data.categories?.[wCatId]?.title || "").toLowerCase();
+                   let foundModId = null;
+                   if (wfCat.content) {
+                       const firstItem = Object.values(wfCat.content)[0] as any;
+                       if (firstItem && firstItem.type === "items") {
+                           // Find the item in memoryItems to see its modifier
+                           const itmObjId = Object.keys(wfCat.content)[0];
+                           const itmObj = data.items?.[itmObjId];
+                           if (itmObj && itmObj.modifier) foundModId = itmObj.modifier;
+                       }
+                   }
+                   memoryWorkflowMeta.push({ catTitle: catTitle, modId: foundModId });
+                });
+            }
+        } catch(e) {}
+    });
+
+    // Genetic Scavenger Helper - DEEP CLONING (Zero Conflict UUIDs)
+    const cloneGeneticModifier = (oldModId: string, parentItemId: string, fData: any): string | null => {
+        const mod = memoryModifiers[oldModId];
+        if (!mod) return null;
+        
+        const { randomUUID } = require("crypto");
+        const newModId = randomUUID();
+        
+        fData.modifier[newModId] = { ...mod, "uuid-item": parentItemId, steps: {} }; 
+        
+        if (mod.steps) {
+            Object.keys(mod.steps).forEach(oldStepId => {
+                const stp = memorySteps[oldStepId];
+                if (!stp) return;
                 
-                catInfo.items = forcedArr.map((forcedName: string) => {
-                    const found = oldItems.find((i: any) => i.name && (i.name.toLowerCase().includes(forcedName.toLowerCase()) || forcedName.toLowerCase().includes(i.name.toLowerCase())));
-                    return {
-                        name: forcedName,
-                        price: found && found.price ? found.price : (Math.floor(Math.random() * 5) + 5)
-                    };
-                });
+                const newStepId = randomUUID();
+                fData.modifier[newModId].steps[newStepId] = { ...mod.steps[oldStepId] };
+                fData.steps[newStepId] = { ...stp, items: {} };
+                
+                if (stp.items) {
+                    Object.keys(stp.items).forEach(oldItemId => {
+                        const itm = memoryItems[oldItemId];
+                        if (!itm) return;
+                        
+                        const newItemId = randomUUID();
+                        fData.steps[newStepId].items[newItemId] = { ...stp.items[oldItemId] };
+                        fData.items[newItemId] = { ...itm };
+                        
+                        if (itm.modifier) {
+                            const nestedModId = cloneGeneticModifier(itm.modifier, newItemId, fData);
+                            if (nestedModId) fData.items[newItemId].modifier = nestedModId;
+                        }
+                    });
+                }
+            });
+        }
+        return newModId;
+    };
+
+    const normalizeCategory = (name: string): string => {
+        if (!name) return "";
+        const n = name.toLowerCase();
+        if (n.match(/pizza|pizzas/)) return "pizza";
+        if (n.match(/boisson|boissons|soft|softs|drink|drinks|soda/)) return "boisson";
+        if (n.match(/dessert|desserts|glace|glaces|sucre|sucré|milkshake|smoothie|açaï/)) return "dessert";
+        if (n.match(/burger|burgers|sandwich|hamburger/)) return "burger";
+        if (n.match(/menu|menus|formule|formules|combo|combos|brunch/)) return "menu";
+        if (n.match(/salade|salades|bowl|pokebowl/)) return "salade";
+        if (n.match(/accompagnement|frite|frites|potatoes|side|tapas|partager/)) return "accompagnement";
+        if (n.match(/tacos|wrap|wraps/)) return "tacos";
+        if (n.match(/enfant|kids/)) return "enfant";
+        return n.replace(/nos /g, "").trim(); // Remove generic prefixes
+    };
+
+    const getScavengedModifierForCategory = (aiCatName: string) => {
+        const needle = aiCatName.toLowerCase();
+        const normalNeedle = normalizeCategory(needle);
+
+        // Blocage strict : Ne jamais appliquer un modifier de Pizza/Burger/Tacos à une Boisson/Dessert
+        const isPlat = ["pizza", "burger", "tacos", "salade", "accompagnement"].includes(normalNeedle);
+        const isBoisson = normalNeedle === "boisson";
+        const isDessert = normalNeedle === "dessert";
+
+        // 1. Sémantique métier stricte
+        for (const meta of memoryWorkflowMeta) {
+            const metaNorm = normalizeCategory(meta.catTitle);
+            
+            // Protection Croisée (Cross-Contamination)
+            if (isBoisson && metaNorm !== "boisson") continue;
+            if (isDessert && metaNorm !== "dessert") continue;
+            if (isPlat && (metaNorm === "boisson" || metaNorm === "dessert")) continue;
+
+            if (meta.modId && ((metaNorm === normalNeedle) || (normalNeedle !== "" && normalNeedle.length > 3 && meta.catTitle.includes(normalNeedle)))) {
+                return meta.modId;
             }
+        }
 
-            if (catInfo.items && Array.isArray(catInfo.items)) {
-                catInfo.items.forEach((itemInfo: any) => {
-                    const itemId = randomUUID();
-                    const itemName = itemInfo.name || "Produit INCONNU";
-                    const itemPrice = parseFloat(itemInfo.price) > 0 ? parseFloat(itemInfo.price) : 10.0;
-                    
-                    const encodedImg = encodeURIComponent(itemName.trim().replace(/\s+/g, '_'));
+        // 2. Fallback de sécurité (si même profil)
+        for (const meta of memoryWorkflowMeta) {
+            const metaNorm = normalizeCategory(meta.catTitle);
+            if (isBoisson && metaNorm !== "boisson") continue;
+            if (isDessert && metaNorm !== "dessert") continue;
+            if (isPlat && (metaNorm === "boisson" || metaNorm === "dessert")) continue;
 
-                    finalData.items[itemId] = {
-                        id: Math.floor(Math.random() * 900) + 1000,
-                        type: "items",
-                        title: itemName,
-                        price: { dflt: { ttc: itemPrice } },
-                        img: { dflt: { img: `https://image.pollinations.ai/prompt/${encodedImg}` } }
-                    };
-
-                                        contentBlock[itemId] = { type: "items", rank: itemRank++ };
-
-                                                            // NOUVEAU PARCOURS "MENU" TYPE MCDONALDS
-                    const isDrinkOrDessert = catInfo.name && (catInfo.name.toLowerCase().includes("boisson") || catInfo.name.toLowerCase().includes("dessert"));
-                    const isFoodItem = !isDrinkOrDessert;
-
-                    // NOUVEAU PARCOURS "MENU" TYPE MCDONALDS EXACT ETK360 COMPATIBLE
-                    const realModifierId = randomUUID();
-                    const modSteps: any = {};
-                    let modRank = 1;
-                    let hasModifiers = false;
-
-                    if (isFoodItem) {
-                        hasModifiers = true;
-                        
-                        // ETAPE 1: Personnalisation dynamique
-                        const stepPersoId = randomUUID();
-                        modSteps[stepPersoId] = { rank: modRank++ };
-                        
-                        const persoItems: any = {};
-                        let pRank = 1;
-                        let maxChoicesArr = 0;
-
-                        // Cuissons si activées
-                        if (systemConfig?.compositions?.cookingOptions) {
-                            const p1 = randomUUID(); const p2 = randomUUID(); const p3 = randomUUID();
-                            persoItems[p1] = { price: 0, uuid: p1, rank: pRank++ };
-                            persoItems[p2] = { price: 0, uuid: p2, rank: pRank++ };
-                            persoItems[p3] = { price: 0, uuid: p3, rank: pRank++ };
-                            
-                            finalData.items[p1] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Saignant", price: { dflt: { ttc: 0 } }, img: { dflt: { img: "https://image.pollinations.ai/prompt/rare_meat" } } };
-                            finalData.items[p2] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "À point", price: { dflt: { ttc: 0 } }, img: { dflt: { img: "https://image.pollinations.ai/prompt/medium_meat" } } };
-                            finalData.items[p3] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Bien cuit", price: { dflt: { ttc: 0 } }, img: { dflt: { img: "https://image.pollinations.ai/prompt/well_done_meat" } } };
-                            maxChoicesArr += 1;
-                        }
-
-                        // Retrait d'ingrédients
-                        const defIng = systemConfig?.compositions?.defaultIngredients || "";
-                        if (defIng.trim() !== "") {
-                            const ings = defIng.split(",").map((s: string) => s.trim()).filter((s: string) => s !== "");
-                            ings.forEach((ing: string) => {
-                                const uid = randomUUID();
-                                persoItems[uid] = { price: 0, uuid: uid, rank: pRank++ };
-                                finalData.items[uid] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: `Sans ${ing}`, price: { dflt: { ttc: 0 } }, img: { dflt: { img: `https://image.pollinations.ai/prompt/no_${encodeURIComponent(ing)}` } } };
-                                maxChoicesArr += 1;
-                            });
-                        }
-
-                        // Suppléments payants
-                        const supps = systemConfig?.compositions?.customSupplements || [];
-                        supps.forEach((supp: any) => {
-                            const uid = randomUUID();
-                            persoItems[uid] = { price: supp.price, uuid: uid, rank: pRank++ };
-                            finalData.items[uid] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: `Supplément ${supp.name} (+${supp.price}€)`, price: { dflt: { ttc: supp.price } }, img: { dflt: { img: `https://image.pollinations.ai/prompt/extra_${encodeURIComponent(supp.name)}` } } };
-                            maxChoicesArr += 1;
-                        });
-
-                        finalData.steps[stepPersoId] = { title: "Personnalisation", minChoices: 0, maxChoices: maxChoicesArr || 5, items: persoItems };
-
-                        // ETAPE 2: Formules
-                        const stepFormuleId = randomUUID();
-                        modSteps[stepFormuleId] = { rank: modRank++ };
-                        
-                        const formuleItems: any = {};
-                        let fRank = 1;
-
-                        if (systemConfig?.formulas?.isSeul !== false) {
-                            const optSeul = randomUUID();
-                            formuleItems[optSeul] = { price: 0, uuid: optSeul, rank: fRank++ };
-                            finalData.items[optSeul] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Seul", price: { dflt: { ttc: 0 } }, img: { dflt: { img: "https://image.pollinations.ai/prompt/single_item" } } };
-                        }
-
-                        // Base menus (Boisson + Accompagnement)
-                        const buildMenuSubsteps = (menuModId: string, parentMenuUuid: string) => {
-                            const menuSteps: any = {};
-                            let sRank = 1;
-
-                            // Boissons dynamiques
-                            const drinksListStr = systemConfig?.drinks?.list || "Coca-Cola, Eau Plate";
-                            const drinksArr = drinksListStr.split(",").map((s:string) => s.trim()).filter((s:string) => s !== "");
-                            if (drinksArr.length > 0) {
-                                const stepBoissonMenu = randomUUID();
-                                menuSteps[stepBoissonMenu] = { rank: sRank++ };
-                                const drinksItems: any = {};
-                                let bRank = 1;
-
-                                drinksArr.forEach((dr: string) => {
-                                    const buid = randomUUID();
-                                    drinksItems[buid] = { price: 0, uuid: buid, rank: bRank++ };
-                                    if (systemConfig?.drinks?.hasSizes) {
-                                        const drModId = randomUUID();
-                                        const drStepSizeId = randomUUID();
-                                        const s1 = randomUUID(); const s2 = randomUUID(); const s3 = randomUUID();
-                                        
-                                        finalData.items[buid] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: dr, price: { dflt: { ttc: 0 } }, modifier: drModId, img: { dflt: { img: `https://image.pollinations.ai/prompt/${encodeURIComponent(dr)}` } } };
-                                        
-                                        finalData.modifier[drModId] = {
-                                            "uuid-item": buid,
-                                            steps: { [drStepSizeId]: { rank: 1 } }
-                                        };
-                                        finalData.steps[drStepSizeId] = { title: `Taille - ${dr}`, minChoices: 1, maxChoices: 1, items: {
-                                            [s1]: { price: systemConfig.drinks.sizeS || 0, uuid: s1, rank: 1 },
-                                            [s2]: { price: systemConfig.drinks.sizeM || 1, uuid: s2, rank: 2 },
-                                            [s3]: { price: systemConfig.drinks.sizeL || 1.5, uuid: s3, rank: 3 }
-                                        }};
-                                        finalData.items[s1] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Taille S", price: { dflt: { ttc: systemConfig.drinks.sizeS || 0 } } };
-                                        finalData.items[s2] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Taille M", price: { dflt: { ttc: systemConfig.drinks.sizeM || 1 } } };
-                                        finalData.items[s3] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Taille L", price: { dflt: { ttc: systemConfig.drinks.sizeL || 1.5 } } };
-                                    } else {
-                                        finalData.items[buid] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: dr, price: { dflt: { ttc: 0 } }, img: { dflt: { img: `https://image.pollinations.ai/prompt/${encodeURIComponent(dr)}` } } };
-                                    }
-                                });
-                                finalData.steps[stepBoissonMenu] = { title: "Choix de la Boisson", minChoices: 1, maxChoices: 1, items: drinksItems };
-                            }
-
-                            // Accompagnements dynamiques
-                            const stepAccompMenu = randomUUID();
-                            menuSteps[stepAccompMenu] = { rank: sRank++ };
-                            
-                            const accompListStr = systemConfig?.accompaniments?.list || "Frites, Potatoes";
-                            const accompArr = accompListStr.split(",").map((s:string) => s.trim()).filter((s:string) => s !== "");
-                            const accompItems: any = {};
-                            let aRank = 1;
-
-                            accompArr.forEach((acc: string) => {
-                                const auid = randomUUID();
-                                accompItems[auid] = { price: 0, uuid: auid, rank: aRank++ };
-
-                                // Si tailles, on crée un sous-modifier !
-                                if (systemConfig?.accompaniments?.hasSizes) {
-                                    const accModId = randomUUID();
-                                    const accStepSizeId = randomUUID();
-                                    const s1 = randomUUID(); const s2 = randomUUID(); const s3 = randomUUID();
-                                    
-                                    finalData.items[auid] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: acc, price: { dflt: { ttc: 0 } }, modifier: accModId, img: { dflt: { img: `https://image.pollinations.ai/prompt/${encodeURIComponent(acc)}` } } };
-                                    
-                                    finalData.modifier[accModId] = {
-                                        "uuid-item": auid,
-                                        steps: { [accStepSizeId]: { rank: 1 } }
-                                    };
-                                    finalData.steps[accStepSizeId] = { title: `Taille - ${acc}`, minChoices: 1, maxChoices: 1, items: {
-                                        [s1]: { price: systemConfig.accompaniments.sizeS || 0, uuid: s1, rank: 1 },
-                                        [s2]: { price: systemConfig.accompaniments.sizeM || 1, uuid: s2, rank: 2 },
-                                        [s3]: { price: systemConfig.accompaniments.sizeL || 1.5, uuid: s3, rank: 3 }
-                                    }};
-                                    finalData.items[s1] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Taille S", price: { dflt: { ttc: systemConfig.accompaniments.sizeS || 0 } } };
-                                    finalData.items[s2] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Taille M", price: { dflt: { ttc: systemConfig.accompaniments.sizeM || 1 } } };
-                                    finalData.items[s3] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Taille L", price: { dflt: { ttc: systemConfig.accompaniments.sizeL || 1.5 } } };
-                                } else {
-                                    finalData.items[auid] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: acc, price: { dflt: { ttc: 0 } }, img: { dflt: { img: `https://image.pollinations.ai/prompt/${encodeURIComponent(acc)}` } } };
-                                }
-                            });
-
-                            finalData.steps[stepAccompMenu] = { title: "Choix de l'Accompagnement", minChoices: 1, maxChoices: 1, items: accompItems };
-                            
-                            // Desserts dynamiques
-                            const dessertsListStr = systemConfig?.desserts?.list || "";
-                            const dessertsArr = dessertsListStr.split(",").map((s:string) => s.trim()).filter((s:string) => s !== "");
-                            if (dessertsArr.length > 0) {
-                                const stepDessertMenu = randomUUID();
-                                menuSteps[stepDessertMenu] = { rank: sRank++ };
-                                const dessertsItems: any = {};
-                                let dRank = 1;
-
-                                dessertsArr.forEach((ds: string) => {
-                                    const duid = randomUUID();
-                                    dessertsItems[duid] = { price: 0, uuid: duid, rank: dRank++ };
-                                    if (systemConfig?.desserts?.hasSizes) {
-                                        const dsModId = randomUUID();
-                                        const dsStepSizeId = randomUUID();
-                                        const s1 = randomUUID(); const s2 = randomUUID(); const s3 = randomUUID();
-                                        
-                                        finalData.items[duid] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: ds, price: { dflt: { ttc: 0 } }, modifier: dsModId, img: { dflt: { img: `https://image.pollinations.ai/prompt/${encodeURIComponent(ds)}` } } };
-                                        
-                                        finalData.modifier[dsModId] = {
-                                            "uuid-item": duid,
-                                            steps: { [dsStepSizeId]: { rank: 1 } }
-                                        };
-                                        finalData.steps[dsStepSizeId] = { title: `Taille - ${ds}`, minChoices: 1, maxChoices: 1, items: {
-                                            [s1]: { price: systemConfig.desserts.sizeS || 0, uuid: s1, rank: 1 },
-                                            [s2]: { price: systemConfig.desserts.sizeM || 1, uuid: s2, rank: 2 },
-                                            [s3]: { price: systemConfig.desserts.sizeL || 1.5, uuid: s3, rank: 3 }
-                                        }};
-                                        finalData.items[s1] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Taille S", price: { dflt: { ttc: systemConfig.desserts.sizeS || 0 } } };
-                                        finalData.items[s2] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Taille M", price: { dflt: { ttc: systemConfig.desserts.sizeM || 1 } } };
-                                        finalData.items[s3] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: "Taille L", price: { dflt: { ttc: systemConfig.desserts.sizeL || 1.5 } } };
-                                    } else {
-                                        finalData.items[duid] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: ds, price: { dflt: { ttc: 0 } }, img: { dflt: { img: `https://image.pollinations.ai/prompt/${encodeURIComponent(ds)}` } } };
-                                    }
-                                });
-                                finalData.steps[stepDessertMenu] = { title: "Choix du Dessert", minChoices: 1, maxChoices: 1, items: dessertsItems };
-                            }
-
-                            finalData.modifier[menuModId] = {
-                                "uuid-item": parentMenuUuid,
-                                steps: menuSteps
-                            };
-                        };
-
-                        if (systemConfig?.formulas?.isMenu) {
-                            const optMenu = randomUUID();
-                            const mPrice = systemConfig.formulas.menuPrice || 2.50;
-                            formuleItems[optMenu] = { price: mPrice, uuid: optMenu, rank: fRank++ };
-                            const optMenuModId = randomUUID();
-                            finalData.items[optMenu] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: `En Menu (+${mPrice}€)`, price: { dflt: { ttc: mPrice } }, modifier: optMenuModId, img: { dflt: { img: "https://image.pollinations.ai/prompt/fastfood_menu_combo" } } };
-                            buildMenuSubsteps(optMenuModId, optMenu);
-                        }
-
-                        if (systemConfig?.formulas?.isMaxi) {
-                            const optMaxi = randomUUID();
-                            const rPrice = systemConfig.formulas.maxiPrice || 3.50;
-                            formuleItems[optMaxi] = { price: rPrice, uuid: optMaxi, rank: fRank++ };
-                            const optMaxiModId = randomUUID();
-                            finalData.items[optMaxi] = { id: Math.floor(Math.random()*9000)+1000, type: "items", title: `En Maxi Menu (+${rPrice}€)`, price: { dflt: { ttc: rPrice } }, modifier: optMaxiModId, img: { dflt: { img: "https://image.pollinations.ai/prompt/fastfood_maxi_menu" } } };
-                            buildMenuSubsteps(optMaxiModId, optMaxi);
-                        }
-
-                        finalData.steps[stepFormuleId] = { title: "Choix de la Formule", minChoices: 1, maxChoices: 1, items: formuleItems };
-                    }
-                    
-                    if (hasModifiers) {
-                        finalData.items[itemId].modifier = realModifierId;
-                        finalData.modifier[realModifierId] = {
-                            "uuid-item": itemId,
-                            steps: modSteps
-                        };
-                    }
-                });
+            if (meta.modId && (needle.includes(meta.catTitle) || meta.catTitle.includes(needle))) {
+                return meta.modId;
             }
+        }
+        
+        // 3. Fallback d'Urgence absolu : Seulement pour les PLATS si isMenu=true
+        if (systemConfig?.formulas?.isMenu && isPlat) {
+            const fallbackMenu = memoryWorkflowMeta.find(m => normalizeCategory(m.catTitle) === "menu" && m.modId);
+            if (fallbackMenu) return fallbackMenu.modId;
+        }
 
-            finalData.workflow[catId] = {
-                type: "categories",
-                rank: catRank++,
-                content: contentBlock
-            };
+        // AUDIT : Logging en cas de non-classification / silencieux pour les outils d'observation
+        console.warn(`[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "${aiCatName}" (Classifiée: ${normalNeedle}). L'item sera injecté pur (sans modifier).`);
+
+        return null; // Pas de modifier sûr détecté
+    };
+
+    // === 2. HYBRID WORKFLOW GENERATION ===
+    if (Object.keys(memoryWorkflow).length > 0) {
+        finalData.workflow = memoryWorkflow; // Base Workflow Skeleton Preserved
+        finalData.categories = { ...memoryCategories }; // Base Categories Preserved for labels
+
+        // We clean the content of the workflow to insert our brand new AI items
+        Object.keys(finalData.workflow).forEach(k => {
+            if (finalData.workflow[k].content) {
+                finalData.workflow[k].content = {};
+            }
         });
     }
+
+    if (sourceCategories.length > 0) {
+        const { randomUUID } = require("crypto");
+        let fallbackCatRank = Object.keys(finalData.workflow).length + 1;
+
+        sourceCategories.forEach((aiCat: any) => {
+            const aiCatName = aiCat.name || aiCat.nom || aiCat.title || aiCat.titre || "Nouvelle Catégorie";
+            
+            let targetCatId = null;
+            const normalAICat = normalizeCategory(aiCatName);
+            for (const wCatId of Object.keys(finalData.workflow)) {
+                const wCatTitle = (finalData.categories[wCatId]?.title || "").toLowerCase();
+                const normalWCat = normalizeCategory(wCatTitle);
+                
+                if (normalAICat === normalWCat || aiCatName.toLowerCase().includes(wCatTitle) || wCatTitle.includes(aiCatName.toLowerCase())) {
+                    targetCatId = wCatId;
+                    break;
+                }
+            }
+
+            if (!targetCatId) {
+                targetCatId = randomUUID();
+                finalData.workflow[targetCatId] = { type: "categories", rank: fallbackCatRank++, content: {} };
+                finalData.categories[targetCatId] = {
+                    title: aiCatName,
+                    isVisible: true, // Force visibility
+                    color: finalData.theme.palette[Math.floor(Math.random() * finalData.theme.palette.length)]
+                };
+            }
+            finalData.categories[targetCatId].title = aiCatName; 
+
+            let aiItemIds = aiCat.itemIds || aiCat.items || [];
+            
+            if (aiItemIds && Array.isArray(aiItemIds)) {
+                let itemRankCounter = Object.keys(finalData.workflow[targetCatId].content).length + 1;
+
+                aiItemIds.forEach((aiItemId: any) => {
+                    // Extract real item ID (if AI sent an object with id instead of string)
+                    let realItemId = typeof aiItemId === 'string' ? aiItemId : (aiItemId.id || aiItemId.itemId);
+                    if (!realItemId || !memoryItems[realItemId]) return; // Skip hallucinations
+
+                    const sourceItem = memoryItems[realItemId];
+                    
+                    // We must deep copy it to avoid reference issues if AI picked it multiple times
+                    const newItemId = randomUUID();
+                    finalData.items[newItemId] = JSON.parse(JSON.stringify(sourceItem));
+                    finalData.items[newItemId].id = Math.floor(Math.random() * 900) + 1000; // Legacy UX standard
+                    finalData.items[newItemId].isVisible = true;
+
+                    // If it has a modifier natively, clone it!
+                    if (sourceItem.modifier) {
+                        const uniqueClonedModId = cloneGeneticModifier(sourceItem.modifier, newItemId, finalData);
+                        if (uniqueClonedModId) {
+                            finalData.items[newItemId].modifier = uniqueClonedModId;
+                        }
+                    } else {
+                        // Siphon / Scavenger Mechanism: If the item has NO modifier but belongs to a category that needs one (like Menus or Burgers)
+                        const scavengedModId = getScavengedModifierForCategory(aiCatName);
+                        if (scavengedModId) {
+                            const uniqueClonedModId = cloneGeneticModifier(scavengedModId, newItemId, finalData);
+                            if (uniqueClonedModId) {
+                                finalData.items[newItemId].modifier = uniqueClonedModId;
+                            }
+                        }
+                    }
+
+                    // Attach to workflow
+                    finalData.workflow[targetCatId].content[newItemId] = { 
+                        type: "items", 
+                        rank: itemRankCounter++ 
+                    };
+                    if (finalData.items[newItemId].modifier) {
+                        finalData.workflow[targetCatId].content[newItemId].modifier = finalData.items[newItemId].modifier;
+                    }
+                });
+            }
+
+            // Delete category cleanly if no valid items were mapped
+            if (Object.keys(finalData.workflow[targetCatId].content).length === 0) {
+                delete finalData.workflow[targetCatId];
+                if (finalData.categories[targetCatId]) {
+                    delete finalData.categories[targetCatId];
+                }
+            }
+        });
+    }
+
+    // Inject UI Theme Metadata into the map so KioskSimulator can dynamically style the view
+    finalData.themeMetadata = {
+        typeLabel: systemConfig?.typeLabel || "Standard",
+        theme: systemConfig?.visualTheme || "Classique",
+        style: systemConfig?.visualStyle || "Moderne"
+    };
 
     // Plus de validation ETK360 aléatoire car on l'a construit mathématiquement
     let jsonResponse = JSON.stringify(finalData, null, 2);
@@ -532,7 +547,7 @@ export async function getAvailableLibraryCards() {
     if (!fs.existsSync(directoryPath)) return [];
 
     const files = fs.readdirSync(directoryPath);
-    return files.filter(f => f.endsWith('.json') && !f.startsWith('ia_'));
+    return files.filter(f => f.endsWith('.json') && f !== 'last_architecture.json' && f !== 'system_config.json');
   } catch (e) {
     console.error("Erreur read library:", e);
     return [];

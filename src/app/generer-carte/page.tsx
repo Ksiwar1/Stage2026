@@ -51,7 +51,7 @@ export default function GenererCarte() {
     options: [] as string[],
     palette: "",
     compositions: { defaultIngredients: "", cookingOptions: false, customSupplements: [] as {name: string, price: number}[], fastSupplementName: "", fastSupplementPrice: "" },
-    formulas: { isSeul: true, isMenu: false, menuPrice: 2.50, isMaxi: false, maxiPrice: 3.50 },
+    formulas: { isSeul: true, isMenu: true, menuPrice: 2.50, isMaxi: true, maxiPrice: 3.50 },
     accompaniments: { list: "Frites, Potatoes", hasSizes: false, sizeS: 0, sizeM: 1.0, sizeL: 1.50 },
     drinks: { list: "Coca-Cola, Eau Plate", hasSizes: false, sizeS: 0, sizeM: 0.5, sizeL: 1.0 },
     desserts: { list: "", hasSizes: false, sizeS: 0, sizeM: 0.5, sizeL: 1.0 },
@@ -97,6 +97,9 @@ ${Object.keys(wizardData.forcedItems).length > 0 ?
       formData.set("sujet", compiledSubject.trim());
       formData.set("sourceInspiration", wizardData.theme);
       formData.set("systemConfigJSON", JSON.stringify({
+          typeLabel: wizardData.typeLabel,
+          visualTheme: wizardData.visualTheme,
+          visualStyle: wizardData.visualStyle,
           compositions: wizardData.compositions,
           formulas: wizardData.formulas,
           accompaniments: wizardData.accompaniments,
@@ -224,123 +227,136 @@ ${Object.keys(wizardData.forcedItems).length > 0 ?
 
 
 
-        <form onSubmit={handleSubmit} encType="multipart/form-data" style={{ display: 'flex', gap: '1rem', flexDirection: 'column', width: '100%', maxWidth: '450px', margin: '0 auto' }}>
+                        <form onSubmit={handleSubmit} encType="multipart/form-data" style={{ width: '100%', maxWidth: '900px', margin: '0 auto', position: 'relative', overflow: 'hidden', paddingBottom: '2rem' }}>
           <input type="hidden" name="ai_type" value={selectedAI} />
           <input type="hidden" name="sauvegarder" value="on" />
 
-           <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)', marginBottom: '2rem' }}>
-               <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: '#1e293b', fontSize: '1.1rem' }}>Nom du Restaurant <span style={{color: '#ef4444'}}>*</span></label>
-               <input
-                 type="text"
-                 name="restaurantName"
-                 required
-                 value={wizardData.restaurantName}
-                 onChange={(e) => setWizardData({...wizardData, restaurantName: e.target.value})}
-                 placeholder="Ex: Burger House..."
-                 style={{ width: '100%', padding: '1rem', borderRadius: '8px', border: '2px solid #cbd5e1', fontSize: '1.1rem', fontWeight: 600, color: '#0f172a' }}
-               />
-               <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.85rem', color: '#64748b' }}>Ce nom sera utilisé pour la bibliothèque et l'affichage des catalogues.</p>
-           </div>
-
-
-           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
-              <div style={{ padding: '0.6rem 1.5rem', borderRadius: '8px', background: '#4f46e5', color: 'white', fontWeight: 600, fontSize: '0.9rem', boxShadow: '0 4px 6px -1px rgba(79, 70, 229, 0.4)' }}>
-                 📸 Analyse d'Image (OCR)
+          {/* --- PROGRESS BAR 5 STEPS --- */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '3rem', position: 'relative', padding: '0 1rem' }}>
+            <div style={{ position: 'absolute', top: '50%', left: '1rem', right: '1rem', height: '6px', background: '#e2e8f0', borderRadius: '3px', zIndex: 0, transform: 'translateY(-50%)' }}></div>
+            <div style={{ position: 'absolute', top: '50%', left: '1rem', width: `calc(${((wizardStep - 1) / 4) * 100}% - 2rem)`, height: '6px', background: 'linear-gradient(90deg, #4f46e5, #0ea5e9)', borderRadius: '3px', zIndex: 0, transform: 'translateY(-50%)', transition: 'width 0.4s ease' }}></div>
+            
+            {[{ n: 1, label: "Concept" }, { n: 2, label: "Composition" }, { n: 3, label: "Structure" }, { n: 4, label: "Technique" }, { n: 5, label: "Finalisation" }].map(step => (
+              <div key={step.n} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', zIndex: 1 }}>
+                <div 
+                  onClick={() => step.n <= wizardStep && setWizardStep(step.n)} 
+                  style={{ width: '45px', height: '45px', borderRadius: '50%', background: wizardStep >= step.n ? 'linear-gradient(135deg, #4f46e5, #0ea5e9)' : '#f1f5f9', color: wizardStep >= step.n ? 'white' : '#94a3b8', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', cursor: step.n <= wizardStep ? 'pointer' : 'default', transition: 'all 0.3s', boxShadow: wizardStep === step.n ? '0 0 0 5px rgba(79, 70, 229, 0.2)' : 'none', border: wizardStep >= step.n ? 'none' : '2px solid #e2e8f0' }}
+                >
+                  {wizardStep > step.n ? <span style={{fontSize:'1.2rem'}}>✓</span> : step.n}
+                </div>
+                <span style={{ position: 'absolute', top: '55px', fontSize: '0.8rem', fontWeight: wizardStep === step.n ? 700 : 500, color: wizardStep === step.n ? '#1e293b' : '#64748b', whiteSpace: 'nowrap' }}>{step.label}</span>
               </div>
-           </div>
+            ))}
+          </div>
 
-           <div style={{ padding: '2rem', border: '2px dashed #cbd5e1', borderRadius: '12px', textAlign: 'center', background: '#f8fafc', cursor: 'pointer', position: 'relative', marginBottom: '2rem' }}>
-             <label style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', color: '#475569' }}>
-               <span style={{ fontSize: '2rem' }}>📸</span>
-               <span style={{ fontWeight: 600 }}>Importer une photo de menu</span>
-               <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>Optionnel : L'IA lira l'image (OCR) pour générer la carte.</span>
-               <input 
-                 type="file" 
-                 name="menuImage" 
-                 accept="image/*" 
-                 onChange={(e) => {
-                   const file = e.target.files?.[0];
-                   if (file) {
-                     const url = URL.createObjectURL(file);
-                     const previewImg = document.getElementById('image-preview') as HTMLImageElement;
-                     if (previewImg) { previewImg.src = url; previewImg.style.display = 'block'; }
-                   }
-                 }}
-                 style={{ position: 'absolute', inset: 0, opacity: 0, cursor: 'pointer' }}
-               />
-             </label>
-             <img id="image-preview" style={{ display: 'none', width: '100%', maxHeight: '200px', objectFit: 'contain', marginTop: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0' }} alt="Aperçu du menu" />
-           </div>
-
-           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '3rem' }}>
-               <button type="submit" disabled={isGenerating} style={{ padding: '0.8rem 2.5rem', background: '#3b82f6', color: 'white', borderRadius: '999px', cursor: isGenerating ? 'not-allowed' : 'pointer', fontWeight: 700, fontSize: '1rem', boxShadow: '0 4px 6px -1px rgba(59, 130, 246, 0.4)', transition: 'transform 0.1s' }}>
-                   {isGenerating ? 'Génération en cours...' : '⚡ Générer la carte avec l\'image'}
-               </button>
-           </div>
-           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
-              <div style={{ padding: '0.6rem 1.5rem', borderRadius: '8px', background: '#4f46e5', color: 'white', fontWeight: 600, fontSize: '0.9rem', boxShadow: '0 4px 6px -1px rgba(79, 70, 229, 0.4)' }}>
-                 🪄 Assistant Guidé
-              </div>
-           </div>
-
-           <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1.5rem', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)' }}>
-               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.5rem', borderBottom: '2px solid #f1f5f9', paddingBottom: '0.5rem' }}>
-                  <span style={{ fontWeight: 700, color: '#4f46e5' }}>Étape {wizardStep}/6</span>
-               </div>
-
-               {wizardStep === 1 && (
-                 <div>
-                   <h3 style={{ margin: '0 0 1rem 0', color: '#1e293b' }}>Restaurant & Base</h3>
+          {/* DRAGGABLE CONTAINER (5 STEPS = 500% width, 20% each) */}
+          <div style={{ display: 'flex', width: '500%', transform: `translateX(-${(wizardStep - 1) * 20}%)`, transition: 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)' }}>
+            
+            {/* ETAPE 1 : CONCEPT DU RESTAURANT */}
+            <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 1 ? 1 : 0.4, transition: 'opacity 0.5s' }}>
+               <div style={{ background: '#ffffff', borderRadius: '16px', padding: '2rem', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)', border: '1px solid #f1f5f9' }}>
+                   <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: '#1e293b', fontSize: '1.2rem' }}>Nom de l'enseigne <span style={{color: '#ef4444'}}>*</span></label>
+                   <input type="text" name="restaurantName" required value={wizardData.restaurantName} onChange={(e) => setWizardData({...wizardData, restaurantName: e.target.value})} placeholder="Ex: L'Atelier du Burger..." style={{ width: '100%', padding: '1.2rem', borderRadius: '12px', border: '2px solid #cbd5e1', fontSize: '1.2rem', fontWeight: 600, color: '#0f172a', outline: 'none', transition: 'border 0.2s', marginBottom: '1.5rem' }} />
                    
+                   <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: '#1e293b', fontSize: '1.2rem' }}>Langue(s) du catalogue</label>
+                   <select value={wizardData.language} onChange={(e) => setWizardData({...wizardData, language: e.target.value})} style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '1rem', marginBottom: '1.5rem', color: '#334155', background: '#f8fafc' }}>
+                       <option>Français</option>
+                       <option>English</option>
+                       <option>Español</option>
+                       <option>Arabe</option>
+                       <option>Bilingue FR/EN</option>
+                   </select>
 
-
-                   <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.5rem', color: '#475569' }}>Type de restaurant</label>
-                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                   <label style={{ display: 'block', fontWeight: 800, margin: '0 0 0.5rem 0', color: '#1e293b', fontSize: '1.2rem' }}>Type de Restaurant <span style={{color: '#ef4444'}}>*</span></label>
+                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '1rem' }}>
                       {[
-                        { label: 'Fast-Food', val: 'carte1_smash_up.json', icon: '🍔' },
-                        { label: 'Fast-Casual', val: 'generique', icon: '🥗' },
-                        { label: 'Pizzeria', val: 'carte3_grill_station.json', icon: '🍕' },
-                        { label: 'Café', val: 'generique', icon: '☕' }
+                        { label: 'Fast-Food / Burger', icon: '🍔', c: 'fastfood' },
+                        { label: 'Pizzeria / Grill', icon: '🍕', c: 'pizzeria' },
+                        { label: 'Tacos / Kebab', icon: '🌯', c: 'tacos' },
+                        { label: 'Gastronomique', icon: '🍷', c: 'gastronomique' },
+                        { label: 'Standard ETK360', icon: '📱', c: 'standard' }
                       ].map(t => (
-                        <button key={t.label} type="button" onClick={() => setWizardData({...wizardData, theme: t.val, typeLabel: t.label})} style={{ padding: '0.8rem', borderRadius: '8px', border: wizardData.typeLabel === t.label ? '2px solid #4f46e5' : '1px solid #cbd5e1', background: wizardData.typeLabel === t.label ? '#e0e7ff' : '#f8fafc', cursor: 'pointer', textAlign: 'left', fontWeight: 600, color: '#334155' }}>
-                          {t.icon} {t.label}
-                        </button>
+                        <div key={t.c} onClick={() => setWizardData({...wizardData, typeLabel: t.label, theme: t.c})} style={{ padding: '1rem', background: wizardData.theme === t.c ? '#eef2ff' : '#f8fafc', border: wizardData.theme === t.c ? '2px solid #4f46e5' : '1px solid #e2e8f0', borderRadius: '12px', cursor: 'pointer', textAlign: 'center', transition: 'all 0.2s', transform: wizardData.theme === t.c ? 'translateY(-2px)' : 'none', boxShadow: wizardData.theme === t.c ? '0 8px 15px -3px rgba(79, 70, 229, 0.1)' : 'none' }}>
+                           <div style={{ fontSize: '2rem', marginBottom: '0.2rem' }}>{t.icon}</div>
+                           <div style={{ fontWeight: 600, fontSize: '0.85rem', color: wizardData.theme === t.c ? '#4f46e5' : '#475569' }}>{t.label}</div>
+                        </div>
                       ))}
                    </div>
-
-                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.5rem' }}>
-                       <div>
-                           <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.5rem', color: '#475569' }}>Langue</label>
-                           <select value={wizardData.language} onChange={(e) => setWizardData({...wizardData, language: e.target.value})} style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1' }}>
-                               <option>Français</option>
-                               <option>Anglais</option>
-                               <option>Arabe</option>
-                               <option>Bilingue FR/EN</option>
-                           </select>
-                       </div>
-                       <div>
-                           <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.5rem', color: '#475569' }}>Nb Produits/Cat.</label>
-                           <select value={wizardData.productCountLimit} onChange={(e) => setWizardData({...wizardData, productCountLimit: e.target.value})} style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1' }}>
-                               <option>3-5</option>
-                               <option>6-10</option>
-                               <option>10+</option>
-                           </select>
-                       </div>
-                   </div>
-
-                   <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                      <button type="button" onClick={() => setWizardStep(2)} disabled={!wizardData.restaurantName || !wizardData.theme} style={{ padding: '0.6rem 1.2rem', background: '#4f46e5', color: 'white', borderRadius: '6px', cursor: 'pointer', opacity: (!wizardData.restaurantName || !wizardData.theme) ? 0.5 : 1 }}>Suivant ➡️</button>
-                   </div>
-                 </div>
-               )}
-
-               {wizardStep === 2 && (
-                 <div>
-                   <h3 style={{ margin: '0 0 1rem 0', color: '#1e293b' }}>Catégories & Structure</h3>
                    
-                   <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.5rem', color: '#475569' }}>Catégories standard</label>
-                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                      {['Entrées', 'Burgers', 'Pizzas', 'Tacos', 'Kebabs', 'Sandwichs', 'Salades', 'Menus', 'Boissons', 'Desserts', 'Extras'].map(c => {
+                   <div style={{ display: 'flex', alignItems: 'center', margin: '2rem 0', color: '#94a3b8' }}>
+                     <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }}></div>
+                     <span style={{ padding: '0 1rem', fontWeight: 800, fontSize: '0.9rem', color: '#64748b' }}>OU</span>
+                     <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }}></div>
+                   </div>
+
+                   {/* SECTION OCR RESTAUREE */}
+                   <div style={{ padding: '1.5rem', border: '2px dashed #cbd5e1', borderRadius: '12px', textAlign: 'center', background: '#f8fafc', cursor: 'pointer', position: 'relative' }}>
+                     <label style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', color: '#475569' }}>
+                       <span style={{ fontSize: '2rem' }}>📸</span>
+                       <span style={{ fontWeight: 800, fontSize: '1.1rem', color: '#1e293b' }}>Importer une photo de menu</span>
+                       <span style={{ fontSize: '0.85rem', color: '#64748b' }}>Optionnel : L'IA lira l'image (OCR) pour générer votre catalogue.</span>
+                       <input 
+                         type="file" 
+                         name="menuImage" 
+                         accept="image/*" 
+                         onChange={(e) => {
+                           const file = e.target.files?.[0];
+                           if (file) {
+                             const url = URL.createObjectURL(file);
+                             const previewImg = document.getElementById('image-preview') as HTMLImageElement;
+                             if (previewImg) { previewImg.src = url; previewImg.style.display = 'block'; }
+                           }
+                         }}
+                         style={{ position: 'absolute', inset: 0, opacity: 0, cursor: 'pointer' }}
+                       />
+                     </label>
+                     <img id="image-preview" style={{ display: 'none', width: '100%', maxHeight: '200px', objectFit: 'contain', marginTop: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0' }} alt="Aperçu du menu" />
+                   </div>
+               </div>
+               <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.5rem' }}>
+                   <button type="button" onClick={() => setWizardStep(2)} disabled={!wizardData.restaurantName || !wizardData.theme} style={{ padding: '1rem 2rem', background: '#4f46e5', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', opacity: (!wizardData.restaurantName || !wizardData.theme) ? 0.5 : 1, transition: 'all 0.2s', boxShadow: '0 4px 15px rgba(79, 70, 229, 0.3)' }}>Continuer →</button>
+               </div>
+            </div>
+
+            {/* ETAPE 2 : LOGIQUE DE VENTE */}
+            <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 2 ? 1 : 0.4, transition: 'opacity 0.5s' }}>
+                <div style={{ background: '#ffffff', borderRadius: '16px', padding: '2rem', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)', border: '1px solid #f1f5f9' }}>
+                   <label style={{ display: 'block', fontWeight: 800, marginBottom: '1rem', color: '#1e293b', fontSize: '1.2rem' }}>Formules Automatiques</label>
+                   <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#f8fafc', padding: '0.8rem 1.2rem', borderRadius: '8px', border: '1px solid #e2e8f0', cursor: 'pointer', flex: 1 }}>
+                          <input type="checkbox" checked={wizardData.formulas.isMenu} onChange={e => setWizardData({...wizardData, formulas: {...wizardData.formulas, isMenu: e.target.checked}})} style={{ width: '20px', height: '20px', accentColor: '#4f46e5' }} />
+                          <span style={{ fontWeight: 600 }}>Taille Standard (+ <input type="number" step="0.1" value={wizardData.formulas.menuPrice} onChange={e => setWizardData({...wizardData, formulas: {...wizardData.formulas, menuPrice: parseFloat(e.target.value)||0}})} style={{ width: '50px', padding: '0.2rem', borderRadius: '4px', border: '1px solid #cbd5e1' }} /> €)</span>
+                      </label>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#f8fafc', padding: '0.8rem 1.2rem', borderRadius: '8px', border: '1px solid #e2e8f0', cursor: 'pointer', flex: 1 }}>
+                          <input type="checkbox" checked={wizardData.formulas.isMaxi} onChange={e => setWizardData({...wizardData, formulas: {...wizardData.formulas, isMaxi: e.target.checked}})} style={{ width: '20px', height: '20px', accentColor: '#4f46e5' }} />
+                          <span style={{ fontWeight: 600 }}>Taille Maxi (+ <input type="number" step="0.1" value={wizardData.formulas.maxiPrice} onChange={e => setWizardData({...wizardData, formulas: {...wizardData.formulas, maxiPrice: parseFloat(e.target.value)||0}})} style={{ width: '50px', padding: '0.2rem', borderRadius: '4px', border: '1px solid #cbd5e1' }} /> €)</span>
+                      </label>
+                   </div>
+
+                   <label style={{ display: 'block', fontWeight: 800, margin: '2rem 0 1rem 0', color: '#1e293b', fontSize: '1.2rem' }}>Accompagnements (Pour les formules)</label>
+                   <input type="text" value={wizardData.accompaniments.list} onChange={e => setWizardData({...wizardData, accompaniments: {...wizardData.accompaniments, list: e.target.value}})} placeholder="Ex: Frites, Potatoes, Salade (séparés par virgule)" style={{ width: '100%', padding: '1rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '1rem' }} />
+                   
+                   <label style={{ display: 'block', fontWeight: 800, margin: '2rem 0 1rem 0', color: '#1e293b', fontSize: '1.2rem' }}>Boissons</label>
+                   <input type="text" value={wizardData.drinks.list} onChange={e => setWizardData({...wizardData, drinks: {...wizardData.drinks, list: e.target.value}})} placeholder="Coca-Cola, Fanta, Eau Sprite..." style={{ width: '100%', padding: '1rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '1rem' }} />
+
+                   <label style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', marginTop: '2rem', background: '#f8fafc', padding: '1.2rem', borderRadius: '12px', border: '1px solid #e2e8f0', cursor: 'pointer' }}>
+                        <input type="checkbox" checked={wizardData.compositions.cookingOptions} onChange={e => setWizardData({...wizardData, compositions: {...wizardData.compositions, cookingOptions: e.target.checked}})} style={{ width: '20px', height: '20px', accentColor: '#4f46e5' }} />
+                        <span style={{ fontWeight: 600, color: '#334155' }}>Forcer les choix de cuisson si applicable</span>
+                   </label>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem' }}>
+                   <button type="button" onClick={() => setWizardStep(1)} style={{ padding: '1rem 2rem', background: '#e2e8f0', color: '#475569', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}>← Retour</button>
+                   <button type="button" onClick={() => setWizardStep(3)} style={{ padding: '1rem 2rem', background: '#4f46e5', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 15px rgba(79, 70, 229, 0.3)' }}>Continuer →</button>
+               </div>
+            </div>
+
+            {/* ETAPE 3 : STRUCTURE */}
+            <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 3 ? 1 : 0.4, transition: 'opacity 0.5s' }}>
+                <div style={{ background: '#ffffff', borderRadius: '16px', padding: '2rem', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)', border: '1px solid #f1f5f9' }}>
+                   <label style={{ display: 'block', fontWeight: 800, marginBottom: '1rem', color: '#1e293b', fontSize: '1.2rem' }}>Que vendez-vous ? <span style={{color: '#ef4444'}}>*</span></label>
+                   
+                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', marginBottom: '1.5rem' }}>
+                      {['Entrées', 'Burgers', 'Pizzas', 'Tacos', 'Kebabs', 'Sandwichs', 'Salades', 'Boissons', 'Desserts', 'Extras', 'Menus Enfants'].map(c => {
                           const isSelected = wizardData.categories.includes(c);
                           return (
                              <button type="button" key={c} onClick={() => {
@@ -348,328 +364,135 @@ ${Object.keys(wizardData.forcedItems).length > 0 ?
                                  if (isSelected) newCats = newCats.filter(x => x !== c);
                                  else newCats.push(c);
                                  setWizardData({...wizardData, categories: newCats});
-                             }} style={{ padding: '0.5rem 1rem', borderRadius: '999px', border: isSelected ? '1px solid #4f46e5' : '1px solid #cbd5e1', background: isSelected ? '#4f46e5' : '#f8fafc', color: isSelected ? 'white' : '#475569', cursor: 'pointer', fontWeight: 500 }}>
+                             }} style={{ padding: '0.6rem 1.2rem', borderRadius: '12px', border: isSelected ? '2px solid #4f46e5' : '1px solid #cbd5e1', background: isSelected ? '#4f46e5' : '#f8fafc', color: isSelected ? 'white' : '#475569', cursor: 'pointer', fontWeight: 600, transition: 'all 0.2s' }}>
                                 {c}
                              </button>
                           );
                       })}
                    </div>
 
-                   <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.5rem', color: '#475569' }}>Ordre des catégories sélectionnées</label>
-                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', marginBottom: '1.5rem', background: '#f8fafc', padding: '1rem', borderRadius: '8px' }}>
-                      {wizardData.categories.length === 0 ? <div style={{ color: '#94a3b8', fontSize: '0.9rem', fontStyle: 'italic' }}>Aucune catégorie sélectionnée</div> : wizardData.categories.map((c, index) => (
-                          <div key={c} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'white', padding: '0.6rem 1rem', borderRadius: '6px', border: '1px solid #e2e8f0' }}>
-                             <div style={{ flex: 1, marginRight: '1rem' }}>
-                                <span style={{ fontWeight: 600, display: 'block', marginBottom: '0.2rem' }}>{c}</span>
-                                <input type="text" placeholder="Produits exacts imposés ? (ex: Coca, Sprite...)" value={wizardData.forcedItems[c] || ""} onChange={e => setWizardData({...wizardData, forcedItems: {...wizardData.forcedItems, [c]: e.target.value}})} style={{ width: '100%', padding: '0.4rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.85rem' }} title="Si rempli, l'IA n'inventera pas d'autres produits pour cette catégorie." />
-                             </div>
-                             <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                                 <button type="button" onClick={() => {
-                                     if(index === 0) return;
-                                     const newArr = [...wizardData.categories];
-                                     const temp = newArr[index-1];
-                                     newArr[index-1] = newArr[index];
-                                     newArr[index] = temp;
-                                     setWizardData({...wizardData, categories: newArr});
-                                 }} disabled={index === 0} style={{ padding: '0.2rem 0.5rem', cursor: 'pointer', border: 'none', background: '#e2e8f0', borderRadius: '4px' }}>↑</button>
-                                 <button type="button" onClick={() => {
-                                     if(index === wizardData.categories.length - 1) return;
-                                     const newArr = [...wizardData.categories];
-                                     const temp = newArr[index+1];
-                                     newArr[index+1] = newArr[index];
-                                     newArr[index] = temp;
-                                     setWizardData({...wizardData, categories: newArr});
-                                 }} disabled={index === wizardData.categories.length - 1} style={{ padding: '0.2rem 0.5rem', cursor: 'pointer', border: 'none', background: '#e2e8f0', borderRadius: '4px' }}>↓</button>
-                             </div>
+                   <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: '#1e293b', fontSize: '1.2rem' }}>Taille (par catégorie)</label>
+                   <select value={wizardData.productCountLimit} onChange={(e) => setWizardData({...wizardData, productCountLimit: e.target.value})} style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '1rem', marginBottom: '1.5rem', color: '#334155' }}>
+                       <option>3-5 produits</option>
+                       <option>6-10 produits</option>
+                       <option>10+ produits (Long format)</option>
+                   </select>
+
+                   <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: '#1e293b', fontSize: '1.2rem' }}>Règles strictes (Optionnel)</label>
+                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', background: '#f8fafc', padding: '1rem', borderRadius: '8px', maxHeight: '150px', overflowY: 'auto' }}>
+                      {wizardData.categories.length === 0 ? <div style={{ color: '#94a3b8', fontSize: '0.9rem', fontStyle: 'italic' }}>Sélectionnez des catégories d'abord.</div> : wizardData.categories.map((c) => (
+                          <div key={c} style={{ display: 'flex', flexDirection: 'column', background: 'white', padding: '0.6rem 1rem', borderRadius: '6px', border: '1px solid #e2e8f0' }}>
+                                <span style={{ fontWeight: 600, fontSize: '0.85rem' }}>{c} :</span>
+                                <input type="text" placeholder="Produits exacts imposés..." value={wizardData.forcedItems[c] || ""} onChange={e => setWizardData({...wizardData, forcedItems: {...wizardData.forcedItems, [c]: e.target.value}})} style={{ width: '100%', padding: '0.4rem', borderRadius: '4px', border: 'none', borderBottom: '1px solid #cbd5e1', fontSize: '0.85rem', outline: 'none' }} />
                           </div>
                       ))}
                    </div>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem' }}>
+                   <button type="button" onClick={() => setWizardStep(2)} style={{ padding: '1rem 2rem', background: '#e2e8f0', color: '#475569', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}>← Retour</button>
+                   <button type="button" onClick={() => setWizardStep(4)} disabled={wizardData.categories.length === 0} style={{ padding: '1rem 2rem', background: '#4f46e5', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', opacity: wizardData.categories.length === 0 ? 0.5 : 1 }}>Continuer →</button>
+               </div>
+            </div>
 
-                   <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                      <input type="text" value={wizardData.customCategory} onChange={e => setWizardData({...wizardData, customCategory: e.target.value})} placeholder="Nouvelle catégorie (ex: Tapas)" style={{ flex: 1, padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1' }} />
-                      <button type="button" onClick={() => {
-                          if(wizardData.customCategory.trim()) {
-                             setWizardData({...wizardData, categories: [...wizardData.categories, wizardData.customCategory.trim()], customCategory: ""});
-                          }
-                      }} style={{ padding: '0.8rem 1.2rem', background: '#10b981', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}>Ajouter</button>
+                        {/* ETAPE 4 : TECHNIQUE & DESIGN */}
+            <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 4 ? 1 : 0.4, transition: 'opacity 0.5s' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1.5rem' }}>
+                   {/* Col Gauche : FormControls */}
+                   <div style={{ background: '#ffffff', borderRadius: '16px', padding: '2rem', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)', border: '1px solid #f1f5f9' }}>
+                      <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: '#1e293b', fontSize: '1.2rem' }}>Format d'affichage cible</label>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                         {['Écran kiosque', 'Tablette', 'Impression A4', 'QR Code menu'].map(f => (
+                           <button type="button" key={f} onClick={() => setWizardData({...wizardData, outputFormat: f})} style={{ padding: '0.8rem', borderRadius: '8px', border: wizardData.outputFormat === f ? '2px solid #4f46e5' : '1px solid #cbd5e1', background: wizardData.outputFormat === f ? '#eef2ff' : '#f8fafc', cursor: 'pointer', fontWeight: 600, color: wizardData.outputFormat === f ? '#4f46e5' : '#334155' }}>
+                             {f}
+                           </button>
+                         ))}
+                      </div>
+
+                      <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: '#1e293b', fontSize: '1.2rem' }}>Style global de l'app</label>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem', marginBottom: '1.5rem' }}>
+                          {[
+                            { name: 'Moderne', p: '#4f46e5', s: '#10b981' },
+                            { name: 'Gourmand (Viande/Pizza)', p: '#dc2626', s: '#ea580c' },
+                            { name: 'Healthy (Salade)', p: '#16a34a', s: '#84cc16' },
+                            { name: 'Élégant', p: '#1e293b', s: '#94a3b8' },
+                            { name: 'Océan (Sushis)', p: '#0284c7', s: '#38bdf8' },
+                            { name: 'Pastel (Gourmandise)', p: '#f43f5e', s: '#fb7185' }
+                          ].map(th => (
+                             <div key={th.name} onClick={() => setWizardData({...wizardData, primaryColor: th.p, secondaryColor: th.s})} style={{ padding: '0.7rem', border: wizardData.primaryColor === th.p ? '2px solid '+th.p : '1px solid #e2e8f0', borderRadius: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+                                <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: th.p }}></div>
+                                <span style={{ fontWeight: 600, color: '#334155', fontSize: '0.85rem' }}>{th.name}</span>
+                             </div>
+                          ))}
+                      </div>
+
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', background: '#f8fafc', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0', cursor: 'pointer', marginBottom: '0.5rem' }}>
+                           <input type="checkbox" checked={wizardData.showAllergens} onChange={e => setWizardData({...wizardData, showAllergens: e.target.checked})} style={{ width: '20px', height: '20px', accentColor: '#4f46e5' }} />
+                           <span style={{ fontWeight: 600, color: '#334155' }}>Placer des pastilles allergènes automatiquement</span>
+                      </label>
+                      
+                      <label style={{ display: 'block', fontWeight: 800, margin: '1rem 0 0.5rem 0', color: '#1e293b', fontSize: '1rem' }}>Sémantique Promotionnelle (Badges)</label>
+                      <input type="text" value={wizardData.productBadges.join(', ')} onChange={e => setWizardData({...wizardData, productBadges: e.target.value.split(',').map(s=>s.trim())})} placeholder="Ex: NOUVEAU, OFFRE SPECIALE, BEST-SELLER" style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.9rem' }} />
                    </div>
 
-                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <button type="button" onClick={() => setWizardStep(1)} style={{ padding: '0.6rem 1.2rem', borderRadius: '6px', cursor: 'pointer', border: '1px solid #cbd5e1', background: 'white' }}>⬅️ Retour</button>
-                      <button type="button" onClick={() => setWizardStep(3)} disabled={wizardData.categories.length === 0} style={{ padding: '0.6rem 1.2rem', background: '#4f46e5', color: 'white', borderRadius: '6px', cursor: 'pointer', opacity: wizardData.categories.length === 0 ? 0.5 : 1 }}>Suivant ➡️</button>
-                   </div>
-                 </div>
-               )}
-
-               {wizardStep === 3 && (
-                 <div>
-                   <h3 style={{ margin: '0 0 1rem 0', color: '#1e293b' }}>Composition & Cuisson</h3>
-                   
-                   <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.5rem', color: '#475569' }}>Ingrédients de base retirables (ex: Laitue, Tomate, Oignon)</label>
-                   <input type="text" value={wizardData.compositions.defaultIngredients} onChange={e => setWizardData({...wizardData, compositions: {...wizardData.compositions, defaultIngredients: e.target.value}})} placeholder="Séparés par des virgules" style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', marginBottom: '1.5rem' }} />
-
-                   <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem', fontWeight: 600, color: '#475569' }}>
-                       <input type="checkbox" checked={wizardData.compositions.cookingOptions} onChange={e => setWizardData({...wizardData, compositions: {...wizardData.compositions, cookingOptions: e.target.checked}})} style={{ width: '1.2rem', height: '1.2rem' }} />
-                       Proposer des cuissons (Saignant, À point, Bien cuit)
-                   </label>
-
-                   <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.5rem', color: '#475569' }}>Suppléments payants</label>
-                   <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '8px', border: '1px solid #e2e8f0', marginBottom: '1.5rem' }}>
-                       {wizardData.compositions.customSupplements.map((s, idx) => (
-                           <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', background: 'white', padding: '0.5rem', borderRadius: '6px', border: '1px solid #cbd5e1' }}>
-                               <span>{s.name} (+{s.price}€)</span>
-                               <button type="button" onClick={() => {
-                                   const arr = [...wizardData.compositions.customSupplements];
-                                   arr.splice(idx, 1);
-                                   setWizardData({...wizardData, compositions: {...wizardData.compositions, customSupplements: arr}});
-                               }} style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer' }}>✕</button>
+                   {/* Col Droite : Live Preview */}
+                   <div style={{ background: wizardData.primaryColor, borderRadius: '16px', padding: '1.5rem', color: '#ffffff', display: 'flex', flexDirection: 'column', gap: '1rem', boxShadow: `0 10px 25px -5px ${wizardData.primaryColor}80`, transition: 'background 0.3s ease', position: 'relative', overflow: 'hidden' }}>
+                      <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '100px', height: '100px', background: wizardData.secondaryColor, borderRadius: '50%', opacity: 0.8, filter: 'blur(30px)' }}></div>
+                      
+                      <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 800, opacity: 0.9 }}>Aperçu Dynamique</div>
+                      
+                      <div style={{ flex: 1, background: 'rgba(255,255,255,0.15)', borderRadius: '12px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '1.2rem', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                         {wizardData.productBadges.length > 0 && wizardData.productBadges[0] && (
+                           <div style={{ display: 'inline-block', background: wizardData.secondaryColor, color: '#fff', fontSize: '0.7rem', padding: '0.2rem 0.6rem', borderRadius: '99px', fontWeight: 'bold', marginBottom: 'auto', alignSelf: 'flex-start' }}>
+                             ★ {wizardData.productBadges[0]}
                            </div>
-                       ))}
-                       <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
-                           <input type="text" placeholder="Ex: Fromage" value={wizardData.compositions.fastSupplementName} onChange={e => setWizardData({...wizardData, compositions: {...wizardData.compositions, fastSupplementName: e.target.value}})} style={{ flex: 2, padding: '0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1' }} />
-                           <input type="number" step="0.1" placeholder="Prix" value={wizardData.compositions.fastSupplementPrice} onChange={e => setWizardData({...wizardData, compositions: {...wizardData.compositions, fastSupplementPrice: e.target.value}})} style={{ flex: 1, padding: '0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1' }} />
-                           <button type="button" onClick={() => {
-                               if (wizardData.compositions.fastSupplementName && wizardData.compositions.fastSupplementPrice) {
-                                  setWizardData({...wizardData, compositions: {
-                                     ...wizardData.compositions,
-                                     customSupplements: [...wizardData.compositions.customSupplements, { name: wizardData.compositions.fastSupplementName, price: parseFloat(wizardData.compositions.fastSupplementPrice) }],
-                                     fastSupplementName: "", fastSupplementPrice: ""
-                                  }});
-                               }
-                           }} style={{ background: '#10b981', color: 'white', border: 'none', borderRadius: '4px', padding: '0.5rem 1rem', cursor: 'pointer' }}>Ajouter</button>
-                       </div>
+                         )}
+                         <span style={{ fontSize: '1.1rem', fontWeight: 900, textShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>Votre Interface ETK</span>
+                      </div>
+                      <div style={{ display: 'flex', gap: '0.5rem' }}>
+                         <div style={{ height: '45px', flex: 1, background: wizardData.secondaryColor, borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '0.85rem', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>Bouton Action</div>
+                         <div style={{ height: '45px', width: '45px', background: 'rgba(255,255,255,0.9)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: wizardData.primaryColor, fontWeight: 'bold' }}>+</div>
+                      </div>
                    </div>
+                </div>
 
-                   <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.5rem', color: '#475569' }}>Badges visuels</label>
-                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                      {['Nouveau 🆕', 'Bestseller ⭐', 'Épicé 🌶️', 'Végétarien 🌱'].map(b => {
-                          const isSelected = wizardData.productBadges.includes(b);
-                          return (
-                             <button type="button" key={b} onClick={() => {
-                                 let newB = [...wizardData.productBadges];
-                                 if (isSelected) newB = newB.filter(x => x !== b);
-                                 else newB.push(b);
-                                 setWizardData({...wizardData, productBadges: newB});
-                             }} style={{ padding: '0.5rem 1rem', borderRadius: '999px', border: isSelected ? '1px solid #10b981' : '1px solid #cbd5e1', background: isSelected ? '#dcfce7' : '#f8fafc', color: isSelected ? '#065f46' : '#475569', cursor: 'pointer', fontWeight: 500 }}>
-                                {b}
-                             </button>
-                          );
-                      })}
-                   </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem' }}>
+                   <button type="button" onClick={() => setWizardStep(3)} style={{ padding: '1rem 2rem', background: '#e2e8f0', color: '#475569', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}>← Retour</button>
+                   <button type="button" onClick={() => setWizardStep(5)} style={{ padding: '1rem 2rem', background: '#4f46e5', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 15px rgba(79, 70, 229, 0.3)' }}>Continuer →</button>
+               </div>
+            </div>
 
-                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <button type="button" onClick={() => setWizardStep(2)} style={{ padding: '0.6rem 1.2rem', borderRadius: '6px', cursor: 'pointer', border: '1px solid #cbd5e1', background: 'white' }}>⬅️ Retour</button>
-                      <button type="button" onClick={() => setWizardStep(4)} style={{ padding: '0.6rem 1.2rem', background: '#4f46e5', color: 'white', borderRadius: '6px', cursor: 'pointer' }}>Suivant ➡️</button>
-                   </div>
-                 </div>
-               )}
-
-               {wizardStep === 4 && (
-                 <div>
-                   <h3 style={{ margin: '0 0 1rem 0', color: '#1e293b' }}>Formules & Menus</h3>
+{/* ETAPE 5 : GENERATION (Recap) */}
+            <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 5 ? 1 : 0.4, transition: 'opacity 0.5s' }}>
+               <div style={{ background: '#ffffff', borderRadius: '16px', padding: '2rem', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)', border: '1px solid #f1f5f9', textAlign: 'center' }}>
+                   <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🚀</div>
+                   <h2 style={{ margin: '0 0 1rem 0', color: '#1e293b', fontSize: '1.8rem' }}>Prêt à générer</h2>
+                   <p style={{ color: '#64748b', fontSize: '1.1rem', marginBottom: '2rem' }}>L'IA va composer une carte intelligente ETK360 respectant les {wizardData.categories.length} contraintes de catégories configurées.</p>
                    
-                   <div style={{ marginBottom: '1.5rem' }}>
-                       <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 600, color: '#475569', padding: '1rem', background: '#f8fafc', border: '1px solid #cbd5e1', borderRadius: '8px' }}>
-                           <input type="checkbox" checked={wizardData.formulas.isSeul} onChange={e => setWizardData({...wizardData, formulas: {...wizardData.formulas, isSeul: e.target.checked}})} style={{ width: '1.2rem', height: '1.2rem' }} />
-                           Proposer "Produit Seul" (Prix de base)
-                       </label>
+                   <div style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '12px', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '0.8rem', marginBottom: '2rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{color:'#64748b'}}>Restaurant :</span> <span style={{fontWeight:800}}>{wizardData.restaurantName} ({wizardData.language})</span></div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{color:'#64748b'}}>Concept :</span> <span style={{fontWeight:800}}>{wizardData.typeLabel}</span></div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{color:'#64748b'}}>Catégories :</span> <span style={{fontWeight:800}}>{wizardData.categories.length}</span></div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{color:'#64748b'}}>Formules :</span> <span style={{fontWeight:800}}>{wizardData.formulas.isMenu ? "Menu/Maxi actifs" : "Seul"}</span></div>
                    </div>
 
-                   <div style={{ marginBottom: '1.5rem', padding: '1rem', background: wizardData.formulas.isMenu ? '#eef2ff' : '#f8fafc', border: wizardData.formulas.isMenu ? '2px solid #4f46e5' : '1px solid #cbd5e1', borderRadius: '8px' }}>
-                       <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 600, color: '#475569', marginBottom: wizardData.formulas.isMenu ? '1rem' : '0' }}>
-                           <input type="checkbox" checked={wizardData.formulas.isMenu} onChange={e => setWizardData({...wizardData, formulas: {...wizardData.formulas, isMenu: e.target.checked}})} style={{ width: '1.2rem', height: '1.2rem' }} />
-                           Proposer en "Menu" (+ Boisson & Accompagnement)
-                       </label>
-                       {wizardData.formulas.isMenu && (
-                           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginLeft: '2rem' }}>
-                               <span>Surcoût du menu :</span>
-                               <input type="number" step="0.1" value={wizardData.formulas.menuPrice} onChange={e => setWizardData({...wizardData, formulas: {...wizardData.formulas, menuPrice: parseFloat(e.target.value)}})} style={{ width: '80px', padding: '0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1' }} />
-                               <span>€</span>
-                           </div>
-                       )}
-                   </div>
-
-                   <div style={{ marginBottom: '1.5rem', padding: '1rem', background: wizardData.formulas.isMaxi ? '#fffbeb' : '#f8fafc', border: wizardData.formulas.isMaxi ? '2px solid #d97706' : '1px solid #cbd5e1', borderRadius: '8px' }}>
-                       <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 600, color: '#475569', marginBottom: wizardData.formulas.isMaxi ? '1rem' : '0' }}>
-                           <input type="checkbox" checked={wizardData.formulas.isMaxi} onChange={e => setWizardData({...wizardData, formulas: {...wizardData.formulas, isMaxi: e.target.checked}})} style={{ width: '1.2rem', height: '1.2rem' }} />
-                           Proposer en "Maxi Menu"
-                       </label>
-                       {wizardData.formulas.isMaxi && (
-                           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginLeft: '2rem' }}>
-                               <span>Surcoût du maxi menu :</span>
-                               <input type="number" step="0.1" value={wizardData.formulas.maxiPrice} onChange={e => setWizardData({...wizardData, formulas: {...wizardData.formulas, maxiPrice: parseFloat(e.target.value)}})} style={{ width: '80px', padding: '0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1' }} />
-                               <span>€</span>
-                           </div>
-                       )}
-                   </div>
-
-                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <button type="button" onClick={() => setWizardStep(3)} style={{ padding: '0.6rem 1.2rem', borderRadius: '6px', cursor: 'pointer', border: '1px solid #cbd5e1', background: 'white' }}>⬅️ Retour</button>
-                      <button type="button" onClick={() => setWizardStep(5)} style={{ padding: '0.6rem 1.2rem', background: '#4f46e5', color: 'white', borderRadius: '6px', cursor: 'pointer' }}>Suivant ➡️</button>
-                   </div>
-                 </div>
-               )}
-
-               {wizardStep === 5 && (
-                 <div>
-                   <h3 style={{ margin: '0 0 1rem 0', color: '#1e293b' }}>Composition des Menus (Accomp. / Boissons / Desserts)</h3>
-                   
-                   <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.5rem', color: '#475569' }}>🍔 Accompagnements (Séparés par des virgules)</label>
-                   <input type="text" value={wizardData.accompaniments.list} onChange={e => setWizardData({...wizardData, accompaniments: {...wizardData.accompaniments, list: e.target.value}})} placeholder="Frites, Potatoes..." style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', marginBottom: '1rem' }} />
-
-                   <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.5rem', color: '#475569' }}>🥤 Boissons Menu (Séparées par des virgules)</label>
-                   <input type="text" value={wizardData.drinks.list} onChange={e => setWizardData({...wizardData, drinks: {...wizardData.drinks, list: e.target.value}})} placeholder="Coca-Cola, Eau Plate, Fanta..." style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', marginBottom: '1rem' }} />
-
-                   <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.5rem', color: '#475569' }}>🍦 Desserts Menu (Optionnel)</label>
-                   <input type="text" value={wizardData.desserts.list} onChange={e => setWizardData({...wizardData, desserts: {...wizardData.desserts, list: e.target.value}})} placeholder="McFlurry, Sundae (Laisser vide si aucun)" style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', marginBottom: '1.5rem' }} />
-
-                   <div style={{ background: '#f8fafc', padding: '1rem', border: '1px solid #cbd5e1', borderRadius: '8px', marginBottom: '1.5rem' }}>
-                       <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', fontWeight: 600, color: '#475569' }}>
-                           <input type="checkbox" checked={wizardData.accompaniments.hasSizes} onChange={e => {
-                               const v = e.target.checked;
-                               setWizardData({...wizardData, 
-                                 accompaniments: {...wizardData.accompaniments, hasSizes: v},
-                                 drinks: {...wizardData.drinks, hasSizes: v},
-                                 desserts: {...wizardData.desserts, hasSizes: v}
-                               })
-                           }} style={{ width: '1.2rem', height: '1.2rem' }} />
-                           Proposer des tailles pour Accompagnements & Boissons (S, M, L)
-                       </label>
-
-                       {wizardData.accompaniments.hasSizes && (
-                           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
-                               <div>
-                                   <label style={{ display: 'block', fontSize: '0.9rem', marginBottom: '0.3rem' }}>Surlcoût Taille S (€)</label>
-                                   <input type="number" step="0.1" value={wizardData.accompaniments.sizeS} onChange={e => setWizardData({...wizardData, accompaniments: {...wizardData.accompaniments, sizeS: parseFloat(e.target.value)}, drinks: {...wizardData.drinks, sizeS: parseFloat(e.target.value)}, desserts: {...wizardData.desserts, sizeS: parseFloat(e.target.value)}})} style={{ width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1' }} />
-                               </div>
-                               <div>
-                                   <label style={{ display: 'block', fontSize: '0.9rem', marginBottom: '0.3rem' }}>Surlcoût Taille M (€)</label>
-                                   <input type="number" step="0.1" value={wizardData.accompaniments.sizeM} onChange={e => setWizardData({...wizardData, accompaniments: {...wizardData.accompaniments, sizeM: parseFloat(e.target.value)}, drinks: {...wizardData.drinks, sizeM: parseFloat(e.target.value)}, desserts: {...wizardData.desserts, sizeM: parseFloat(e.target.value)}})} style={{ width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1' }} />
-                               </div>
-                               <div>
-                                   <label style={{ display: 'block', fontSize: '0.9rem', marginBottom: '0.3rem' }}>Surlcoût Taille L (€)</label>
-                                   <input type="number" step="0.1" value={wizardData.accompaniments.sizeL} onChange={e => setWizardData({...wizardData, accompaniments: {...wizardData.accompaniments, sizeL: parseFloat(e.target.value)}, drinks: {...wizardData.drinks, sizeL: parseFloat(e.target.value)}, desserts: {...wizardData.desserts, sizeL: parseFloat(e.target.value)}})} style={{ width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1' }} />
-                               </div>
-                           </div>
-                       )}
-                   </div>
-
-                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <button type="button" onClick={() => setWizardStep(4)} style={{ padding: '0.6rem 1.2rem', borderRadius: '6px', cursor: 'pointer', border: '1px solid #cbd5e1', background: 'white' }}>⬅️ Retour</button>
-                      <button type="button" onClick={() => setWizardStep(6)} style={{ padding: '0.6rem 1.2rem', background: '#4f46e5', color: 'white', borderRadius: '6px', cursor: 'pointer' }}>Suivant ➡️</button>
-                   </div>
-                 </div>
-               )}
-
-               {wizardStep === 6 && (
-                 <div>
-                   <h3 style={{ margin: '0 0 1rem 0', color: '#1e293b' }}>Style Visuel & Couleurs</h3>
-                   
-                   <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.5rem', color: '#475569' }}>Thème / Ambiance</label>
-                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                      {['Clair', 'Sombre', 'Coloré', 'Épuré'].map(t => (
-                        <button type="button" key={t} onClick={() => setWizardData({...wizardData, visualTheme: t})} style={{ padding: '0.8rem', borderRadius: '8px', border: wizardData.visualTheme === t ? '2px solid #4f46e5' : '1px solid #cbd5e1', background: wizardData.visualTheme === t ? '#e0e7ff' : '#f8fafc', cursor: 'pointer', fontWeight: 600, color: '#334155' }}>
-                          {t}
-                        </button>
-                      ))}
-                   </div>
-
-                   <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.5rem', color: '#475569' }}>Couleurs Exactes (Optionnel)</label>
-                   <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                         <input type="color" value={wizardData.primaryColor} onChange={e => setWizardData({...wizardData, primaryColor: e.target.value})} style={{ width: '40px', height: '40px', border: 'none', cursor: 'pointer' }} />
-                         <span style={{ fontSize: '0.9rem' }}>Primaire</span>
-                      </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                         <input type="color" value={wizardData.secondaryColor} onChange={e => setWizardData({...wizardData, secondaryColor: e.target.value})} style={{ width: '40px', height: '40px', border: 'none', cursor: 'pointer' }} />
-                         <span style={{ fontSize: '0.9rem' }}>Secondaire</span>
-                      </div>
-                   </div>
-
-                   <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.5rem', color: '#475569' }}>Style de Carte</label>
-                   <select value={wizardData.visualStyle} onChange={(e) => setWizardData({...wizardData, visualStyle: e.target.value})} style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', marginBottom: '1.5rem' }}>
-                       <option>Moderne</option>
-                       <option>Classique</option>
-                       <option>Minimaliste</option>
-                       <option>Bold</option>
-                   </select>
-
-                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <button type="button" onClick={() => setWizardStep(5)} style={{ padding: '0.6rem 1.2rem', borderRadius: '6px', cursor: 'pointer', border: '1px solid #cbd5e1', background: 'white' }}>⬅️ Retour</button>
-                      <button type="button" onClick={() => setWizardStep(7)} style={{ padding: '0.6rem 1.2rem', background: '#4f46e5', color: 'white', borderRadius: '6px', cursor: 'pointer' }}>Suivant ➡️</button>
-                   </div>
-                 </div>
-               )}
-
-               {wizardStep === 7 && (
-                 <div>
-                   <h3 style={{ margin: '0 0 1rem 0', color: '#1e293b' }}>Format de Sortie & Affichage</h3>
-                   
-                   <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.5rem', color: '#475569' }}>Format d'affichage</label>
-                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                      {['Écran kiosque', 'Tablette', 'Impression A4', 'QR Code menu'].map(f => (
-                        <button type="button" key={f} onClick={() => setWizardData({...wizardData, outputFormat: f})} style={{ padding: '0.8rem', borderRadius: '8px', border: wizardData.outputFormat === f ? '2px solid #4f46e5' : '1px solid #cbd5e1', background: wizardData.outputFormat === f ? '#e0e7ff' : '#f8fafc', cursor: 'pointer', fontWeight: 600, color: '#334155' }}>
-                          {f}
-                        </button>
-                      ))}
-                   </div>
-
-                   <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.5rem', color: '#475569' }}>Type de navigation temporelle</label>
-                   <select value={wizardData.navigationType} onChange={(e) => setWizardData({...wizardData, navigationType: e.target.value})} style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', marginBottom: '1.5rem' }}>
-                       <option>Parcours guidé (étapes obligatoires)</option>
-                       <option>Menu classique (tout visible catégorisé)</option>
-                       <option>Carrousel interactif</option>
-                   </select>
-
-                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <button type="button" onClick={() => setWizardStep(6)} style={{ padding: '0.6rem 1.2rem', borderRadius: '6px', cursor: 'pointer', border: '1px solid #cbd5e1', background: 'white' }}>⬅️ Retour</button>
-                      <button type="button" onClick={() => setWizardStep(8)} style={{ padding: '0.6rem 1.2rem', background: '#4f46e5', color: 'white', borderRadius: '6px', cursor: 'pointer' }}>Voir le Récapitulatif ➡️</button>
-                   </div>
-                 </div>
-               )}
-
-               {wizardStep === 8 && (
-                 <div>
-                   <h3 style={{ margin: '0 0 1rem 0', color: '#1e293b', textAlign: 'center' }}>✨ Récapitulatif & Génération</h3>
-                   
-                   <div style={{ background: '#f8fafc', borderRadius: '8px', border: '1px solid #e2e8f0', padding: '1rem', marginBottom: '1.5rem', fontSize: '0.95rem' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                         <span style={{ color: '#64748b' }}>Restaurant :</span>
-                         <span style={{ fontWeight: 600 }}>{wizardData.restaurantName} ({wizardData.language})</span>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                         <span style={{ color: '#64748b' }}>Type :</span>
-                         <span style={{ fontWeight: 600 }}>{wizardData.typeLabel}</span>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                         <span style={{ color: '#64748b' }}>Catégories :</span>
-                         <span style={{ fontWeight: 600 }}>{wizardData.categories.length} sections ({wizardData.productCountLimit} prod.)</span>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                         <span style={{ color: '#64748b' }}>Formules :</span>
-                         <span style={{ fontWeight: 600 }}>{wizardData.formulas.isMenu ? "Menu OK" : "Seul"}</span>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', alignItems: 'center' }}>
-                         <span style={{ color: '#64748b' }}>Design :</span>
-                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <span style={{ fontWeight: 600 }}>{wizardData.visualTheme} / {wizardData.visualStyle}</span>
-                            <div style={{ width: '15px', height: '15px', background: wizardData.primaryColor, borderRadius: '50%' }}></div>
-                            <div style={{ width: '15px', height: '15px', background: wizardData.secondaryColor, borderRadius: '50%' }}></div>
-                         </div>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
-                          <button type="button" onClick={() => setWizardStep(1)} style={{ fontSize: '0.8rem', padding: '0.4rem 0.8rem', background: '#e2e8f0', border: 'none', borderRadius: '4px', cursor: 'pointer', color: '#475569' }}>✏️ Tout Revoir (Modifier)</button>
-                      </div>
-                   </div>
-
-                   <button type="submit" disabled={isGenerating} className={styles.button_primary} style={{ width: '100%', padding: '1rem', fontSize: '1.1rem', opacity: isGenerating ? 0.5 : 1 }}>
-                     {isGenerating ? "⏳ L'IA construit votre carte..." : "🚀 Lancer la Génération IA"}
+                   <button disabled={isGenerating} type="submit" style={{ width: '100%', padding: '1.2rem', background: isGenerating ? '#94a3b8' : 'linear-gradient(135deg, #4f46e5, #0ea5e9)', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.3rem', fontWeight: 900, cursor: isGenerating ? 'not-allowed' : 'pointer', transition: 'all 0.3s', boxShadow: isGenerating ? 'none' : '0 10px 25px -5px rgba(79, 70, 229, 0.4)', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem' }}>
+                      {isGenerating ? (
+                        <><span>⏳</span> {generationStepText || "Génération..."}</>
+                      ) : (
+                        <>Générer la carte <span style={{fontSize:'1.5rem'}}>⚡</span></>
+                      )}
                    </button>
-                 </div>
-               )}            </div>
+               </div>
+               
+               <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem' }}>
+                   <button type="button" disabled={isGenerating} onClick={() => setWizardStep(4)} style={{ padding: '1rem 2rem', background: '#e2e8f0', color: '#475569', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', opacity: isGenerating ? 0.5 : 1 }}>← Modifier les paramètres</button>
+               </div>
+            </div>
 
-          
+          </div>
         </form>
+
+
 
         <Link href="/menu" className={styles.backButton}>
           <span>&lt;-</span> Retour au tableau de bord

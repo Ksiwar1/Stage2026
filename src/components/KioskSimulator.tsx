@@ -50,6 +50,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
   // -- PANIER --
   const [cartCount, setCartCount] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
+  const [showToast, setShowToast] = useState<{name: string, visible: boolean} | null>(null);
 
   // -- TUNNEL DE COMMANDE (chaque produit a son propre parcours) --
   const [selectedProduct, setSelectedProduct] = useState<ParsedProduct | null>(null);
@@ -139,17 +140,19 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
   };
 
   const startOrder = (product: ParsedProduct) => {
+    
     const rootTree = mapParsedProductToNode(product);
-    console.log(`\n=== 🌳 PARSED PRODUCT TREE POUR : ${product.name} ===`);
-    console.dir(rootTree, { depth: null });
 
-    // Produit simple (pas de parcours) → ajout direct au panier
-    if (!rootTree || rootTree.steps.length === 0) {
+    // FIX UX 1: Achat direct si pas d'options
+    if (!rootTree.steps || rootTree.steps.length === 0) {
       setCartCount(prev => prev + 1);
       setCartTotal(prev => prev + product.priceTTC);
+      setShowToast({ name: product.name, visible: true });
+      setTimeout(() => setShowToast(t => t ? { ...t, visible: false } : null), 2500);
       return;
     }
 
+    // Ouverture normale du modal
     setSelectedProduct(product);
     setWorkflowStack([{ node: rootTree, stepIndex: 0 }]);
 
@@ -237,17 +240,8 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
     if (valid) {
        const nextIndex = currentStepIndex + 1;
        if (nextIndex >= funnelSteps.length && workflowStack.length > 1) {
-          // Suppression du récapitulatif pour les sous-produits : on remonte directement au parent
-          setWorkflowStack(prev => {
-             const newStack = prev.slice(0, -1);
-             const last = { ...newStack[newStack.length - 1] };
-             // On s'assure qu'on n'avance que si le parent n'est pas déjà à la fin
-             // Mais si le retour automatique doit avancer le parent ? 
-             // Un sous-parcours fait partie d'une étape du parent, valider le sous-parcours ne signifie pas forcément valider l'étape du parent (qui peut nécessiter d'autres choix).
-             // On laisse l'utilisateur valider l'étape parente quand il le souhaite.
-             // On revient simplement à l'index actuel du parent !
-             return newStack;
-          });
+          // Suppression du récapitulatif factice pour les sous-composants : on dépile immédiatement !
+          setWorkflowStack(prev => prev.slice(0, -1));
        } else {
           setCurrentStepIndex(nextIndex);
        }
@@ -366,8 +360,15 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
   }
 
   return (
-    <div style={{ '--color-primary': themePalette.primary, '--color-secondary': themePalette.secondary, '--color-background': themePalette.background, '--color-surface': themePalette.surface, '--color-text': themePalette.text, '--color-on-primary': themePalette.onPrimary } as React.CSSProperties}>
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw', background: 'var(--color-background)', fontFamily: 'sans-serif', overflow: 'hidden' }}>
+    <div style={{ 
+      '--color-primary': themePalette.primary, 
+      '--color-secondary': themePalette.secondary, 
+      '--color-background': themePalette.background, 
+      '--color-surface': themePalette.surface, 
+      '--color-text': themePalette.text, 
+      '--color-on-primary': themePalette.onPrimary 
+    } as React.CSSProperties}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw', background: 'var(--color-background)', fontFamily: catalogData?.themeMetadata?.typeLabel?.toLowerCase().includes('pizza') ? "'Playfair Display', serif" : catalogData?.themeMetadata?.typeLabel?.toLowerCase().includes('gastronomique') ? "'Cinzel', serif" : "'Inter', sans-serif", overflow: 'hidden' }}>
       
       {/* TUNNEL MODAL */}
       {selectedProduct && (
@@ -381,60 +382,27 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
             position: 'relative'
           }}>
             
-            {/* Top Cyan Section */}
+            {/* Top Slim Header */}
             <div style={{ 
-                background: 'linear-gradient(to bottom, #defaf1, #9cf1d8)', 
-                padding: '2rem 1rem', 
-                position: 'relative',
-                display: 'flex', flexDirection: 'column', alignItems: 'center'
+                height: '140px', width: '100%', 
+                backgroundImage: `url(${selectedProduct?.image})`, 
+                backgroundSize: 'cover', backgroundPosition: 'center', 
+                position: 'relative', flexShrink: 0 
             }}>
-               {/* Controls */}
-               <div style={{ position: 'absolute', top: '1rem', right: '1.5rem', display: 'flex', gap: '8px' }}>
-                  <button style={{ background: '#d1d5db', color: 'white', border: 'none', borderRadius: '50%', width: '32px', height: '32px', fontSize: '18px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>i</button>
-                  <button onClick={() => setSelectedProduct(null)} style={{ background: '#d1d5db', color: '#4b5563', border: 'none', borderRadius: '50%', width: '32px', height: '32px', fontSize: '18px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>✕</button>
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, top: 0, background: 'linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 100%)', padding: '1.5rem 2.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                    <h2 style={{ color: 'white', margin: 0, fontSize: '2.2rem', fontWeight: 900, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>{selectedProduct?.name}</h2>
+                    <p style={{ color: 'var(--color-primary)', margin: '0.2rem 0 0', fontSize: '1.4rem', fontWeight: 800 }}>{selectedProduct?.priceTTC.toFixed(2)} €</p>
+                </div>
+               <div style={{ position: 'absolute', top: '15px', right: '15px' }}>
+                  <button onClick={() => setSelectedProduct(null)} style={{ background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', color: 'white', border: 'none', borderRadius: '50%', width: '45px', height: '45px', fontSize: '20px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>✕</button>
                </div>
-               
-               <h2 style={{ margin: 0, fontSize: '1.6rem', textTransform: 'uppercase', fontWeight: 900, color: '#111827', marginBottom: '2.5rem', textAlign: 'center' }}>{activeWorkflow ? activeWorkflow.node.name : selectedProduct.name}</h2>
+            </div>
+            
+            <div style={{ padding: '2rem 1.5rem 0', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
 
                {!isGlobalOptionPhase && (
                  <>
-                   {/* Step Icons Row */}
-                   <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', marginBottom: '2.5rem' }}>
-                 {funnelSteps.map((s, i) => {
-                    const isComp = s.title.toLowerCase().includes('composition');
-                    const stepImg = s.image || s.children[0]?.image || null;
-                    return (
-                        <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                           <div style={{ width: '80px', height: '60px', background: 'transparent', border: isComp ? 'none' : '2px solid #4b5563', borderRadius: '8px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '8px', position: 'relative', overflow: 'hidden' }}>
-                              {isComp ? (
-                                 <div style={{ width: '56px', height: '56px', background: '#4b5563', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                      <line x1="4" y1="6" x2="20" y2="6"></line>
-                                      <line x1="4" y1="12" x2="20" y2="12"></line>
-                                      <line x1="4" y1="18" x2="20" y2="18"></line>
-                                    </svg>
-                                 </div>
-                              ) : stepImg ? (
-                                 <img src={stepImg} alt={s.title}
-                                   onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://recette-setting.softavera.com/nopicture.png'; }}
-                                   style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '4px' }} />
-                              ) : (
-                                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#4b5563" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                              )}
-                              {!isComp && (
-                                 <div style={{ position: 'absolute', bottom: '-10px', right: '-10px', background: '#d1d5db', borderRadius: '50%', width: '24px', height: '24px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                   <span style={{ transform: 'rotate(45deg)', color: '#4b5563', fontWeight: 'bold' }}>+</span>
-                                 </div>
-                              )}
-                           </div>
-                           <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#111827', textTransform: 'uppercase' }}>{s.title}</span>
-                        </div>
-                    );
-                 })}
-               </div>
-
-               {/* Numeric Stepper Row */}
-               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', maxWidth: '400px' }}>
+                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', maxWidth: '400px', marginBottom: '2rem' }}>
                  {funnelSteps.map((s, i) => {
                     const isActive = i === currentStepIndex;
                     const isPast = i < currentStepIndex;
@@ -529,42 +497,45 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                           onClick={() => !isLocked && handleOptionClick(currentStep, opt.productId)}
                           style={{
                             position: 'relative',
-                            background: isComp && !isIncluded ? '#fef2f2' : 'white',
+                            background: isComp && !isIncluded ? 'rgba(254, 242, 242, 0.1)' : 'var(--color-surface)',
                             border: `${isComp || isSelected ? '3px' : '1px'} solid ${borderColor}`,
                             borderRadius: '16px', padding: '1rem',
                             cursor: isLocked ? 'not-allowed' : 'pointer',
-                            transition: 'all 0.2s',
-                            boxShadow: '0 4px 15px rgba(0,0,0,0.05)',
-                            opacity: isComp && !isIncluded ? 0.6 : 1
+                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                            boxShadow: isSelected || (isComp && isIncluded) ? '0 10px 25px rgba(0,0,0,0.1)' : '0 4px 15px rgba(0,0,0,0.05)',
+                            transform: isSelected || (isComp && isIncluded) ? 'translateY(-4px)' : 'none',
+                            opacity: isComp && !isIncluded ? 0.6 : 1,
+                            overflow: 'hidden'
                           }}
+                          onMouseEnter={(e) => { if (!isSelected) e.currentTarget.style.transform = 'translateY(-2px)' }}
+                          onMouseLeave={(e) => { if (!isSelected) e.currentTarget.style.transform = 'none' }}
                         >
-                           {/* Badge état top right */}
-                           <div style={{ position: 'absolute', top: '10px', right: '10px', width: '30px', height: '30px', borderRadius: '50%', color: 'var(--color-on-primary)', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1.1rem', fontWeight: 'bold',
+                           {/* Badge état top left (Forme différente selon single/multi) */}
+                           <div style={{ position: 'absolute', top: '15px', left: '15px', width: '28px', height: '28px', borderRadius: (currentStep.maxChoices === 1 && !isComp) ? '50%' : '8px', color: 'var(--color-on-primary)', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1rem', fontWeight: 'bold',
                              background: isComp
                                ? (isLocked ? '#9ca3af' : isIncluded ? 'var(--color-primary)' : '#ef4444')
-                               : (isSelected ? 'var(--color-primary)' : 'var(--color-secondary)')
+                               : (isSelected ? 'var(--color-primary)' : 'var(--color-background)'),
+                             border: isSelected ? 'none' : '2px solid #cbd5e1'
                            }}>
-                             {isComp ? (isLocked ? '🔒' : isIncluded ? '✓' : '✕') : (isSelected ? '✓' : '+')}
+                             {isComp ? (isLocked ? '🔒' : isIncluded ? '✓' : '') : (isSelected ? '✓' : '')}
                            </div>
 
-                           {/* Info Icon top left */}
-                           <div style={{ position: 'absolute', top: '10px', left: '10px', width: '24px', height: '24px', borderRadius: '50%', background: '#f3f4f6', color: '#9ca3af', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '0.9rem', fontWeight: 'bold' }}>
+                           {/* Info Icon top right */}
+                           <div style={{ position: 'absolute', top: '15px', right: '15px', width: '28px', height: '28px', borderRadius: '50%', background: 'rgba(243, 244, 246, 0.8)', color: '#9ca3af', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '0.9rem', fontWeight: 'bold' }}>
                              i
                            </div>
 
 
 
-                           <div style={{ height: '140px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '1rem' }}>
-                             {opt.image ? (
-                               <img src={opt.image} alt={opt.name} onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://recette-setting.softavera.com/nopicture.png'; }}
+                           {opt.image && (
+                             <div style={{ height: '120px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '1rem' }}>
+                               <img src={opt.image} alt={opt.name} onError={(e) => { e.currentTarget.style.display = 'none'; }}
                                  style={{ width: '100%', height: '100%', objectFit: 'contain', filter: isComp && !isIncluded ? 'grayscale(1)' : 'none' }} />
-                             ) : (
-                               <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" strokeWidth="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                             )}
-                           </div>
+                             </div>
+                           )}
                            <div style={{ textAlign: 'center' }}>
                              <strong style={{ fontSize: '1.1rem', textTransform: 'uppercase', display: 'block', marginBottom: '0.5rem',
-                               color: isComp && !isIncluded ? '#9ca3af' : '#111827',
+                               color: isComp && !isIncluded ? '#9ca3af' : 'var(--color-text)',
                                textDecoration: isComp && !isIncluded ? 'line-through' : 'none'
                              }}>{opt.name}</strong>
                              {!isComp && opt.price ? <span style={{ color: 'var(--color-text)', fontWeight: 'bold', fontSize: '1.2rem' }}>+{(opt.price || 0).toFixed(2)} €</span> : null}
@@ -635,7 +606,12 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                   {getContextualMinChoices(currentStep) === 0 && (stepSelections[currentStep.stepId] || []).length === 0 ? "Passer cette étape" : "Suivant →"}
                 </button>
               ) : (
-                <button onClick={confirmProduct} style={{ background: 'var(--color-primary)', color: 'var(--color-on-primary)', padding: '1rem 3rem', borderRadius: '8px', border: 'none', fontSize: '1.2rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)' }}>
+                <button onClick={(e) => {
+                   const btn = e.currentTarget;
+                   btn.style.transform = 'scale(0.95)';
+                   setTimeout(() => { btn.style.transform = 'scale(1)'; confirmProduct(); }, 150);
+                }} style={{ background: 'var(--color-primary)', color: 'var(--color-on-primary)', padding: '1rem 3rem', borderRadius: '12px', border: 'none', fontSize: '1.4rem', fontWeight: 900, cursor: 'pointer', boxShadow: '0 8px 20px rgba(0, 0, 0, 0.15)', transition: 'all 0.15s ease-out', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                   {workflowStack.length > 1 ? "Terminer" : "Valider mon menu"}
                 </button>
               )}
@@ -714,7 +690,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                 style={{ 
                   background: 'var(--color-surface)', borderRadius: '16px', position: 'relative', overflow: 'hidden', 
                   boxShadow: '0 8px 20px rgba(0,0,0,0.06)', display: 'flex', flexDirection: 'column', 
-                  padding: '1.5rem', cursor: 'pointer', transition: 'transform 0.2s'
+                  padding: '1.5rem', cursor: 'pointer', transition: 'transform 0.2s', zIndex: 10
                 }}
               >
                 <div style={{ width: '100%', height: '220px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '1rem', padding: '1rem' }}>
@@ -739,6 +715,32 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
 
       {/* PIED DE PAGE */}
       {/* Footer supprimé à la demande de l'utilisateur */}
+      {/* Floating Cart Bar (Panier dynamique) */}
+      {cartCount > 0 && !selectedProduct && (
+         <div style={{ position: 'absolute', bottom: '25px', left: '50%', transform: 'translateX(-50%)', width: '90%', maxWidth: '800px', background: 'var(--color-secondary)', borderRadius: '20px', display: 'flex', justifyContent: 'space-between', padding: '15px 30px', alignItems: 'center', boxShadow: '0 15px 35px rgba(0,0,0,0.3)', zIndex: 40 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+               <div style={{ width: '50px', height: '50px', background: 'rgba(255,255,255,0.1)', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1.8rem' }}>🛒</div>
+               <div>
+                  <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '1px' }}>Votre Commande</div>
+                  <div style={{ color: 'white', fontSize: '1.2rem', fontWeight: 900 }}>{cartCount} article{cartCount > 1 ? 's' : ''}</div>
+               </div>
+            </div>
+            <button style={{ background: 'var(--color-primary)', color: 'var(--color-on-primary)', padding: '12px 28px', borderRadius: '12px', border: 'none', fontSize: '1.3rem', fontWeight: 900, cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 8px 15px rgba(0,0,0,0.2)' }}>
+               Régler {cartTotal.toFixed(2)} €
+            </button>
+         </div>
+      )}
+
+      {/* Toast Animé pour feedback d'ajout */}
+      <div style={{
+         position: 'absolute', top: showToast?.visible ? '30px' : '-100px', left: '50%', transform: 'translateX(-50%)',
+         background: '#10b981', color: 'white', padding: '12px 24px', borderRadius: '50px', fontWeight: 800, fontSize: '1rem',
+         boxShadow: '0 10px 25px rgba(16, 185, 129, 0.4)', transition: 'top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)', zIndex: 1000,
+         display: 'flex', alignItems: 'center', gap: '10px'
+      }}>
+         <span style={{ fontSize: '1.3rem' }}>✅</span> {showToast?.name} a été ajouté !
+      </div>
+
     </div>
     </div>
   );
