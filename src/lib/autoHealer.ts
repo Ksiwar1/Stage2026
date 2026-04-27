@@ -69,30 +69,13 @@ export function patchETK360Structure(data: any): any {
        
        if (wNode && wNode.type === 'categories') {
            if (!wNode.content) wNode.content = {};
-           
-           // Si la catégorie est vide, on injecte de force un pointer de produit fantôme pour que l'AutoHealer la peuple
-           if (Object.keys(wNode.content).length === 0) {
-               const fallbackKey = `item_gen_${catKey.substring(0, 5)}_${Math.floor(Math.random() * 900)}`;
-               wNode.content[fallbackKey] = { type: 'items', rank: 1 };
-           }
        }
 
        if (wNode && wNode.content) {
           Object.keys(wNode.content).forEach(itemKey => {
+             // RÈGLE MÉTIER : Suppression des pointeurs fantômes. Pas d'injection artificielle.
              if (!data.items[itemKey]) {
-                let catTitle = "Inconnu";
-                if (data.categories && data.categories[catKey] && data.categories[catKey].title) {
-                   catTitle = data.categories[catKey].title;
-                }
-                const encodedImg = encodeURIComponent(catTitle.trim().replace(/\s+/g, '_'));
-
-                data.items[itemKey] = {
-                   id: Math.floor(Math.random() * 900),
-                   type: "items",
-                   title: `Produit (${catTitle})`,
-                   price: { dflt: { ttc: 0 } },
-                   img: { dflt: { img: `https://image.pollinations.ai/prompt/${encodedImg}` } }
-                };
+                delete wNode.content[itemKey];
              }
           });
        }
@@ -106,53 +89,7 @@ export function patchETK360Structure(data: any): any {
     });
   }
 
-  // 2. REGLE DES ITEMS : Chaque Item a au moins un Modifier
-  const itemKeys = Object.keys(data.items);
-  for (const itemKey of itemKeys) {
-    const item = data.items[itemKey];
-    
-    if (!item.modifier) {
-      // Brancher vers un nouveau modifier
-      item.modifier = generateId('mod');
-    }
-
-    // Assurer que le modifier pointé EXISTE BIEN
-    if (!data.modifier[item.modifier]) {
-      data.modifier[item.modifier] = {
-        title: "Options pour " + (item.title || "Produit"),
-        steps: {}
-      };
-    }
-  }
-
-  // 3. REGLE DES MODIFIERS : Chaque Modifier a au moins un Step
-  const modKeys = Object.keys(data.modifier);
-  for (const modKey of modKeys) {
-    const modifier = data.modifier[modKey];
-    
-    if (!modifier.steps || typeof modifier.steps !== 'object') {
-       modifier.steps = {};
-    }
-
-    if (Object.keys(modifier.steps).length === 0) {
-      const newStepId = generateId('step');
-      modifier.steps[newStepId] = { rank: 1 };
-    }
-
-    // Assurer que le step pointé EXISTE BIEN
-    for (const stepKey of Object.keys(modifier.steps)) {
-       if (!data.steps[stepKey]) {
-          data.steps[stepKey] = {
-             title: "Étape de Choix",
-             minChoices: 1,
-             maxChoices: 1,
-             items: {}
-          };
-       }
-    }
-  }
-
-  // 4. REGLE DES STEPS : Chaque Step a au moins 2 options
+  // 2. NETTOYAGE DES STEPS : On nettoie les options fantômes
   const stepKeys = Object.keys(data.steps);
   for (const stepKey of stepKeys) {
     const step = data.steps[stepKey];
@@ -161,38 +98,11 @@ export function patchETK360Structure(data: any): any {
        step.items = {};
     }
 
-    // Sécuriser l'existence des the ghost pointers d'abord
+    // Sécuriser l'existence : suppression stricte des pointeurs sans données
     for (const optId of Object.keys(step.items)) {
        if (!data.items[optId]) {
-          data.items[optId] = {
-             id: Math.floor(Math.random() * 900) + 1000,
-             type: "items",
-             title: "Option " + optId.slice(0, 4),
-             price: { dflt: { ttc: 0 } }
-          };
+          delete step.items[optId];
        }
-    }
-
-    // Insérer des options "Patch" si on a moins de 2 options
-    let currentOptionsCount = Object.keys(step.items).length;
-    let fallbackCounter = 1;
-    
-    while (currentOptionsCount < 2) {
-       const fallbackId = `${stepKey}_opt_${fallbackCounter}`;
-       step.items[fallbackId] = {}; // Le pointer
-       
-       if (!data.items[fallbackId]) {
-          data.items[fallbackId] = {
-             id: Math.floor(Math.random() * 900) + 5000,
-             type: "items",
-             title: `Option Standard ${fallbackCounter}`,
-             price: { dflt: { ttc: 0 } },
-             img: { dflt: { img: "https://image.pollinations.ai/prompt/option" } }
-          };
-       }
-       
-       currentOptionsCount++;
-       fallbackCounter++;
     }
   }
 

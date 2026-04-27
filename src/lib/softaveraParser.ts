@@ -21,7 +21,7 @@ export interface ParsedStep {
 export interface ParsedProduct {
   id: string;
   name: string;
-  priceTTC: number;
+  priceTTC: number | null;
   image: string | null;
   description: string;
   steps: ParsedStep[];
@@ -39,37 +39,20 @@ export interface ParsedCategory {
 /**
  * Extrait le prix TTC le plus pertinent de l'objet Item d'ETK360
  */
-function extractBestPrice(rawItem: any): number {
-  let priceTTC = 0;
-  if (!rawItem || !rawItem.price) return 0;
-
-  if (typeof rawItem.price.ttc === 'number' && rawItem.price.ttc > 0) priceTTC = rawItem.price.ttc;
-  else if (typeof rawItem.price.dflt === 'number' && rawItem.price.dflt > 0) priceTTC = rawItem.price.dflt;
-  else if (typeof rawItem.price.dflt === 'object' && typeof rawItem.price.dflt.ttc === 'number') priceTTC = rawItem.price.dflt.ttc;
-  else if (typeof rawItem.price.ht === 'number' && rawItem.price.ht > 0) priceTTC = rawItem.price.ht * 1.1;
-  
-  if (priceTTC === 0 && rawItem.price.advanced && typeof rawItem.price.advanced === 'object') {
-    const advKeys = Object.keys(rawItem.price.advanced);
-    for (const ak of advKeys) {
-      const tarifObj = rawItem.price.advanced[ak];
-      if (tarifObj && typeof tarifObj.ttc === 'number' && tarifObj.ttc > 0) {
-        priceTTC = tarifObj.ttc;
-        break;
-      }
-    }
-  }
-  return priceTTC;
+function extractBestPrice(rawItem: any): number | null {
+  if (!rawItem || !rawItem.price || !rawItem.price.dflt) return null;
+  return rawItem.price.dflt.ttc !== undefined ? rawItem.price.dflt.ttc : null;
 }
 
 /**
  * Extrait le nom formel destiné au public
  */
 function extractBestName(obj: any, fallback: string = "Inconnu"): string {
+  // Le nouveau format normalise tout dans 'title'
+  if (obj?.title) return obj.title;
+  // Les fallbacks conservés temporairement si des objets non mappés filtrent
   if (obj?.displayName?.dflt?.nameDef) return obj.displayName.dflt.nameDef;
   if (typeof obj?.displayName === 'string') return obj.displayName;
-  if (obj?.label) return obj.label;
-  if (obj?.trads?.fr) return obj.trads.fr;
-  if (obj?.title) return obj.title;
   if (obj?.name) return obj.name;
   return fallback;
 }
@@ -407,7 +390,8 @@ function parseLegacyETK360Hierarchy(data: any): ParsedCategory[] {
          const firstImg = categoryNode.products.find(p => p.image);
          if (firstImg) categoryNode.image = firstImg.image;
       }
-      if (categoryNode.products.length > 0) tree.push(categoryNode);
+      // Laisse la catégorie même si 0 produit pour permettre l'affichage du fallback UI
+      tree.push(categoryNode);
    }
    return tree;
 }
@@ -438,9 +422,9 @@ export function parseETK360Hierarchy(data: any): ParsedCategory[] {
       if (catObj.archive === true || catObj.isVisible === false) continue;
       if (catObj.visibilityInfo?.isVisible === false) continue;
 
-      let title = extractBestName(catObj, catObj.title || "Catégorie");
-      let image = catObj.img?.dflt?.img || catObj.img?.url || null;
-      if (image === "https://beta-catalogue.etk360.com/no-pictures.svg") image = null;
+      let title = catObj.title || "";
+      let image = catObj.img?.dflt?.img;
+      if (image === "https://dev-catalogue.softavera.com/no-pictures.svg" || image === "no-pictures.svg") image = null;
 
       const categoryNode: ParsedCategory = {
           id: wNodeId,
@@ -462,14 +446,11 @@ export function parseETK360Hierarchy(data: any): ParsedCategory[] {
           if (!itemObj) continue;
           if (itemObj.archive === true || itemObj.isVisible === false) continue;
 
-          let desc = "";
-          if (typeof itemObj.description === 'string') desc = itemObj.description;
-          else if (itemObj.description?.dflt?.nameDef) desc = itemObj.description.dflt.nameDef;
-          else if (itemObj.desc) desc = itemObj.desc;
+          let desc = itemObj.description?.dflt?.nameDef || itemObj.description || "";
           if (desc === "[object Object]") desc = "";
 
-          let imgUrl = itemObj.img?.dflt?.img || itemObj.img?.url || null;
-          if (imgUrl === "https://beta-catalogue.etk360.com/no-pictures.svg") imgUrl = null;
+          let imgUrl = itemObj.img?.dflt?.img;
+          if (imgUrl === "https://dev-catalogue.softavera.com/no-pictures.svg" || imgUrl === "no-pictures.svg") imgUrl = null;
 
           // Étape 3 : S'enfoncer dans le content de l'Article pour extraire le sous-parcours (Le Modifier) !
           const itemContentKeys = Object.keys(iNode.content || {});
@@ -479,8 +460,10 @@ export function parseETK360Hierarchy(data: any): ParsedCategory[] {
 
           const productNode: ParsedProduct = {
               id: iNode.id,
-              name: extractBestName(itemObj, "Produit sans nom").trim(),
-              priceTTC: extractBestPrice(itemObj),
+              name: itemObj.displayName?.dflt?.nameDef || itemObj.title || "",
+              priceTTC: typeof itemObj.price?.dflt === 'object' 
+                        ? (itemObj.price.dflt.ttc !== undefined ? itemObj.price.dflt.ttc : null) 
+                        : (itemObj.price?.dflt !== undefined ? itemObj.price?.dflt : null),
               image: imgUrl,
               description: desc,
               steps: [],
@@ -507,21 +490,8 @@ export function parseETK360Hierarchy(data: any): ParsedCategory[] {
 
 
 
-          // Résolution de l'affichage à 0€ des Menus Composables (ex: menus basés sur des étapes payantes)
-          if (productNode.priceTTC === 0 && productNode.steps.length > 0) {
-             let startingPrice = 0;
-             for (const step of productNode.steps) {
-                if (step.minChoices > 0 && step.options.length > 0) {
-                   const minPriceDelta = Math.min(...step.options.map(o => o.priceDelta));
-                   if (minPriceDelta > 0) {
-                      startingPrice += (minPriceDelta * step.minChoices);
-                   }
-                }
-             }
-             if (startingPrice > 0) {
-                productNode.priceTTC = startingPrice;
-             }
-          }
+          // Strict Read-Only: Aucun raccommodage de prix par le front-end
+          // Si le prix est à 0€ sur le backend, il reste à 0€ visuellement.
 
           categoryNode.products.push(productNode);
       }
@@ -531,9 +501,9 @@ export function parseETK360Hierarchy(data: any): ParsedCategory[] {
          if (firstImgProduct) categoryNode.image = firstImgProduct.image;
       }
 
-      if (categoryNode.products.length > 0) {
-         tree.push(categoryNode);
-      }
+      // On autorise désormais les catégories vides à exister dans l'arbre final
+      // pour que l'interface (KioskSimulator) puisse afficher le Empty State "Aucun produit disponible".
+      tree.push(categoryNode);
   }
 
   // Tri final des catégories par leur rang workflow

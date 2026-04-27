@@ -1,0 +1,32 @@
+{
+  "title": "Nouveau Restaurant",
+  "theme": {
+    "palette": [
+      "#1e293b",
+      "#94a3b8",
+      "#1e293b"
+    ]
+  },
+  "workflow": {
+    "9894eb5a-6b9b-48ec-8bd0-48c646181ac2": {
+      "type": "categories",
+      "rank": 1,
+      "content": {}
+    }
+  },
+  "categories": {
+    "9894eb5a-6b9b-48ec-8bd0-48c646181ac2": {
+      "title": "Burgers",
+      "isVisible": true,
+      "color": "#0284c7"
+    }
+  },
+  "items": {},
+  "modifier": {},
+  "steps": {},
+  "themeMetadata": {
+    "typeLabel": "Standard",
+    "theme": "Coloré",
+    "style": "Moderne"
+  }
+}

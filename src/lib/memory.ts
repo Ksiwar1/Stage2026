@@ -28,35 +28,7 @@ export function getCartesMemory(): MemoryFile[] {
   });
 }
 
-// Désormais, on n'utilise PLUS le few-shot brutal avec slice() car il détruit le JSON.
-// On injecte un Master Schema parfait.
-export function getPromptSystemForAI(sourceCatalogName?: string, secondaryInspirations: string[] = [], hasImage = false, phase: 1 | 2 = 1): string {
-  const ocrAddon = hasImage ? `\n\n📌 MODE VISION / OCR ACTIF : L'utilisateur a fourni la photo d'un menu complet. Ton rôle prioritaire est d'agir comme un OCR intelligent:\n - Lis précisément toutes les catégories, les noms de produits, et SURTOUT LES PRIX figurant sur l'image.\n - RAPPEL STRICT: Modélise UNIQUEMENT ce que tu vois sur l'image ou en inférant logiquement le menu à partir de celle-ci, tout en respectant scrupuleusement la structure de mon exemple ETK360.\n - Ne génère pas de produits hors-sujet qui ne sont pas sur l'image.` : "";
-
-  // Construction du RAG avec les modèles secondaires !
-  let secondaryContext = "";
-  if (secondaryInspirations.length > 0) {
-     const extractions = secondaryInspirations.map(file => extractLightStructureFromCatalogue(path.join(process.cwd(), '.softavera', 'carte', file))).filter(t => t);
-     if (extractions.length > 0) {
-        secondaryContext = `\n\nPOUR TON INSPIRATION STRUCTURELLE (RAG), voici ${extractions.length} autre(s) méthode(s) validée(s) dans notre librairie. Inspires-en toi pour les patterns complexes :\n`;
-        extractions.forEach((ext, i) => {
-           secondaryContext += `--- BASE INSPIRATION ${i + 1} :\n\`\`\`json\n${ext}\n\`\`\`\n`;
-        });
-     }
-  }
-
-  let baseTemplate = "";
-  if (sourceCatalogName && sourceCatalogName !== 'generique') {
-    if (phase === 1) {
-       const extractedTemplate = extractLightStructureFromCatalogue(path.join(process.cwd(), '.softavera', 'carte', sourceCatalogName));
-       if (extractedTemplate) baseTemplate = extractedTemplate;
-    } else {
-       const extractedTemplate = extractTemplateFromCatalogue(path.join(process.cwd(), '.softavera', 'carte', sourceCatalogName));
-       if (extractedTemplate) baseTemplate = extractedTemplate;
-    }
-  } else {
-    // Le Generique master template
-    baseTemplate = `{
+export const GENERIC_MASTER_TEMPLATE_JSON_STR = `{
   "theme": {
     "palette": ["#4F46E5", "#10B981", "#F59E0B", "#F3F4F6", "#111827"]
   },
@@ -113,31 +85,101 @@ export function getPromptSystemForAI(sourceCatalogName?: string, secondaryInspir
   },
   "steps": {
     "step_choix_boisson": {
+      "id": "step_choix_boisson",
+      "ref": "step_choix_boisson",
       "title": "Choisissez votre boisson",
+      "archive": false,
+      "isBasic": false,
+      "isComment": false,
+      "isModifiable": true,
       "minChoices": 1,
       "maxChoices": 1,
-      "items": { "item_coca": {} }
+      "rank": 1,
+      "displayName": { "dflt": { "imp": [], "nameDef": "Choisissez votre boisson", "salesSupport": {} } },
+      "specificOpts": {},
+      "img": { "dflt": { "img": "no-pictures.svg", "salesSupport": {} } },
+      "stepItems": { "item_coca": { "rank": 1, "priceStep": 0, "maxChoices": 1, "minChoices": 0 } }
     },
     "step_choix_accompagnement": {
+      "id": "step_choix_accompagnement",
+      "ref": "step_choix_accompagnement",
       "title": "Votre accompagnement",
+      "archive": false,
+      "isBasic": false,
+      "isComment": false,
+      "isModifiable": true,
       "minChoices": 1,
       "maxChoices": 1,
-      "items": { "item_frites": {}, "item_potatoes": {} }
+      "rank": 2,
+      "displayName": { "dflt": { "imp": [], "nameDef": "Votre accompagnement", "salesSupport": {} } },
+      "specificOpts": {},
+      "img": { "dflt": { "img": "no-pictures.svg", "salesSupport": {} } },
+      "stepItems": { "item_frites": { "rank": 1, "priceStep": 0, "maxChoices": 1, "minChoices": 0 }, "item_potatoes": { "rank": 2, "priceStep": 0, "maxChoices": 1, "minChoices": 0 } }
     },
     "step_choix_sauce": {
+      "id": "step_choix_sauce",
+      "ref": "step_choix_sauce",
       "title": "Choisir vos sauces",
+      "archive": false,
+      "isBasic": false,
+      "isComment": false,
+      "isModifiable": true,
       "minChoices": 0,
       "maxChoices": 2,
-      "items": { "item_sauce_mayo": {}, "item_sauce_ket": {} }
+      "rank": 3,
+      "displayName": { "dflt": { "imp": [], "nameDef": "Choisir vos sauces", "salesSupport": {} } },
+      "specificOpts": {},
+      "img": { "dflt": { "img": "no-pictures.svg", "salesSupport": {} } },
+      "stepItems": { "item_sauce_mayo": { "rank": 1, "priceStep": 0, "maxChoices": 1, "minChoices": 0 }, "item_sauce_ket": { "rank": 2, "priceStep": 0, "maxChoices": 1, "minChoices": 0 } }
     },
     "step_taille_boisson": {
+      "id": "step_taille_boisson",
+      "ref": "step_taille_boisson",
       "title": "Taille de votre boisson",
+      "archive": false,
+      "isBasic": false,
+      "isComment": false,
+      "isModifiable": true,
       "minChoices": 1,
       "maxChoices": 1,
-      "items": { "item_coca_33cl": {}, "item_coca_50cl": {} }
+      "rank": 1,
+      "displayName": { "dflt": { "imp": [], "nameDef": "Taille de votre boisson", "salesSupport": {} } },
+      "specificOpts": {},
+      "img": { "dflt": { "img": "no-pictures.svg", "salesSupport": {} } },
+      "stepItems": { "item_coca_33cl": { "rank": 1, "priceStep": 0, "maxChoices": 1, "minChoices": 0 }, "item_coca_50cl": { "rank": 2, "priceStep": 0, "maxChoices": 1, "minChoices": 0 } }
     }
   }
 }`;
+
+// Désormais, on n'utilise PLUS le few-shot brutal avec slice() car il détruit le JSON.
+// On injecte un Master Schema parfait.
+export function getPromptSystemForAI(sourceCatalogName?: string, secondaryInspirations: string[] = [], hasImage = false, phase: 1 | 2 = 1): string {
+  const ocrAddon = hasImage ? `\n\n📌 MODE VISION / OCR ACTIF : L'utilisateur a fourni la photo d'un menu complet. Ton rôle prioritaire est d'agir comme un OCR intelligent:\n - Lis précisément toutes les catégories, les noms de produits, et SURTOUT LES PRIX figurant sur l'image.\n - RAPPEL STRICT: Modélise UNIQUEMENT ce que tu vois sur l'image ou en inférant logiquement le menu à partir de celle-ci, tout en respectant scrupuleusement la structure de mon exemple ETK360.\n - Ne génère pas de produits hors-sujet qui ne sont pas sur l'image.` : "";
+
+  // Construction du RAG avec les modèles secondaires !
+  let secondaryContext = "";
+  if (secondaryInspirations.length > 0) {
+     const extractions = secondaryInspirations.map(file => extractLightStructureFromCatalogue(path.join(process.cwd(), '.softavera', 'carte', file))).filter(t => t);
+     if (extractions.length > 0) {
+        secondaryContext = `\n\nPOUR TON INSPIRATION STRUCTURELLE (RAG), voici ${extractions.length} autre(s) méthode(s) validée(s) dans notre librairie. Inspires-en toi pour les patterns complexes :\n`;
+        extractions.forEach((ext, i) => {
+           secondaryContext += `--- BASE INSPIRATION ${i + 1} :\n\`\`\`json\n${ext}\n\`\`\`\n`;
+        });
+     }
+  }
+
+  let baseTemplate = "";
+  if (sourceCatalogName && sourceCatalogName !== 'generique') {
+    if (phase === 1) {
+       const extractedTemplate = extractLightStructureFromCatalogue(path.join(process.cwd(), '.softavera', 'carte', sourceCatalogName));
+       if (extractedTemplate) baseTemplate = extractedTemplate;
+    } else {
+       const extractedTemplate = extractTemplateFromCatalogue(path.join(process.cwd(), '.softavera', 'carte', sourceCatalogName));
+       if (extractedTemplate) baseTemplate = extractedTemplate;
+    }
+  } else {
+    // Le Generique master template
+    baseTemplate = GENERIC_MASTER_TEMPLATE_JSON_STR;
   }
 
   if (phase === 1) {
@@ -524,11 +566,23 @@ export function extractTemplateFromCatalogue(catalogPath: string): string | null
   }
 }
 
+export function isValidETK360Catalogue(data: any): boolean {
+  if (!data || typeof data !== 'object') return false;
+  if (!data.workflow || typeof data.workflow !== 'object') return false;
+  if (!data.categories || typeof data.categories !== 'object') return false;
+  if (!data.items || typeof data.items !== 'object' || Object.keys(data.items).length === 0) return false;
+  return true;
+}
+
 export function extractTrueDataFromCatalogue(catalogPath: string): string | null {
   try {
     if (!fs.existsSync(catalogPath)) return null;
     const content = fs.readFileSync(catalogPath, 'utf-8');
     const data = JSON.parse(content);
+    
+    if (!isValidETK360Catalogue(data)) {
+        throw new Error("ERR_INVALID_CATALOGUE");
+    }
     
     let catStr = "";
     if (data.categories) {
@@ -545,7 +599,7 @@ export function extractTrueDataFromCatalogue(catalogPath: string): string | null
            if (itemObj.archive === true || itemObj.visibilityInfo?.isVisible === false || itemObj.isVisible === false) continue;
            
            // Limite augmentée d'éléments mais format string compressé
-           if (itemCount > 250) break; 
+           if (itemCount > 60) break; 
            let name = itemObj.displayName?.dflt?.nameDef || itemObj.title || itemObj.name || itemId;
            itemStr += `[${itemId}]:${name}\n`;
            itemCount++;

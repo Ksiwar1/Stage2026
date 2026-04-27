@@ -66,55 +66,29 @@ export async function genererArchitectureAction(data: FormData) {
   const fsLib = require('fs');
   const pathLib = require('path');
 
-  // RAG Semantic Profiling
-  const docsDescriptions = availableDocs.map(f => {
-      try {
-          const content = JSON.parse(fsLib.readFileSync(pathLib.join(process.cwd(), '.softavera', 'carte', f), 'utf-8'));
-          const catTitles = content.categories ? Object.values(content.categories).map((c:any) => c.title).slice(0, 3).join(", ") : "Inconnu";
-          return `${f} (Thème: ${content.title || 'Inconnu'} | Catégories: ${catTitles})`;
-      } catch(e) { return f; }
-  });
-
-  if (!activeSourceInspiration || activeSourceInspiration === 'generique') {
-    console.log("[RAG] Auto-sélection intelligente des templates algorithmiques...");
-    const ragSys = `Tu es un agent RAG expert en Data Structuration.
-Ton objectif est de choisir la carte existante qui correspond structurellement le mieux à la demande du client.
-Fichiers templates disponibles :
-${docsDescriptions.join("\n")}
-
-La demande métier (Type de resto) est : "${sujetDemande}". 
-Réponds UNIQUEMENT par le texte brut, en listant le MEILLEUR fichier de base pour fusionner la structure, suivi d'éventuels 1 ou 2 autres intéressants, séparés par des virgules (ex: "ia_pizza.json, ia_sandwich.json"). 
-Si et seulement si absolument AUCUNE carte de la liste ne permet une bonne base structurelle pour la demande, renvoie "generique".`;
-    
-    try {
-      const ragRes = await generateAIResponse(ragSys, "Analyse le RAG", 0.1, "gemini");
-      const selectedFiles = ragRes.replace(/```(json)?/gi, "").replace(/\n/g, ",").split(',').map(s => s.trim());
-      const validFiles = selectedFiles.filter(f => availableDocs.includes(f));
-
-      if (validFiles.length > 0) {
-        activeSourceInspiration = validFiles[0];
-        activeSecondaryInspirations = validFiles.slice(1, maxSecondary + 1);
-        console.log(`[RAG] BASE SÉLECTIONNÉE : ${activeSourceInspiration}`);
-      } else {
-        activeSourceInspiration = 'generique';
-        activeSecondaryInspirations = availableDocs.slice(0, maxSecondary);
-        console.log(`[RAG] BASE GÉNÉRIQUE (Aucun match trouvé)`);
-      }
-    } catch (e) {
-      activeSourceInspiration = 'generique';
-      activeSecondaryInspirations = availableDocs.slice(0, maxSecondary);
-    }
+  // --- NOUVEAU ROUTAGE STRICT DU PIPELINE ---
+  if (hasImage) {
+      console.log("[ROUTAGE] Mode OCR Strict activé. Désactivation de la source locale.");
+      activeSourceInspiration = 'generique'; // On force la suppression de la base
+      activeSecondaryInspirations = [];
+      sujetDemande = "TRANSCRIRE STRICTEMENT LE TEXTE DE L'IMAGE. Extraire tous les produits lus.\n" + sujetDemande;
   } else {
-    activeSecondaryInspirations = availableDocs
-      .filter(doc => doc !== activeSourceInspiration && doc !== 'generique')
-      .slice(0, maxSecondary);
+      console.log(`[ROUTAGE] Mode RAG Strict activé sur base: ${activeSourceInspiration}`);
+      activeSecondaryInspirations = []; // INTERDICTION ABSOLUE DU MÉLANGE INTER-CARTES
   }
 
   try {
-        const trueDataStr = extractTrueDataFromCatalogue(pathLib.join(process.cwd(), '.softavera', 'carte', activeSourceInspiration));
+    let trueDataStr = null;
+    try {
+        trueDataStr = extractTrueDataFromCatalogue(pathLib.join(process.cwd(), '.softavera', 'carte', activeSourceInspiration));
+    } catch (err: any) {
+        if (err.message === "ERR_INVALID_CATALOGUE") {
+            return { success: false, error: "La base locale sélectionnée est corrompue ou ne contient aucun produit valide. Impossible de lancer la génération RAG." };
+        }
+    }
     let trueDataSection = "";
     if (trueDataStr) {
-        trueDataSection = `\nVOICI LA SEULE BASE DE DONNÉES DE PRODUITS AUTORISÉE (La Source de Vérité) :\n\`\`\`json\n${trueDataStr}\n\`\`\`\n\nRÈGLES ABSOLUES :\n1. Tu ne dois utiliser QUE les identifiants présents dans 'AVAILABLE_ITEMS'.\n2. N'invente AUCUN produit qui n'est pas dans cette liste. L'invention de prix, de noms ou d'IDs est strictement interdite.\n3. Si la demande du client ou l'OCR mentionne un produit absent de la liste, trouve le produit le plus proche sémantiquement dans la liste.\n`;
+        trueDataSection = `\nVOICI LA SEULE BASE DE DONNÉES DE PRODUITS AUTORISÉE (La Source de Vérité) :\n\`\`\`json\n${trueDataStr}\n\`\`\`\n\nRÈGLES ABSOLUES :\n1. Tu ne dois utiliser QUE les identifiants présents dans 'AVAILABLE_ITEMS'.\n2. N'invente AUCUN produit qui n'est pas dans cette liste. L'invention de prix, de noms ou d'IDs est strictement interdite.\n3. Si la demande du client ou l'OCR mentionne une catégorie ou un produit TOTALEMENT ABSENT de la liste, IGNORE-LE. Il vaut mieux laisser la catégorie vide ("itemIds": []) plutôt que d'inventer des produits qui ne sont pas de la même thématique.\n`;
     }
 
     console.log("[PHASE 1] Génération de la Trame Intermédiaire...");
@@ -264,14 +238,20 @@ export async function enrichirCarteAction(
     let memoryWorkflowMeta: any[] = []; // To easily scan for modifiers
 
     const allInspirations = [];
-    if (activeSourceInspiration && activeSourceInspiration !== 'generique') allInspirations.push(activeSourceInspiration);
-    activeSecondaryInspirations.forEach((f:string) => {
-        if (!allInspirations.includes(f)) allInspirations.push(f);
-    });
+    if (activeSourceInspiration) allInspirations.push(activeSourceInspiration); // Inclut 'generique'
+    
+    // RÈGLE MÉTIER STRICTE : Aucune contamination (Fallback inter-cartes) autorisée
+    // On ne charge plus les activeSecondaryInspirations.
 
     allInspirations.forEach((f, index) => {
         try {
-            const data = JSON.parse(fsLib.readFileSync(pathLib.join(process.cwd(), '.softavera', 'carte', f), 'utf-8'));
+            let data;
+            if (f === 'generique') {
+                const { GENERIC_MASTER_TEMPLATE_JSON_STR } = require('@/lib/memory');
+                data = JSON.parse(GENERIC_MASTER_TEMPLATE_JSON_STR);
+            } else {
+                data = JSON.parse(fsLib.readFileSync(pathLib.join(process.cwd(), '.softavera', 'carte', f), 'utf-8'));
+            }
             if (index === 0) { // BaseMap
                memoryWorkflow = data.workflow || {};
             }
@@ -301,6 +281,56 @@ export async function enrichirCarteAction(
         } catch(e) {}
     });
 
+    const buildBaseETK360Item = (rId: string, found: any) => {
+        // Extraction propre du texte
+        const extractedTitle = found.displayName?.dflt?.nameDef || found.title || found.name || rId;
+        const extractedDesc = typeof found.description === 'string' ? found.description : (found.description?.dflt?.nameDef || "");
+
+        // Résolution absolue du prix (Null ou Nombre)
+        let rawTtc: number | null = null;
+        if (found.price) {
+           if (typeof found.price.dflt === 'object' && found.price.dflt !== null) {
+              rawTtc = found.price.dflt.ttc !== undefined ? found.price.dflt.ttc : null;
+           } else if (typeof found.price.dflt === 'number') {
+              rawTtc = found.price.dflt;
+           } else if (typeof found.price.ttc === 'number') {
+              rawTtc = found.price.ttc;
+           }
+        } else if (found.priceTTC !== undefined) {
+           rawTtc = found.priceTTC;
+        }
+
+        return {
+          id: rId,
+          ref: found.ref || `REF_${rId}`,
+          type: found.type === 'modifier' ? 'modifier' : 'item',
+          title: extractedTitle,
+          description: extractedDesc || undefined,
+          price: { dflt: { ttc: rawTtc } },
+          img: found.img?.dflt?.img ? { dflt: { img: found.img.dflt.img } } : (found.image ? { dflt: { img: found.image } } : undefined),
+          modifier: found.modifier || undefined,
+          basicComp: found.basicComp || undefined,
+          isVisible: found.isVisible !== false,
+        };
+    };
+
+    const buildBaseETK360Step = (sId: string, sRef: any) => ({
+        id: sRef.id || sId,
+        ref: sRef.ref || sId,
+        title: sRef.title || "Choix",
+        archive: sRef.archive || false,
+        isBasic: sRef.isBasic || false,
+        isComment: sRef.isComment || false,
+        stepItems: {}, // Sera peuplé manuellement
+        maxChoices: sRef.maxChoices ?? 1,
+        minChoices: sRef.minChoices ?? 0,
+        displayName: sRef.displayName || { dflt: { imp: [], nameDef: sRef.title || "Choix", salesSupport: {} } },
+        isModifiable: sRef.isModifiable ?? true,
+        specificOpts: sRef.specificOpts || {},
+        img: sRef.img || { dflt: { img: "no-pictures.svg", salesSupport: {} } },
+        rank: sRef.rank || 0
+    });
+
     // Genetic Scavenger Helper - DEEP CLONING (Zero Conflict UUIDs)
     const cloneGeneticModifier = (oldModId: string, parentItemId: string, fData: any): string | null => {
         const mod = memoryModifiers[oldModId];
@@ -318,16 +348,30 @@ export async function enrichirCarteAction(
                 
                 const newStepId = randomUUID();
                 fData.modifier[newModId].steps[newStepId] = { ...mod.steps[oldStepId] };
-                fData.steps[newStepId] = { ...stp, items: {} };
+                fData.steps[newStepId] = buildBaseETK360Step(newStepId, stp);
                 
-                if (stp.items) {
-                    Object.keys(stp.items).forEach(oldItemId => {
+                const sourceItems = stp.stepItems || stp.items || stp.values || {};
+                
+                if (sourceItems) {
+                    Object.keys(sourceItems).forEach(oldItemId => {
                         const itm = memoryItems[oldItemId];
                         if (!itm) return;
                         
                         const newItemId = randomUUID();
-                        fData.steps[newStepId].items[newItemId] = { ...stp.items[oldItemId] };
-                        fData.items[newItemId] = { ...itm };
+                        fData.steps[newStepId].stepItems[newItemId] = { 
+                            rank: sourceItems[oldItemId]?.rank || 0,
+                            priceStep: sourceItems[oldItemId]?.priceStep || 0,
+                            maxChoices: sourceItems[oldItemId]?.maxChoices || 1,
+                            minChoices: sourceItems[oldItemId]?.minChoices || 0,
+                            ...sourceItems[oldItemId]
+                        };
+                        
+                        fData.items[newItemId] = buildBaseETK360Item(newItemId, itm);
+                        
+                        // Remap the override pointer if it exists in the modifier configuration
+                        if (fData.modifier[newModId].steps[newStepId].stepItems && mod.steps[oldStepId].stepItems && mod.steps[oldStepId].stepItems[oldItemId]) {
+                             fData.modifier[newModId].steps[newStepId].stepItems[newItemId] = mod.steps[oldStepId].stepItems[oldItemId];
+                        }
                         
                         if (itm.modifier) {
                             const nestedModId = cloneGeneticModifier(itm.modifier, newItemId, fData);
@@ -390,10 +434,14 @@ export async function enrichirCarteAction(
             }
         }
         
-        // 3. Fallback d'Urgence absolu : Seulement pour les PLATS si isMenu=true
-        if (systemConfig?.formulas?.isMenu && isPlat) {
+        // 3. Fallback d'Urgence absolu : Seulement pour les PLATS
+        if (isPlat) {
             const fallbackMenu = memoryWorkflowMeta.find(m => normalizeCategory(m.catTitle) === "menu" && m.modId);
             if (fallbackMenu) return fallbackMenu.modId;
+            
+            // Si pas de 'menu', on prend le premier modifier disponible lié à un plat
+            const fallbackAnyPlat = memoryWorkflowMeta.find(m => ["pizza", "burger", "tacos", "salade"].includes(normalizeCategory(m.catTitle)) && m.modId);
+            if (fallbackAnyPlat) return fallbackAnyPlat.modId;
         }
 
         // AUDIT : Logging en cas de non-classification / silencieux pour les outils d'observation
@@ -405,7 +453,14 @@ export async function enrichirCarteAction(
     // === 2. HYBRID WORKFLOW GENERATION ===
     if (Object.keys(memoryWorkflow).length > 0) {
         finalData.workflow = memoryWorkflow; // Base Workflow Skeleton Preserved
-        finalData.categories = { ...memoryCategories }; // Base Categories Preserved for labels
+        finalData.categories = JSON.parse(JSON.stringify(memoryCategories)); // Base Categories Preserved for labels
+
+        Object.keys(finalData.categories).forEach(cId => {
+            finalData.categories[cId].id = cId;
+            finalData.categories[cId].rank = finalData.workflow[cId]?.rank || 0;
+            finalData.categories[cId].items = {};
+            finalData.categories[cId].child = {};
+        });
 
         // We clean the content of the workflow to insert our brand new AI items
         Object.keys(finalData.workflow).forEach(k => {
@@ -436,14 +491,21 @@ export async function enrichirCarteAction(
 
             if (!targetCatId) {
                 targetCatId = randomUUID();
-                finalData.workflow[targetCatId] = { type: "categories", rank: fallbackCatRank++, content: {} };
+                const newCatRank = fallbackCatRank++;
+                finalData.workflow[targetCatId] = { type: "categories", rank: newCatRank, content: {} };
                 finalData.categories[targetCatId] = {
+                    id: targetCatId,
+                    rank: newCatRank,
                     title: aiCatName,
                     isVisible: true, // Force visibility
+                    items: {},
+                    child: {},
                     color: finalData.theme.palette[Math.floor(Math.random() * finalData.theme.palette.length)]
                 };
             }
             finalData.categories[targetCatId].title = aiCatName; 
+            if (!finalData.categories[targetCatId].items) finalData.categories[targetCatId].items = {};
+            if (!finalData.categories[targetCatId].child) finalData.categories[targetCatId].child = {};
 
             let aiItemIds = aiCat.itemIds || aiCat.items || [];
             
@@ -453,9 +515,26 @@ export async function enrichirCarteAction(
                 aiItemIds.forEach((aiItemId: any) => {
                     // Extract real item ID (if AI sent an object with id instead of string)
                     let realItemId = typeof aiItemId === 'string' ? aiItemId : (aiItemId.id || aiItemId.itemId);
-                    if (!realItemId || !memoryItems[realItemId]) return; // Skip hallucinations
+                    if (!realItemId) return;
+                    let sourceItem = memoryItems[realItemId];
+                    
+                    // FEATURE : Si la BDD (memoryItems) ne contient pas l'item, mais que l'IA l'a généré grâce à l'OCR de l'image ("generique")
+                    if (!sourceItem) {
+                        const parsedAiItems = intermediate.items || intermediate.products || [];
+                        if (Array.isArray(parsedAiItems)) {
+                            const found = parsedAiItems.find((it: any) => it.id === realItemId || it.itemId === realItemId);
+                            if (found) {
+                                sourceItem = buildBaseETK360Item(realItemId, found);
+                            }
+                        } else if (typeof parsedAiItems === 'object') {
+                            const found = parsedAiItems[realItemId];
+                            if (found) {
+                                sourceItem = buildBaseETK360Item(realItemId, found);
+                            }
+                        }
+                    }
 
-                    const sourceItem = memoryItems[realItemId];
+                    if (!sourceItem) return; // Véritable hallucination sans donnée source, on skip.
                     
                     // We must deep copy it to avoid reference issues if AI picked it multiple times
                     const newItemId = randomUUID();
@@ -470,33 +549,76 @@ export async function enrichirCarteAction(
                             finalData.items[newItemId].modifier = uniqueClonedModId;
                         }
                     } else {
-                        // Siphon / Scavenger Mechanism: If the item has NO modifier but belongs to a category that needs one (like Menus or Burgers)
-                        const scavengedModId = getScavengedModifierForCategory(aiCatName);
-                        if (scavengedModId) {
-                            const uniqueClonedModId = cloneGeneticModifier(scavengedModId, newItemId, finalData);
-                            if (uniqueClonedModId) {
-                                finalData.items[newItemId].modifier = uniqueClonedModId;
-                            }
-                        }
+                         // Siphon métier contraint (RAG restreint ou OCR générique)
+                         const scavengedModId = getScavengedModifierForCategory(aiCatName);
+                         if (scavengedModId) {
+                             const uniqueClonedModId = cloneGeneticModifier(scavengedModId, newItemId, finalData);
+                             if (uniqueClonedModId) {
+                                 finalData.items[newItemId].modifier = uniqueClonedModId;
+                             }
+                         }
                     }
 
-                    // Attach to workflow
+                    // Attach to workflow AND categories (Dual-Binding Single Source of Truth)
                     finalData.workflow[targetCatId].content[newItemId] = { 
                         type: "items", 
                         rank: itemRankCounter++ 
                     };
+                    
                     if (finalData.items[newItemId].modifier) {
                         finalData.workflow[targetCatId].content[newItemId].modifier = finalData.items[newItemId].modifier;
                     }
+                    
+                    // Dual Binding for ETK360 parser consistency
+                    finalData.categories[targetCatId].items[newItemId] = { ...finalData.workflow[targetCatId].content[newItemId] };
                 });
             }
 
-            // Delete category cleanly if no valid items were mapped
-            if (Object.keys(finalData.workflow[targetCatId].content).length === 0) {
-                delete finalData.workflow[targetCatId];
-                if (finalData.categories[targetCatId]) {
-                    delete finalData.categories[targetCatId];
-                }
+            // RÈGLE MÉTIER : On conserve la catégorie même si elle est vide (0 produit valide).
+            // Le Front-End (KioskSimulator) gèrera l'affichage "Aucun produit disponible".
+            // Suppression du code de nettoyage agressif.
+        });
+    }
+
+    // === 3. GRAPH INTEGRITY GARBAGE COLLECTOR (Safety Net) ===
+    
+    // Niveau 1: Nettoyage des items fantômes au sein des stepItems
+    if (finalData.steps) {
+        Object.keys(finalData.steps).forEach(sId => {
+            const step = finalData.steps[sId];
+            if (step.stepItems) {
+                Object.keys(step.stepItems).forEach(iId => {
+                    if (!finalData.items[iId]) {
+                        delete step.stepItems[iId];
+                    }
+                });
+            }
+        });
+    }
+
+    // Niveau 2: Nettoyage des steps qui se retrouvent vides de choix
+    if (finalData.steps) {
+        Object.keys(finalData.steps).forEach(sId => {
+            const step = finalData.steps[sId];
+            if (!step.stepItems || Object.keys(step.stepItems).length === 0) {
+                delete finalData.steps[sId];
+            }
+        });
+    }
+
+    // Niveau 3: Curetage des Modifiers qui pointeraient vers un step mort
+    if (finalData.modifier) {
+        Object.keys(finalData.modifier).forEach(mId => {
+            const mod = finalData.modifier[mId];
+            if (mod.steps) {
+                Object.keys(mod.steps).forEach(sId => {
+                    if (!finalData.steps[sId]) {
+                        delete mod.steps[sId];
+                    }
+                });
+                
+                // Note : En ETK360 un modifier vide de steps est juste un "pass-through", 
+                // il ne fait pas crasher la borne, il s'auto-bypass. On le garde légalement.
             }
         });
     }
@@ -508,7 +630,56 @@ export async function enrichirCarteAction(
         style: systemConfig?.visualStyle || "Moderne"
     };
 
-    // Plus de validation ETK360 aléatoire car on l'a construit mathématiquement
+    // === 4. SINGLE SOURCE OF TRUTH VALIDATION WALL ===
+    const verifySchemaIntegrity = (data: any) => {
+        const rootItems = data.items || {};
+        const rootCats = data.categories || {};
+        const rootWf = data.workflow || {};
+        
+        // Check 1: Workflow roots must exist in Categories
+        for (const wCatId of Object.keys(rootWf)) {
+            if (!rootCats[wCatId]) {
+                throw new Error(`Workflow root category '${wCatId}' is missing from final categories.`);
+            }
+        }
+        
+        // Check 2: All items referenced in workflow MUST exist in global items, and rank collisions
+        for (const wCatId of Object.keys(rootWf)) {
+            const content = rootWf[wCatId].content || {};
+            const ranks = new Set();
+            
+            for (const itemId of Object.keys(content)) {
+                if (!rootItems[itemId]) {
+                    throw new Error(`Item '${itemId}' is referenced in workflow '${wCatId}' but is totally absent from global database.`);
+                }
+                const r = content[itemId].rank;
+                if (r !== undefined && r !== null) {
+                    if (ranks.has(r)) {
+                        console.warn(`[INTEGRITY] Rank Collision in '${wCatId}': rank ${r}. ETK360 might sort them alphabetically.`); 
+                    }
+                    ranks.add(r);
+                }
+            }
+        }
+        
+        // Check 3: Categories Dual Binding Check
+        for (const cId of Object.keys(rootCats)) {
+            const catItems = rootCats[cId].items || {};
+            for (const itemId of Object.keys(catItems)) {
+                if (!rootItems[itemId]) {
+                    throw new Error(`Item '${itemId}' is tied to category '${cId}' but does NOT exist in global database.`);
+                }
+            }
+        }
+        return true;
+    };
+
+    try {
+        verifySchemaIntegrity(finalData);
+    } catch (e: any) {
+        console.error("FATAL ETK360 GENERATION PARSE:", e.message);
+        return JSON.stringify({ success: false, error: `Validation de structure échouée: ${e.message}` });
+    }
     let jsonResponse = JSON.stringify(finalData, null, 2);
 
     if (sauvegarder) {

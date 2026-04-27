@@ -36,48 +36,17 @@ export function buildProductTree(
   let image = null;
 
   if (productRef) {
-      name = productRef.displayName?.dflt?.nameDef || productRef.trads?.fr || productRef.title || productRef.name || name;
+      name = productRef.displayName?.dflt?.nameDef;
       
-      if (typeof productRef.price?.ttc === 'number' && productRef.price.ttc > 0) {
-         price = productRef.price.ttc;
-      } else if (typeof productRef.price?.dflt === 'number' && productRef.price.dflt > 0) {
-         price = productRef.price.dflt;
-      } else if (productRef.price?.advanced && typeof productRef.price.advanced === 'object') {
-         const advKeys = Object.keys(productRef.price.advanced);
-         for (const ak of advKeys) {
-            if (productRef.price.advanced[ak]?.ttc > 0) {
-               price = productRef.price.advanced[ak].ttc;
-               break;
-            }
-         }
-      }
+      const p = productRef.price?.dflt;
+      if (typeof p === 'number') price = p;
+      else if (p && p.ttc) price = p.ttc;
 
-      if (productRef.img?.dflt?.img) {
-         image = productRef.img.dflt.img;
-         if (image === "https://beta-catalogue.etk360.com/no-pictures.svg") image = null;
-      } else if (productRef.img?.url) {
-         image = productRef.img.url;
-      }
+      image = productRef.img?.dflt?.img;
+      if (image === "https://dev-catalogue.softavera.com/no-pictures.svg" || image === "no-pictures.svg") image = null;
   }
 
-  // 2. Identification du modifier
-  let activeModifierId = modifierIdContext || null;
-  
-  // Si aucun modifierId n'est fourni par le contexte parent, on cherche dans la base
-  // si un modifier annonce explicitement être rattaché à ce produit via son "uuid-item"
-  if (!activeModifierId && data.modifier) {
-     for (const [mId, modDef] of Object.entries(data.modifier)) {
-        if ((modDef as any)['uuid-item'] === productId) {
-           activeModifierId = mId;
-           break;
-        }
-     }
-  }
-  
-  // Rétrocompatibilité (si écrit directement sur l'item)
-  if (!activeModifierId && productRef?.modifier) {
-     activeModifierId = productRef.modifier;
-  }
+  let activeModifierId = productRef?.modifier || modifierIdContext || null;
 
   const node: ProductTreeNode = {
     productId,
@@ -106,17 +75,10 @@ export function buildProductTree(
       };
 
       for (const [ingId, ingMeta] of ingEntries as [string, any][]) {
-        const ingRef = data.items?.[ingId];
-        const ingName = ingRef
-          ? (ingRef.displayName?.dflt?.nameDef || ingRef.trads?.fr || ingRef.title || ingRef.name || `Item ${ingId}`)
-          : `Item ${ingId}`;
+        const ingName = ingRef?.displayName?.dflt?.nameDef || `Ingrédient ${ingId}`;
 
-        let ingImage: string | null = null;
-        if (ingRef?.img?.dflt?.img && ingRef.img.dflt.img !== 'https://beta-catalogue.etk360.com/no-pictures.svg') {
-          ingImage = ingRef.img.dflt.img;
-        } else if (ingRef?.img?.url) {
-          ingImage = ingRef.img.url;
-        }
+        let ingImage: string | null = ingRef?.img?.dflt?.img || null;
+        if (ingImage === 'https://dev-catalogue.softavera.com/no-pictures.svg' || ingImage === "no-pictures.svg") ingImage = null;
 
         compositionStep.children.push({
           productId: ingId,
@@ -154,7 +116,7 @@ export function buildProductTree(
             for (const sNode of stepsToProcess) {
                const stepId = sNode.stepId;
                const stepInfos = data.opt?.[stepId] || data.steps?.[stepId] || {};
-               let title = stepInfos.displayName?.dflt?.nameDef || stepInfos.title || "Choix";
+               let title = stepInfos.displayName?.dflt?.nameDef || "Choix";
                
                let minChoices = stepInfos.minChoices || 0;
                let maxChoices = stepInfos.maxChoices || 1;
@@ -163,12 +125,8 @@ export function buildProductTree(
                   if (sNode.ovr.maxChoices !== undefined) maxChoices = sNode.ovr.maxChoices;
                }
 
-               let stepImage: string | null = null;
-               if (stepInfos.img?.dflt?.img && stepInfos.img.dflt.img !== 'https://beta-catalogue.etk360.com/no-pictures.svg') {
-                  stepImage = stepInfos.img.dflt.img;
-               } else if (stepInfos.img?.url) {
-                  stepImage = stepInfos.img.url;
-               }
+               let stepImage: string | null = stepInfos.img?.dflt?.img || null;
+               if (stepImage === 'https://dev-catalogue.softavera.com/no-pictures.svg' || stepImage === "no-pictures.svg") stepImage = null;
 
                const stepNode: StepTreeNode = {
                   stepId,
@@ -180,11 +138,8 @@ export function buildProductTree(
                   image: stepImage
                };
 
-               // Les items peuvent être dans la surcharge du `modifier` ou dans la définition globale de la `step`
-               let itemsMap = sNode.items;
-               if (!itemsMap || Object.keys(itemsMap).length === 0) {
-                  itemsMap = stepInfos.stepItems || stepInfos.values || stepInfos.items || {};
-               }
+               // Les items proviennent nativement et uniquement de `stepItems`
+               let itemsMap = stepInfos.stepItems || {};
 
                if (itemsMap && typeof itemsMap === 'object') {
                   const itemKeys = Object.keys(itemsMap);
@@ -197,11 +152,9 @@ export function buildProductTree(
                      
                      const childObj = buildProductTree(childProdId, data, childModId, newVisited);
                      
-                     // Gestion de la surcharge de prix (ovr.priceStep) si applicable
-                     // Si le produit ne définit pas directement un prix complet, mais un surcoût dans stepInfos.values
-                     const legacyPrice = stepInfos.values?.[childProdId]?.priceStep;
-                     if (legacyPrice !== undefined) {
-                         childObj.price = Number(legacyPrice) || 0;
+                     const itemLegacyPrice = itemsMap[childProdId]?.priceStep;
+                     if (itemLegacyPrice !== undefined && itemLegacyPrice > 0) {
+                         childObj.price = Number(itemLegacyPrice);
                      }
 
                      stepNode.children.push(childObj);

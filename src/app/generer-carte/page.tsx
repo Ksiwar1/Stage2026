@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { genererArchitectureAction, enrichirCarteAction, getAvailableLibraryCards } from "../actions/genererCarteAction";
 import KioskSimulator from "../../components/KioskSimulator";
 import { parseETK360Hierarchy } from "../../lib/softaveraParser";
+import { useLanguage } from '../../lib/LanguageContext';
 
 const AI_PROVIDERS = [
   { value: "groq", label: "Groq (Llama 3.1 8B)", icon: "🟢", tag: "Gratuit" },
@@ -14,10 +15,12 @@ const AI_PROVIDERS = [
 ];
 
 export default function GenererCarte() {
+  const { t } = useLanguage();
   const [resultat, setResultat] = useState<{ success: boolean; json?: string; savedPath?: string | null; error?: string } | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationStepText, setGenerationStepText] = useState<string>("");
   const [selectedAI, setSelectedAI] = useState("groq");
+  const [hasImage, setHasImage] = useState(false);
 
   // States Modal Visualisation
   const [isVisualizing, setIsVisualizing] = useState<boolean>(false);
@@ -133,11 +136,6 @@ ${Object.keys(wizardData.forcedItems).length > 0 ?
          archRes.activeSecondaryInspirations || []
       );
       const data = JSON.parse(enrichResStr);
-      // DEBUG
-      if (data.json && data.json.includes('"categories": {}')) {
-           setResultat({ success: false, error: "AI generated an empty structure. Raw AI output was: " + archRes.architectureJson });
-           return;
-      }
       setResultat(data);
       
       // Stockage préventif
@@ -182,9 +180,9 @@ ${Object.keys(wizardData.forcedItems).length > 0 ?
   return (
     <main className={`${styles.main} ${styles.heroImageBg}`}>
       <div className={styles.hero}>
-        <h1 className={styles.title}>Générateur de cartes</h1>
+        <h1 className={styles.title}>{t('gen_title')}</h1>
         <p className={styles.description}>
-          L'Intelligence Artificielle est connectée à vos cartes. Tapez un sujet et laissez la magie opérer.
+          {t('gen_desc')}
         </p>
 
         {/* Sélecteur AI Provider */}
@@ -236,7 +234,7 @@ ${Object.keys(wizardData.forcedItems).length > 0 ?
             <div style={{ position: 'absolute', top: '50%', left: '1rem', right: '1rem', height: '6px', background: '#e2e8f0', borderRadius: '3px', zIndex: 0, transform: 'translateY(-50%)' }}></div>
             <div style={{ position: 'absolute', top: '50%', left: '1rem', width: `calc(${((wizardStep - 1) / 4) * 100}% - 2rem)`, height: '6px', background: 'linear-gradient(90deg, #4f46e5, #0ea5e9)', borderRadius: '3px', zIndex: 0, transform: 'translateY(-50%)', transition: 'width 0.4s ease' }}></div>
             
-            {[{ n: 1, label: "Concept" }, { n: 2, label: "Composition" }, { n: 3, label: "Structure" }, { n: 4, label: "Technique" }, { n: 5, label: "Finalisation" }].map(step => (
+            {[{ n: 1, label: t('gen_step1') }, { n: 2, label: t('gen_step2') }, { n: 3, label: t('gen_step3') }, { n: 4, label: t('gen_step4') }, { n: 5, label: t('gen_step5') }].map(step => (
               <div key={step.n} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', zIndex: 1 }}>
                 <div 
                   onClick={() => step.n <= wizardStep && setWizardStep(step.n)} 
@@ -256,7 +254,7 @@ ${Object.keys(wizardData.forcedItems).length > 0 ?
             <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 1 ? 1 : 0.4, transition: 'opacity 0.5s' }}>
                <div style={{ background: '#ffffff', borderRadius: '16px', padding: '2rem', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)', border: '1px solid #f1f5f9' }}>
                    <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: '#1e293b', fontSize: '1.2rem' }}>Nom de l'enseigne <span style={{color: '#ef4444'}}>*</span></label>
-                   <input type="text" name="restaurantName" required value={wizardData.restaurantName} onChange={(e) => setWizardData({...wizardData, restaurantName: e.target.value})} placeholder="Ex: L'Atelier du Burger..." style={{ width: '100%', padding: '1.2rem', borderRadius: '12px', border: '2px solid #cbd5e1', fontSize: '1.2rem', fontWeight: 600, color: '#0f172a', outline: 'none', transition: 'border 0.2s', marginBottom: '1.5rem' }} />
+                   <input type="text" name="restaurantName" required={!hasImage} value={wizardData.restaurantName} onChange={(e) => setWizardData({...wizardData, restaurantName: e.target.value})} placeholder="Ex: L'Atelier du Burger..." style={{ width: '100%', padding: '1.2rem', borderRadius: '12px', border: '2px solid #cbd5e1', fontSize: '1.2rem', fontWeight: 600, color: '#0f172a', outline: 'none', transition: 'border 0.2s', marginBottom: '1.5rem' }} />
                    
                    <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: '#1e293b', fontSize: '1.2rem' }}>Langue(s) du catalogue</label>
                    <select value={wizardData.language} onChange={(e) => setWizardData({...wizardData, language: e.target.value})} style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '1rem', marginBottom: '1.5rem', color: '#334155', background: '#f8fafc' }}>
@@ -301,6 +299,7 @@ ${Object.keys(wizardData.forcedItems).length > 0 ?
                          accept="image/*" 
                          onChange={(e) => {
                            const file = e.target.files?.[0];
+                           setHasImage(!!file);
                            if (file) {
                              const url = URL.createObjectURL(file);
                              const previewImg = document.getElementById('image-preview') as HTMLImageElement;
@@ -314,7 +313,7 @@ ${Object.keys(wizardData.forcedItems).length > 0 ?
                    </div>
                </div>
                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.5rem' }}>
-                   <button type="button" onClick={() => setWizardStep(2)} disabled={!wizardData.restaurantName || !wizardData.theme} style={{ padding: '1rem 2rem', background: '#4f46e5', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', opacity: (!wizardData.restaurantName || !wizardData.theme) ? 0.5 : 1, transition: 'all 0.2s', boxShadow: '0 4px 15px rgba(79, 70, 229, 0.3)' }}>Continuer →</button>
+                   <button type="button" onClick={() => setWizardStep(hasImage ? 4 : 2)} disabled={(!wizardData.restaurantName || !wizardData.theme) && !hasImage} style={{ padding: '1rem 2rem', background: '#4f46e5', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', opacity: ((!wizardData.restaurantName || !wizardData.theme) && !hasImage) ? 0.5 : 1, transition: 'all 0.2s', boxShadow: '0 4px 15px rgba(79, 70, 229, 0.3)' }}>{hasImage ? "Mode Photo : Aller au Design →" : t('gen_continue')}</button>
                </div>
             </div>
 
@@ -345,8 +344,8 @@ ${Object.keys(wizardData.forcedItems).length > 0 ?
                    </label>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem' }}>
-                   <button type="button" onClick={() => setWizardStep(1)} style={{ padding: '1rem 2rem', background: '#e2e8f0', color: '#475569', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}>← Retour</button>
-                   <button type="button" onClick={() => setWizardStep(3)} style={{ padding: '1rem 2rem', background: '#4f46e5', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 15px rgba(79, 70, 229, 0.3)' }}>Continuer →</button>
+                   <button type="button" onClick={() => setWizardStep(1)} style={{ padding: '1rem 2rem', background: '#e2e8f0', color: '#475569', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}>{t('gen_back')}</button>
+                   <button type="button" onClick={() => setWizardStep(3)} style={{ padding: '1rem 2rem', background: '#4f46e5', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 15px rgba(79, 70, 229, 0.3)' }}>{t('gen_continue')}</button>
                </div>
             </div>
 
@@ -389,8 +388,8 @@ ${Object.keys(wizardData.forcedItems).length > 0 ?
                    </div>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem' }}>
-                   <button type="button" onClick={() => setWizardStep(2)} style={{ padding: '1rem 2rem', background: '#e2e8f0', color: '#475569', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}>← Retour</button>
-                   <button type="button" onClick={() => setWizardStep(4)} disabled={wizardData.categories.length === 0} style={{ padding: '1rem 2rem', background: '#4f46e5', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', opacity: wizardData.categories.length === 0 ? 0.5 : 1 }}>Continuer →</button>
+                   <button type="button" onClick={() => setWizardStep(2)} style={{ padding: '1rem 2rem', background: '#e2e8f0', color: '#475569', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}>{t('gen_back')}</button>
+                   <button type="button" onClick={() => setWizardStep(4)} disabled={wizardData.categories.length === 0} style={{ padding: '1rem 2rem', background: '#4f46e5', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', opacity: wizardData.categories.length === 0 ? 0.5 : 1 }}>{t('gen_continue')}</button>
                </div>
             </div>
 
@@ -456,8 +455,8 @@ ${Object.keys(wizardData.forcedItems).length > 0 ?
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem' }}>
-                   <button type="button" onClick={() => setWizardStep(3)} style={{ padding: '1rem 2rem', background: '#e2e8f0', color: '#475569', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}>← Retour</button>
-                   <button type="button" onClick={() => setWizardStep(5)} style={{ padding: '1rem 2rem', background: '#4f46e5', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 15px rgba(79, 70, 229, 0.3)' }}>Continuer →</button>
+                   <button type="button" onClick={() => setWizardStep(hasImage ? 1 : 3)} style={{ padding: '1rem 2rem', background: '#e2e8f0', color: '#475569', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}>{t('gen_back')}</button>
+                   <button type="button" onClick={() => setWizardStep(5)} style={{ padding: '1rem 2rem', background: '#4f46e5', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 15px rgba(79, 70, 229, 0.3)' }}>{t('gen_continue')}</button>
                </div>
             </div>
 
@@ -465,27 +464,33 @@ ${Object.keys(wizardData.forcedItems).length > 0 ?
             <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 5 ? 1 : 0.4, transition: 'opacity 0.5s' }}>
                <div style={{ background: '#ffffff', borderRadius: '16px', padding: '2rem', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)', border: '1px solid #f1f5f9', textAlign: 'center' }}>
                    <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🚀</div>
-                   <h2 style={{ margin: '0 0 1rem 0', color: '#1e293b', fontSize: '1.8rem' }}>Prêt à générer</h2>
-                   <p style={{ color: '#64748b', fontSize: '1.1rem', marginBottom: '2rem' }}>L'IA va composer une carte intelligente ETK360 respectant les {wizardData.categories.length} contraintes de catégories configurées.</p>
+                   <h2 style={{ margin: '0 0 1rem 0', color: '#1e293b', fontSize: '1.8rem' }}>{t('gen_ready')}</h2>
+                   <p style={{ color: '#64748b', fontSize: '1.1rem', marginBottom: '2rem' }}>{t('gen_ready_desc')}</p>
                    
                    <div style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '12px', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '0.8rem', marginBottom: '2rem' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{color:'#64748b'}}>Restaurant :</span> <span style={{fontWeight:800}}>{wizardData.restaurantName} ({wizardData.language})</span></div>
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{color:'#64748b'}}>Concept :</span> <span style={{fontWeight:800}}>{wizardData.typeLabel}</span></div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{color:'#64748b'}}>Catégories :</span> <span style={{fontWeight:800}}>{wizardData.categories.length}</span></div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{color:'#64748b'}}>Formules :</span> <span style={{fontWeight:800}}>{wizardData.formulas.isMenu ? "Menu/Maxi actifs" : "Seul"}</span></div>
+                      {hasImage ? (
+                         <div style={{ display: 'flex', justifyContent: 'space-between', color: '#059669', fontWeight: 'bold' }}><span>Mode :</span> <span>Extraction Optique (OCR) 📸</span></div>
+                      ) : (
+                         <>
+                           <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{color:'#64748b'}}>Catégories :</span> <span style={{fontWeight:800}}>{wizardData.categories.length}</span></div>
+                           <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{color:'#64748b'}}>Formules :</span> <span style={{fontWeight:800}}>{wizardData.formulas.isMenu ? "Menu/Maxi actifs" : "Seul"}</span></div>
+                         </>
+                      )}
                    </div>
 
                    <button disabled={isGenerating} type="submit" style={{ width: '100%', padding: '1.2rem', background: isGenerating ? '#94a3b8' : 'linear-gradient(135deg, #4f46e5, #0ea5e9)', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.3rem', fontWeight: 900, cursor: isGenerating ? 'not-allowed' : 'pointer', transition: 'all 0.3s', boxShadow: isGenerating ? 'none' : '0 10px 25px -5px rgba(79, 70, 229, 0.4)', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem' }}>
                       {isGenerating ? (
-                        <><span>⏳</span> {generationStepText || "Génération..."}</>
+                        <><span>⏳</span> {generationStepText || t('gen_generating')}</>
                       ) : (
-                        <>Générer la carte <span style={{fontSize:'1.5rem'}}>⚡</span></>
+                        <>{t('gen_generate')} <span style={{fontSize:'1.5rem'}}>⚡</span></>
                       )}
                    </button>
                </div>
                
                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem' }}>
-                   <button type="button" disabled={isGenerating} onClick={() => setWizardStep(4)} style={{ padding: '1rem 2rem', background: '#e2e8f0', color: '#475569', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', opacity: isGenerating ? 0.5 : 1 }}>← Modifier les paramètres</button>
+                   <button type="button" disabled={isGenerating} onClick={() => setWizardStep(4)} style={{ padding: '1rem 2rem', background: '#e2e8f0', color: '#475569', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', opacity: isGenerating ? 0.5 : 1 }}>{t('gen_back')}</button>
                </div>
             </div>
 
@@ -495,7 +500,7 @@ ${Object.keys(wizardData.forcedItems).length > 0 ?
 
 
         <Link href="/menu" className={styles.backButton}>
-          <span>&lt;-</span> Retour au tableau de bord
+          <span>&lt;-</span> {t('gen_return_board')}
         </Link>
       </div>
 

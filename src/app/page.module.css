@@ -10,12 +10,31 @@
 
 /* Utilitaire de background partagé pour appliquer l'image floutée aux pages enfants */
 .heroImageBg {
-  background: 
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.9) 60%, rgba(255,255,255,1) 100%),
-    url('/hero-bornes.png');
+  position: relative;
+  /* La couleur de fond globale s'il n'y a pas d'image */
+  background-color: transparent; 
+  isolation: isolate;
+}
+
+.heroImageBg::before {
+  content: "";
+  position: fixed; /* Fixed pour simuler le background-attachment: fixed */
+  top: -10%; left: -10%; right: -10%; bottom: -10%;
+  z-index: -2;
+  background-image: url('/hero-bornes.png');
   background-size: cover;
-  background-position: center 20%;
-  background-attachment: fixed;
+  background-position: center;
+  animation: smoothKenBurns 12s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.heroImageBg::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: -1;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.9) 60%, rgba(255, 255, 255, 1) 100%);
+  pointer-events: none;
 }
 
 /* Le fond géant Flouté Blanc / Bornes de l'Accueil */
@@ -28,14 +47,29 @@
   align-items: center;
   justify-content: center;
   padding: 4rem 1.5rem;
-  /* L'image des bornes avec un fort overlay dégradé blanc pour le flouté textuel (allégé) */
-  background: 
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.88) 70%, rgba(255,255,255,1) 100%),
-    url('/hero-bornes.png');
-  background-size: cover;
-  background-position: center 30%;
-  background-attachment: fixed;
   animation: fadeIn 1.2s ease-out;
+  overflow: hidden;
+}
+
+.heroBackground::before {
+  content: "";
+  position: absolute;
+  top: -10%; left: -10%; right: -10%; bottom: -10%;
+  z-index: 0;
+  background-image: url('/hero-bornes.png');
+  background-size: cover;
+  background-position: center;
+  animation: smoothKenBurns 12s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.heroBackground::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 1;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.88) 70%, rgba(255, 255, 255, 1) 100%);
+  pointer-events: none;
 }
 
 /* Conteneur du texte */
@@ -159,6 +193,11 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes smoothKenBurns {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.15); }
+}
+
 @media (max-width: 768px) {
   .title { font-size: 2.5rem; }
   .description { font-size: 1.15rem; }
@@ -184,6 +223,8 @@
   max-width: 1100px;
   margin: 0 auto 4rem auto;
   padding: 0 1.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .card {

@@ -1,0 +1,1528 @@
+{
+  "title": "Softavera",
+  "theme": {
+    "palette": [
+      "#000000",
+      "#ece279",
+      "#000000"
+    ]
+  },
+  "workflow": {
+    "e7cb03df-b35a-45c3-b45a-c8f6636909d9": {
+      "type": "categories",
+      "rank": 1,
+      "content": {
+        "9ac09687-61eb-4cb7-94b6-4a6bac7457a3": {
+          "type": "items",
+          "rank": 1
+        },
+        "22dbd3a3-02bd-467d-a551-e27fefa68f2c": {
+          "type": "items",
+          "rank": 2
+        },
+        "103fd928-6c2d-4062-8dd4-7cdabaf65658": {
+          "type": "items",
+          "rank": 3
+        },
+        "8d8029d7-4784-4958-a327-468f6f9cfad3": {
+          "type": "items",
+          "rank": 4
+        },
+        "a6125b8d-dd60-4eb3-99e0-6239c03e2ae0": {
+          "type": "items",
+          "rank": 5
+        },
+        "a7e8f621-7b88-403f-b668-c885e511185d": {
+          "type": "items",
+          "rank": 6
+        }
+      }
+    },
+    "1729ba43-b99d-4fb8-bf86-dd7e01cd9378": {
+      "type": "categories",
+      "rank": 2,
+      "content": {
+        "e0678015-4326-4104-9cc5-9273d42c014c": {
+          "type": "items",
+          "rank": 1
+        },
+        "35b84337-c470-4044-90f8-31262aa12269": {
+          "type": "items",
+          "rank": 2
+        },
+        "83147aab-871e-4893-91fe-659075d41a35": {
+          "type": "items",
+          "rank": 3
+        },
+        "bcfccf60-69fc-46f1-bbb0-87e736ac9f2b": {
+          "type": "items",
+          "rank": 4
+        },
+        "33a1c62f-ece7-4a14-b7ca-755f338c97b8": {
+          "type": "items",
+          "rank": 5
+        },
+        "2e1e6f14-f307-4068-88eb-5dd7c62a6d9c": {
+          "type": "items",
+          "rank": 6
+        }
+      }
+    },
+    "725d757d-6ae6-4868-bd5d-a40a266ac6ae": {
+      "type": "categories",
+      "rank": 3,
+      "content": {
+        "e0863d35-ecbe-4a10-80a9-9ae0fd60d539": {
+          "type": "items",
+          "rank": 1
+        },
+        "0a8389f9-a4ba-426f-8909-f5a9f1c075cb": {
+          "type": "items",
+          "rank": 2
+        },
+        "e5c3211e-7348-43d9-8926-c5af8e59e963": {
+          "type": "items",
+          "rank": 3
+        },
+        "11255b7e-9230-40ec-a702-da466c2ddaa6": {
+          "type": "items",
+          "rank": 4
+        },
+        "0139e5d5-78e9-4221-9b76-545511cf4396": {
+          "type": "items",
+          "rank": 5
+        }
+      }
+    }
+  },
+  "categories": {
+    "e7cb03df-b35a-45c3-b45a-c8f6636909d9": {
+      "title": "Pizzas",
+      "isVisible": true,
+      "color": "#ece279"
+    },
+    "1729ba43-b99d-4fb8-bf86-dd7e01cd9378": {
+      "title": "Boissons",
+      "isVisible": true,
+      "color": "#000000"
+    },
+    "725d757d-6ae6-4868-bd5d-a40a266ac6ae": {
+      "title": "Desserts",
+      "isVisible": true,
+      "color": "#000000"
+    }
+  },
+  "items": {
+    "9ac09687-61eb-4cb7-94b6-4a6bac7457a3": {
+      "id": 1705,
+      "type": "items",
+      "title": "Pizza Margherita ⭐",
+      "price": {
+        "dflt": {
+          "ttc": 12.5
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Pizza_Margherita_%E2%AD%90"
+        }
+      },
+      "modifier": "ca692063-b61b-417f-84a1-23eed575c85e"
+    },
+    "d9db50a6-eafc-4f40-8e7b-10691225c917": {
+      "id": 4461,
+      "type": "items",
+      "title": "Supplément thon (+1€)",
+      "price": {
+        "dflt": {
+          "ttc": 1
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/extra_thon"
+        }
+      }
+    },
+    "f0d2c646-cf1a-4f62-ae68-12cea1306713": {
+      "id": 2900,
+      "type": "items",
+      "title": "Supplément poulet (+1.5€)",
+      "price": {
+        "dflt": {
+          "ttc": 1.5
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/extra_poulet"
+        }
+      }
+    },
+    "968ec69b-c572-445c-8f50-bc532e32cf8a": {
+      "id": 3117,
+      "type": "items",
+      "title": "En Menu (+1.5€)",
+      "price": {
+        "dflt": {
+          "ttc": 1.5
+        }
+      },
+      "modifier": "bdecb0fe-b3d0-4c4a-813f-6f8de0440624",
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/fastfood_menu_combo"
+        }
+      }
+    },
+    "9d85b2ab-b00c-4bd3-84c4-4adc7c52b09f": {
+      "id": 1738,
+      "type": "items",
+      "title": "Coca-Cola",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Coca-Cola"
+        }
+      }
+    },
+    "2e230ffc-f94f-46e0-966c-176378fe44e2": {
+      "id": 9060,
+      "type": "items",
+      "title": "Eau Plate",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Eau%20Plate"
+        }
+      }
+    },
+    "a87e08ef-58d6-4825-9209-8f4de045feae": {
+      "id": 7472,
+      "type": "items",
+      "title": "Frites",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Frites"
+        }
+      }
+    },
+    "1483f296-3d0e-470b-ad44-5cd932add285": {
+      "id": 5043,
+      "type": "items",
+      "title": "Potatoes",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Potatoes"
+        }
+      }
+    },
+    "22dbd3a3-02bd-467d-a551-e27fefa68f2c": {
+      "id": 1208,
+      "type": "items",
+      "title": "Pizza Capricciosa",
+      "price": {
+        "dflt": {
+          "ttc": 15
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Pizza_Capricciosa"
+        }
+      },
+      "modifier": "a49fd417-a084-4cbc-ab3c-3545e90e9111"
+    },
+    "a1bfe0dc-d8d8-42be-a51e-fbecb1bd8f5b": {
+      "id": 3914,
+      "type": "items",
+      "title": "Supplément thon (+1€)",
+      "price": {
+        "dflt": {
+          "ttc": 1
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/extra_thon"
+        }
+      }
+    },
+    "bce1e3ba-fd8e-4cf9-8a31-22bf2eb4b4fe": {
+      "id": 7355,
+      "type": "items",
+      "title": "Supplément poulet (+1.5€)",
+      "price": {
+        "dflt": {
+          "ttc": 1.5
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/extra_poulet"
+        }
+      }
+    },
+    "5f848d19-7b6f-4aba-ac64-bc98d65043ac": {
+      "id": 5602,
+      "type": "items",
+      "title": "En Menu (+1.5€)",
+      "price": {
+        "dflt": {
+          "ttc": 1.5
+        }
+      },
+      "modifier": "7534fa89-6276-46fa-b787-f5c34bd1adaf",
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/fastfood_menu_combo"
+        }
+      }
+    },
+    "326dec27-9874-44fb-bfcf-7230f2914c6f": {
+      "id": 4991,
+      "type": "items",
+      "title": "Coca-Cola",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Coca-Cola"
+        }
+      }
+    },
+    "f8c981f2-895a-407b-9582-bac8f4b55484": {
+      "id": 8220,
+      "type": "items",
+      "title": "Eau Plate",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Eau%20Plate"
+        }
+      }
+    },
+    "4cb291d8-3872-4590-b7a1-091e1719bf45": {
+      "id": 9559,
+      "type": "items",
+      "title": "Frites",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Frites"
+        }
+      }
+    },
+    "d42d7114-be0f-426d-9843-5f91bee81f13": {
+      "id": 4964,
+      "type": "items",
+      "title": "Potatoes",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Potatoes"
+        }
+      }
+    },
+    "103fd928-6c2d-4062-8dd4-7cdabaf65658": {
+      "id": 1093,
+      "type": "items",
+      "title": "Pizza Provençale",
+      "price": {
+        "dflt": {
+          "ttc": 14.5
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Pizza_Proven%C3%A7ale"
+        }
+      },
+      "modifier": "d9f013b4-c8db-4f1a-a9b2-fcc12be4bbe7"
+    },
+    "ad35a938-b4be-4ff4-b2ca-c90b17027fe6": {
+      "id": 3062,
+      "type": "items",
+      "title": "Supplément thon (+1€)",
+      "price": {
+        "dflt": {
+          "ttc": 1
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/extra_thon"
+        }
+      }
+    },
+    "3b48b543-3cbe-4525-9f71-7f69e9b4cf03": {
+      "id": 4897,
+      "type": "items",
+      "title": "Supplément poulet (+1.5€)",
+      "price": {
+        "dflt": {
+          "ttc": 1.5
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/extra_poulet"
+        }
+      }
+    },
+    "4f0cbbf8-5bda-436a-8122-42c01e0cdcbb": {
+      "id": 6678,
+      "type": "items",
+      "title": "En Menu (+1.5€)",
+      "price": {
+        "dflt": {
+          "ttc": 1.5
+        }
+      },
+      "modifier": "01bb34f9-0208-4d03-860e-3342c9a0c84e",
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/fastfood_menu_combo"
+        }
+      }
+    },
+    "fedbdf3f-e8dc-4758-82ae-d2bb85acabf9": {
+      "id": 1840,
+      "type": "items",
+      "title": "Coca-Cola",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Coca-Cola"
+        }
+      }
+    },
+    "0a09354b-b7e2-4e2e-bca4-e6130b6a5d98": {
+      "id": 5926,
+      "type": "items",
+      "title": "Eau Plate",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Eau%20Plate"
+        }
+      }
+    },
+    "7e54e541-6ca7-45cb-abc0-87c2fc511bd1": {
+      "id": 8523,
+      "type": "items",
+      "title": "Frites",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Frites"
+        }
+      }
+    },
+    "ce9339f6-77c6-4069-919e-74919668b7d4": {
+      "id": 3849,
+      "type": "items",
+      "title": "Potatoes",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Potatoes"
+        }
+      }
+    },
+    "8d8029d7-4784-4958-a327-468f6f9cfad3": {
+      "id": 1118,
+      "type": "items",
+      "title": "Pizza Toscane",
+      "price": {
+        "dflt": {
+          "ttc": 16
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Pizza_Toscane"
+        }
+      },
+      "modifier": "d65be135-7ea7-44f0-a225-300186148c54"
+    },
+    "033f4ac0-7af7-42f0-9cc8-362d7946f0df": {
+      "id": 9537,
+      "type": "items",
+      "title": "Supplément thon (+1€)",
+      "price": {
+        "dflt": {
+          "ttc": 1
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/extra_thon"
+        }
+      }
+    },
+    "94924d2c-f879-49c1-8e8a-6e9e3fc33f76": {
+      "id": 9865,
+      "type": "items",
+      "title": "Supplément poulet (+1.5€)",
+      "price": {
+        "dflt": {
+          "ttc": 1.5
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/extra_poulet"
+        }
+      }
+    },
+    "105e17cc-876f-43b4-b773-7aa1448e10b0": {
+      "id": 1669,
+      "type": "items",
+      "title": "En Menu (+1.5€)",
+      "price": {
+        "dflt": {
+          "ttc": 1.5
+        }
+      },
+      "modifier": "98decacc-724a-486e-9a02-31b4bf27592e",
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/fastfood_menu_combo"
+        }
+      }
+    },
+    "bf0b43bf-8a50-4ee3-be69-acac908e1780": {
+      "id": 6900,
+      "type": "items",
+      "title": "Coca-Cola",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Coca-Cola"
+        }
+      }
+    },
+    "d5ba5c29-4401-4501-a380-fd36f0a03e6b": {
+      "id": 7019,
+      "type": "items",
+      "title": "Eau Plate",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Eau%20Plate"
+        }
+      }
+    },
+    "5b56107c-51be-44fa-847f-cbccb3eda5c9": {
+      "id": 8199,
+      "type": "items",
+      "title": "Frites",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Frites"
+        }
+      }
+    },
+    "2ba6e010-5890-4956-9917-2954f185ab1a": {
+      "id": 6118,
+      "type": "items",
+      "title": "Potatoes",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Potatoes"
+        }
+      }
+    },
+    "a6125b8d-dd60-4eb3-99e0-6239c03e2ae0": {
+      "id": 1153,
+      "type": "items",
+      "title": "Pizza Marinara",
+      "price": {
+        "dflt": {
+          "ttc": 13
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Pizza_Marinara"
+        }
+      },
+      "modifier": "9c80d5fd-6b8d-42d8-be2a-56202c258026"
+    },
+    "032ccc96-91c9-4550-b918-1377319d2383": {
+      "id": 6942,
+      "type": "items",
+      "title": "Supplément thon (+1€)",
+      "price": {
+        "dflt": {
+          "ttc": 1
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/extra_thon"
+        }
+      }
+    },
+    "15b2f5e1-8ff5-4957-bfdd-ccf925130df5": {
+      "id": 2425,
+      "type": "items",
+      "title": "Supplément poulet (+1.5€)",
+      "price": {
+        "dflt": {
+          "ttc": 1.5
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/extra_poulet"
+        }
+      }
+    },
+    "c6d0ffad-ded5-48f0-976b-c6ecb7fc6958": {
+      "id": 7302,
+      "type": "items",
+      "title": "En Menu (+1.5€)",
+      "price": {
+        "dflt": {
+          "ttc": 1.5
+        }
+      },
+      "modifier": "a18a573a-b576-4d08-91db-3f45268b0dc7",
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/fastfood_menu_combo"
+        }
+      }
+    },
+    "f5ccbb9e-0f44-42dc-851a-108fc90f959e": {
+      "id": 4580,
+      "type": "items",
+      "title": "Coca-Cola",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Coca-Cola"
+        }
+      }
+    },
+    "2dc6be11-5022-4a32-8692-c8b8e33cf461": {
+      "id": 8954,
+      "type": "items",
+      "title": "Eau Plate",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Eau%20Plate"
+        }
+      }
+    },
+    "001bb6bf-bca1-4086-aeac-7e42c9084107": {
+      "id": 9752,
+      "type": "items",
+      "title": "Frites",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Frites"
+        }
+      }
+    },
+    "205a3fde-4499-4901-b778-172849ce5664": {
+      "id": 2547,
+      "type": "items",
+      "title": "Potatoes",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Potatoes"
+        }
+      }
+    },
+    "a7e8f621-7b88-403f-b668-c885e511185d": {
+      "id": 1036,
+      "type": "items",
+      "title": "Pizza Quattro Formaggi",
+      "price": {
+        "dflt": {
+          "ttc": 17
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Pizza_Quattro_Formaggi"
+        }
+      },
+      "modifier": "993e1642-09e4-4a37-aadc-e32d73026fd3"
+    },
+    "f02e1103-338a-40d4-9cf3-b81934922d9c": {
+      "id": 8598,
+      "type": "items",
+      "title": "Supplément thon (+1€)",
+      "price": {
+        "dflt": {
+          "ttc": 1
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/extra_thon"
+        }
+      }
+    },
+    "11fb482f-69f7-4923-9c13-af063d3f8c68": {
+      "id": 3858,
+      "type": "items",
+      "title": "Supplément poulet (+1.5€)",
+      "price": {
+        "dflt": {
+          "ttc": 1.5
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/extra_poulet"
+        }
+      }
+    },
+    "c377d4a4-287b-41be-8e26-599ee6a59f01": {
+      "id": 2326,
+      "type": "items",
+      "title": "En Menu (+1.5€)",
+      "price": {
+        "dflt": {
+          "ttc": 1.5
+        }
+      },
+      "modifier": "08e3a95b-8a6f-4b59-853a-a86b98a2eef1",
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/fastfood_menu_combo"
+        }
+      }
+    },
+    "7d35d22b-abdb-4794-acc1-6b1d638ecf2e": {
+      "id": 9778,
+      "type": "items",
+      "title": "Coca-Cola",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Coca-Cola"
+        }
+      }
+    },
+    "b6dfde88-30e2-4036-bd86-cb6318a5c185": {
+      "id": 8258,
+      "type": "items",
+      "title": "Eau Plate",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Eau%20Plate"
+        }
+      }
+    },
+    "1460eb21-c672-4e1a-a1de-6f1a9ec4373b": {
+      "id": 3554,
+      "type": "items",
+      "title": "Frites",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Frites"
+        }
+      }
+    },
+    "8334de2a-f911-4113-baa5-62a550498092": {
+      "id": 1827,
+      "type": "items",
+      "title": "Potatoes",
+      "price": {
+        "dflt": {
+          "ttc": 0
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Potatoes"
+        }
+      }
+    },
+    "e0678015-4326-4104-9cc5-9273d42c014c": {
+      "id": 1742,
+      "type": "items",
+      "title": "Eau minérale",
+      "price": {
+        "dflt": {
+          "ttc": 2.5
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Eau_min%C3%A9rale"
+        }
+      }
+    },
+    "35b84337-c470-4044-90f8-31262aa12269": {
+      "id": 1625,
+      "type": "items",
+      "title": "Jus d'orange",
+      "price": {
+        "dflt": {
+          "ttc": 3.5
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Jus_d'orange"
+        }
+      }
+    },
+    "83147aab-871e-4893-91fe-659075d41a35": {
+      "id": 1319,
+      "type": "items",
+      "title": "Soda cola",
+      "price": {
+        "dflt": {
+          "ttc": 3
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Soda_cola"
+        }
+      }
+    },
+    "bcfccf60-69fc-46f1-bbb0-87e736ac9f2b": {
+      "id": 1265,
+      "type": "items",
+      "title": "Thé noir",
+      "price": {
+        "dflt": {
+          "ttc": 2
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Th%C3%A9_noir"
+        }
+      }
+    },
+    "33a1c62f-ece7-4a14-b7ca-755f338c97b8": {
+      "id": 1304,
+      "type": "items",
+      "title": "Café express",
+      "price": {
+        "dflt": {
+          "ttc": 2.5
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Caf%C3%A9_express"
+        }
+      }
+    },
+    "2e1e6f14-f307-4068-88eb-5dd7c62a6d9c": {
+      "id": 1595,
+      "type": "items",
+      "title": "Limonade citron",
+      "price": {
+        "dflt": {
+          "ttc": 3.5
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Limonade_citron"
+        }
+      }
+    },
+    "e0863d35-ecbe-4a10-80a9-9ae0fd60d539": {
+      "id": 1368,
+      "type": "items",
+      "title": "Tiramisu",
+      "price": {
+        "dflt": {
+          "ttc": 6
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Tiramisu"
+        }
+      }
+    },
+    "0a8389f9-a4ba-426f-8909-f5a9f1c075cb": {
+      "id": 1615,
+      "type": "items",
+      "title": "Gelato vanille",
+      "price": {
+        "dflt": {
+          "ttc": 5
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Gelato_vanille"
+        }
+      }
+    },
+    "e5c3211e-7348-43d9-8926-c5af8e59e963": {
+      "id": 1311,
+      "type": "items",
+      "title": "Gelato chocolat",
+      "price": {
+        "dflt": {
+          "ttc": 5.5
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Gelato_chocolat"
+        }
+      }
+    },
+    "11255b7e-9230-40ec-a702-da466c2ddaa6": {
+      "id": 1794,
+      "type": "items",
+      "title": "Cannoli",
+      "price": {
+        "dflt": {
+          "ttc": 7
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Cannoli"
+        }
+      }
+    },
+    "0139e5d5-78e9-4221-9b76-545511cf4396": {
+      "id": 1676,
+      "type": "items",
+      "title": "Zeppole",
+      "price": {
+        "dflt": {
+          "ttc": 8
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/Zeppole"
+        }
+      }
+    }
+  },
+  "modifier": {
+    "bdecb0fe-b3d0-4c4a-813f-6f8de0440624": {
+      "uuid-item": "968ec69b-c572-445c-8f50-bc532e32cf8a",
+      "steps": {
+        "425550d6-cf16-4360-aa75-61dce5ac1455": {
+          "rank": 1
+        },
+        "c12d3c36-101d-4d3f-b880-a8da4d5e82f4": {
+          "rank": 2
+        }
+      }
+    },
+    "ca692063-b61b-417f-84a1-23eed575c85e": {
+      "uuid-item": "9ac09687-61eb-4cb7-94b6-4a6bac7457a3",
+      "steps": {
+        "5b379f5e-1899-462a-9079-a8552ff41edc": {
+          "rank": 1
+        },
+        "fa631d80-4d29-4877-8171-9e41df80876f": {
+          "rank": 2
+        }
+      }
+    },
+    "7534fa89-6276-46fa-b787-f5c34bd1adaf": {
+      "uuid-item": "5f848d19-7b6f-4aba-ac64-bc98d65043ac",
+      "steps": {
+        "65fd3ff0-aa5b-488c-9ad9-a0539da73e06": {
+          "rank": 1
+        },
+        "e1459ad8-dfd9-4075-945e-5b164fb005fd": {
+          "rank": 2
+        }
+      }
+    },
+    "a49fd417-a084-4cbc-ab3c-3545e90e9111": {
+      "uuid-item": "22dbd3a3-02bd-467d-a551-e27fefa68f2c",
+      "steps": {
+        "f076d140-95e5-4ee5-9dc8-454f6ba29cd9": {
+          "rank": 1
+        },
+        "920bd77a-4ae8-45ad-a547-364fb5b76267": {
+          "rank": 2
+        }
+      }
+    },
+    "01bb34f9-0208-4d03-860e-3342c9a0c84e": {
+      "uuid-item": "4f0cbbf8-5bda-436a-8122-42c01e0cdcbb",
+      "steps": {
+        "34a2230a-4ca9-4145-8bea-a1a306effa23": {
+          "rank": 1
+        },
+        "1d54413e-9e65-4717-981e-0a395996c219": {
+          "rank": 2
+        }
+      }
+    },
+    "d9f013b4-c8db-4f1a-a9b2-fcc12be4bbe7": {
+      "uuid-item": "103fd928-6c2d-4062-8dd4-7cdabaf65658",
+      "steps": {
+        "f363b893-37ba-4883-80c3-4c4685f3b223": {
+          "rank": 1
+        },
+        "6f1efba3-6114-40a1-8f50-84e7d010113b": {
+          "rank": 2
+        }
+      }
+    },
+    "98decacc-724a-486e-9a02-31b4bf27592e": {
+      "uuid-item": "105e17cc-876f-43b4-b773-7aa1448e10b0",
+      "steps": {
+        "f14fd3af-b4a9-401a-a818-24b35cba5ce2": {
+          "rank": 1
+        },
+        "febd7f09-8755-446c-a68e-ee35acb0b4a2": {
+          "rank": 2
+        }
+      }
+    },
+    "d65be135-7ea7-44f0-a225-300186148c54": {
+      "uuid-item": "8d8029d7-4784-4958-a327-468f6f9cfad3",
+      "steps": {
+        "4bcedc16-9ffe-40fb-ac78-0a2ccc825e96": {
+          "rank": 1
+        },
+        "fb0e311f-47f0-4cbc-aae8-575ca952f361": {
+          "rank": 2
+        }
+      }
+    },
+    "a18a573a-b576-4d08-91db-3f45268b0dc7": {
+      "uuid-item": "c6d0ffad-ded5-48f0-976b-c6ecb7fc6958",
+      "steps": {
+        "b8582968-1198-4773-9dd7-1c384bec4886": {
+          "rank": 1
+        },
+        "b5ec834e-9556-43e2-9b6b-0ba5c57e32e4": {
+          "rank": 2
+        }
+      }
+    },
+    "9c80d5fd-6b8d-42d8-be2a-56202c258026": {
+      "uuid-item": "a6125b8d-dd60-4eb3-99e0-6239c03e2ae0",
+      "steps": {
+        "8b10190e-2364-473d-a022-6e8574f05658": {
+          "rank": 1
+        },
+        "67c27168-5e1a-4259-85a7-558c7f582508": {
+          "rank": 2
+        }
+      }
+    },
+    "08e3a95b-8a6f-4b59-853a-a86b98a2eef1": {
+      "uuid-item": "c377d4a4-287b-41be-8e26-599ee6a59f01",
+      "steps": {
+        "61f3bf3d-8953-4c48-b472-4d66395c69ec": {
+          "rank": 1
+        },
+        "fd2cf4ec-980d-4a64-bf6a-4a3322cb389d": {
+          "rank": 2
+        }
+      }
+    },
+    "993e1642-09e4-4a37-aadc-e32d73026fd3": {
+      "uuid-item": "a7e8f621-7b88-403f-b668-c885e511185d",
+      "steps": {
+        "abb5a85e-3a6b-4e3a-882d-c45dfc9991ec": {
+          "rank": 1
+        },
+        "94f2a845-360b-4e94-a404-b90171d842c9": {
+          "rank": 2
+        }
+      }
+    }
+  },
+  "steps": {
+    "5b379f5e-1899-462a-9079-a8552ff41edc": {
+      "title": "Personnalisation",
+      "minChoices": 0,
+      "maxChoices": 2,
+      "items": {
+        "d9db50a6-eafc-4f40-8e7b-10691225c917": {
+          "price": 1,
+          "uuid": "d9db50a6-eafc-4f40-8e7b-10691225c917",
+          "rank": 1
+        },
+        "f0d2c646-cf1a-4f62-ae68-12cea1306713": {
+          "price": 1.5,
+          "uuid": "f0d2c646-cf1a-4f62-ae68-12cea1306713",
+          "rank": 2
+        }
+      }
+    },
+    "425550d6-cf16-4360-aa75-61dce5ac1455": {
+      "title": "Choix de la Boisson",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "9d85b2ab-b00c-4bd3-84c4-4adc7c52b09f": {
+          "price": 0,
+          "uuid": "9d85b2ab-b00c-4bd3-84c4-4adc7c52b09f",
+          "rank": 1
+        },
+        "2e230ffc-f94f-46e0-966c-176378fe44e2": {
+          "price": 0,
+          "uuid": "2e230ffc-f94f-46e0-966c-176378fe44e2",
+          "rank": 2
+        }
+      }
+    },
+    "c12d3c36-101d-4d3f-b880-a8da4d5e82f4": {
+      "title": "Choix de l'Accompagnement",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "a87e08ef-58d6-4825-9209-8f4de045feae": {
+          "price": 0,
+          "uuid": "a87e08ef-58d6-4825-9209-8f4de045feae",
+          "rank": 1
+        },
+        "1483f296-3d0e-470b-ad44-5cd932add285": {
+          "price": 0,
+          "uuid": "1483f296-3d0e-470b-ad44-5cd932add285",
+          "rank": 2
+        }
+      }
+    },
+    "fa631d80-4d29-4877-8171-9e41df80876f": {
+      "title": "Choix de la Formule",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "968ec69b-c572-445c-8f50-bc532e32cf8a": {
+          "price": 1.5,
+          "uuid": "968ec69b-c572-445c-8f50-bc532e32cf8a",
+          "rank": 1
+        }
+      }
+    },
+    "f076d140-95e5-4ee5-9dc8-454f6ba29cd9": {
+      "title": "Personnalisation",
+      "minChoices": 0,
+      "maxChoices": 2,
+      "items": {
+        "a1bfe0dc-d8d8-42be-a51e-fbecb1bd8f5b": {
+          "price": 1,
+          "uuid": "a1bfe0dc-d8d8-42be-a51e-fbecb1bd8f5b",
+          "rank": 1
+        },
+        "bce1e3ba-fd8e-4cf9-8a31-22bf2eb4b4fe": {
+          "price": 1.5,
+          "uuid": "bce1e3ba-fd8e-4cf9-8a31-22bf2eb4b4fe",
+          "rank": 2
+        }
+      }
+    },
+    "65fd3ff0-aa5b-488c-9ad9-a0539da73e06": {
+      "title": "Choix de la Boisson",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "326dec27-9874-44fb-bfcf-7230f2914c6f": {
+          "price": 0,
+          "uuid": "326dec27-9874-44fb-bfcf-7230f2914c6f",
+          "rank": 1
+        },
+        "f8c981f2-895a-407b-9582-bac8f4b55484": {
+          "price": 0,
+          "uuid": "f8c981f2-895a-407b-9582-bac8f4b55484",
+          "rank": 2
+        }
+      }
+    },
+    "e1459ad8-dfd9-4075-945e-5b164fb005fd": {
+      "title": "Choix de l'Accompagnement",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "4cb291d8-3872-4590-b7a1-091e1719bf45": {
+          "price": 0,
+          "uuid": "4cb291d8-3872-4590-b7a1-091e1719bf45",
+          "rank": 1
+        },
+        "d42d7114-be0f-426d-9843-5f91bee81f13": {
+          "price": 0,
+          "uuid": "d42d7114-be0f-426d-9843-5f91bee81f13",
+          "rank": 2
+        }
+      }
+    },
+    "920bd77a-4ae8-45ad-a547-364fb5b76267": {
+      "title": "Choix de la Formule",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "5f848d19-7b6f-4aba-ac64-bc98d65043ac": {
+          "price": 1.5,
+          "uuid": "5f848d19-7b6f-4aba-ac64-bc98d65043ac",
+          "rank": 1
+        }
+      }
+    },
+    "f363b893-37ba-4883-80c3-4c4685f3b223": {
+      "title": "Personnalisation",
+      "minChoices": 0,
+      "maxChoices": 2,
+      "items": {
+        "ad35a938-b4be-4ff4-b2ca-c90b17027fe6": {
+          "price": 1,
+          "uuid": "ad35a938-b4be-4ff4-b2ca-c90b17027fe6",
+          "rank": 1
+        },
+        "3b48b543-3cbe-4525-9f71-7f69e9b4cf03": {
+          "price": 1.5,
+          "uuid": "3b48b543-3cbe-4525-9f71-7f69e9b4cf03",
+          "rank": 2
+        }
+      }
+    },
+    "34a2230a-4ca9-4145-8bea-a1a306effa23": {
+      "title": "Choix de la Boisson",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "fedbdf3f-e8dc-4758-82ae-d2bb85acabf9": {
+          "price": 0,
+          "uuid": "fedbdf3f-e8dc-4758-82ae-d2bb85acabf9",
+          "rank": 1
+        },
+        "0a09354b-b7e2-4e2e-bca4-e6130b6a5d98": {
+          "price": 0,
+          "uuid": "0a09354b-b7e2-4e2e-bca4-e6130b6a5d98",
+          "rank": 2
+        }
+      }
+    },
+    "1d54413e-9e65-4717-981e-0a395996c219": {
+      "title": "Choix de l'Accompagnement",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "7e54e541-6ca7-45cb-abc0-87c2fc511bd1": {
+          "price": 0,
+          "uuid": "7e54e541-6ca7-45cb-abc0-87c2fc511bd1",
+          "rank": 1
+        },
+        "ce9339f6-77c6-4069-919e-74919668b7d4": {
+          "price": 0,
+          "uuid": "ce9339f6-77c6-4069-919e-74919668b7d4",
+          "rank": 2
+        }
+      }
+    },
+    "6f1efba3-6114-40a1-8f50-84e7d010113b": {
+      "title": "Choix de la Formule",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "4f0cbbf8-5bda-436a-8122-42c01e0cdcbb": {
+          "price": 1.5,
+          "uuid": "4f0cbbf8-5bda-436a-8122-42c01e0cdcbb",
+          "rank": 1
+        }
+      }
+    },
+    "4bcedc16-9ffe-40fb-ac78-0a2ccc825e96": {
+      "title": "Personnalisation",
+      "minChoices": 0,
+      "maxChoices": 2,
+      "items": {
+        "033f4ac0-7af7-42f0-9cc8-362d7946f0df": {
+          "price": 1,
+          "uuid": "033f4ac0-7af7-42f0-9cc8-362d7946f0df",
+          "rank": 1
+        },
+        "94924d2c-f879-49c1-8e8a-6e9e3fc33f76": {
+          "price": 1.5,
+          "uuid": "94924d2c-f879-49c1-8e8a-6e9e3fc33f76",
+          "rank": 2
+        }
+      }
+    },
+    "f14fd3af-b4a9-401a-a818-24b35cba5ce2": {
+      "title": "Choix de la Boisson",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "bf0b43bf-8a50-4ee3-be69-acac908e1780": {
+          "price": 0,
+          "uuid": "bf0b43bf-8a50-4ee3-be69-acac908e1780",
+          "rank": 1
+        },
+        "d5ba5c29-4401-4501-a380-fd36f0a03e6b": {
+          "price": 0,
+          "uuid": "d5ba5c29-4401-4501-a380-fd36f0a03e6b",
+          "rank": 2
+        }
+      }
+    },
+    "febd7f09-8755-446c-a68e-ee35acb0b4a2": {
+      "title": "Choix de l'Accompagnement",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "5b56107c-51be-44fa-847f-cbccb3eda5c9": {
+          "price": 0,
+          "uuid": "5b56107c-51be-44fa-847f-cbccb3eda5c9",
+          "rank": 1
+        },
+        "2ba6e010-5890-4956-9917-2954f185ab1a": {
+          "price": 0,
+          "uuid": "2ba6e010-5890-4956-9917-2954f185ab1a",
+          "rank": 2
+        }
+      }
+    },
+    "fb0e311f-47f0-4cbc-aae8-575ca952f361": {
+      "title": "Choix de la Formule",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "105e17cc-876f-43b4-b773-7aa1448e10b0": {
+          "price": 1.5,
+          "uuid": "105e17cc-876f-43b4-b773-7aa1448e10b0",
+          "rank": 1
+        }
+      }
+    },
+    "8b10190e-2364-473d-a022-6e8574f05658": {
+      "title": "Personnalisation",
+      "minChoices": 0,
+      "maxChoices": 2,
+      "items": {
+        "032ccc96-91c9-4550-b918-1377319d2383": {
+          "price": 1,
+          "uuid": "032ccc96-91c9-4550-b918-1377319d2383",
+          "rank": 1
+        },
+        "15b2f5e1-8ff5-4957-bfdd-ccf925130df5": {
+          "price": 1.5,
+          "uuid": "15b2f5e1-8ff5-4957-bfdd-ccf925130df5",
+          "rank": 2
+        }
+      }
+    },
+    "b8582968-1198-4773-9dd7-1c384bec4886": {
+      "title": "Choix de la Boisson",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "f5ccbb9e-0f44-42dc-851a-108fc90f959e": {
+          "price": 0,
+          "uuid": "f5ccbb9e-0f44-42dc-851a-108fc90f959e",
+          "rank": 1
+        },
+        "2dc6be11-5022-4a32-8692-c8b8e33cf461": {
+          "price": 0,
+          "uuid": "2dc6be11-5022-4a32-8692-c8b8e33cf461",
+          "rank": 2
+        }
+      }
+    },
+    "b5ec834e-9556-43e2-9b6b-0ba5c57e32e4": {
+      "title": "Choix de l'Accompagnement",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "001bb6bf-bca1-4086-aeac-7e42c9084107": {
+          "price": 0,
+          "uuid": "001bb6bf-bca1-4086-aeac-7e42c9084107",
+          "rank": 1
+        },
+        "205a3fde-4499-4901-b778-172849ce5664": {
+          "price": 0,
+          "uuid": "205a3fde-4499-4901-b778-172849ce5664",
+          "rank": 2
+        }
+      }
+    },
+    "67c27168-5e1a-4259-85a7-558c7f582508": {
+      "title": "Choix de la Formule",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "c6d0ffad-ded5-48f0-976b-c6ecb7fc6958": {
+          "price": 1.5,
+          "uuid": "c6d0ffad-ded5-48f0-976b-c6ecb7fc6958",
+          "rank": 1
+        }
+      }
+    },
+    "abb5a85e-3a6b-4e3a-882d-c45dfc9991ec": {
+      "title": "Personnalisation",
+      "minChoices": 0,
+      "maxChoices": 2,
+      "items": {
+        "f02e1103-338a-40d4-9cf3-b81934922d9c": {
+          "price": 1,
+          "uuid": "f02e1103-338a-40d4-9cf3-b81934922d9c",
+          "rank": 1
+        },
+        "11fb482f-69f7-4923-9c13-af063d3f8c68": {
+          "price": 1.5,
+          "uuid": "11fb482f-69f7-4923-9c13-af063d3f8c68",
+          "rank": 2
+        }
+      }
+    },
+    "61f3bf3d-8953-4c48-b472-4d66395c69ec": {
+      "title": "Choix de la Boisson",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "7d35d22b-abdb-4794-acc1-6b1d638ecf2e": {
+          "price": 0,
+          "uuid": "7d35d22b-abdb-4794-acc1-6b1d638ecf2e",
+          "rank": 1
+        },
+        "b6dfde88-30e2-4036-bd86-cb6318a5c185": {
+          "price": 0,
+          "uuid": "b6dfde88-30e2-4036-bd86-cb6318a5c185",
+          "rank": 2
+        }
+      }
+    },
+    "fd2cf4ec-980d-4a64-bf6a-4a3322cb389d": {
+      "title": "Choix de l'Accompagnement",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "1460eb21-c672-4e1a-a1de-6f1a9ec4373b": {
+          "price": 0,
+          "uuid": "1460eb21-c672-4e1a-a1de-6f1a9ec4373b",
+          "rank": 1
+        },
+        "8334de2a-f911-4113-baa5-62a550498092": {
+          "price": 0,
+          "uuid": "8334de2a-f911-4113-baa5-62a550498092",
+          "rank": 2
+        }
+      }
+    },
+    "94f2a845-360b-4e94-a404-b90171d842c9": {
+      "title": "Choix de la Formule",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "items": {
+        "c377d4a4-287b-41be-8e26-599ee6a59f01": {
+          "price": 1.5,
+          "uuid": "c377d4a4-287b-41be-8e26-599ee6a59f01",
+          "rank": 1
+        }
+      }
+    }
+  }
+}

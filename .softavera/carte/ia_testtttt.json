@@ -1,0 +1,595 @@
+{
+  "title": "TESTTTTT",
+  "theme": {
+    "palette": [
+      "#0284c7",
+      "#38bdf8",
+      "#0284c7"
+    ]
+  },
+  "workflow": {
+    "9894eb5a-6b9b-48ec-8bd0-48c646181ac2": {
+      "type": "categories",
+      "rank": 1,
+      "content": {
+        "8c6c6d3d-37f3-42c3-8d56-60de8c2738a8": {
+          "type": "items",
+          "rank": 1,
+          "modifier": "dbee052d-105a-4a23-89ec-c52c750ce152"
+        },
+        "79fe7211-9c2f-4660-8656-2ebf4cf003f6": {
+          "type": "items",
+          "rank": 2,
+          "modifier": "5f451970-3c66-4466-aa81-2508ba23bc38"
+        },
+        "ad985cba-136c-4951-bb47-9d3e2a3cb4a8": {
+          "type": "items",
+          "rank": 3,
+          "modifier": "6edbb4a7-03d3-40d5-8738-17fcbe5d9601"
+        }
+      }
+    },
+    "fc8ee7d7-cfd7-405e-aeab-d541cccfaae0": {
+      "type": "categories",
+      "rank": 2,
+      "content": {
+        "7ea4107f-3506-449b-94cb-f6ed136847d5": {
+          "type": "items",
+          "rank": 1,
+          "modifier": "167c4ae1-c47e-465f-bce3-0bb696e4ed03"
+        },
+        "3115fef4-ca35-4869-b387-d7bc6ee8c4cf": {
+          "type": "items",
+          "rank": 2,
+          "modifier": "2752a0cd-1ac8-4e91-b29b-b8f8f7a080fb"
+        },
+        "be18f918-abe6-4bbf-87ca-30af8c202894": {
+          "type": "items",
+          "rank": 3,
+          "modifier": "326b67d0-7341-4046-a0e5-b6d7be809df3"
+        }
+      }
+    },
+    "93982439-41b0-4b64-ab9c-c0e7b99be2f4": {
+      "type": "categories",
+      "rank": 3,
+      "content": {
+        "3bc6fd7d-5aeb-4dd6-a9e6-f98707a8bd19": {
+          "type": "items",
+          "rank": 1,
+          "modifier": "08d49209-09a5-4a98-9a08-0b3168f43afa"
+        },
+        "65891cb7-f2cf-481a-aa9a-68c4decd0513": {
+          "type": "items",
+          "rank": 2,
+          "modifier": "f7807ae2-082b-4288-be1b-17f56157380e"
+        },
+        "0002a8c6-7f79-49dd-bfae-3b450bf79e62": {
+          "type": "items",
+          "rank": 3,
+          "modifier": "c5014553-059d-47b5-a27b-05e312bed2e1"
+        }
+      }
+    }
+  },
+  "categories": {
+    "9894eb5a-6b9b-48ec-8bd0-48c646181ac2": {
+      "title": "Burgers",
+      "isVisible": true,
+      "color": "#0284c7"
+    },
+    "fc8ee7d7-cfd7-405e-aeab-d541cccfaae0": {
+      "title": "Boissons",
+      "isVisible": true,
+      "color": "#0284c7"
+    },
+    "93982439-41b0-4b64-ab9c-c0e7b99be2f4": {
+      "title": "Desserts",
+      "isVisible": true,
+      "color": "#38bdf8"
+    }
+  },
+  "items": {
+    "8c6c6d3d-37f3-42c3-8d56-60de8c2738a8": {
+      "id": 1789,
+      "type": "items",
+      "title": "BURGER 1",
+      "price": {
+        "dflt": {
+          "ttc": 8.99
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/BURGER%2C1,%20food?width=800&height=600&nologo=true"
+        }
+      },
+      "desc": "Un délicieux burger fait maison avec un patty de boeuf tendre, des feuilles de salade fraîches, du fromage mélange et une sauce tangy. (A : boeuf)",
+      "modifier": "dbee052d-105a-4a23-89ec-c52c750ce152"
+    },
+    "c95db550-2316-4365-a977-a6613b152742": {
+      "title": "A point"
+    },
+    "574a1570-e7ca-4752-a4e8-cfe92ae483d4": {
+      "title": "Bien cuit"
+    },
+    "79fe7211-9c2f-4660-8656-2ebf4cf003f6": {
+      "id": 1110,
+      "type": "items",
+      "title": "BURGER 2",
+      "price": {
+        "dflt": {
+          "ttc": 10.99
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/BURGER%2C2,%20food?width=800&height=600&nologo=true"
+        }
+      },
+      "desc": "Un burger épicé avec un patty de boeuf, des feuilles de salade, du fromage, des tranches de bacon et une sauce à la piquante. (A : boeuf, porc)",
+      "modifier": "5f451970-3c66-4466-aa81-2508ba23bc38"
+    },
+    "ea7e2463-3296-49bd-a20f-2ab1ee054189": {
+      "title": "A point"
+    },
+    "eb4a2d57-16a5-4879-8029-3daff87af405": {
+      "title": "Bien cuit"
+    },
+    "ad985cba-136c-4951-bb47-9d3e2a3cb4a8": {
+      "id": 1181,
+      "type": "items",
+      "title": "BURGER 3",
+      "price": {
+        "dflt": {
+          "ttc": 9.99
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/BURGER%2C3,%20food?width=800&height=600&nologo=true"
+        }
+      },
+      "desc": "Un burger végétarien avec un patty de tofu, des feuilles de salade, du fromage végétalien et une sauce légère. (A : soja)",
+      "modifier": "6edbb4a7-03d3-40d5-8738-17fcbe5d9601"
+    },
+    "d9d995a4-f2a0-4443-8342-6dd85333428c": {
+      "title": "A point"
+    },
+    "ab013a51-0eef-4927-889b-a1bd6456d069": {
+      "title": "Bien cuit"
+    },
+    "7ea4107f-3506-449b-94cb-f6ed136847d5": {
+      "id": 1102,
+      "type": "items",
+      "title": "BOISSON 1",
+      "price": {
+        "dflt": {
+          "ttc": 2.99
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/BOISSON%2C1,%20food?width=800&height=600&nologo=true"
+        }
+      },
+      "desc": "Une limonade fraîche et sucrée faite avec du jus de citron frais et du sucre. (A : citron)",
+      "modifier": "167c4ae1-c47e-465f-bce3-0bb696e4ed03"
+    },
+    "2df91f4f-a5b7-4369-81f6-b4fa9d7e7743": {
+      "title": "Standard (33cl)"
+    },
+    "51dac27c-d538-4c53-92ae-080e357ce7cd": {
+      "title": "Maxi (50cl)"
+    },
+    "3115fef4-ca35-4869-b387-d7bc6ee8c4cf": {
+      "id": 1397,
+      "type": "items",
+      "title": "BOISSON 2",
+      "price": {
+        "dflt": {
+          "ttc": 1.99
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/BOISSON%2C2,%20food?width=800&height=600&nologo=true"
+        }
+      },
+      "desc": "Un café chaud et fort préparé avec des grains de café de haute qualité. (A : café)",
+      "modifier": "2752a0cd-1ac8-4e91-b29b-b8f8f7a080fb"
+    },
+    "7a14c160-8fc9-445a-a32f-2dee3c49b84d": {
+      "title": "Standard (33cl)"
+    },
+    "1a7eb4a0-f297-4a78-bafc-7f57174fc494": {
+      "title": "Maxi (50cl)"
+    },
+    "be18f918-abe6-4bbf-87ca-30af8c202894": {
+      "id": 1036,
+      "type": "items",
+      "title": "BOISSON 3",
+      "price": {
+        "dflt": {
+          "ttc": 3.99
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/BOISSON%2C3,%20food?width=800&height=600&nologo=true"
+        }
+      },
+      "desc": "Un jus d'orange frais et sucré fait avec du jus de tangerine. (A : orange)",
+      "modifier": "326b67d0-7341-4046-a0e5-b6d7be809df3"
+    },
+    "afbec49c-08d1-4d0c-b7ba-5709857d0ce7": {
+      "title": "Standard (33cl)"
+    },
+    "4d701ed5-739b-4b26-ad34-07c91b66d172": {
+      "title": "Maxi (50cl)"
+    },
+    "3bc6fd7d-5aeb-4dd6-a9e6-f98707a8bd19": {
+      "id": 1794,
+      "type": "items",
+      "title": "DESSERT 1",
+      "price": {
+        "dflt": {
+          "ttc": 5.99
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/DESSERT%2C1,%20food?width=800&height=600&nologo=true"
+        }
+      },
+      "desc": "Un gâteau au chocolat moelleux et riche avec une garniture de glace. (A : lait)",
+      "modifier": "08d49209-09a5-4a98-9a08-0b3168f43afa"
+    },
+    "e7feef9a-0f53-4560-a0bf-2b83cbb5a0cf": {
+      "title": "Avec Chantilly"
+    },
+    "533ee9eb-36db-4b7d-9aee-a68cb4cc76a6": {
+      "title": "Boule de glace vanille"
+    },
+    "65891cb7-f2cf-481a-aa9a-68c4decd0513": {
+      "id": 1828,
+      "type": "items",
+      "title": "DESSERT 2",
+      "price": {
+        "dflt": {
+          "ttc": 4.99
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/DESSERT%2C2,%20food?width=800&height=600&nologo=true"
+        }
+      },
+      "desc": "Un sorbet de framboise fraîche et légèrement sucré. (A : framboise)",
+      "modifier": "f7807ae2-082b-4288-be1b-17f56157380e"
+    },
+    "36a63749-015e-4f08-9ee5-49044e0f4886": {
+      "title": "Avec Chantilly"
+    },
+    "fe2a1d02-625f-4c41-a010-34a6f848e23b": {
+      "title": "Boule de glace vanille"
+    },
+    "0002a8c6-7f79-49dd-bfae-3b450bf79e62": {
+      "id": 1249,
+      "type": "items",
+      "title": "DESSERT 3",
+      "price": {
+        "dflt": {
+          "ttc": 6.99
+        }
+      },
+      "img": {
+        "dflt": {
+          "img": "https://image.pollinations.ai/prompt/DESSERT%2C3,%20food?width=800&height=600&nologo=true"
+        }
+      },
+      "desc": "Un cheesecake à la vanille avec une garniture de fruits rouges. (A : lait, œufs)",
+      "modifier": "c5014553-059d-47b5-a27b-05e312bed2e1"
+    },
+    "495804aa-e95c-4495-8e2f-14b76eec744c": {
+      "title": "Avec Chantilly"
+    },
+    "ac9b7a0a-3b65-41d1-ac5f-0c008102d265": {
+      "title": "Boule de glace vanille"
+    }
+  },
+  "modifier": {
+    "dbee052d-105a-4a23-89ec-c52c750ce152": {
+      "uuid-item": "8c6c6d3d-37f3-42c3-8d56-60de8c2738a8",
+      "steps": {
+        "93fa0538-d2fb-4464-aa46-beee321c2796": {
+          "rank": 1
+        }
+      }
+    },
+    "5f451970-3c66-4466-aa81-2508ba23bc38": {
+      "uuid-item": "79fe7211-9c2f-4660-8656-2ebf4cf003f6",
+      "steps": {
+        "05c483b8-eaa8-4457-8ec8-744dd468df7b": {
+          "rank": 1
+        }
+      }
+    },
+    "6edbb4a7-03d3-40d5-8738-17fcbe5d9601": {
+      "uuid-item": "ad985cba-136c-4951-bb47-9d3e2a3cb4a8",
+      "steps": {
+        "83b0b012-a870-4068-8695-e5c2fe7b68d9": {
+          "rank": 1
+        }
+      }
+    },
+    "167c4ae1-c47e-465f-bce3-0bb696e4ed03": {
+      "uuid-item": "7ea4107f-3506-449b-94cb-f6ed136847d5",
+      "steps": {
+        "f0f19112-b6e7-4c97-8efd-7ffb703492c5": {
+          "rank": 1
+        }
+      }
+    },
+    "2752a0cd-1ac8-4e91-b29b-b8f8f7a080fb": {
+      "uuid-item": "3115fef4-ca35-4869-b387-d7bc6ee8c4cf",
+      "steps": {
+        "5633157a-5b24-4d4e-8ab4-b16ddf825f6d": {
+          "rank": 1
+        }
+      }
+    },
+    "326b67d0-7341-4046-a0e5-b6d7be809df3": {
+      "uuid-item": "be18f918-abe6-4bbf-87ca-30af8c202894",
+      "steps": {
+        "17cbe98b-f1d5-4697-83de-7e5cca4219cf": {
+          "rank": 1
+        }
+      }
+    },
+    "08d49209-09a5-4a98-9a08-0b3168f43afa": {
+      "uuid-item": "3bc6fd7d-5aeb-4dd6-a9e6-f98707a8bd19",
+      "steps": {
+        "8c3d0630-3f3e-4db9-b7df-95c5b58b0247": {
+          "rank": 1
+        }
+      }
+    },
+    "f7807ae2-082b-4288-be1b-17f56157380e": {
+      "uuid-item": "65891cb7-f2cf-481a-aa9a-68c4decd0513",
+      "steps": {
+        "3fb355c7-415e-4a14-8ec2-310521f5131f": {
+          "rank": 1
+        }
+      }
+    },
+    "c5014553-059d-47b5-a27b-05e312bed2e1": {
+      "uuid-item": "0002a8c6-7f79-49dd-bfae-3b450bf79e62",
+      "steps": {
+        "95082015-d546-4d2f-bcd9-c0f6927aa827": {
+          "rank": 1
+        }
+      }
+    }
+  },
+  "steps": {
+    "93fa0538-d2fb-4464-aa46-beee321c2796": {
+      "title": "Cuisson & Options",
+      "minChoices": 0,
+      "maxChoices": 1,
+      "items": {
+        "c95db550-2316-4365-a977-a6613b152742": {
+          "rank": 1,
+          "price": {
+            "dflt": {
+              "ttc": 0
+            }
+          }
+        },
+        "574a1570-e7ca-4752-a4e8-cfe92ae483d4": {
+          "rank": 2,
+          "price": {
+            "dflt": {
+              "ttc": 0
+            }
+          }
+        }
+      }
+    },
+    "05c483b8-eaa8-4457-8ec8-744dd468df7b": {
+      "title": "Cuisson & Options",
+      "minChoices": 0,
+      "maxChoices": 1,
+      "items": {
+        "ea7e2463-3296-49bd-a20f-2ab1ee054189": {
+          "rank": 1,
+          "price": {
+            "dflt": {
+              "ttc": 0
+            }
+          }
+        },
+        "eb4a2d57-16a5-4879-8029-3daff87af405": {
+          "rank": 2,
+          "price": {
+            "dflt": {
+              "ttc": 0
+            }
+          }
+        }
+      }
+    },
+    "83b0b012-a870-4068-8695-e5c2fe7b68d9": {
+      "title": "Cuisson & Options",
+      "minChoices": 0,
+      "maxChoices": 1,
+      "items": {
+        "d9d995a4-f2a0-4443-8342-6dd85333428c": {
+          "rank": 1,
+          "price": {
+            "dflt": {
+              "ttc": 0
+            }
+          }
+        },
+        "ab013a51-0eef-4927-889b-a1bd6456d069": {
+          "rank": 2,
+          "price": {
+            "dflt": {
+              "ttc": 0
+            }
+          }
+        }
+      }
+    },
+    "f0f19112-b6e7-4c97-8efd-7ffb703492c5": {
+      "title": "Format et Options",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "semanticType": "TAILLE",
+      "items": {
+        "2df91f4f-a5b7-4369-81f6-b4fa9d7e7743": {
+          "rank": 1,
+          "price": {
+            "dflt": {
+              "ttc": 0
+            }
+          }
+        },
+        "51dac27c-d538-4c53-92ae-080e357ce7cd": {
+          "rank": 2,
+          "price": {
+            "dflt": {
+              "ttc": 1.5
+            }
+          }
+        }
+      }
+    },
+    "5633157a-5b24-4d4e-8ab4-b16ddf825f6d": {
+      "title": "Format et Options",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "semanticType": "TAILLE",
+      "items": {
+        "7a14c160-8fc9-445a-a32f-2dee3c49b84d": {
+          "rank": 1,
+          "price": {
+            "dflt": {
+              "ttc": 0
+            }
+          }
+        },
+        "1a7eb4a0-f297-4a78-bafc-7f57174fc494": {
+          "rank": 2,
+          "price": {
+            "dflt": {
+              "ttc": 1.5
+            }
+          }
+        }
+      }
+    },
+    "17cbe98b-f1d5-4697-83de-7e5cca4219cf": {
+      "title": "Format et Options",
+      "minChoices": 1,
+      "maxChoices": 1,
+      "semanticType": "TAILLE",
+      "items": {
+        "afbec49c-08d1-4d0c-b7ba-5709857d0ce7": {
+          "rank": 1,
+          "price": {
+            "dflt": {
+              "ttc": 0
+            }
+          }
+        },
+        "4d701ed5-739b-4b26-ad34-07c91b66d172": {
+          "rank": 2,
+          "price": {
+            "dflt": {
+              "ttc": 1.5
+            }
+          }
+        }
+      }
+    },
+    "8c3d0630-3f3e-4db9-b7df-95c5b58b0247": {
+      "title": "Gourmandises supplémentaires",
+      "minChoices": 0,
+      "maxChoices": 1,
+      "semanticType": "EXTRAS",
+      "items": {
+        "e7feef9a-0f53-4560-a0bf-2b83cbb5a0cf": {
+          "rank": 1,
+          "price": {
+            "dflt": {
+              "ttc": 1
+            }
+          }
+        },
+        "533ee9eb-36db-4b7d-9aee-a68cb4cc76a6": {
+          "rank": 2,
+          "price": {
+            "dflt": {
+              "ttc": 1.5
+            }
+          }
+        }
+      }
+    },
+    "3fb355c7-415e-4a14-8ec2-310521f5131f": {
+      "title": "Gourmandises supplémentaires",
+      "minChoices": 0,
+      "maxChoices": 1,
+      "semanticType": "EXTRAS",
+      "items": {
+        "36a63749-015e-4f08-9ee5-49044e0f4886": {
+          "rank": 1,
+          "price": {
+            "dflt": {
+              "ttc": 1
+            }
+          }
+        },
+        "fe2a1d02-625f-4c41-a010-34a6f848e23b": {
+          "rank": 2,
+          "price": {
+            "dflt": {
+              "ttc": 1.5
+            }
+          }
+        }
+      }
+    },
+    "95082015-d546-4d2f-bcd9-c0f6927aa827": {
+      "title": "Gourmandises supplémentaires",
+      "minChoices": 0,
+      "maxChoices": 1,
+      "semanticType": "EXTRAS",
+      "items": {
+        "495804aa-e95c-4495-8e2f-14b76eec744c": {
+          "rank": 1,
+          "price": {
+            "dflt": {
+              "ttc": 1
+            }
+          }
+        },
+        "ac9b7a0a-3b65-41d1-ac5f-0c008102d265": {
+          "rank": 2,
+          "price": {
+            "dflt": {
+              "ttc": 1.5
+            }
+          }
+        }
+      }
+    }
+  },
+  "themeMetadata": {
+    "typeLabel": "Fast-Food / Burger",
+    "theme": "Coloré",
+    "style": "Moderne"
+  }
+}

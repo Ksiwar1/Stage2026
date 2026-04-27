@@ -84,3 +84,27 @@
     gap: 1rem;
   }
 }
+
+.langSelector {
+  display: flex;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-left: 1rem;
+}
+
+.langBtn {
+  padding: 0.5rem 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  transition: all 0.2s ease;
+}
+
+.langBtn.activeLang {
+  background: #111827;
+  color: white;
+}
