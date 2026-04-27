@@ -53,21 +53,14 @@ export const GENERIC_MASTER_TEMPLATE_JSON_STR = `{
     "cat_boissons": { "title": "Boissons", "isVisible": true }
   },
   "items": {
-    "item_menu_burger": {
-      "title": "Menu Classic",
-      "modifier": "mod_menu_burger_steps"
-    },
-    "item_coca": {
-      "title": "Coca Cola",
-      "price": { "dflt": { "ttc": 2.50 } },
-      "modifier": "mod_boisson_taille"
-    },
-    "item_coca_33cl": { "title": "Normale 33cl", "price": { "dflt": { "ttc": 0 } } },
-    "item_coca_50cl": { "title": "Maxi 50cl", "price": { "dflt": { "ttc": 0.50 } } },
-    "item_frites": { "title": "Frites Classiques" },
-    "item_potatoes": { "title": "Potatoes Croustillantes" },
-    "item_sauce_mayo": { "title": "Mayonnaise" },
-    "item_sauce_ket": { "title": "Ketchup" }
+    "item_menu_burger": { "t": "Menu Classic", "m": "mod_menu_burger_steps" },
+    "item_coca": { "t": "Coca Cola", "p": 2.50, "m": "mod_boisson_taille" },
+    "item_coca_33cl": { "t": "Normale 33cl", "p": 0 },
+    "item_coca_50cl": { "t": "Maxi 50cl", "p": 0.50 },
+    "item_frites": { "t": "Frites Classiques" },
+    "item_potatoes": { "t": "Potatoes Croustillantes" },
+    "item_sauce_mayo": { "t": "Mayonnaise" },
+    "item_sauce_ket": { "t": "Ketchup" }
   },
   "modifier": {
     "mod_menu_burger_steps": {
@@ -85,68 +78,20 @@ export const GENERIC_MASTER_TEMPLATE_JSON_STR = `{
   },
   "steps": {
     "step_choix_boisson": {
-      "id": "step_choix_boisson",
-      "ref": "step_choix_boisson",
-      "title": "Choisissez votre boisson",
-      "archive": false,
-      "isBasic": false,
-      "isComment": false,
-      "isModifiable": true,
-      "minChoices": 1,
-      "maxChoices": 1,
-      "rank": 1,
-      "displayName": { "dflt": { "imp": [], "nameDef": "Choisissez votre boisson", "salesSupport": {} } },
-      "specificOpts": {},
-      "img": { "dflt": { "img": "no-pictures.svg", "salesSupport": {} } },
-      "stepItems": { "item_coca": { "rank": 1, "priceStep": 0, "maxChoices": 1, "minChoices": 0 } }
+      "t": "Choisissez votre boisson", "min": 1, "max": 1,
+      "stepItems": { "item_coca": { "rank": 1 } }
     },
     "step_choix_accompagnement": {
-      "id": "step_choix_accompagnement",
-      "ref": "step_choix_accompagnement",
-      "title": "Votre accompagnement",
-      "archive": false,
-      "isBasic": false,
-      "isComment": false,
-      "isModifiable": true,
-      "minChoices": 1,
-      "maxChoices": 1,
-      "rank": 2,
-      "displayName": { "dflt": { "imp": [], "nameDef": "Votre accompagnement", "salesSupport": {} } },
-      "specificOpts": {},
-      "img": { "dflt": { "img": "no-pictures.svg", "salesSupport": {} } },
-      "stepItems": { "item_frites": { "rank": 1, "priceStep": 0, "maxChoices": 1, "minChoices": 0 }, "item_potatoes": { "rank": 2, "priceStep": 0, "maxChoices": 1, "minChoices": 0 } }
+      "t": "Votre accompagnement", "min": 1, "max": 1,
+      "stepItems": { "item_frites": { "rank": 1 }, "item_potatoes": { "rank": 2 } }
     },
     "step_choix_sauce": {
-      "id": "step_choix_sauce",
-      "ref": "step_choix_sauce",
-      "title": "Choisir vos sauces",
-      "archive": false,
-      "isBasic": false,
-      "isComment": false,
-      "isModifiable": true,
-      "minChoices": 0,
-      "maxChoices": 2,
-      "rank": 3,
-      "displayName": { "dflt": { "imp": [], "nameDef": "Choisir vos sauces", "salesSupport": {} } },
-      "specificOpts": {},
-      "img": { "dflt": { "img": "no-pictures.svg", "salesSupport": {} } },
-      "stepItems": { "item_sauce_mayo": { "rank": 1, "priceStep": 0, "maxChoices": 1, "minChoices": 0 }, "item_sauce_ket": { "rank": 2, "priceStep": 0, "maxChoices": 1, "minChoices": 0 } }
+      "t": "Choisir vos sauces", "min": 0, "max": 2,
+      "stepItems": { "item_sauce_mayo": { "rank": 1 }, "item_sauce_ket": { "rank": 2 } }
     },
     "step_taille_boisson": {
-      "id": "step_taille_boisson",
-      "ref": "step_taille_boisson",
-      "title": "Taille de votre boisson",
-      "archive": false,
-      "isBasic": false,
-      "isComment": false,
-      "isModifiable": true,
-      "minChoices": 1,
-      "maxChoices": 1,
-      "rank": 1,
-      "displayName": { "dflt": { "imp": [], "nameDef": "Taille de votre boisson", "salesSupport": {} } },
-      "specificOpts": {},
-      "img": { "dflt": { "img": "no-pictures.svg", "salesSupport": {} } },
-      "stepItems": { "item_coca_33cl": { "rank": 1, "priceStep": 0, "maxChoices": 1, "minChoices": 0 }, "item_coca_50cl": { "rank": 2, "priceStep": 0, "maxChoices": 1, "minChoices": 0 } }
+      "t": "Taille de votre boisson", "min": 1, "max": 1,
+      "stepItems": { "item_coca_33cl": { "rank": 1 }, "item_coca_50cl": { "rank": 2 } }
     }
   }
 }`;
@@ -228,11 +173,19 @@ Tu vas complèter la carte en générant :
 
 🚨 RÈGLE VITALE DE MAPPING 🚨 : Tu dois OBLIGATOIREMENT créer dans ton dictionnaire "items" les produits avec les IDENTIFIANTS EXACTS (ex: "item_gen_pizza") qui ont été pré-déclarés dans le 'workflow' qui t'a été fourni en entrée. Ne crée jamais de nouvel identifiant. S'il te manque des identifiants dans le workflow, inventes-en de manière logique.
 
+📉 RÈGLE DE DÉCOMPRESSION DE L'INSPIRATION (TRÈS IMPORTANT) 📉 : 
+Pour optimiser la lecture, le Modèle Maître fourni utilise des clés aliasées ("t" au lieu de "title", "p" au lieu de "price").
+Cependant, TON JSON GÉNÉRÉ DOIT STRICTEMENT ÊTRE DÉCOMPRESSÉ au format canonique suivant :
+- Remplace l'alias "t" par la vraie clé "title": "Nom".
+- Remplace l'alias "p": 12.5 par la vraie structure complexe ETK360 "price": { "dflt": { "ttc": 12.5 } }. Ne génère JAMAIS un prix plat en sortie.
+- Remplace l'alias "m" par la vraie clé "modifier": "mod_xxx".
+- Remplace l'alias "min" par "minChoices" et "max" par "maxChoices" dans les steps.
+
 RÈGLES D'OR STRUCTURELLES: 
 - INTERDICTION ABSOLUE D'UTILISER LE MOT-CLÉ "opt".
 - OBLIGATION GLOBALE DE PREMIER NIVEAU : Les 3 nouveaux dictionnaires ("items", "modifier", "steps") que tu dois générer DOIVENT OBLIGATOIREMENT ÊTRE PLACÉS À LA RACINE GLOBALE DU JSON (au tout premier niveau, exactement à côté de "workflow" et "categories"). NE LES INCLUS JAMAIS À L'INTÉRIEUR DU WORKFLOW !
 - COHÉRENCE ABSOLUE DES IDENTIFIANTS (TRÈS IMPORTANT) : Le dictionnaire 'items' que tu vas générer doit IMPÉRATIVEMENT redéclarer TOUS les identifiants qui ont été déclarés dans les tableaux 'content' du 'workflow' de l'Architecture de base. Ne génère pas d'identifiants aléatoires ! Chaque identifiant déclaré dans le workflow DOIT avoir sa définition produit dans 'items'. Pense bien à donner des noms logiques liés à la catégorie (ex: Des VRAIES frites dans la catégorie Frites).
-- Tu dois REPRODUIRE exactement la structure du Modèle Maître, sans en inventer une nouvelle: pointage d'IDs (Cross-Referencing) : un produit "Menu" pointe vers un ID de "modifier", qui pointe vers des IDs de "steps", qui pointent inversement vers des IDs d'"items" existants à la racine.
+- Tu dois REPRODUIRE exactement la structure du Modèle Maître décompressée, sans en inventer une nouvelle: pointage d'IDs (Cross-Referencing) : un produit "Menu" pointe vers un ID de "modifier", qui pointe vers des IDs de "steps", qui pointent inversement vers des IDs d'"items" existants à la racine.
 
 Contraintes :
 - Ne génère JAMAIS de "opt" ou une autre structure personnalisée.
@@ -483,53 +436,70 @@ export function extractTemplateFromCatalogue(catalogPath: string): string | null
     }
     
     // 5. Recursive Traversal Algorithm
+    const extractPriceTTC = (priceData: any) => {
+        if (!priceData) return null;
+        if (typeof priceData.dflt === 'object' && priceData.dflt !== null && typeof priceData.dflt.ttc === 'number') return priceData.dflt.ttc;
+        if (typeof priceData.ttc === 'number') return priceData.ttc;
+        if (typeof priceData.dflt === 'number') return priceData.dflt;
+        return null;
+    };
+
     const traverseItem = (itemId: string, depth: number = 0) => {
       if (skeleton.items[itemId]) return;
       if (!data.items[itemId]) return;
-      const it = { ...data.items[itemId] };
-      it.archive = false;
-      it.isVisible = true;
-      if (it.visibilityInfo) it.visibilityInfo.isVisible = true;
-      it.title = "NOM_PRODUIT_A_REMPLACER"; // Forcer un titre explicite pour l'IA
-      skeleton.items[itemId] = it;
-
+      const it = data.items[itemId];
+      const p = extractPriceTTC(it.price);
+      
+      const compressedIt: any = {
+          t: "NOM_PRODUIT_A_REMPLACER"
+      };
+      if (p !== null) compressedIt.p = p;
       if (it.modifier && depth < 1) {
-         traverseModifier(it.modifier, depth);
+          compressedIt.m = it.modifier;
+          traverseModifier(it.modifier, depth);
       }
+      skeleton.items[itemId] = compressedIt;
     };
 
     const traverseModifier = (modId: string, depth: number) => {
       if (skeleton.modifier[modId]) return;
       if (!data.modifier?.[modId]) return;
       
-      const modData = { ...data.modifier[modId] };
+      const modData = data.modifier[modId];
+      const compressedMod: any = {};
+      
       if (modData.steps) {
          const selection = Object.keys(modData.steps).slice(0, 2); // Capped at 2 steps
-         const subSteps: any = {};
+         compressedMod.steps = {};
          selection.forEach(k => {
-             subSteps[k] = modData.steps[k];
+             compressedMod.steps[k] = { rank: modData.steps[k].rank || 1 };
              traverseStep(k, depth);
          });
-         modData.steps = subSteps;
       }
-      skeleton.modifier[modId] = modData;
+      skeleton.modifier[modId] = compressedMod;
     };
 
     const traverseStep = (stepId: string, depth: number) => {
       if (skeleton.steps[stepId]) return;
       if (!data.steps?.[stepId]) return;
       
-      const stepData = { ...data.steps[stepId] };
-      if (stepData.items) {
-         const selection = Object.keys(stepData.items).slice(0, 2);
-         const subItems: any = {};
-         selection.forEach(id => {
-             subItems[id] = stepData.items[id];
-             traverseItem(id, depth + 1);
-         });
-         stepData.items = subItems;
+      const stepData = data.steps[stepId];
+      const compressedStep: any = {
+          t: stepData.title || stepData.displayName?.dflt?.nameDef || "Choix",
+          min: stepData.minChoices ?? 0,
+          max: stepData.maxChoices ?? 1
+      };
+      
+      const itemsSource = stepData.items || stepData.stepItems || {};
+      const selection = Object.keys(itemsSource).slice(0, 2);
+      if (selection.length > 0) {
+          compressedStep.stepItems = {};
+          selection.forEach(id => {
+              compressedStep.stepItems[id] = { rank: itemsSource[id].rank || 1 };
+              traverseItem(id, depth + 1);
+          });
       }
-      skeleton.steps[stepId] = stepData;
+      skeleton.steps[stepId] = compressedStep;
     };
     // Begin injection
     if (complexItemId) traverseItem(complexItemId);

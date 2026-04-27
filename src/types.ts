@@ -17,14 +17,54 @@ export interface ETK360WorkflowNode {
 }
 
 export interface ETK360Category {
-  id: string;
-  title: string;
-  isVisible: boolean;
-  rank: number;
-  items: Record<string, any>;
-  child?: Record<string, any>;
+  id: number | string;
+  img?: {
+    dflt: {
+      img: string;
+      salesSupport?: any;
+    };
+  };
+  ref?: string;
+  rank?: number;
+  child?: any[];
   color?: string;
-  image?: string;
+  items?: string[] | Record<string, any>; // Supporte les array d'UUIDs ou l'ancien format
+  title: string;
+  video?: {
+    url: string;
+    type: string;
+  };
+  idCard?: number | any[];
+  parent?: string;
+  archive?: boolean;
+  liaison?: any[];
+  isNameShow?: boolean;
+  linkedTags?: any[];
+  description?: {
+    dflt?: {
+      imp?: any;
+      nameDef?: string;
+      salesSupport?: any;
+    };
+  };
+  displayName?: {
+    dflt?: {
+      imp?: any;
+      nameDef?: string;
+      salesSupport?: any;
+      [key: string]: any; // Pour les canaux multilingues FR/EN
+    };
+  };
+  linkedChild?: any[];
+  linkedItems?: any[];
+  visibilityInfo?: {
+    dflt?: {
+      isVisible?: boolean;
+      basicCompVisibility?: boolean;
+      [key: number]: number[]; // Canaux numérotés
+    };
+  };
+  isInfoModeActive?: boolean;
 }
 
 export interface ETK360Price {
@@ -48,21 +88,83 @@ export interface ETK360IngredientMeta {
 }
 
 export interface ETK360Item {
-  id: string;                      // Identifiant canonique
-  ref?: string;                    // Référence SKU métier
-  type: 'item' | 'modifier';       // Typologie stricte
-  title: string;                   // Nom du produit
-  description?: string;            // Description formatée string
-  price: ETK360Price;              // Arborescence de tarification stricte
-  img?: ETK360Image;               // Conteneur d'image minimaliste
-  modifier?: string;               // Relation pure ID (lien vers un sous-tunnel)
-  basicComp?: Record<string, ETK360IngredientMeta>; // Options exclusives composant la structure métier brute
-  isVisible?: boolean;             // L'état de publication en base de donnée
+  id: string; // Gardé pour la clé canonique
+  fid?: number;
+  img?: {
+    dflt: {
+      img: string;
+      salesSupport?: any;
+    };
+  };
+  opt?: Record<string, any>;
+  ref?: string;
+  menu?: Record<string, any>;
+  rank?: number;
+  unit?: Record<string, any>;
+  color?: string;
+  offer?: Record<string, any>;
+  price?: any;
+  steps?: any[];
+  title: string;
+  parent?: string;
+  prSize?: number;
+  archive?: boolean;
+  barCode?: string;
+  extrRef?: string;
+  liaison?: any[];
+  calories?: number;
+  outStock?: boolean;
+  printers?: any[];
+  sizeList?: any[];
+  suspSale?: any[];
+  variants?: any[];
+  allergens?: any[];
+  basicComp?: Record<string, any>;
+  isComment?: boolean;
+  active_qty?: boolean;
+  isRedirect?: boolean;
+  linkedTags?: any[];
+  nutriScore?: Record<string, any>;
+  description?: {
+    dflt?: {
+      imp?: any;
+      nameDef?: string;
+      salesSupport?: any;
+      [key: string]: any;
+    };
+  };
+  displayName?: {
+    dflt?: {
+      imp?: any;
+      nameDef?: string;
+      salesSupport?: any;
+      [key: string]: any;
+    };
+  };
+  isTitleShow?: boolean;
+  creationType?: string;
+  isOptionChoice?: boolean;
+  visibilityInfo?: {
+    dflt?: {
+      isVisible?: boolean;
+      basicCompVisibility?: boolean;
+      [key: number]: number[];
+    };
+  };
+  stepVisibility?: {
+    dflt?: {
+      isVisible?: boolean;
+      basicCompVisibility?: boolean;
+      [key: number]: number[];
+    };
+  };
+  type?: 'item' | 'modifier' | string;
+  modifier?: string; // Gardé pour la liaison workflow
 }
 
 export interface ETK360StepItemOverride {
   rank: number;
-  priceStep: number; // Surcharge locale du prix d'une option
+  priceStep: number;
   maxChoices: number;
   minChoices: number;
   itemPrice?: Record<string, any>;
@@ -70,20 +172,30 @@ export interface ETK360StepItemOverride {
 }
 
 export interface ETK360Step {
-  id: number | string;
+  id: number;
   ref: string;
+  req?: boolean;
   title: string;
-  archive: boolean;
-  isBasic: boolean;
-  isComment: boolean;
+  archive?: boolean;
+  isBasic?: boolean;
+  isComment?: boolean;
   stepItems: Record<string, ETK360StepItemOverride>;
   maxChoices: number;
   minChoices: number;
-  displayName: { dflt: { imp: any[]; nameDef: string; salesSupport: any } };
-  isModifiable: boolean;
-  specificOpts: Record<string, any>;
-  img: ETK360Image;
-  rank: number;
+  displayName?: {
+    dflt?: {
+      imp?: any;
+      nameDef?: string;
+      salesSupport?: any;
+      [key: string]: any;
+    };
+  };
+  isModifiable?: boolean;
+  nbrWithPrice?: number;
+  specificOpts?: Record<string, any>;
+  nbrWithspecialPrice?: number;
+  img?: ETK360Image; // Kept for backwards compatibility if any
+  rank?: number;     // Kept for backwards compatibility if any
 }
 
 export interface ETK360ModifierStepMeta {
@@ -92,13 +204,17 @@ export interface ETK360ModifierStepMeta {
 
 export interface ETK360Modifier {
   title?: string;
-  "uuid-item"?: string; // Relation historique (Legacy)
+  "uuid-item"?: string;
   steps?: Record<string, ETK360ModifierStepMeta>;
 }
 
 export interface ETK360Catalogue {
   title?: string;
   theme?: ETK360Theme;
+  opt?: Record<string, any>;
+  etat?: string; // ex: "En attente"
+  tags?: Record<string, any>;
+  color?: string;
   workflow: Record<string, ETK360WorkflowNode>;
   categories: Record<string, ETK360Category>;
   items: Record<string, ETK360Item>;

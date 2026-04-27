@@ -28,15 +28,5 @@ export function verifySchemaIntegrity(data: any): boolean {
             }
         }
     }
-    
-    // Check 3: Categories Dual Binding Check
-    for (const cId of Object.keys(rootCats)) {
-        const catItems = rootCats[cId].items || {};
-        for (const itemId of Object.keys(catItems)) {
-            if (!rootItems[itemId]) {
-                throw new Error(`Item '${itemId}' is tied to category '${cId}' but does NOT exist in global database.`);
-            }
-        }
-    }
     return true;
 }

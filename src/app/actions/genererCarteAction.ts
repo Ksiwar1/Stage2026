@@ -254,6 +254,13 @@ export async function enrichirCarteAction(
             }
             if (index === 0) { // BaseMap
                memoryWorkflow = data.workflow || {};
+               
+               // Clonage de TOUTES les propriétés natives racines
+               Object.keys(data).forEach(key => {
+                   if (!['workflow', 'categories', 'items', 'modifier', 'steps', 'theme', 'title'].includes(key)) {
+                       (finalData as any)[key] = data[key];
+                   }
+               });
             }
             Object.assign(memoryCategories, data.categories || {});
             Object.assign(memoryModifiers, data.modifier || {});
@@ -301,20 +308,19 @@ export async function enrichirCarteAction(
         }
 
         return {
+          ...JSON.parse(JSON.stringify(found)), // Clone intégral pour préserver la donnée originelle stricte
           id: rId,
           ref: found.ref || `REF_${rId}`,
           type: found.type === 'modifier' ? 'modifier' : 'item',
           title: extractedTitle,
-          description: extractedDesc || undefined,
+          description: found.description || undefined, // On préserve le formattage objet ou string
           price: { dflt: { ttc: rawTtc } },
-          img: found.img?.dflt?.img ? { dflt: { img: found.img.dflt.img } } : (found.image ? { dflt: { img: found.image } } : undefined),
-          modifier: found.modifier || undefined,
-          basicComp: found.basicComp || undefined,
-          isVisible: found.isVisible !== false,
+          img: found.img || (found.image ? { dflt: { img: found.image } } : undefined)
         };
     };
 
     const buildBaseETK360Step = (sId: string, sRef: any) => ({
+        ...JSON.parse(JSON.stringify(sRef)), // Clone natif
         id: sRef.id || sId,
         ref: sRef.ref || sId,
         title: sRef.title || "Choix",
@@ -453,13 +459,12 @@ export async function enrichirCarteAction(
     // === 2. HYBRID WORKFLOW GENERATION ===
     if (Object.keys(memoryWorkflow).length > 0) {
         finalData.workflow = memoryWorkflow; // Base Workflow Skeleton Preserved
-        finalData.categories = JSON.parse(JSON.stringify(memoryCategories)); // Base Categories Preserved for labels
+        finalData.categories = JSON.parse(JSON.stringify(memoryCategories)); // Deep clone to preserve exactly raw JSON properties
 
         Object.keys(finalData.categories).forEach(cId => {
             finalData.categories[cId].id = cId;
             finalData.categories[cId].rank = finalData.workflow[cId]?.rank || 0;
-            finalData.categories[cId].items = {};
-            finalData.categories[cId].child = {};
+            // Ne pas écraser ni purger les child/items si on veut respecter le JSON originel strict
         });
 
         // We clean the content of the workflow to insert our brand new AI items
@@ -487,23 +492,20 @@ export async function enrichirCarteAction(
                     targetCatId = wCatId;
                     break;
                 }
-            }
-
             if (!targetCatId) {
                 targetCatId = randomUUID();
                 const newCatRank = fallbackCatRank++;
                 finalData.workflow[targetCatId] = { type: "categories", rank: newCatRank, content: {} };
                 finalData.categories[targetCatId] = {
                     id: targetCatId,
-                    rank: newCatRank,
                     title: aiCatName,
-                    isVisible: true, // Force visibility
+                    isVisible: true,
                     items: {},
                     child: {},
                     color: finalData.theme.palette[Math.floor(Math.random() * finalData.theme.palette.length)]
                 };
             }
-            finalData.categories[targetCatId].title = aiCatName; 
+            finalData.categories[targetCatId].title = aiCatName;
             if (!finalData.categories[targetCatId].items) finalData.categories[targetCatId].items = {};
             if (!finalData.categories[targetCatId].child) finalData.categories[targetCatId].child = {};
 
@@ -569,7 +571,8 @@ export async function enrichirCarteAction(
                         finalData.workflow[targetCatId].content[newItemId].modifier = finalData.items[newItemId].modifier;
                     }
                     
-                    // Dual Binding for ETK360 parser consistency
+                    // Dual Binding for ETK360 parser consistency (Restored per exact JSON specs)
+                    if (!finalData.categories[targetCatId].items) finalData.categories[targetCatId].items = {};
                     finalData.categories[targetCatId].items[newItemId] = { ...finalData.workflow[targetCatId].content[newItemId] };
                 });
             }
