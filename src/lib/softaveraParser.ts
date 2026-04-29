@@ -446,7 +446,7 @@ export function parseETK360Hierarchy(data: any): ParsedCategory[] {
           if (!itemObj) continue;
           if (itemObj.archive === true || itemObj.isVisible === false) continue;
 
-          let desc = itemObj.description?.dflt?.nameDef || itemObj.description || "";
+          let desc = typeof itemObj.description === 'string' ? itemObj.description : (itemObj.description?.dflt?.nameDef || itemObj.desc || "");
           if (desc === "[object Object]") desc = "";
 
           let imgUrl = itemObj.img?.dflt?.img;
@@ -460,10 +460,8 @@ export function parseETK360Hierarchy(data: any): ParsedCategory[] {
 
           const productNode: ParsedProduct = {
               id: iNode.id,
-              name: itemObj.displayName?.dflt?.nameDef || itemObj.title || "",
-              priceTTC: typeof itemObj.price?.dflt === 'object' 
-                        ? (itemObj.price.dflt.ttc !== undefined ? itemObj.price.dflt.ttc : null) 
-                        : (itemObj.price?.dflt !== undefined ? itemObj.price?.dflt : null),
+              name: extractBestName(itemObj, "Produit").trim(),
+              priceTTC: extractBestPrice(itemObj),
               image: imgUrl,
               description: desc,
               steps: [],

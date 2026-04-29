@@ -26,6 +26,24 @@ export function verifySchemaIntegrity(data: any): boolean {
                 }
                 ranks.add(r);
             }
+        return true;
+    }
+    
+    // Check 3: Categories Dual Binding Check
+    for (const cId of Object.keys(rootCats)) {
+        const catItems = rootCats[cId].items;
+        if (Array.isArray(catItems)) {
+            for (const itemId of catItems) {
+                if (typeof itemId === 'string' && !rootItems[itemId]) {
+                    throw new Error(`Item '${itemId}' is tied to category '${cId}' but does NOT exist in global database.`);
+                }
+            }
+        } else if (catItems && typeof catItems === 'object') {
+            for (const itemId of Object.keys(catItems)) {
+                if (!rootItems[itemId]) {
+                    throw new Error(`Item '${itemId}' is tied to category '${cId}' but does NOT exist in global database.`);
+                }
+            }
         }
     }
     return true;

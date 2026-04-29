@@ -163,7 +163,7 @@ ModifierOptionCard.displayName = 'ModifierOptionCard';
 export default function KioskSimulator({ restaurantName, tree, themePalette = { primary: '#F39C12', secondary: '#1A237E', background: '#F8FAFC', surface: '#FFFFFF', text: '#111827', onPrimary: 'white' }, catalogData }: { restaurantName: string, tree: ParsedCategory[], themePalette?: { primary: string, secondary: string, background?: string, surface?: string, text: string, onPrimary: string }, catalogData?: any }) {
   const { t, lang } = useLanguage();
   const [diningOption, setDiningOption] = useState<'sur_place' | 'emporter' | null>(null);
-  const activeCategories = useMemo(() => tree.filter(c => c.products && c.products.length > 0), [tree]);
+  const activeCategories = useMemo(() => tree.filter(cat => cat.isVisible !== false), [tree]);
   const [activeCategoryId, setActiveCategoryId] = useState<string>(activeCategories[0]?.id || "");
   const activeCategory = activeCategories.find(c => c.id === activeCategoryId) || activeCategories[0];
 
@@ -510,7 +510,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
             }}>
                 <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, top: 0, background: 'linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 100%)', padding: '1.5rem 2.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                     <h2 style={{ color: 'white', margin: 0, fontSize: '2.2rem', fontWeight: 900, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>{selectedProduct?.name}</h2>
-                    <p style={{ color: 'var(--color-primary)', margin: '0.2rem 0 0', fontSize: '1.4rem', fontWeight: 800 }}>{selectedProduct?.priceTTC.toFixed(2)} €</p>
+                    <p style={{ color: 'var(--color-primary)', margin: '0.2rem 0 0', fontSize: '1.4rem', fontWeight: 800 }}>{selectedProduct?.priceTTC != null ? `${selectedProduct.priceTTC.toFixed(2)} €` : '—'}</p>
                 </div>
                <div style={{ position: 'absolute', top: '15px', right: '15px' }}>
                   <button onClick={() => setSelectedProduct(null)} style={{ background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', color: 'white', border: 'none', borderRadius: '50%', width: '45px', height: '45px', fontSize: '20px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>✕</button>

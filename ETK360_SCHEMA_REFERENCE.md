@@ -7,7 +7,7 @@ Toute génération, manipulation ou extraction de carte doit **strictement** con
 > **Règles Universelles du Schéma :**
 > - **Identifiants** : Tous les IDs primaires sont des `UUIDs` (à l'exception de propriétés spécifiques signalées).
 > - **Visibilité (`visibilityInfo` / `stepVisibility`)** : Le contrôle d'affichage s'opère par "Canal de vente" (1, 2, 3...) contenant des tableaux de créneaux horaires. `isVisible` agit comme switch maître.
-> - **Multilingue (`displayName.dflt.salesSupport`)** : Ces objets gèrent le "Custom Labeling" multilingue (FR/EN) ciblé par canal de vente.
+> - **Multilingue (`displayName.dflt.salestSupport`)** : Ces objets gèrent le "Custom Labeling" multilingue (FR/EN) ciblé par canal de vente.
 > - **Tri (`rank`)** : Seul ce Number dicte l'ordre positionnel d'affichage d'un élément UI.
 > - **Destruction Douce (`archive`)** : La valeur `true` supprime l'élément du rendu client/borne. Ne jamais détruire physiquement le noeud du JSON.
 

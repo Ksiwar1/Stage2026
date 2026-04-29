@@ -14,6 +14,11 @@ const AI_PROVIDERS = [
   { value: "claude", label: "Claude Sonnet", icon: "🟠", tag: "Payant" },
 ];
 
+const GLOBAL_DRINKS_LIST = [
+  "Coca-Cola", "Coca-Cola Zéro", "Fanta", "Sprite", "Ice Tea", "Oasis", "Perrier", "Eau Plate", "Jus d'orange", "Jus de pomme"
+];
+
+
 export default function GenererCarte() {
   const { t } = useLanguage();
   const [resultat, setResultat] = useState<{ success: boolean; json?: string; savedPath?: string | null; error?: string } | null>(null);
@@ -56,7 +61,7 @@ export default function GenererCarte() {
     compositions: { defaultIngredients: "", cookingOptions: false, customSupplements: [] as {name: string, price: number}[], fastSupplementName: "", fastSupplementPrice: "" },
     formulas: { isSeul: true, isMenu: true, menuPrice: 2.50, isMaxi: true, maxiPrice: 3.50 },
     accompaniments: { list: "Frites, Potatoes", hasSizes: false, sizeS: 0, sizeM: 1.0, sizeL: 1.50 },
-    drinks: { list: "Coca-Cola, Eau Plate", hasSizes: false, sizeS: 0, sizeM: 0.5, sizeL: 1.0 },
+    drinks: { list: "Coca-Cola, Eau Plate", selectedGlobal: ["Coca-Cola", "Eau Plate"], customList: "", hasSizes: false, sizeS: 0, sizeM: 0.5, sizeL: 1.0 },
     desserts: { list: "", hasSizes: false, sizeS: 0, sizeM: 0.5, sizeL: 1.0 },
     forcedItems: {} as Record<string, string>
   });
@@ -95,7 +100,7 @@ ${Object.keys(wizardData.forcedItems).length > 0 ?
       return `  -> Pour la catégorie "${cat}", tu DOIS générer UNIQUEMENT ces produits : ${items}. N'invente rien d'autre.`;
   }).join('\n')
   : ""}
-
+${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génères une catégorie de boissons, tu DOIS obligatoirement inclure toutes ces boissons : ${wizardData.drinks.list}. N'en oublie aucune.` : ""}
 `;
       formData.set("sujet", compiledSubject.trim());
       formData.set("sourceInspiration", wizardData.theme);
@@ -336,7 +341,36 @@ ${Object.keys(wizardData.forcedItems).length > 0 ?
                    <input type="text" value={wizardData.accompaniments.list} onChange={e => setWizardData({...wizardData, accompaniments: {...wizardData.accompaniments, list: e.target.value}})} placeholder="Ex: Frites, Potatoes, Salade (séparés par virgule)" style={{ width: '100%', padding: '1rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '1rem' }} />
                    
                    <label style={{ display: 'block', fontWeight: 800, margin: '2rem 0 1rem 0', color: '#1e293b', fontSize: '1.2rem' }}>Boissons</label>
-                   <input type="text" value={wizardData.drinks.list} onChange={e => setWizardData({...wizardData, drinks: {...wizardData.drinks, list: e.target.value}})} placeholder="Coca-Cola, Fanta, Eau Sprite..." style={{ width: '100%', padding: '1rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '1rem' }} />
+                   
+                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '0.8rem', marginBottom: '1.5rem' }}>
+                      {GLOBAL_DRINKS_LIST.map(boisson => {
+                         const isSelected = wizardData.drinks.selectedGlobal?.includes(boisson);
+                         return (
+                            <label key={boisson} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: isSelected ? '#eef2ff' : '#f8fafc', padding: '0.8rem 1rem', borderRadius: '8px', border: isSelected ? '1px solid #4f46e5' : '1px solid #e2e8f0', cursor: 'pointer', transition: 'all 0.2s' }}>
+                                <input type="checkbox" checked={isSelected || false} onChange={e => {
+                                    const checked = e.target.checked;
+                                    let newSelected = [...(wizardData.drinks.selectedGlobal || [])];
+                                    if (checked) newSelected.push(boisson);
+                                    else newSelected = newSelected.filter(b => b !== boisson);
+                                    
+                                    const customList = wizardData.drinks.customList || "";
+                                    const newList = [...newSelected, customList].filter(Boolean).join(", ");
+                                    
+                                    setWizardData({...wizardData, drinks: {...wizardData.drinks, selectedGlobal: newSelected, list: newList}});
+                                }} style={{ width: '18px', height: '18px', accentColor: '#4f46e5' }} />
+                                <span style={{ fontWeight: 600, fontSize: '0.9rem', color: isSelected ? '#4f46e5' : '#334155' }}>{boisson}</span>
+                            </label>
+                         );
+                      })}
+                   </div>
+                   
+                   <label style={{ display: 'block', fontWeight: 600, margin: '0 0 0.5rem 0', color: '#475569', fontSize: '0.95rem' }}>Boissons supplémentaires (séparées par une virgule)</label>
+                   <input type="text" value={wizardData.drinks.customList || ""} onChange={e => {
+                       const customList = e.target.value;
+                       const newSelected = wizardData.drinks.selectedGlobal || [];
+                       const newList = [...newSelected, customList].filter(Boolean).join(", ");
+                       setWizardData({...wizardData, drinks: {...wizardData.drinks, customList, list: newList}});
+                   }} placeholder="Ex: Bière Pression, Limonade Maison..." style={{ width: '100%', padding: '1rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '1rem' }} />
 
                    <label style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', marginTop: '2rem', background: '#f8fafc', padding: '1.2rem', borderRadius: '12px', border: '1px solid #e2e8f0', cursor: 'pointer' }}>
                         <input type="checkbox" checked={wizardData.compositions.cookingOptions} onChange={e => setWizardData({...wizardData, compositions: {...wizardData.compositions, cookingOptions: e.target.checked}})} style={{ width: '20px', height: '20px', accentColor: '#4f46e5' }} />

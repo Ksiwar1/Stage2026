@@ -555,28 +555,43 @@ export function extractTrueDataFromCatalogue(catalogPath: string): string | null
     }
     
     let catStr = "";
+    let itemMapStr = "";
     if (data.categories) {
+       let globalItemCount = 0;
        for (const [catId, catObj] of Object.entries<any>(data.categories)) {
            if (catObj.archive === true || catObj.visibilityInfo?.isVisible === false || catObj.isVisible === false) continue;
            catStr += `[${catId}]:${catObj.title || catObj.name || catId}\n`;
-       }
-    }
-
-    let itemStr = "";
-    if (data.items) {
-       let itemCount = 0;
-       for (const [itemId, itemObj] of Object.entries<any>(data.items)) {
-           if (itemObj.archive === true || itemObj.visibilityInfo?.isVisible === false || itemObj.isVisible === false) continue;
            
-           // Limite augmentée d'éléments mais format string compressé
-           if (itemCount > 60) break; 
-           let name = itemObj.displayName?.dflt?.nameDef || itemObj.title || itemObj.name || itemId;
-           itemStr += `[${itemId}]:${name}\n`;
-           itemCount++;
+           let localItemStr = "";
+           let localItemCount = 0;
+           let catItems = catObj.items || {};
+           
+           const processItemIds = (itemsList: Array<string> | string[]) => {
+               for (const itId of itemsList) {
+                   if (!data.items || !data.items[itId]) continue;
+                   const iObj = data.items[itId];
+                   if (iObj.archive === true || iObj.visibilityInfo?.isVisible === false || iObj.isVisible === false) continue;
+                   if (localItemCount > 8 || globalItemCount > 50) break;
+                   let name = iObj.displayName?.dflt?.nameDef || iObj.title || iObj.name || itId;
+                   localItemStr += `  - [${itId}]:${name}\n`;
+                   localItemCount++;
+                   globalItemCount++;
+               }
+           };
+
+           if (Array.isArray(catItems)) {
+               processItemIds(catItems);
+           } else {
+               processItemIds(Object.keys(catItems));
+           }
+
+           if (localItemStr) {
+               itemMapStr += `\n### Famille: '${catObj.title || catObj.name || catId}' :\n${localItemStr}`;
+           }
        }
     }
 
-    return `\n-- CATALOGUE DISPONIBLE (MAPPAGE STRICT) --\nCATEGORIES:\n${catStr}PRODUITS:\n${itemStr}`;
+    return `\n-- CATALOGUE DISPONIBLE (MAPPAGE STRICT) --\nL'IA doit mapper ses produits en respectant strictement l'appartenance à ces familles. Interdiction absolue de prendre un produit d'une famille pour le mettre dans une catégorie non sensée.\n\nCATEGORIES DISPONIBLES:\n${catStr}\nPRODUITS PAR FAMILLE LOGIQUE:\n${itemMapStr}`;
   } catch (e) {
     console.error("ETK True Data Extraction Error :", e);
     return null;

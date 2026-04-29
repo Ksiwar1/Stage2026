@@ -88,22 +88,47 @@ export async function genererArchitectureAction(data: FormData) {
     }
     let trueDataSection = "";
     if (trueDataStr) {
-        trueDataSection = `\nVOICI LA SEULE BASE DE DONNÉES DE PRODUITS AUTORISÉE (La Source de Vérité) :\n\`\`\`json\n${trueDataStr}\n\`\`\`\n\nRÈGLES ABSOLUES :\n1. Tu ne dois utiliser QUE les identifiants présents dans 'AVAILABLE_ITEMS'.\n2. N'invente AUCUN produit qui n'est pas dans cette liste. L'invention de prix, de noms ou d'IDs est strictement interdite.\n3. Si la demande du client ou l'OCR mentionne une catégorie ou un produit TOTALEMENT ABSENT de la liste, IGNORE-LE. Il vaut mieux laisser la catégorie vide ("itemIds": []) plutôt que d'inventer des produits qui ne sont pas de la même thématique.\n`;
+        if (hasImage) {
+            trueDataSection = `\nVOICI LA BASE DE DONNÉES LOCALE (Source d'Inspiration) :\n\`\`\`json\n${trueDataStr}\n\`\`\`\n\nRÈGLES OCR DYNAMIQUES :\n1. Tu DOIS générer des produits basés EXCLUSIVEMENT sur l'image.\n2. L'image est la vérité absolue. Tu dois inventer de nouveaux identifiants ('itemIds') pour tout produit détecté sur l'image, n'essaie pas de te limiter strictement à la base locale si l'image réclame plus.\n`;
+        } else {
+            trueDataSection = `\nVOICI LA SEULE BASE DE DONNÉES DE PRODUITS AUTORISÉE (La Source de Vérité) :\n\`\`\`json\n${trueDataStr}\n\`\`\`\n\nRÈGLES ABSOLUES :\n1. Tu DOIS prioriser les identifiants présents dans 'AVAILABLE_ITEMS'.\n2. N'invente des produits QUE si le client a EXPLICITEMENT demandé une catégorie (ex: Pizzas) qui est totalement absente de la base. Dans ce cas unique, tu as l'autorisation d'inventer des produits avec de nouveaux IDs, noms et prix pour peupler cette catégorie.\n3. Pour le reste, l'invention de prix, de noms ou d'IDs hors-sujet est strictement interdite.\n`;
+        }
     }
 
     console.log("[PHASE 1] Génération de la Trame Intermédiaire...");
-    const promptSysteme1 = `Tu es un assistant restaurateur. Tu dois répondre STRICTEMENT en format JSON pur, sans texte MD. Tu vas créer un mappage de menu.${trueDataSection}
+    const promptSysteme1 = `Tu es un assistant restaurateur. Tu dois répondre STRICTEMENT en format JSON pur, sans aucune balise ni texte MD. Tu vas créer un mappage de menu.${trueDataSection}
+
+RÈGLES D'AUTOMATISATION ABSOLUES :
+1. Cohérence stricte : Une catégorie 'PIZZAS' ne doit contenir QUE des pizzas. Ne mets JAMAIS de tacos dans une catégorie de pizzas. S'il n'y a pas de produits correspondants, renvoie la catégorie vide ("items": []).
+2. Composition des Menus : Si tu crées ou assignes un produit de type "Menu" ou multichoix, tu DOIS obligatoirement générer sa composition détaillée ("steps") qui guide le client.
+
 Format attendu:
 {
   "categories": [
     {
       "name": "Catégorie 1",
-      "itemIds": ["id_item_real_1", "id_item_real_2"]
+      "items": [
+         {
+            "id": "item_1234",
+            "name": "Menu Burger",
+            "price": 10.50,
+            "description": "Un super menu",
+            "steps": [
+               {
+                  "title": "Choix de la Boisson",
+                  "minChoices": 1,
+                  "maxChoices": 1,
+                  "options": [
+                     { "id": "opt_coca", "name": "Coca Cola", "priceDelta": 0 }
+                  ]
+               }
+            ]
+         }
+      ]
     }
   ]
 }
-INSTRUCTION EXTRÊMEMENT CRITIQUE: Tu dois OBLIGATOIREMENT générer EXACTEMENT les catégories demandées par l'utilisateur du début à la fin (ex: Menus, Boissons, Desserts). Interdiction ABSOLUE d'en oublier une seule ! Si une catégorie est vide d'items, tu retournes quand même la catégorie avec "itemIds": [].
-AUCUN texte additionnel.`;
+INSTRUCTION EXTRÊMEMENT CRITIQUE: Tu dois OBLIGATOIREMENT générer EXACTEMENT les catégories demandées. Si tu pioches dans la BASE LOCALE, conserve bien l'identifiant exact dans "id" mais inclus cet identifiant sous forme d'objet complet. AUCUN texte additionnel.`;
 
     const promptUtilisateur1 = `Sujet demandé: ${sujetDemande}. Produis le JSON du menu.`;
     
@@ -276,10 +301,23 @@ export async function enrichirCarteAction(
                    if (wfCat.content) {
                        const firstItem = Object.values(wfCat.content)[0] as any;
                        if (firstItem && firstItem.type === "items") {
-                           // Find the item in memoryItems to see its modifier
                            const itmObjId = Object.keys(wfCat.content)[0];
-                           const itmObj = data.items?.[itmObjId];
-                           if (itmObj && itmObj.modifier) foundModId = itmObj.modifier;
+                           
+                           // ETK360 Native Mapping: Le modifier est dans wfCat.content[itm].content
+                           if (firstItem.content) {
+                               const innerKeys = Object.keys(firstItem.content);
+                               for (const mk of innerKeys) {
+                                   if (firstItem.content[mk].type === 'modifier') {
+                                       foundModId = mk;
+                                       break;
+                                   }
+                               }
+                           }
+                           
+                           if (!foundModId) {
+                               const itmObj = data.items?.[itmObjId];
+                               if (itmObj && itmObj.modifier) foundModId = itmObj.modifier;
+                           }
                        }
                    }
                    memoryWorkflowMeta.push({ catTitle: catTitle, modId: foundModId });
@@ -295,27 +333,57 @@ export async function enrichirCarteAction(
 
         // Résolution absolue du prix (Null ou Nombre)
         let rawTtc: number | null = null;
-        if (found.price) {
-           if (typeof found.price.dflt === 'object' && found.price.dflt !== null) {
-              rawTtc = found.price.dflt.ttc !== undefined ? found.price.dflt.ttc : null;
-           } else if (typeof found.price.dflt === 'number') {
-              rawTtc = found.price.dflt;
-           } else if (typeof found.price.ttc === 'number') {
-              rawTtc = found.price.ttc;
-           }
+        if (found.price !== undefined && found.price !== null) {
+            if (typeof found.price === 'number') {
+               rawTtc = found.price;
+            } else if (typeof found.price.dflt === 'object' && found.price.dflt !== null) {
+               rawTtc = found.price.dflt.ttc !== undefined ? found.price.dflt.ttc : null;
+            } else if (typeof found.price.dflt === 'number') {
+               rawTtc = found.price.dflt;
+            } else if (typeof found.price.ttc === 'number') {
+               rawTtc = found.price.ttc;
+            }
         } else if (found.priceTTC !== undefined) {
            rawTtc = found.priceTTC;
         }
 
+        const safeId = typeof rId === 'string' ? rId : require("crypto").randomUUID();
+
         return {
           ...JSON.parse(JSON.stringify(found)), // Clone intégral pour préserver la donnée originelle stricte
-          id: rId,
-          ref: found.ref || `REF_${rId}`,
+          id: safeId,
+          ref: typeof found.ref === 'string' ? found.ref : `REF_${String(safeId).substring(0,8)}`,
           type: found.type === 'modifier' ? 'modifier' : 'item',
           title: extractedTitle,
           description: found.description || undefined, // On préserve le formattage objet ou string
-          price: { dflt: { ttc: rawTtc } },
-          img: found.img || (found.image ? { dflt: { img: found.image } } : undefined)
+          price: { dflt: { ttc: rawTtc !== null ? rawTtc : 0 } },
+          img: found.img || (found.image ? { dflt: { img: found.image, salesSupport: {} } } : { dflt: { img: "no-pictures.svg", salesSupport: {} } }),
+          fid: found.fid || "",
+          opt: found.opt || {},
+          qty: found.qty ?? 1,
+          rank: found.rank ?? 0,
+          unit: found.unit || "unit",
+          offer: found.offer || "",
+          prSize: found.prSize || "",
+          archive: found.archive || false,
+          barCode: found.barCode || "",
+          liaison: Array.isArray(found.liaison) ? found.liaison : [],
+          calories: found.calories ?? 0,
+          outStock: found.outStock || false,
+          printers: found.printers || [],
+          sizeList: found.sizeList || [],
+          suspSale: found.suspSale || false,
+          variants: found.variants || [],
+          allergens: found.allergens || [],
+          basicComp: found.basicComp || false,
+          isComment: found.isComment || false,
+          active_qty: found.active_qty || false,
+          isRedirect: found.isRedirect || false,
+          linkedTags: found.linkedTags || [],
+          nutriScore: found.nutriScore || "",
+          stepVisibility: found.stepVisibility || { dflt: { 1: [], 2: [], 3: [], 4: [] }, isVisible: true, basicCompVisibility: true },
+          visibilityInfo: found.visibilityInfo || { dflt: { 1: [], 2: [], 3: [], 4: [] }, isVisible: true, basicCompVisibility: true },
+          isOptionChoice: found.isOptionChoice || false
         };
     };
 
@@ -363,7 +431,7 @@ export async function enrichirCarteAction(
                         const itm = memoryItems[oldItemId];
                         if (!itm) return;
                         
-                        const newItemId = randomUUID();
+                        const newItemId = oldItemId;
                         fData.steps[newStepId].stepItems[newItemId] = { 
                             rank: sourceItems[oldItemId]?.rank || 0,
                             priceStep: sourceItems[oldItemId]?.priceStep || 0,
@@ -372,21 +440,93 @@ export async function enrichirCarteAction(
                             ...sourceItems[oldItemId]
                         };
                         
-                        fData.items[newItemId] = buildBaseETK360Item(newItemId, itm);
+                        if (!fData.items[newItemId]) {
+                            fData.items[newItemId] = buildBaseETK360Item(newItemId, itm);
+                            if (itm.modifier) {
+                                const nestedModId = cloneGeneticModifier(itm.modifier, newItemId, fData);
+                                if (nestedModId) fData.items[newItemId].modifier = nestedModId;
+                            }
+                        }
                         
                         // Remap the override pointer if it exists in the modifier configuration
                         if (fData.modifier[newModId].steps[newStepId].stepItems && mod.steps[oldStepId].stepItems && mod.steps[oldStepId].stepItems[oldItemId]) {
                              fData.modifier[newModId].steps[newStepId].stepItems[newItemId] = mod.steps[oldStepId].stepItems[oldItemId];
                         }
-                        
-                        if (itm.modifier) {
-                            const nestedModId = cloneGeneticModifier(itm.modifier, newItemId, fData);
-                            if (nestedModId) fData.items[newItemId].modifier = nestedModId;
-                        }
                     });
                 }
             });
         }
+        return newModId;
+    };
+
+    // Nouveau Moteur de Rendu : Transformateur natif (AI 'steps' array -> ETK360 nested dictionary)
+    const buildNativeModifierFromAiSteps = (aiSteps: any[], parentItemId: string, fData: any): string => {
+        const { randomUUID } = require("crypto");
+        const newModId = randomUUID();
+        
+        fData.modifier[newModId] = { 
+            "uuid-item": parentItemId, 
+            archive: false, 
+            status: "ready", 
+            steps: {} 
+        };
+        
+        aiSteps.forEach((aiStep, sIndex) => {
+            const newStepId = randomUUID();
+            fData.modifier[newModId].steps[newStepId] = { rank: sIndex + 1 };
+            
+            fData.steps[newStepId] = {
+                id: newStepId,
+                ref: `STEP_${newStepId.substring(0,6)}`,
+                title: aiStep.title || "Choix",
+                archive: false,
+                isBasic: false,
+                isComment: false,
+                stepItems: {},
+                maxChoices: typeof aiStep.maxChoices === 'number' ? aiStep.maxChoices : 1,
+                minChoices: typeof aiStep.minChoices === 'number' ? aiStep.minChoices : 0,
+                displayName: { dflt: { imp: [], nameDef: aiStep.title || "Choix", salesSupport: {} } },
+                isModifiable: true,
+                specificOpts: {},
+                rank: sIndex + 1
+            };
+            
+            const aiOptions = aiStep.options || aiStep.items || [];
+            aiOptions.forEach((opt: any, oIndex: number) => {
+                let optId = opt.id;
+                
+                if (!optId || !memoryItems[optId]) {
+                   const foundKey = Object.keys(memoryItems).find(k => {
+                       const mItm = memoryItems[k];
+                       const title = mItm.displayName?.dflt?.nameDef || mItm.title || mItm.name;
+                       const optTitle = opt.name || opt.title;
+                       return title && optTitle && title.toLowerCase() === optTitle.toLowerCase();
+                   });
+                   optId = foundKey || opt.id || randomUUID();
+                }
+                
+                fData.steps[newStepId].stepItems[optId] = {
+                    rank: oIndex + 1,
+                    priceStep: opt.priceDelta || opt.price || 0,
+                    maxChoices: 1,
+                    minChoices: 0
+                };
+                
+                if (!fData.items[optId]) {
+                    const sourceItm = memoryItems[optId];
+                    if (sourceItm) {
+                        fData.items[optId] = buildBaseETK360Item(optId, sourceItm);
+                        if (sourceItm.modifier) {
+                            const nestedModId = cloneGeneticModifier(sourceItm.modifier, optId, fData);
+                            if (nestedModId) fData.items[optId].modifier = nestedModId;
+                        }
+                    } else {
+                        fData.items[optId] = buildBaseETK360Item(optId, opt);
+                    }
+                }
+            });
+        });
+        
         return newModId;
     };
 
@@ -440,18 +580,11 @@ export async function enrichirCarteAction(
             }
         }
         
-        // 3. Fallback d'Urgence absolu : Seulement pour les PLATS
-        if (isPlat) {
-            const fallbackMenu = memoryWorkflowMeta.find(m => normalizeCategory(m.catTitle) === "menu" && m.modId);
-            if (fallbackMenu) return fallbackMenu.modId;
-            
-            // Si pas de 'menu', on prend le premier modifier disponible lié à un plat
-            const fallbackAnyPlat = memoryWorkflowMeta.find(m => ["pizza", "burger", "tacos", "salade"].includes(normalizeCategory(m.catTitle)) && m.modId);
-            if (fallbackAnyPlat) return fallbackAnyPlat.modId;
-        }
+        // 3. Fallback désactivé sur demande de l'utilisateur : ne jamais injecter un modifier d'une autre famille
+        // Même si c'est un "Plat", un Burger ne doit pas donner ses options à une Pizza.
 
         // AUDIT : Logging en cas de non-classification / silencieux pour les outils d'observation
-        console.warn(`[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "${aiCatName}" (Classifiée: ${normalNeedle}). L'item sera injecté pur (sans modifier).`);
+        console.warn(`[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "${needle}" (Classifiée: ${normalNeedle}). L'item sera injecté pur (sans modifier).`);
 
         return null; // Pas de modifier sûr détecté
     };
@@ -464,7 +597,20 @@ export async function enrichirCarteAction(
         Object.keys(finalData.categories).forEach(cId => {
             finalData.categories[cId].id = cId;
             finalData.categories[cId].rank = finalData.workflow[cId]?.rank || 0;
-            // Ne pas écraser ni purger les child/items si on veut respecter le JSON originel strict
+            
+            // Il faut absolument purger les items et child hérités du catalogue global. 
+            // Ce catalogue IA est un sous-ensemble : on ne garde pas les vieux UUIDs fantômes.
+            if (Array.isArray(finalData.categories[cId].items)) {
+                finalData.categories[cId].items = [];
+            } else {
+                finalData.categories[cId].items = []; // Force Array per ETK360 specs
+            }
+            
+            if (Array.isArray(finalData.categories[cId].child)) {
+                finalData.categories[cId].child = [];
+            } else {
+                finalData.categories[cId].child = []; // Force Array per ETK360 specs
+            }
         });
 
         // We clean the content of the workflow to insert our brand new AI items
@@ -477,9 +623,9 @@ export async function enrichirCarteAction(
 
     if (sourceCategories.length > 0) {
         const { randomUUID } = require("crypto");
-        let fallbackCatRank = Object.keys(finalData.workflow).length + 1;
+        const activeCategoryIds = new Set<string>();
 
-        sourceCategories.forEach((aiCat: any) => {
+        sourceCategories.forEach((aiCat: any, aiIndex: number) => {
             const aiCatName = aiCat.name || aiCat.nom || aiCat.title || aiCat.titre || "Nouvelle Catégorie";
             
             let targetCatId = null;
@@ -492,22 +638,49 @@ export async function enrichirCarteAction(
                     targetCatId = wCatId;
                     break;
                 }
+            }
+            
+            if (targetCatId) {
+                activeCategoryIds.add(targetCatId);
+            }
+
             if (!targetCatId) {
                 targetCatId = randomUUID();
-                const newCatRank = fallbackCatRank++;
-                finalData.workflow[targetCatId] = { type: "categories", rank: newCatRank, content: {} };
+                activeCategoryIds.add(targetCatId);
+                finalData.workflow[targetCatId] = { type: "categories", rank: 0, content: {} };
                 finalData.categories[targetCatId] = {
-                    id: targetCatId,
+                    img: { dflt: { img: "no-pictures.svg", salesSupport: {} } },
+                    ref: `CAT_${targetCatId.substring(0,6)}`,
+                    rank: 0,
+                    child: [],
+                    color: finalData.theme.palette[Math.floor(Math.random() * finalData.theme.palette.length)],
+                    items: [],
                     title: aiCatName,
-                    isVisible: true,
-                    items: {},
-                    child: {},
-                    color: finalData.theme.palette[Math.floor(Math.random() * finalData.theme.palette.length)]
+                    video: { url: "", type: "" },
+                    idCard: 1,
+                    parent: "",
+                    archive: false,
+                    liaison: [],
+                    isNameShow: true,
+                    linkedTags: [],
+                    description: { dflt: { imp: [], nameDef: "", salesSupport: {} } },
+                    displayName: { dflt: { imp: [], nameDef: aiCatName, salesSupport: {} } },
+                    linkedChild: [],
+                    linkedItems: [],
+                    visibilityInfo: { dflt: { 1: [], 2: [], 3: [], 4: [] }, isVisible: true, basicCompVisibility: true },
+                    isInfoModeActive: false,
+                    id: targetCatId,
+                    isVisible: true
                 };
             }
+            // FIX 2: Synchronize Rank perfectly with AI intention
+            const currentCatRank = aiIndex + 1;
+            finalData.workflow[targetCatId].rank = currentCatRank;
+            finalData.categories[targetCatId].rank = currentCatRank;
             finalData.categories[targetCatId].title = aiCatName;
-            if (!finalData.categories[targetCatId].items) finalData.categories[targetCatId].items = {};
-            if (!finalData.categories[targetCatId].child) finalData.categories[targetCatId].child = {};
+            
+            if (!finalData.categories[targetCatId].items) finalData.categories[targetCatId].items = [];
+            if (!finalData.categories[targetCatId].child) finalData.categories[targetCatId].child = [];
 
             let aiItemIds = aiCat.itemIds || aiCat.items || [];
             
@@ -520,66 +693,102 @@ export async function enrichirCarteAction(
                     if (!realItemId) return;
                     let sourceItem = memoryItems[realItemId];
                     
-                    // FEATURE : Si la BDD (memoryItems) ne contient pas l'item, mais que l'IA l'a généré grâce à l'OCR de l'image ("generique")
+                    // FEATURE : L'IA a généré l'item de façon dynamique (OCR ou invention contrainte)
                     if (!sourceItem) {
-                        const parsedAiItems = intermediate.items || intermediate.products || [];
-                        if (Array.isArray(parsedAiItems)) {
-                            const found = parsedAiItems.find((it: any) => it.id === realItemId || it.itemId === realItemId);
-                            if (found) {
-                                sourceItem = buildBaseETK360Item(realItemId, found);
-                            }
-                        } else if (typeof parsedAiItems === 'object') {
-                            const found = parsedAiItems[realItemId];
-                            if (found) {
-                                sourceItem = buildBaseETK360Item(realItemId, found);
+                        if (typeof aiItemId === 'object' && (aiItemId.name || aiItemId.title)) {
+                            sourceItem = buildBaseETK360Item(realItemId, aiItemId);
+                        } else {
+                            const parsedAiItems = intermediate.items || intermediate.products || [];
+                            if (Array.isArray(parsedAiItems)) {
+                                const found = parsedAiItems.find((it: any) => it.id === realItemId || it.itemId === realItemId);
+                                if (found) {
+                                    sourceItem = buildBaseETK360Item(realItemId, found);
+                                }
+                            } else if (typeof parsedAiItems === 'object') {
+                                const found = parsedAiItems[realItemId];
+                                if (found) {
+                                    sourceItem = buildBaseETK360Item(realItemId, found);
+                                }
                             }
                         }
                     }
 
-                    if (!sourceItem) return; // Véritable hallucination sans donnée source, on skip.
+                    if (!sourceItem) return; // Véritable hallucination sans donnée source
                     
-                    // We must deep copy it to avoid reference issues if AI picked it multiple times
                     const newItemId = randomUUID();
                     finalData.items[newItemId] = JSON.parse(JSON.stringify(sourceItem));
-                    finalData.items[newItemId].id = Math.floor(Math.random() * 900) + 1000; // Legacy UX standard
+                    finalData.items[newItemId].id = Math.floor(Math.random() * 900) + 1000; 
                     finalData.items[newItemId].isVisible = true;
-
-                    // If it has a modifier natively, clone it!
-                    if (sourceItem.modifier) {
+                    // FIX 1: Assurer que l'item pointe bien sur sa catégorie visuelle parente
+                    finalData.items[newItemId].parent = targetCatId; 
+                    
+                    // Injection des Steps OCR (Intelligence Artificielle pure)
+                    if (sourceItem.steps && Array.isArray(sourceItem.steps) && sourceItem.steps.length > 0) {
+                        const newModId = buildNativeModifierFromAiSteps(sourceItem.steps, newItemId, finalData);
+                        finalData.items[newItemId].modifier = newModId;
+                    } else {
+                        // Sinon Fallback classique vers l'existant
                         const uniqueClonedModId = cloneGeneticModifier(sourceItem.modifier, newItemId, finalData);
                         if (uniqueClonedModId) {
                             finalData.items[newItemId].modifier = uniqueClonedModId;
+                        } else {
+                            const scavengedModId = getScavengedModifierForCategory(aiCatName);
+                            if (scavengedModId) {
+                                const scavCloneMod = cloneGeneticModifier(scavengedModId, newItemId, finalData);
+                                if (scavCloneMod) finalData.items[newItemId].modifier = scavCloneMod;
+                            }
                         }
-                    } else {
-                         // Siphon métier contraint (RAG restreint ou OCR générique)
-                         const scavengedModId = getScavengedModifierForCategory(aiCatName);
-                         if (scavengedModId) {
-                             const uniqueClonedModId = cloneGeneticModifier(scavengedModId, newItemId, finalData);
-                             if (uniqueClonedModId) {
-                                 finalData.items[newItemId].modifier = uniqueClonedModId;
-                             }
-                         }
                     }
 
                     // Attach to workflow AND categories (Dual-Binding Single Source of Truth)
+                    if (!finalData.workflow[targetCatId].content) finalData.workflow[targetCatId].content = {};
                     finalData.workflow[targetCatId].content[newItemId] = { 
                         type: "items", 
                         rank: itemRankCounter++ 
                     };
                     
                     if (finalData.items[newItemId].modifier) {
-                        finalData.workflow[targetCatId].content[newItemId].modifier = finalData.items[newItemId].modifier;
+                        const mId = finalData.items[newItemId].modifier;
+                        // Injection Native ETK360 : le modifier vit dans le content du workflow de l'item !
+                        finalData.workflow[targetCatId].content[newItemId].content = {
+                            [mId]: { type: "modifier", rank: 1 }
+                        };
                     }
                     
                     // Dual Binding for ETK360 parser consistency (Restored per exact JSON specs)
-                    if (!finalData.categories[targetCatId].items) finalData.categories[targetCatId].items = {};
-                    finalData.categories[targetCatId].items[newItemId] = { ...finalData.workflow[targetCatId].content[newItemId] };
+                    if (!finalData.categories[targetCatId].items) finalData.categories[targetCatId].items = [];
+                    
+                    if (Array.isArray(finalData.categories[targetCatId].items)) {
+                        if (!finalData.categories[targetCatId].items.includes(newItemId)) {
+                            finalData.categories[targetCatId].items.push(newItemId);
+                        }
+                    } else {
+                        finalData.categories[targetCatId].items = [newItemId];
+                    }
                 });
             }
 
             // RÈGLE MÉTIER : On conserve la catégorie même si elle est vide (0 produit valide).
             // Le Front-End (KioskSimulator) gèrera l'affichage "Aucun produit disponible".
             // Suppression du code de nettoyage agressif.
+        });
+        
+        // Nettoyage strict : archiver et cacher toutes les catégories locales non demandées par l'IA
+        Object.keys(finalData.categories).forEach(cId => {
+            if (!activeCategoryIds.has(cId)) {
+                finalData.categories[cId].isVisible = false;
+                finalData.categories[cId].archive = true;
+                
+                if (finalData.categories[cId].visibilityInfo) {
+                    finalData.categories[cId].visibilityInfo.isVisible = false;
+                    finalData.categories[cId].visibilityInfo.basicCompVisibility = false;
+                }
+                
+                // Retirer de la racine du workflow pour garantir l'absence totale dans la borne
+                if (finalData.workflow[cId]) {
+                    delete finalData.workflow[cId];
+                }
+            }
         });
     }
 
@@ -667,10 +876,18 @@ export async function enrichirCarteAction(
         
         // Check 3: Categories Dual Binding Check
         for (const cId of Object.keys(rootCats)) {
-            const catItems = rootCats[cId].items || {};
-            for (const itemId of Object.keys(catItems)) {
-                if (!rootItems[itemId]) {
-                    throw new Error(`Item '${itemId}' is tied to category '${cId}' but does NOT exist in global database.`);
+            const catItems = rootCats[cId].items;
+            if (Array.isArray(catItems)) {
+                for (const itemId of catItems) {
+                    if (typeof itemId === 'string' && !rootItems[itemId]) {
+                        throw new Error(`Item '${itemId}' is tied to category '${cId}' but does NOT exist in global database.`);
+                    }
+                }
+            } else if (catItems && typeof catItems === 'object') {
+                for (const itemId of Object.keys(catItems)) {
+                    if (!rootItems[itemId]) {
+                        throw new Error(`Item '${itemId}' is tied to category '${cId}' but does NOT exist in global database.`);
+                    }
                 }
             }
         }
@@ -683,7 +900,33 @@ export async function enrichirCarteAction(
         console.error("FATAL ETK360 GENERATION PARSE:", e.message);
         return JSON.stringify({ success: false, error: `Validation de structure échouée: ${e.message}` });
     }
-    let jsonResponse = JSON.stringify(finalData, null, 2);
+    const orderedRootFields = [
+        "opt", "etat", "tags", "color", "items", "steps", "title", "remark", 
+        "status", "Planning", "idEntite", "modifier", "operator", "shoplist", 
+        "workflow", "allergens", "isAutoRef", "categories", "workflowList", 
+        "isUniqueTitle", "allergenGroups", "dateModification", "iuudCardReference"
+    ];
+
+    const orderedFinalData: any = {};
+    
+    // 1. Force the strict order for recognized fields
+    for (const key of orderedRootFields) {
+        if (finalData[key] !== undefined) {
+            orderedFinalData[key] = finalData[key];
+        } else {
+            // Optional: you can choose to initialize missing fields if required by ETK360, 
+            // but the user said "sans toucher à ce qu'ils contiennent", so we only reorder existing ones.
+        }
+    }
+    
+    // 2. Append any remaining extra fields (like themeMetadata, theme, etc.) at the end
+    for (const key of Object.keys(finalData)) {
+        if (!orderedRootFields.includes(key)) {
+            orderedFinalData[key] = finalData[key];
+        }
+    }
+
+    let jsonResponse = JSON.stringify(orderedFinalData, null, 2);
 
     if (sauvegarder) {
       const timestamp = Date.now();
