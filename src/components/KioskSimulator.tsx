@@ -348,6 +348,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
         }
         return nodeTotal;
      };
+     let total = 0;
      if (selectedProduct.priceTTC !== null && selectedProduct.priceTTC !== undefined) {
          total += selectedProduct.priceTTC;
      }

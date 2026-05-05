@@ -91,7 +91,7 @@ export async function genererArchitectureAction(data: FormData) {
         if (hasImage) {
             trueDataSection = `\nVOICI LA BASE DE DONNÉES LOCALE (Source d'Inspiration) :\n\`\`\`json\n${trueDataStr}\n\`\`\`\n\nRÈGLES OCR DYNAMIQUES :\n1. Tu DOIS générer des produits basés EXCLUSIVEMENT sur l'image.\n2. L'image est la vérité absolue. Tu dois inventer de nouveaux identifiants ('itemIds') pour tout produit détecté sur l'image, n'essaie pas de te limiter strictement à la base locale si l'image réclame plus.\n`;
         } else {
-            trueDataSection = `\nVOICI LA SEULE BASE DE DONNÉES DE PRODUITS AUTORISÉE (La Source de Vérité) :\n\`\`\`json\n${trueDataStr}\n\`\`\`\n\nRÈGLES ABSOLUES :\n1. Tu DOIS prioriser les identifiants présents dans 'AVAILABLE_ITEMS'.\n2. N'invente des produits QUE si le client a EXPLICITEMENT demandé une catégorie (ex: Pizzas) qui est totalement absente de la base. Dans ce cas unique, tu as l'autorisation d'inventer des produits avec de nouveaux IDs, noms et prix pour peupler cette catégorie.\n3. Pour le reste, l'invention de prix, de noms ou d'IDs hors-sujet est strictement interdite.\n`;
+            trueDataSection = `\nVOICI LA SEULE BASE DE DONNÉES DE PRODUITS AUTORISÉE (La Source de Vérité) :\n\`\`\`json\n${trueDataStr}\n\`\`\`\n\nRÈGLES ABSOLUES :\n1. Tu DOIS prioriser les identifiants présents dans 'AVAILABLE_ITEMS'.\n2. Si le client a EXPLICITEMENT demandé une catégorie (ex: Tacos, Pizzas) qui est TOTALEMENT ABSENTE de la base locale, tu AS L'OBLIGATION d'inventer au moins 5 produits avec de nouveaux IDs (UUID), noms et prix pour la peupler. NE RENVOIE JAMAIS UNE CATÉGORIE VIDE si elle a été demandée.\n3. Pour le reste, l'invention de prix, de noms ou d'IDs hors-sujet est strictement interdite.\n`;
         }
     }
 
@@ -99,8 +99,11 @@ export async function genererArchitectureAction(data: FormData) {
     const promptSysteme1 = `Tu es un assistant restaurateur. Tu dois répondre STRICTEMENT en format JSON pur, sans aucune balise ni texte MD. Tu vas créer un mappage de menu.${trueDataSection}
 
 RÈGLES D'AUTOMATISATION ABSOLUES :
-1. Cohérence stricte : Une catégorie 'PIZZAS' ne doit contenir QUE des pizzas. Ne mets JAMAIS de tacos dans une catégorie de pizzas. S'il n'y a pas de produits correspondants, renvoie la catégorie vide ("items": []).
-2. Composition des Menus : Si tu crées ou assignes un produit de type "Menu" ou multichoix, tu DOIS obligatoirement générer sa composition détaillée ("steps") qui guide le client.
+1. Cohérence stricte : Une catégorie 'PIZZAS' ne doit contenir QUE des pizzas. Si le client réclame un thème absent, INVENTE LES PRODUITS, ne renvoie jamais la catégorie vide ("items": []).
+2. INTERDICTION D'INVENTER DES CATÉGORIES : Ne crée JAMAIS de catégories qui n'ont pas été explicitement demandées par l'utilisateur ou trouvées sur l'image (ex: ne génère pas de "Desserts" si on ne te le demande pas).
+3. INTERDICTION D'INVENTER DES PRODUITS : Tu DOIS te limiter strictement aux produits présents dans la base locale (AVAILABLE_ITEMS) pour une catégorie donnée. N'ajoute pas de produits "fictifs" (ex: Pizza Ananas) si cette catégorie existe déjà dans la base.
+4. Composition des Menus : Si tu crées ou assignes un produit de type "Menu" ou multichoix, tu DOIS obligatoirement générer sa composition détaillée ("steps") qui guide le client.
+
 
 Format attendu:
 {
@@ -109,7 +112,7 @@ Format attendu:
       "name": "Catégorie 1",
       "items": [
          {
-            "id": "item_1234",
+            "id": "550e8400-e29b-41d4-a716-446655440000",
             "name": "Menu Burger",
             "price": 10.50,
             "description": "Un super menu",
@@ -119,7 +122,7 @@ Format attendu:
                   "minChoices": 1,
                   "maxChoices": 1,
                   "options": [
-                     { "id": "opt_coca", "name": "Coca Cola", "priceDelta": 0 }
+                     { "id": "123e4567-e89b-12d3-a456-426614174000", "name": "Coca Cola", "priceDelta": 0 }
                   ]
                }
             ]
@@ -128,7 +131,7 @@ Format attendu:
     }
   ]
 }
-INSTRUCTION EXTRÊMEMENT CRITIQUE: Tu dois OBLIGATOIREMENT générer EXACTEMENT les catégories demandées. Si tu pioches dans la BASE LOCALE, conserve bien l'identifiant exact dans "id" mais inclus cet identifiant sous forme d'objet complet. AUCUN texte additionnel.`;
+INSTRUCTION EXTRÊMEMENT CRITIQUE: Tu dois OBLIGATOIREMENT générer EXACTEMENT les catégories demandées. Si tu pioches dans la BASE LOCALE, conserve bien l'identifiant exact. TOUS LES NOUVEAUX IDS ('id') DOIVENT ÊTRE DES UUIDs UNIQUES STRICTEMENT AU FORMAT 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'. AUCUN NOM LISIBLE COMME 'opt_tomate' OU 'item_1' N'EST AUTORISÉ DANS LES CLÉS. N'inclus jamais d'objet dans la valeur de "id", cela doit rester une simple string. AUCUN texte additionnel.`;
 
     const promptUtilisateur1 = `Sujet demandé: ${sujetDemande}. Produis le JSON du menu.`;
     
@@ -283,9 +286,23 @@ export async function enrichirCarteAction(
                // Clonage de TOUTES les propriétés natives racines
                Object.keys(data).forEach(key => {
                    if (!['workflow', 'categories', 'items', 'modifier', 'steps', 'theme', 'title'].includes(key)) {
-                       (finalData as any)[key] = data[key];
+                       // Clone profond pour éviter les références
+                       (finalData as any)[key] = JSON.parse(JSON.stringify(data[key]));
                    }
                });
+
+               // Écrasement du nom du restaurant (Company) dans la shoplist d'origine pour éviter les vieux noms (ex: Softavera)
+               if ((finalData as any).shoplist && typeof (finalData as any).shoplist === 'object') {
+                   const shopKeys = Object.keys((finalData as any).shoplist);
+                   shopKeys.forEach(shopId => {
+                       const shop = (finalData as any).shoplist[shopId];
+                       if (restaurantName) shop.Company = restaurantName;
+                       // Nettoyage des "undefined" strings illégaux
+                       Object.keys(shop).forEach(k => {
+                           if (shop[k] === "undefined") shop[k] = null;
+                       });
+                   });
+               }
             }
             Object.assign(memoryCategories, data.categories || {});
             Object.assign(memoryModifiers, data.modifier || {});
@@ -326,10 +343,62 @@ export async function enrichirCarteAction(
         } catch(e) {}
     });
 
+    const ALLERGENS_REGISTRY: Record<string, string> = {
+        'gluten': 'a1000000-0000-0000-0000-000000000001',
+        'crustacé': 'a1000000-0000-0000-0000-000000000002',
+        'crustace': 'a1000000-0000-0000-0000-000000000002',
+        'oeuf': 'a1000000-0000-0000-0000-000000000003',
+        'poisson': 'a1000000-0000-0000-0000-000000000004',
+        'arachide': 'a1000000-0000-0000-0000-000000000005',
+        'soja': 'a1000000-0000-0000-0000-000000000006',
+        'lait': 'a1000000-0000-0000-0000-000000000007',
+        'fromage': 'a1000000-0000-0000-0000-000000000007',
+        'noix': 'a1000000-0000-0000-0000-000000000008',
+        'fruit à coque': 'a1000000-0000-0000-0000-000000000008',
+        'céleri': 'a1000000-0000-0000-0000-000000000009',
+        'celeri': 'a1000000-0000-0000-0000-000000000009',
+        'moutarde': 'a1000000-0000-0000-0000-000000000010',
+        'sésame': 'a1000000-0000-0000-0000-000000000011',
+        'sesame': 'a1000000-0000-0000-0000-000000000011',
+        'sulfite': 'a1000000-0000-0000-0000-000000000012',
+        'lupin': 'a1000000-0000-0000-0000-000000000013',
+        'mollusque': 'a1000000-0000-0000-0000-000000000014'
+    };
+
+    const parseAllergens = (text: string) => {
+        if (!text || typeof text !== 'string') return [];
+        const found = new Set<string>();
+        const lower = text.toLowerCase();
+        for (const [key, uuid] of Object.entries(ALLERGENS_REGISTRY)) {
+            if (lower.includes(key)) found.add(uuid);
+        }
+        return Array.from(found);
+    };
+
     const buildBaseETK360Item = (rId: string, found: any) => {
-        // Extraction propre du texte
-        const extractedTitle = found.displayName?.dflt?.nameDef || found.title || found.name || rId;
+        // Source de vérité : title en premier, sinon nameDef, sinon name
+        const extractedTitle = found.title || found.displayName?.dflt?.nameDef || found.name || rId;
         const extractedDesc = typeof found.description === 'string' ? found.description : (found.description?.dflt?.nameDef || "");
+
+        // Parsing Allergènes
+        let itemAllergens = Array.isArray(found.allergens) && found.allergens.length > 0 ? found.allergens : [];
+        if (itemAllergens.length === 0 && extractedDesc) {
+            itemAllergens = parseAllergens(extractedDesc);
+        }
+
+        // Qty, prSize conversion
+        let qtyNum = typeof found.qty === 'number' ? found.qty : parseInt(String(found.qty), 10);
+        if (isNaN(qtyNum)) qtyNum = 1;
+        
+        let prSizeNum = typeof found.prSize === 'number' ? found.prSize : parseInt(String(found.prSize), 10);
+        if (isNaN(prSizeNum)) prSizeNum = 0;
+
+        // SizeList
+        let sizeListArray = Array.isArray(found.sizeList) ? found.sizeList : [];
+
+        // Description et displayName uniformisés (dflt object)
+        const normalizedDescription = { dflt: { nameDef: extractedDesc, imp: [], salesSupport: {} } };
+        const normalizedDisplayName = { dflt: { nameDef: extractedTitle, imp: [], salesSupport: {} } };
 
         // Résolution absolue du prix (Null ou Nombre)
         let rawTtc: number | null = null;
@@ -347,49 +416,64 @@ export async function enrichirCarteAction(
            rawTtc = found.priceTTC;
         }
 
-        const safeId = typeof rId === 'string' ? rId : require("crypto").randomUUID();
+        const safeId = typeof rId === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(rId) ? rId : require("crypto").randomUUID();
+
+        const baseClone = JSON.parse(JSON.stringify(found));
+        // Remove duplicate legacy properties
+        delete baseClone.name;
 
         return {
-          ...JSON.parse(JSON.stringify(found)), // Clone intégral pour préserver la donnée originelle stricte
+          ...baseClone, // Clone intégral pour préserver la donnée originelle stricte
           id: safeId,
-          ref: typeof found.ref === 'string' ? found.ref : `REF_${String(safeId).substring(0,8)}`,
-          type: found.type === 'modifier' ? 'modifier' : 'item',
-          title: extractedTitle,
-          description: found.description || undefined, // On préserve le formattage objet ou string
-          price: { dflt: { ttc: rawTtc !== null ? rawTtc : 0 } },
-          img: found.img || (found.image ? { dflt: { img: found.image, salesSupport: {} } } : { dflt: { img: "no-pictures.svg", salesSupport: {} } }),
-          fid: found.fid || "",
+          fid: found.fid || 0,
+          ing: found.ing || {},
           opt: found.opt || {},
-          qty: found.qty ?? 1,
+          ref: typeof found.ref === 'string' && found.ref.startsWith('REF_') ? found.ref : (found.ref || `REF_${String(safeId).substring(0,8)}`),
+          type: found.type === 'modifier' ? 'modifier' : 'item',
+          menu: found.menu || {},
           rank: found.rank ?? 0,
-          unit: found.unit || "unit",
-          offer: found.offer || "",
-          prSize: found.prSize || "",
+          unit: found.unit || {},
+          color: found.color || "#FFFFFF",
+          offer: found.offer || {},
+          price: { dflt: { ttc: rawTtc !== null ? rawTtc : 0 } },
+          steps: found.steps || [],
+          title: extractedTitle,
+          parent: found.parent || "",
+          prSize: prSizeNum,
+          showBc: found.showBc ?? true,
           archive: found.archive || false,
           barCode: found.barCode || "",
+          extrRef: found.extrRef || "",
           liaison: Array.isArray(found.liaison) ? found.liaison : [],
           calories: found.calories ?? 0,
           outStock: found.outStock || false,
           printers: found.printers || [],
-          sizeList: found.sizeList || [],
-          suspSale: found.suspSale || false,
+          sizeList: sizeListArray,
+          suspSale: found.suspSale || [],
           variants: found.variants || [],
-          allergens: found.allergens || [],
-          basicComp: found.basicComp || false,
+          allergens: itemAllergens,
+          basicComp: found.basicComp || {},
           isComment: found.isComment || false,
           active_qty: found.active_qty || false,
           isRedirect: found.isRedirect || false,
           linkedTags: found.linkedTags || [],
-          nutriScore: found.nutriScore || "",
-          stepVisibility: found.stepVisibility || { dflt: { 1: [], 2: [], 3: [], 4: [] }, isVisible: true, basicCompVisibility: true },
-          visibilityInfo: found.visibilityInfo || { dflt: { 1: [], 2: [], 3: [], 4: [] }, isVisible: true, basicCompVisibility: true },
-          isOptionChoice: found.isOptionChoice || false
+          nutriScore: found.nutriScore || {},
+          description: normalizedDescription,
+          displayName: normalizedDisplayName,
+          isTitleShow: found.isTitleShow ?? true,
+          creationType: found.creationType || "catalogue",
+          hideZeroPrice: found.hideZeroPrice || false,
+          isOptionChoice: found.isOptionChoice || false,
+          stepVisibility: found.stepVisibility || {},
+          visibilityInfo: found.visibilityInfo || {},
+          img: found.img || (found.image ? { dflt: { img: found.image, salesSupport: {} } } : { dflt: { img: "no-pictures.svg", salesSupport: {} } }),
+          qty: qtyNum
         };
     };
 
     const buildBaseETK360Step = (sId: string, sRef: any) => ({
         ...JSON.parse(JSON.stringify(sRef)), // Clone natif
-        id: sRef.id || sId,
+        id: sId,
         ref: sRef.ref || sId,
         title: sRef.title || "Choix",
         archive: sRef.archive || false,
@@ -459,6 +543,16 @@ export async function enrichirCarteAction(
         return newModId;
     };
 
+    const aiStepRegistry = new Map<string, string>(); // hash -> stepId
+
+    const hashStep = (aiStep: any): string => {
+        const title = (aiStep.title || "Choix").toLowerCase();
+        const min = typeof aiStep.minChoices === 'number' ? aiStep.minChoices : 0;
+        const max = typeof aiStep.maxChoices === 'number' ? aiStep.maxChoices : 1;
+        const opts = (aiStep.options || aiStep.items || []).map((o: any) => o.name || o.title || "").sort().join("|");
+        return `${title}_${min}_${max}_${opts}`;
+    };
+
     // Nouveau Moteur de Rendu : Transformateur natif (AI 'steps' array -> ETK360 nested dictionary)
     const buildNativeModifierFromAiSteps = (aiSteps: any[], parentItemId: string, fData: any): string => {
         const { randomUUID } = require("crypto");
@@ -472,59 +566,67 @@ export async function enrichirCarteAction(
         };
         
         aiSteps.forEach((aiStep, sIndex) => {
-            const newStepId = randomUUID();
-            fData.modifier[newModId].steps[newStepId] = { rank: sIndex + 1 };
+            const stepHash = hashStep(aiStep);
+            let newStepId = aiStepRegistry.get(stepHash);
             
-            fData.steps[newStepId] = {
-                id: newStepId,
-                ref: `STEP_${newStepId.substring(0,6)}`,
-                title: aiStep.title || "Choix",
-                archive: false,
-                isBasic: false,
-                isComment: false,
-                stepItems: {},
-                maxChoices: typeof aiStep.maxChoices === 'number' ? aiStep.maxChoices : 1,
-                minChoices: typeof aiStep.minChoices === 'number' ? aiStep.minChoices : 0,
-                displayName: { dflt: { imp: [], nameDef: aiStep.title || "Choix", salesSupport: {} } },
-                isModifiable: true,
-                specificOpts: {},
-                rank: sIndex + 1
-            };
-            
-            const aiOptions = aiStep.options || aiStep.items || [];
-            aiOptions.forEach((opt: any, oIndex: number) => {
-                let optId = opt.id;
+            if (!newStepId) {
+                newStepId = randomUUID();
+                aiStepRegistry.set(stepHash, newStepId);
                 
-                if (!optId || !memoryItems[optId]) {
-                   const foundKey = Object.keys(memoryItems).find(k => {
-                       const mItm = memoryItems[k];
-                       const title = mItm.displayName?.dflt?.nameDef || mItm.title || mItm.name;
-                       const optTitle = opt.name || opt.title;
-                       return title && optTitle && title.toLowerCase() === optTitle.toLowerCase();
-                   });
-                   optId = foundKey || opt.id || randomUUID();
-                }
-                
-                fData.steps[newStepId].stepItems[optId] = {
-                    rank: oIndex + 1,
-                    priceStep: opt.priceDelta || opt.price || 0,
-                    maxChoices: 1,
-                    minChoices: 0
+                fData.steps[newStepId] = {
+                    id: newStepId,
+                    ref: `STEP_${newStepId.substring(0,6)}`,
+                    title: aiStep.title || "Choix",
+                    archive: false,
+                    isBasic: false,
+                    isComment: false,
+                    stepItems: {},
+                    maxChoices: typeof aiStep.maxChoices === 'number' ? aiStep.maxChoices : 1,
+                    minChoices: typeof aiStep.minChoices === 'number' ? aiStep.minChoices : 0,
+                    displayName: { dflt: { imp: [], nameDef: aiStep.title || "Choix", salesSupport: {} } },
+                    isModifiable: true,
+                    specificOpts: {},
+                    rank: sIndex + 1
                 };
                 
-                if (!fData.items[optId]) {
-                    const sourceItm = memoryItems[optId];
-                    if (sourceItm) {
-                        fData.items[optId] = buildBaseETK360Item(optId, sourceItm);
-                        if (sourceItm.modifier) {
-                            const nestedModId = cloneGeneticModifier(sourceItm.modifier, optId, fData);
-                            if (nestedModId) fData.items[optId].modifier = nestedModId;
-                        }
-                    } else {
-                        fData.items[optId] = buildBaseETK360Item(optId, opt);
+                const aiOptions = aiStep.options || aiStep.items || [];
+                aiOptions.forEach((opt: any, oIndex: number) => {
+                    let optId = opt.id;
+                    const isUUID = (str: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(str);
+                    
+                    if (!optId || !isUUID(optId) || !memoryItems[optId]) {
+                       const foundKey = Object.keys(memoryItems).find(k => {
+                           const mItm = memoryItems[k];
+                           const title = mItm.displayName?.dflt?.nameDef || mItm.title || mItm.name;
+                           const optTitle = opt.name || opt.title;
+                           return title && optTitle && title.toLowerCase() === optTitle.toLowerCase();
+                       });
+                       optId = (foundKey && isUUID(foundKey)) ? foundKey : (optId && isUUID(optId) ? optId : randomUUID());
                     }
-                }
-            });
+                    
+                    fData.steps[newStepId].stepItems[optId] = {
+                        rank: oIndex + 1,
+                        priceStep: opt.priceDelta || opt.price || 0,
+                        maxChoices: 1,
+                        minChoices: 0
+                    };
+                    
+                    if (!fData.items[optId]) {
+                        const sourceItm = memoryItems[optId];
+                        if (sourceItm) {
+                            fData.items[optId] = buildBaseETK360Item(optId, sourceItm);
+                            if (sourceItm.modifier) {
+                                const nestedModId = cloneGeneticModifier(sourceItm.modifier, optId, fData);
+                                if (nestedModId) fData.items[optId].modifier = nestedModId;
+                            }
+                        } else {
+                            fData.items[optId] = buildBaseETK360Item(optId, opt);
+                        }
+                    }
+                });
+            }
+            
+            fData.modifier[newModId].steps[newStepId] = { rank: sIndex + 1 };
         });
         
         return newModId;
@@ -682,7 +784,7 @@ export async function enrichirCarteAction(
             if (!finalData.categories[targetCatId].items) finalData.categories[targetCatId].items = [];
             if (!finalData.categories[targetCatId].child) finalData.categories[targetCatId].child = [];
 
-            let aiItemIds = aiCat.itemIds || aiCat.items || [];
+            let aiItemIds = aiCat.itemIds || aiCat.items || aiCat.products || [];
             
             if (aiItemIds && Array.isArray(aiItemIds)) {
                 let itemRankCounter = Object.keys(finalData.workflow[targetCatId].content).length + 1;
@@ -693,6 +795,22 @@ export async function enrichirCarteAction(
                     if (!realItemId) return;
                     let sourceItem = memoryItems[realItemId];
                     
+                    // FIX: Fuzzy Matcher pour contrer les hallucinations d'ID de l'IA
+                    // Si l'IA invente un ID mais que le nom du produit existe dans la base locale, on le récupère
+                    if (!sourceItem && typeof aiItemId === 'object') {
+                        const aiName = (aiItemId.name || aiItemId.title || "").toLowerCase().trim();
+                        if (aiName) {
+                            const matchedKey = Object.keys(memoryItems).find(k => {
+                                const mItm = memoryItems[k];
+                                const title = (mItm.displayName?.dflt?.nameDef || mItm.title || mItm.name || "").toLowerCase().trim();
+                                return title && (title === aiName || title.includes(aiName) || aiName.includes(title));
+                            });
+                            if (matchedKey) {
+                                sourceItem = memoryItems[matchedKey];
+                            }
+                        }
+                    }
+
                     // FEATURE : L'IA a généré l'item de façon dynamique (OCR ou invention contrainte)
                     if (!sourceItem) {
                         if (typeof aiItemId === 'object' && (aiItemId.name || aiItemId.title)) {
@@ -717,7 +835,7 @@ export async function enrichirCarteAction(
                     
                     const newItemId = randomUUID();
                     finalData.items[newItemId] = JSON.parse(JSON.stringify(sourceItem));
-                    finalData.items[newItemId].id = Math.floor(Math.random() * 900) + 1000; 
+                    finalData.items[newItemId].id = newItemId; 
                     finalData.items[newItemId].isVisible = true;
                     // FIX 1: Assurer que l'item pointe bien sur sa catégorie visuelle parente
                     finalData.items[newItemId].parent = targetCatId; 

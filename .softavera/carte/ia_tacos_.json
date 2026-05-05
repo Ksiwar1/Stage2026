@@ -1,0 +1,3866 @@
+{
+  "opt": {
+    "0c0e3830-21c3-46f1-8f46-a217e9d42df3": {
+      "title": "TAILLE MENU",
+      "values": {
+        "0dd073ef-ce2e-4b15-9e00-ad3b72afdc9d": {
+          "rank": 2,
+          "items": [
+            "09a3c037-b4c7-4f74-8131-606b77d9fd09",
+            "4d0ebbb1-eb05-4b73-aacf-33c225a3bb4b",
+            "e0f9236a-4175-4ce0-aa92-a2fdb7718975",
+            "1074d2e2-40fe-424e-8a37-79eb79743321",
+            "d1252c7c-5720-4051-b85a-185bb513a2ed",
+            "4f6b2323-0da2-4715-94c7-de2800c63049",
+            "d6c652e9-44fb-472c-be51-adb5b7f2bc51"
+          ],
+          "title": "L",
+          "indice": 2,
+          "isFavorite": false,
+          "advancedName": {}
+        },
+        "dd7bd417-075a-48b8-927f-8d163d83a356": {
+          "rank": 1,
+          "items": [
+            "09a3c037-b4c7-4f74-8131-606b77d9fd09",
+            "4d0ebbb1-eb05-4b73-aacf-33c225a3bb4b",
+            "e0f9236a-4175-4ce0-aa92-a2fdb7718975",
+            "1074d2e2-40fe-424e-8a37-79eb79743321",
+            "d1252c7c-5720-4051-b85a-185bb513a2ed",
+            "4f6b2323-0da2-4715-94c7-de2800c63049",
+            "d6c652e9-44fb-472c-be51-adb5b7f2bc51"
+          ],
+          "title": "M",
+          "indice": 1,
+          "isFavorite": true,
+          "advancedName": {}
+        }
+      },
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "TAILLE",
+          "salesSupport": {}
+        }
+      },
+      "defaultValue": "M",
+      "isUniqueTitle": false
+    },
+    "5f4f359c-892b-4434-9fe5-163f851b9299": {
+      "title": "TAILLE",
+      "values": {
+        "bd416394-3a8f-4661-a32e-9788e7e655eb": {
+          "rank": 2,
+          "items": [
+            "b912e793-b4c7-4733-bb0c-7da712f45aa7",
+            "1d3da903-976d-49a4-a622-85947c8a506c",
+            "5396fd37-a31a-47c0-a1d7-89bc6ce21f4e",
+            "c13ffeb7-03e3-4199-830f-b5676606db2e",
+            "73cb70f9-8a92-4ca8-bc50-feb184cbb4a4",
+            "9488997d-2418-4c51-b8db-e3713f02ec6b",
+            "c485e566-a534-4df9-917a-f3554307fa73"
+          ],
+          "title": "L",
+          "indice": 2,
+          "isFavorite": false,
+          "advancedName": {}
+        },
+        "e2f9f48a-b389-4265-a52f-26b7070b54d6": {
+          "rank": 1,
+          "items": [
+            "b912e793-b4c7-4733-bb0c-7da712f45aa7",
+            "1d3da903-976d-49a4-a622-85947c8a506c",
+            "5396fd37-a31a-47c0-a1d7-89bc6ce21f4e",
+            "c13ffeb7-03e3-4199-830f-b5676606db2e",
+            "73cb70f9-8a92-4ca8-bc50-feb184cbb4a4",
+            "9488997d-2418-4c51-b8db-e3713f02ec6b",
+            "c485e566-a534-4df9-917a-f3554307fa73"
+          ],
+          "title": "M",
+          "indice": 1,
+          "isFavorite": true,
+          "advancedName": {}
+        }
+      },
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "defaultValue": "M",
+      "isUniqueTitle": false
+    }
+  },
+  "etat": "En attente",
+  "tags": {},
+  "color": "",
+  "items": {},
+  "steps": {},
+  "title": "tacos ",
+  "remark": "",
+  "status": "En attente",
+  "Planning": "",
+  "idEntite": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "modifier": {},
+  "operator": "Administrateur",
+  "shoplist": {
+    "f1504395-39c9-4c72-ae71-e50b9d527bb2": {
+      "cp": "24100",
+      "img": "no-pictures.svg",
+      "town": "BERGERAC",
+      "Nature": "boutique",
+      "shopid": 2,
+      "Address": "2 RUE DES CARMES",
+      "Company": "tacos ",
+      "Country": "FRANCE",
+      "Responsible": ""
+    }
+  },
+  "workflow": {
+    "011611de-bafd-4c59-a76e-2e921a34864c": {
+      "ovr": {},
+      "rank": 3,
+      "type": "categories",
+      "content": {}
+    },
+    "cc017a24-b948-44fd-b2e1-fc693244136d": {
+      "ovr": {},
+      "rank": 2,
+      "type": "categories",
+      "content": {}
+    },
+    "80ef3bb5-7d43-4bcf-a9a6-b05f56275cea": {
+      "type": "categories",
+      "rank": 1,
+      "content": {}
+    }
+  },
+  "allergens": {
+    "05b5be6d-659f-45cd-b3d3-a17528841a9b": {
+      "id": 18,
+      "icon": "63e67239-28c0-4f28-af82-579b0442a736.webp",
+      "group": "c40ceedc-1274-4b58-b6d7-cc96f506810f",
+      "title": "Amandes",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Amandes",
+          "salesSupport": {
+            "1": {
+              "en": "Almonds",
+              "fr": "Amandes"
+            },
+            "2": {
+              "en": "Almonds",
+              "fr": "Amandes"
+            },
+            "4": {
+              "en": "Almonds",
+              "fr": "Amandes"
+            },
+            "5": {
+              "en": "Almonds",
+              "fr": "Amandes"
+            },
+            "6": {
+              "en": "Almonds",
+              "fr": "Amandes"
+            }
+          }
+        }
+      }
+    },
+    "0bf4180a-eaf1-4319-8fb1-70e6838d35d7": {
+      "id": 9,
+      "icon": "b83983db-062f-46d1-acdc-aea1c29da2a1.webp",
+      "group": "",
+      "title": "Lupin",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Lupin",
+          "salesSupport": {}
+        }
+      }
+    },
+    "169df83c-ab12-4682-96f0-0d6cf7ee9f84": {
+      "id": 25,
+      "icon": "acecd808-51e4-4f73-90a3-7a04eedcc7d7.webp",
+      "group": "c40ceedc-1274-4b58-b6d7-cc96f506810f",
+      "title": "Cajou",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Cajou",
+          "salesSupport": {
+            "1": {
+              "en": "Cashew",
+              "fr": "Cajou"
+            },
+            "2": {
+              "en": "Cashew",
+              "fr": "Cajou"
+            },
+            "4": {
+              "en": "Cashew",
+              "fr": "Cajou"
+            },
+            "5": {
+              "en": "Cashew",
+              "fr": "Cajou"
+            },
+            "6": {
+              "en": "Cashew",
+              "fr": "Cajou"
+            }
+          }
+        }
+      }
+    },
+    "1deb0c9c-fc52-42d7-966b-9a021755865c": {
+      "id": 15,
+      "icon": "d9356947-32cf-474f-982e-fa7215cd79c3.webp",
+      "group": "de689e98-9b81-4471-b2e6-60cdd5a4aa14",
+      "title": "Avoine",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Avoine",
+          "salesSupport": {
+            "1": {
+              "en": "Oats",
+              "fr": "Avoine"
+            },
+            "2": {
+              "en": "Oats",
+              "fr": "Avoine"
+            },
+            "4": {
+              "en": "Oats",
+              "fr": "Avoine"
+            },
+            "5": {
+              "en": "Oats",
+              "fr": "Avoine"
+            },
+            "6": {
+              "en": "Oats",
+              "fr": "Avoine"
+            }
+          }
+        }
+      }
+    },
+    "27afa216-9d9e-4d6a-8a0e-a0a49c6465f1": {
+      "id": 19,
+      "icon": "5741bcfc-b8df-4cab-a3ed-284c74be7972.webp",
+      "group": "c40ceedc-1274-4b58-b6d7-cc96f506810f",
+      "title": "Noisettes",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Noisettes",
+          "salesSupport": {
+            "1": {
+              "en": "Hazelnut",
+              "fr": "Noisettes"
+            },
+            "2": {
+              "en": "Hazelnut",
+              "fr": "Noisettes"
+            },
+            "4": {
+              "en": "Hazelnut",
+              "fr": "Noisettes"
+            },
+            "5": {
+              "en": "Hazelnut",
+              "fr": "Noisettes"
+            },
+            "6": {
+              "en": "Hazelnut",
+              "fr": "Noisettes"
+            }
+          }
+        }
+      }
+    },
+    "293d3d67-2201-4158-a722-142b8deb4f96": {
+      "id": 23,
+      "icon": "7f5445e6-c83d-483b-8d03-9aec026a27a3.webp",
+      "group": "c40ceedc-1274-4b58-b6d7-cc96f506810f",
+      "title": "Noix de Pécan",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Noix de Pécan",
+          "salesSupport": {
+            "1": {
+              "en": "Pecan nuts",
+              "fr": "Noix de Pécan"
+            },
+            "2": {
+              "en": "Pecan nuts",
+              "fr": "Noix de Pécan"
+            },
+            "4": {
+              "en": "Pecan nuts",
+              "fr": "Noix de Pécan"
+            },
+            "5": {
+              "en": "Pecan nuts",
+              "fr": "Noix de Pécan"
+            },
+            "6": {
+              "en": "Pecan nuts",
+              "fr": "Noix de Pécan"
+            }
+          }
+        }
+      }
+    },
+    "2f38b5f7-db0c-40ce-ae17-d6ce5b5da71f": {
+      "id": 17,
+      "icon": "92c6e6bf-006b-4a71-aaae-53d8d3baebee.webp",
+      "group": "de689e98-9b81-4471-b2e6-60cdd5a4aa14",
+      "title": "Kamut",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Kamut",
+          "salesSupport": {
+            "1": {
+              "en": "Hand",
+              "fr": "Main"
+            },
+            "2": {
+              "en": "Hand",
+              "fr": "Main"
+            },
+            "4": {
+              "en": "Hand",
+              "fr": "Main"
+            },
+            "5": {
+              "en": "Hand",
+              "fr": "Main"
+            },
+            "6": {
+              "en": "Hand",
+              "fr": "Main"
+            }
+          }
+        }
+      }
+    },
+    "340171f9-e7f0-4883-9550-7c1e195b251d": {
+      "id": 14,
+      "icon": "2919c422-ebc5-407f-b773-2d22aeda4d79.webp",
+      "group": "de689e98-9b81-4471-b2e6-60cdd5a4aa14",
+      "title": "Orge",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Orge",
+          "salesSupport": {
+            "1": {
+              "en": "Barley",
+              "fr": "Orge"
+            },
+            "2": {
+              "en": "Barley",
+              "fr": "Orge"
+            },
+            "4": {
+              "en": "Barley",
+              "fr": "Orge"
+            },
+            "5": {
+              "en": "Barley",
+              "fr": "Orge"
+            },
+            "6": {
+              "en": "Barley",
+              "fr": "Orge"
+            }
+          }
+        }
+      }
+    },
+    "56394b3f-1902-44a3-a8b6-8c07b7b4062f": {
+      "id": 4,
+      "icon": "42fedf76-bcbe-42fb-a421-3e950d641122.webp",
+      "group": "",
+      "title": "Soja",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Soja",
+          "salesSupport": {}
+        }
+      }
+    },
+    "5931590a-4b59-47cc-a6e7-32a64ea917b0": {
+      "id": 8,
+      "icon": "f0218d27-7bb4-47e4-99fa-9ed912ed71c1.webp",
+      "group": "",
+      "title": "Graines",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Graines",
+          "salesSupport": {}
+        }
+      }
+    },
+    "5a816b8a-f54d-4c76-9e51-7bc2ebbb68c3": {
+      "id": 24,
+      "icon": "4fd3a76f-639b-41de-ae16-145669ded098.webp",
+      "group": "c40ceedc-1274-4b58-b6d7-cc96f506810f",
+      "title": "Pistaches",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Pistaches",
+          "salesSupport": {
+            "1": {
+              "en": "Pistachios",
+              "fr": "Pistaches"
+            },
+            "2": {
+              "en": "Pistachios",
+              "fr": "Pistaches"
+            },
+            "4": {
+              "en": "Pistachios",
+              "fr": "Pistaches"
+            },
+            "5": {
+              "en": "Pistachios",
+              "fr": "Pistaches"
+            },
+            "6": {
+              "en": "Pistachios",
+              "fr": "Pistaches"
+            }
+          }
+        }
+      }
+    },
+    "61a520e6-2edb-4eee-ad19-c416950791b7": {
+      "id": 21,
+      "icon": "1cbbc129-1d3e-444b-9e3b-528f65f25a6f.webp",
+      "group": "c40ceedc-1274-4b58-b6d7-cc96f506810f",
+      "title": "Noix",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Noix",
+          "salesSupport": {}
+        }
+      }
+    },
+    "8aaba0fd-56b8-431c-8d25-d1345f592c52": {
+      "id": 13,
+      "icon": "94509c0a-3437-498a-9ca5-80da61cd5881.webp",
+      "group": "de689e98-9b81-4471-b2e6-60cdd5a4aa14",
+      "title": "Seigle",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Seigle",
+          "salesSupport": {
+            "1": {
+              "en": "Rye",
+              "fr": "Seigle"
+            },
+            "2": {
+              "en": "Rye",
+              "fr": "Seigle"
+            },
+            "4": {
+              "en": "Rye",
+              "fr": "Seigle"
+            },
+            "5": {
+              "en": "Rye",
+              "fr": "Seigle"
+            },
+            "6": {
+              "en": "Rye",
+              "fr": "Seigle"
+            }
+          }
+        }
+      }
+    },
+    "964e8dec-2304-4e0d-b65b-4c7af5904ace": {
+      "id": 3,
+      "icon": "1b57b356-4a16-41b4-8f91-56983607b00c.webp",
+      "group": "",
+      "title": "Arachides",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Arachides",
+          "salesSupport": {
+            "1": {
+              "en": "Peanuts",
+              "fr": "Arachides"
+            },
+            "2": {
+              "en": "Peanuts",
+              "fr": "Arachides"
+            },
+            "4": {
+              "en": "Peanuts",
+              "fr": "Arachides"
+            },
+            "5": {
+              "en": "Peanuts",
+              "fr": "Arachides"
+            },
+            "6": {
+              "en": "Peanuts",
+              "fr": "Arachides"
+            }
+          }
+        }
+      }
+    },
+    "a3db6cd5-0b44-4bee-84c0-f2dbf1471ed4": {
+      "id": 12,
+      "icon": "e8b3170e-2fa3-4fad-abae-162cfcf4a162.webp",
+      "group": "de689e98-9b81-4471-b2e6-60cdd5a4aa14",
+      "title": "Blé",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Blé",
+          "salesSupport": {
+            "1": {
+              "en": "Wheat",
+              "fr": "Blé"
+            },
+            "2": {
+              "en": "Wheat",
+              "fr": "Blé"
+            },
+            "4": {
+              "en": "Wheat",
+              "fr": "Blé"
+            },
+            "5": {
+              "en": "Wheat",
+              "fr": "Blé"
+            },
+            "6": {
+              "en": "Wheat",
+              "fr": "Blé"
+            }
+          }
+        }
+      }
+    },
+    "aa8ad49e-0904-447b-8bd4-934866f912f4": {
+      "id": 16,
+      "icon": "4145df5d-7c95-432e-af71-8042ad22bebc.webp",
+      "group": "de689e98-9b81-4471-b2e6-60cdd5a4aa14",
+      "title": "Epeautre",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Epeautre",
+          "salesSupport": {
+            "1": {
+              "en": "Spelled",
+              "fr": "Epeautre"
+            },
+            "2": {
+              "en": "Spelled",
+              "fr": "Epeautre"
+            },
+            "4": {
+              "en": "Spelled",
+              "fr": "Epeautre"
+            },
+            "5": {
+              "en": "Spelled",
+              "fr": "Epeautre"
+            },
+            "6": {
+              "en": "Spelled",
+              "fr": "Epeautre"
+            }
+          }
+        }
+      }
+    },
+    "b381de95-10ac-4b44-8928-b074908a1df0": {
+      "id": 7,
+      "icon": "70248343-b00b-4d9e-9f43-3d44f7740a7e.webp",
+      "group": "",
+      "title": "Moutarde",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Moutarde",
+          "salesSupport": {
+            "1": {
+              "en": "Mustard",
+              "fr": "Moutarde"
+            },
+            "2": {
+              "en": "Mustard",
+              "fr": "Moutarde"
+            },
+            "4": {
+              "en": "Mustard",
+              "fr": "Moutarde"
+            },
+            "5": {
+              "en": "Mustard",
+              "fr": "Moutarde"
+            },
+            "6": {
+              "en": "Mustard",
+              "fr": "Moutarde"
+            }
+          }
+        }
+      }
+    },
+    "b3f32662-c217-4408-918c-d065a01cc203": {
+      "id": 22,
+      "icon": "a5b9d2a0-b7da-4b40-913a-c8f9237286c8.webp",
+      "group": "c40ceedc-1274-4b58-b6d7-cc96f506810f",
+      "title": "Noix de Macadamia",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Noix de Macadamia",
+          "salesSupport": {
+            "1": {
+              "en": "Macadamia nuts",
+              "fr": "Noix de Macadamia"
+            },
+            "2": {
+              "en": "Macadamia nuts",
+              "fr": "Noix de Macadamia"
+            },
+            "4": {
+              "en": "Macadamia nuts",
+              "fr": "Noix de Macadamia"
+            },
+            "5": {
+              "en": "Macadamia nuts",
+              "fr": "Noix de Macadamia"
+            },
+            "6": {
+              "en": "Macadamia nuts",
+              "fr": "Noix de Macadamia"
+            }
+          }
+        }
+      }
+    },
+    "c4a3012a-2ec0-4f08-8369-e553d7831575": {
+      "id": 5,
+      "icon": "e6650e01-88aa-4521-8185-e02a5534e988.webp",
+      "group": "",
+      "title": "Lait",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Lait",
+          "salesSupport": {
+            "1": {
+              "en": "Milk",
+              "fr": "Lait"
+            },
+            "2": {
+              "en": "Milk",
+              "fr": "Lait"
+            },
+            "4": {
+              "en": "Milk",
+              "fr": "Lait"
+            },
+            "5": {
+              "en": "Milk",
+              "fr": "Lait"
+            },
+            "6": {
+              "en": "Milk",
+              "fr": "Lait"
+            }
+          }
+        }
+      }
+    },
+    "c80e3184-6fae-4cee-8286-c7bb0682b62a": {
+      "id": 6,
+      "icon": "03bab5cd-b166-4902-a6a9-0d4e9b2e4e6e.webp",
+      "group": "",
+      "title": "Céleri",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Céleri",
+          "salesSupport": {
+            "1": {
+              "en": "Celery",
+              "fr": "Céleri"
+            },
+            "2": {
+              "en": "Celery",
+              "fr": "Céleri"
+            },
+            "4": {
+              "en": "Celery",
+              "fr": "Céleri"
+            },
+            "5": {
+              "en": "Celery",
+              "fr": "Céleri"
+            },
+            "6": {
+              "en": "Celery",
+              "fr": "Céleri"
+            }
+          }
+        }
+      }
+    },
+    "c82e6919-e90e-4f56-9020-584fef1b5d6c": {
+      "id": 20,
+      "icon": "0535a2b6-8141-4cfb-ad46-4e878da29a07.webp",
+      "group": "c40ceedc-1274-4b58-b6d7-cc96f506810f",
+      "title": "Noix du Brésil",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Noix du Brésil",
+          "salesSupport": {
+            "1": {
+              "en": "Brazil nut",
+              "fr": "Noix du Brésil"
+            },
+            "2": {
+              "en": "Brazil nut",
+              "fr": "Noix du Brésil"
+            },
+            "4": {
+              "en": "Brazil nut",
+              "fr": "Noix du Brésil"
+            },
+            "5": {
+              "en": "Brazil nut",
+              "fr": "Noix du Brésil"
+            },
+            "6": {
+              "en": "Brazil nut",
+              "fr": "Noix du Brésil"
+            }
+          }
+        }
+      }
+    },
+    "d10cfcc0-3214-45fb-9d47-d9fb4dd37538": {
+      "id": 2,
+      "icon": "1dcbc500-2de9-497e-84cb-26d291030fda.webp",
+      "group": "",
+      "title": "Poissons",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Poissons",
+          "salesSupport": {
+            "1": {
+              "en": "Pisces",
+              "fr": "Poissons"
+            },
+            "2": {
+              "en": "Pisces",
+              "fr": "Poissons"
+            },
+            "4": {
+              "en": "Pisces",
+              "fr": "Poissons"
+            },
+            "5": {
+              "en": "Pisces",
+              "fr": "Poissons"
+            },
+            "6": {
+              "en": "Pisces",
+              "fr": "Poissons"
+            }
+          }
+        }
+      }
+    },
+    "de504707-31ed-4d71-a854-1348d2012271": {
+      "id": 10,
+      "icon": "6d2a98ef-0c0c-459a-81b4-495f17d57cc7.webp",
+      "group": "",
+      "title": "Mollusques",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Mollusques",
+          "salesSupport": {
+            "1": {
+              "en": "Molluscs",
+              "fr": "Mollusques"
+            },
+            "2": {
+              "en": "Molluscs",
+              "fr": "Mollusques"
+            },
+            "4": {
+              "en": "Molluscs",
+              "fr": "Mollusques"
+            },
+            "5": {
+              "en": "Molluscs",
+              "fr": "Mollusques"
+            },
+            "6": {
+              "en": "Molluscs",
+              "fr": "Mollusques"
+            }
+          }
+        }
+      }
+    },
+    "f0d23d3a-f58d-4128-9387-cbf92b7402ae": {
+      "id": 1,
+      "icon": "a4f3a2c0-90df-4e84-95aa-bb604d683d7b.webp",
+      "group": "",
+      "title": "Oeufs",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Oeufs",
+          "salesSupport": {
+            "1": {
+              "en": "Eggs",
+              "fr": "Oeufs"
+            },
+            "2": {
+              "en": "Eggs",
+              "fr": "Oeufs"
+            },
+            "4": {
+              "en": "Eggs",
+              "fr": "Oeufs"
+            },
+            "5": {
+              "en": "Eggs",
+              "fr": "Oeufs"
+            },
+            "6": {
+              "en": "Eggs",
+              "fr": "Oeufs"
+            }
+          }
+        }
+      }
+    },
+    "f52c2ffc-5194-423c-9c74-60ec098d9c92": {
+      "id": 11,
+      "icon": "3a7f5bf9-7816-4a66-9d2c-ce19fb9fa8c9.webp",
+      "group": "",
+      "title": "Anhydride sulfureux et sulfites",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Anhydride sulfureux et sulfites",
+          "salesSupport": {
+            "1": {
+              "en": "Sulfur dioxide and sulphites",
+              "fr": "Anhydride sulfureux et sulfites"
+            },
+            "2": {
+              "en": "Sulfur dioxide and sulphites",
+              "fr": "Anhydride sulfureux et sulfites"
+            },
+            "4": {
+              "en": "Sulfur dioxide and sulphites",
+              "fr": "Anhydride sulfureux et sulfites"
+            },
+            "5": {
+              "en": "Sulfur dioxide and sulphites",
+              "fr": "Anhydride sulfureux et sulfites"
+            },
+            "6": {
+              "en": "Sulfur dioxide and sulphites",
+              "fr": "Anhydride sulfureux et sulfites"
+            }
+          }
+        }
+      }
+    }
+  },
+  "isAutoRef": false,
+  "categories": {
+    "011611de-bafd-4c59-a76e-2e921a34864c": {
+      "id": "011611de-bafd-4c59-a76e-2e921a34864c",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_bsb_franchise/Category/1717767595446DESSERTS.webp",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00052",
+      "rank": 3,
+      "child": [],
+      "color": "#00CCCC",
+      "items": [],
+      "title": "Desserts",
+      "video": {
+        "url": "1717773424418desssert.webm",
+        "type": "video"
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": false,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "isInfoModeActive": true
+    },
+    "04128b50-a646-4df4-b1b0-1aeceb65a161": {
+      "id": "04128b50-a646-4df4-b1b0-1aeceb65a161",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_bsb_franchise/Category/1717767408646BURGERS.webp",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00043",
+      "rank": 2,
+      "child": [],
+      "color": "#FFFFE0",
+      "items": [],
+      "title": "BURGERS",
+      "video": {
+        "url": "1717773257611burger.webm",
+        "type": "video"
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "05a2729e-4d73-4631-9fa1-a8e9e3896c92": {
+      "id": "05a2729e-4d73-4631-9fa1-a8e9e3896c92",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_bsb_franchise/Category/1719494107601TACOS(5).webp",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00044",
+      "rank": 3,
+      "child": [],
+      "color": "#FFCC66",
+      "items": [],
+      "title": "TACOS",
+      "video": {
+        "url": "1717773274012tacos.webm",
+        "type": "video"
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "08a8617e-61de-467d-9bc7-a0604b1bcae3": {
+      "id": "08a8617e-61de-467d-9bc7-a0604b1bcae3",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00056",
+      "rank": 19,
+      "child": [],
+      "color": "#FFCCFF",
+      "items": [],
+      "title": "WRAP SEUL",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "WRAP SEUL",
+          "salesSupport": {
+            "1": {
+              "en": "WRAP ALONE",
+              "fr": "WRAP SEUL"
+            },
+            "2": {
+              "en": "WRAP ALONE",
+              "fr": "WRAP SEUL"
+            },
+            "4": {
+              "en": "WRAP ALONE",
+              "fr": "WRAP SEUL"
+            },
+            "5": {
+              "en": "WRAP ALONE",
+              "fr": "WRAP SEUL"
+            },
+            "6": {
+              "en": "WRAP ALONE",
+              "fr": "WRAP SEUL"
+            }
+          }
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [],
+          "2": [],
+          "3": [],
+          "4": []
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "09c0f270-ec59-484d-8c6e-409bcd567c70": {
+      "id": "09c0f270-ec59-484d-8c6e-409bcd567c70",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00062",
+      "rank": 30,
+      "child": [],
+      "color": "#FF33FF",
+      "items": [],
+      "title": "COMP TAC M",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "TACOS MONTAGNARD MENU",
+          "salesSupport": {
+            "1": {
+              "en": "MOUNTAIN TACOS MENU",
+              "fr": "TACOS MONTAGNARD MENU"
+            },
+            "2": {
+              "en": "MOUNTAIN TACOS MENU",
+              "fr": "TACOS MONTAGNARD MENU"
+            },
+            "4": {
+              "en": "MOUNTAIN TACOS MENU",
+              "fr": "TACOS MONTAGNARD MENU"
+            },
+            "5": {
+              "en": "MOUNTAIN TACOS MENU",
+              "fr": "TACOS MONTAGNARD MENU"
+            },
+            "6": {
+              "en": "MOUNTAIN TACOS MENU",
+              "fr": "TACOS MONTAGNARD MENU"
+            }
+          }
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            4,
+            2,
+            5
+          ],
+          "2": [],
+          "3": [
+            4,
+            1,
+            2,
+            6,
+            5,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "0c54a5ad-9a18-4839-a8d5-9aeef41c4abd": {
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "000077",
+      "rank": 31,
+      "child": [],
+      "color": "#FF9966",
+      "items": [],
+      "title": "CROUST SEU",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": [],
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": true,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "RIZ CROUSTY SEULS",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "id": "0c54a5ad-9a18-4839-a8d5-9aeef41c4abd",
+      "isVisible": false
+    },
+    "0f6d4c01-5840-4010-90f0-40d3d2241935": {
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_bsb_franchise/Category/1720173959059SALADES1.webp",
+          "salesSupport": {}
+        }
+      },
+      "ref": "000075",
+      "rank": 13,
+      "child": [],
+      "color": "#02d468",
+      "items": [],
+      "title": "SALADES",
+      "video": {
+        "url": "1720023194407SALADE2.webm",
+        "type": "video"
+      },
+      "idCard": [],
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            0
+          ],
+          "2": [
+            1,
+            4,
+            2,
+            5,
+            6,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "id": "0f6d4c01-5840-4010-90f0-40d3d2241935",
+      "isVisible": false
+    },
+    "12d50152-3166-49e5-8914-9d6f6a64cba3": {
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_bsb_franchise/Category/1720173940090petitesfaims1.webp",
+          "salesSupport": {}
+        }
+      },
+      "ref": "000074",
+      "rank": 7,
+      "child": [],
+      "color": "#ea9e1a",
+      "items": [],
+      "title": "PETIT FAIM",
+      "video": {
+        "url": "1719931812021chickenwings.webm",
+        "type": "video"
+      },
+      "idCard": [],
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "PETITES FAIMS",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            0
+          ],
+          "2": [
+            1,
+            4,
+            2,
+            5,
+            6,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "id": "12d50152-3166-49e5-8914-9d6f6a64cba3",
+      "isVisible": false
+    },
+    "18324bdb-cd08-46ee-ba5a-e6ed51daa99f": {
+      "id": "18324bdb-cd08-46ee-ba5a-e6ed51daa99f",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00065",
+      "rank": 27,
+      "child": [],
+      "color": "#FFCCFF",
+      "items": [],
+      "title": "TAC SEUL",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "TACOS SEUL",
+          "salesSupport": {
+            "1": {
+              "en": "TACOS ALONE",
+              "fr": "TACOS SEUL"
+            },
+            "2": {
+              "en": "TACOS ALONE",
+              "fr": "TACOS SEUL"
+            },
+            "4": {
+              "en": "TACOS ALONE",
+              "fr": "TACOS SEUL"
+            },
+            "5": {
+              "en": "TACOS ALONE",
+              "fr": "TACOS SEUL"
+            },
+            "6": {
+              "en": "TACOS ALONE",
+              "fr": "TACOS SEUL"
+            }
+          }
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            4,
+            2,
+            5
+          ],
+          "2": [],
+          "3": [
+            4,
+            1,
+            2,
+            6,
+            5,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "20490f51-c55f-43c8-832d-36fca8d62e9a": {
+      "id": "20490f51-c55f-43c8-832d-36fca8d62e9a",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00069",
+      "rank": 0,
+      "child": [],
+      "color": "#FF6633",
+      "items": [],
+      "title": "VIANDES",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": 1,
+      "parent": "2a383250-7423-44bf-808e-bbb5d3bb6c57",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": true,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "2a191575-d7c4-4d9a-8fb1-a8da26dacb82": {
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_bsb_franchise/Category/20260114_144627798.webp",
+          "salesSupport": {}
+        }
+      },
+      "ref": "000076",
+      "rank": 6,
+      "child": [],
+      "color": "#FFCCFF",
+      "items": [],
+      "title": "RIZ CROUST",
+      "video": {
+        "url": "20260114_145233163.webp",
+        "type": "image"
+      },
+      "idCard": [],
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "RIZ CROUSTY",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "id": "2a191575-d7c4-4d9a-8fb1-a8da26dacb82",
+      "isVisible": false
+    },
+    "2a383250-7423-44bf-808e-bbb5d3bb6c57": {
+      "id": "2a383250-7423-44bf-808e-bbb5d3bb6c57",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00042",
+      "rank": 1,
+      "child": [],
+      "color": "#FFFF00",
+      "items": [],
+      "title": "COMPOSANTS",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": true,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [],
+          "2": [],
+          "3": [],
+          "4": []
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "2b185140-0653-4b99-8118-2449fc7da75a": {
+      "id": "2b185140-0653-4b99-8118-2449fc7da75a",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00068",
+      "rank": 0,
+      "child": [],
+      "color": "#FFFFE0",
+      "items": [],
+      "title": "FROMAGE",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": 1,
+      "parent": "2a383250-7423-44bf-808e-bbb5d3bb6c57",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": true,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "315fe49d-7380-4cfb-9988-8151d36f5071": {
+      "id": "315fe49d-7380-4cfb-9988-8151d36f5071",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_bsb_franchise/Category/1717767549852CROCKS.webp",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00051",
+      "rank": 11,
+      "child": [],
+      "color": "#FF9966",
+      "items": [],
+      "title": "CROCK",
+      "video": {
+        "url": "1717773387879Hummer.webm",
+        "type": "video"
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "CROCK'S",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "35ec2dff-0198-43db-93bc-be2bfd971c3e": {
+      "id": "35ec2dff-0198-43db-93bc-be2bfd971c3e",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00063",
+      "rank": 25,
+      "child": [],
+      "color": "#FFCCFF",
+      "items": [],
+      "title": "RED SEUL",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "RED SEUL",
+          "salesSupport": {
+            "1": {
+              "en": "RED ALONE",
+              "fr": "RED SEUL"
+            },
+            "2": {
+              "en": "RED ALONE",
+              "fr": "RED SEUL"
+            },
+            "4": {
+              "en": "RED ALONE",
+              "fr": "RED SEUL"
+            },
+            "5": {
+              "en": "RED ALONE",
+              "fr": "RED SEUL"
+            },
+            "6": {
+              "en": "RED ALONE",
+              "fr": "RED SEUL"
+            }
+          }
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            4,
+            2,
+            5
+          ],
+          "2": [],
+          "3": [
+            4,
+            1,
+            2,
+            6,
+            5,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "384f6339-e0e5-4cb8-a7e7-52d7cd60b807": {
+      "id": "384f6339-e0e5-4cb8-a7e7-52d7cd60b807",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00060",
+      "rank": 24,
+      "child": [],
+      "color": "#FF33FF",
+      "items": [],
+      "title": "HUMME MENU",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "HUMMER MENU",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            4,
+            2,
+            5
+          ],
+          "2": [],
+          "3": [
+            4,
+            1,
+            2,
+            6,
+            5,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "4324295d-4007-4876-b10f-d5acd16f45ab": {
+      "id": "4324295d-4007-4876-b10f-d5acd16f45ab",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_bsb_franchise/Category/1717767463236BOX.webp",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00046",
+      "rank": 5,
+      "child": [],
+      "color": "#FF33FF",
+      "items": [],
+      "title": "BOX",
+      "video": {
+        "url": "1717773311583chickenwings.webm",
+        "type": "video"
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "53593d82-2439-4194-9cb9-2b906537a8bd": {
+      "id": "53593d82-2439-4194-9cb9-2b906537a8bd",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00071",
+      "rank": 0,
+      "child": [],
+      "color": "#00FF99",
+      "items": [],
+      "title": "LEGUMES",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": 1,
+      "parent": "2a383250-7423-44bf-808e-bbb5d3bb6c57",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": true,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "6201af48-b91f-4674-93ef-e961403c0092": {
+      "id": "6201af48-b91f-4674-93ef-e961403c0092",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_bsb_franchise/Category/1719494606577MENUS1.webp",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00049",
+      "rank": 12,
+      "child": [],
+      "color": "#FFCCFF",
+      "items": [],
+      "title": "MENUS",
+      "video": {
+        "url": "1717773406638menu.webm",
+        "type": "video"
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "6936d5a3-2be8-4311-bff6-9d14cc0e947d": {
+      "id": "6936d5a3-2be8-4311-bff6-9d14cc0e947d",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00055",
+      "rank": 18,
+      "child": [],
+      "color": "#FF33FF",
+      "items": [],
+      "title": "BURG MEN",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "BURGER MENU",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [],
+          "2": [],
+          "3": [],
+          "4": []
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "703948ac-c592-45b5-b345-346e0dd90c8d": {
+      "id": "703948ac-c592-45b5-b345-346e0dd90c8d",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_bsb_franchise/Category/1717767518182HUMMERS.webp",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00050",
+      "rank": 10,
+      "child": [],
+      "color": "#FDFD96",
+      "items": [],
+      "title": "HUMMER",
+      "video": {
+        "url": "1717773371313Hummer.webm",
+        "type": "video"
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "902c4dcf-996e-4580-af21-ace907d3c97f": {
+      "id": "902c4dcf-996e-4580-af21-ace907d3c97f",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00058",
+      "rank": 22,
+      "child": [],
+      "color": "#FF33FF",
+      "items": [],
+      "title": "LONG MENU",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            4,
+            2,
+            5
+          ],
+          "2": [],
+          "3": [
+            4,
+            1,
+            2,
+            6,
+            5,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "913cd7c9-19c1-4482-bbcc-f9f175dcb9aa": {
+      "id": "913cd7c9-19c1-4482-bbcc-f9f175dcb9aa",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00064",
+      "rank": 26,
+      "child": [],
+      "color": "#FF33FF",
+      "items": [],
+      "title": "RED MENU",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            4,
+            2,
+            5
+          ],
+          "2": [],
+          "3": [
+            4,
+            1,
+            2,
+            6,
+            5,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "951ca46d-a0bc-42c3-907c-0eaabbb1b12e": {
+      "id": "951ca46d-a0bc-42c3-907c-0eaabbb1b12e",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00070",
+      "rank": 0,
+      "child": [],
+      "color": "#FFCCFF",
+      "items": [],
+      "title": "SAUCES",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": 1,
+      "parent": "2a383250-7423-44bf-808e-bbb5d3bb6c57",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": true,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "a18d7ba4-e84c-4962-8f15-624e31ba99b1": {
+      "id": "a18d7ba4-e84c-4962-8f15-624e31ba99b1",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_bsb_franchise/Category/1717767481534LONGS.webp",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00047",
+      "rank": 8,
+      "child": [],
+      "color": "#FF9966",
+      "items": [],
+      "title": "LONG",
+      "video": {
+        "url": "1717773337296sandwich.webm",
+        "type": "video"
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            4,
+            1,
+            2,
+            6,
+            5
+          ],
+          "2": [
+            4,
+            1,
+            2,
+            6,
+            5
+          ],
+          "3": [
+            4,
+            1,
+            2,
+            6,
+            5
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "a345ae7d-2fc0-427e-a145-eb2745280daa": {
+      "id": "a345ae7d-2fc0-427e-a145-eb2745280daa",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00072",
+      "rank": 0,
+      "child": [],
+      "color": "#FFCC87",
+      "items": [],
+      "title": "PAIN",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": 1,
+      "parent": "2a383250-7423-44bf-808e-bbb5d3bb6c57",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": true,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "a595aeae-7422-45b9-aa9a-c35b0d0ae7fb": {
+      "id": "a595aeae-7422-45b9-aa9a-c35b0d0ae7fb",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_bsb_franchise/Category/1717767501151THERED.webp",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00048",
+      "rank": 9,
+      "child": [],
+      "color": "#FF3300",
+      "items": [],
+      "title": "THE RED",
+      "video": {
+        "url": "1717773356153sandwich.webm",
+        "type": "video"
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "acd9b5fe-54d5-4e90-a31c-58f2763a6e39": {
+      "id": "acd9b5fe-54d5-4e90-a31c-58f2763a6e39",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00054",
+      "rank": 17,
+      "child": [],
+      "color": "#FFCCFF",
+      "items": [],
+      "title": "BURGE SEUL",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "BURGER SEUL",
+          "salesSupport": {
+            "1": {
+              "en": "BURGER ALONE",
+              "fr": "BURGER SEUL"
+            },
+            "2": {
+              "en": "BURGER ALONE",
+              "fr": "BURGER SEUL"
+            },
+            "4": {
+              "en": "BURGER ALONE",
+              "fr": "BURGER SEUL"
+            },
+            "5": {
+              "en": "BURGER ALONE",
+              "fr": "BURGER SEUL"
+            },
+            "6": {
+              "en": "BURGER ALONE",
+              "fr": "BURGER SEUL"
+            }
+          }
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [],
+          "2": [],
+          "3": [],
+          "4": []
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "baef9780-7398-4a05-aafc-7a1e8cca05c3": {
+      "id": "baef9780-7398-4a05-aafc-7a1e8cca05c3",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00059",
+      "rank": 23,
+      "child": [],
+      "color": "#FFCCFF",
+      "items": [],
+      "title": "HUMME SEUL",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "HUMMER SEUL",
+          "salesSupport": {
+            "1": {
+              "en": "HUMMER ALONE",
+              "fr": "HUMMER SEUL"
+            },
+            "2": {
+              "en": "HUMMER ALONE",
+              "fr": "HUMMER SEUL"
+            },
+            "4": {
+              "en": "HUMMER ALONE",
+              "fr": "HUMMER SEUL"
+            },
+            "5": {
+              "en": "HUMMER ALONE",
+              "fr": "HUMMER SEUL"
+            },
+            "6": {
+              "en": "HUMMER ALONE",
+              "fr": "HUMMER SEUL"
+            }
+          }
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            4,
+            2,
+            5
+          ],
+          "2": [],
+          "3": [
+            4,
+            1,
+            2,
+            6,
+            5,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "bfc16d79-9659-4321-a038-433e56e553e4": {
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_bsb_franchise/Category/1720173922345GLACES1.webp",
+          "salesSupport": {}
+        }
+      },
+      "ref": "000073",
+      "rank": 16,
+      "child": [],
+      "color": "#FFFFFF",
+      "items": [],
+      "title": "GLACES",
+      "video": {
+        "url": "1719575846558glace2.webm",
+        "type": "video"
+      },
+      "idCard": [],
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            0
+          ],
+          "2": [
+            1,
+            4,
+            2,
+            5,
+            6,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "id": "bfc16d79-9659-4321-a038-433e56e553e4",
+      "isVisible": false
+    },
+    "c2a4ac95-aaee-4599-93a3-9b4ddabaa492": {
+      "id": "c2a4ac95-aaee-4599-93a3-9b4ddabaa492",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00067",
+      "rank": 20,
+      "child": [],
+      "color": "#FF33FF",
+      "items": [],
+      "title": "WRAP MENU",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [],
+          "2": [],
+          "3": [],
+          "4": []
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "c902e920-e8f8-4c8a-9b16-d6a753b82cad": {
+      "id": "c902e920-e8f8-4c8a-9b16-d6a753b82cad",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00066",
+      "rank": 28,
+      "child": [],
+      "color": "#FF33FF",
+      "items": [],
+      "title": "TAC MENU",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "TACOS MENU",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            4,
+            2,
+            5
+          ],
+          "2": [],
+          "3": [
+            4,
+            1,
+            2,
+            6,
+            5,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "cc017a24-b948-44fd-b2e1-fc693244136d": {
+      "id": "cc017a24-b948-44fd-b2e1-fc693244136d",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_bsb_franchise/Category/1717767613153boissons.webp",
+          "salesSupport": {
+            "1": {
+              "en": "1717767650044DRINKS.webp",
+              "fr": "1717767650045boissons.webp"
+            },
+            "2": {
+              "en": "",
+              "fr": ""
+            },
+            "4": {
+              "en": "",
+              "fr": ""
+            },
+            "5": {
+              "en": "",
+              "fr": ""
+            },
+            "6": {
+              "en": "",
+              "fr": ""
+            }
+          }
+        }
+      },
+      "ref": "00053",
+      "rank": 2,
+      "child": [],
+      "color": "#33FFFF",
+      "items": [],
+      "title": "Boissons",
+      "video": {
+        "url": "1717773446016boisson.webm",
+        "type": "video"
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": false,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "BOISSONS",
+          "salesSupport": {
+            "1": {
+              "en": "DRINKS",
+              "fr": "BOISSONS"
+            },
+            "2": {
+              "en": "DRINKS",
+              "fr": "BOISSONS"
+            },
+            "4": {
+              "en": "DRINKS",
+              "fr": "BOISSONS"
+            },
+            "5": {
+              "en": "DRINKS",
+              "fr": "BOISSONS"
+            },
+            "6": {
+              "en": "DRINKS",
+              "fr": "BOISSONS"
+            }
+          }
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "isInfoModeActive": true
+    },
+    "cd99cb9c-0b39-40bd-90c0-774783de1b08": {
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "000078",
+      "rank": 32,
+      "child": [],
+      "color": "#33FFFF",
+      "items": [],
+      "title": "CROUST MEN",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": [],
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": true,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "RIZ CROUSTY MENUS",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "id": "cd99cb9c-0b39-40bd-90c0-774783de1b08",
+      "isVisible": false
+    },
+    "d2e3a852-8158-4f10-b3b7-dbfae7d0082e": {
+      "id": "d2e3a852-8158-4f10-b3b7-dbfae7d0082e",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_bsb_franchise/Category/1717767445717WRAPS.webp",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00045",
+      "rank": 4,
+      "child": [],
+      "color": "#FF9966",
+      "items": [],
+      "title": "WRAP",
+      "video": {
+        "url": "1717773288950WRAP.webm",
+        "type": "video"
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "dca6b0a9-9ac0-4520-9379-2676f205627a": {
+      "id": "dca6b0a9-9ac0-4520-9379-2676f205627a",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00061",
+      "rank": 29,
+      "child": [],
+      "color": "#FFCCFF",
+      "items": [],
+      "title": "COMP TAC S",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "TACOS MONTAGNARD SEUL",
+          "salesSupport": {
+            "1": {
+              "en": "MOUNTAIN TACOS ONLY",
+              "fr": "TACOS MONTAGNARD SEUL"
+            },
+            "2": {
+              "en": "MOUNTAIN TACOS ONLY",
+              "fr": "TACOS MONTAGNARD SEUL"
+            },
+            "4": {
+              "en": "MOUNTAIN TACOS ONLY",
+              "fr": "TACOS MONTAGNARD SEUL"
+            },
+            "5": {
+              "en": "MOUNTAIN TACOS ONLY",
+              "fr": "TACOS MONTAGNARD SEUL"
+            },
+            "6": {
+              "en": "MOUNTAIN TACOS ONLY",
+              "fr": "TACOS MONTAGNARD SEUL"
+            }
+          }
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            4,
+            2,
+            5
+          ],
+          "2": [],
+          "3": [
+            4,
+            1,
+            2,
+            6,
+            5,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "eecd3df7-723e-45e5-9923-e3e67dea53ad": {
+      "id": "eecd3df7-723e-45e5-9923-e3e67dea53ad",
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00057",
+      "rank": 21,
+      "child": [],
+      "color": "#FFCCFF",
+      "items": [],
+      "title": "LONG SEUL",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": true,
+      "liaison": [],
+      "isNameShow": false,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "LONG SEUL",
+          "salesSupport": {
+            "1": {
+              "en": "LONG ALONE",
+              "fr": "LONG SEUL"
+            },
+            "2": {
+              "en": "LONG ALONE",
+              "fr": "LONG SEUL"
+            },
+            "4": {
+              "en": "LONG ALONE",
+              "fr": "LONG SEUL"
+            },
+            "5": {
+              "en": "LONG ALONE",
+              "fr": "LONG SEUL"
+            },
+            "6": {
+              "en": "LONG ALONE",
+              "fr": "LONG SEUL"
+            }
+          }
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            4,
+            2,
+            5
+          ],
+          "2": [],
+          "3": [
+            4,
+            1,
+            2,
+            6,
+            5,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": false
+      },
+      "isInfoModeActive": true,
+      "isVisible": false
+    },
+    "80ef3bb5-7d43-4bcf-a9a6-b05f56275cea": {
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "CAT_80ef3b",
+      "rank": 1,
+      "child": [],
+      "color": "#94a3b8",
+      "items": [],
+      "title": "Pizzas",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": 1,
+      "parent": "",
+      "archive": false,
+      "liaison": [],
+      "isNameShow": true,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Pizzas",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [],
+          "2": [],
+          "3": [],
+          "4": []
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "isInfoModeActive": false,
+      "id": "80ef3bb5-7d43-4bcf-a9a6-b05f56275cea",
+      "isVisible": true
+    }
+  },
+  "workflowList": {},
+  "isUniqueTitle": false,
+  "allergenGroups": {
+    "c40ceedc-1274-4b58-b6d7-cc96f506810f": {
+      "icon": "",
+      "title": "FRUITS A COQUES",
+      "allergens": [
+        "05b5be6d-659f-45cd-b3d3-a17528841a9b",
+        "27afa216-9d9e-4d6a-8a0e-a0a49c6465f1",
+        "c82e6919-e90e-4f56-9020-584fef1b5d6c",
+        "61a520e6-2edb-4eee-ad19-c416950791b7",
+        "b3f32662-c217-4408-918c-d065a01cc203",
+        "293d3d67-2201-4158-a722-142b8deb4f96",
+        "5a816b8a-f54d-4c76-9e51-7bc2ebbb68c3",
+        "169df83c-ab12-4682-96f0-0d6cf7ee9f84"
+      ]
+    },
+    "de689e98-9b81-4471-b2e6-60cdd5a4aa14": {
+      "icon": "",
+      "title": "GLUTIN",
+      "allergens": [
+        "a3db6cd5-0b44-4bee-84c0-f2dbf1471ed4",
+        "8aaba0fd-56b8-431c-8d25-d1345f592c52",
+        "340171f9-e7f0-4883-9550-7c1e195b251d",
+        "1deb0c9c-fc52-42d7-966b-9a021755865c",
+        "aa8ad49e-0904-447b-8bd4-934866f912f4",
+        "2f38b5f7-db0c-40ce-ae17-d6ce5b5da71f"
+      ]
+    }
+  },
+  "dateModification": "Le 04/06/2024 à 12:13",
+  "iuudCardReference": 0,
+  "theme": {
+    "palette": [
+      "#1e293b",
+      "#94a3b8",
+      "#1e293b"
+    ]
+  },
+  "themeMetadata": {
+    "typeLabel": "Tacos / Kebab",
+    "theme": "Coloré",
+    "style": "Moderne"
+  }
+}
