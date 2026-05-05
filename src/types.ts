@@ -59,19 +59,21 @@ export interface ETK360Category {
   linkedItems?: any[];
   visibilityInfo?: {
     dflt?: {
-      isVisible?: boolean;
-      basicCompVisibility?: boolean;
-      [key: number]: number[]; // Canaux numérotés
+      [key: string]: number[]; // Canaux numérotés
     };
+    isVisible?: boolean;
+    basicCompVisibility?: boolean;
   };
   isInfoModeActive?: boolean;
 }
 
 export interface ETK360Price {
-  dflt?: {
-    tx?: number;
-    ttc?: number | null; // Distinction stricte entre manquant (null) et gratuit (0)
-  } | number | null;
+  ht?: number;
+  tva?: number;
+  ovr?: any[];
+  dflt?: number | null;
+  advanced?: Record<string, any>;
+  saleModeVAT?: any[];
 }
 
 export interface ETK360Image {
@@ -146,56 +148,72 @@ export interface ETK360Item {
   isOptionChoice?: boolean;
   visibilityInfo?: {
     dflt?: {
-      isVisible?: boolean;
-      basicCompVisibility?: boolean;
-      [key: number]: number[];
+      [key: string]: number[];
     };
+    isVisible?: boolean;
+    basicCompVisibility?: boolean;
   };
   stepVisibility?: {
     dflt?: {
-      isVisible?: boolean;
-      basicCompVisibility?: boolean;
-      [key: number]: number[];
+      [key: string]: number[];
     };
+    isVisible?: boolean;
+    basicCompVisibility?: boolean;
   };
   type?: 'item' | 'modifier' | string;
   modifier?: string; // Gardé pour la liaison workflow
 }
 
 export interface ETK360StepItemOverride {
-  rank: number;
-  priceStep: number;
-  maxChoices: number;
-  minChoices: number;
-  itemPrice?: Record<string, any>;
-  nbrWithPrice?: number;
+  rank?: number;
+  itemPrice?: {
+    price?: Record<string, any>;
+    isVisible?: boolean;
+  };
+  priceStep?: number;
+  nbrWithPrice?: number | null;
+  specialPrice?: number;
+  basicCompVisibility?: boolean;
+  nbrWithspecialPrice?: number | null;
 }
 
 export interface ETK360Step {
-  id: number;
-  ref: string;
+  img?: string;
+  msg?: {
+    dflt?: {
+      imp?: any[];
+      nameDef?: string;
+      salesSupport?: Record<string, any>;
+    };
+  };
+  ref?: string;
   req?: boolean;
-  title: string;
+  title?: string;
   archive?: boolean;
   isBasic?: boolean;
   isComment?: boolean;
-  stepItems: Record<string, ETK360StepItemOverride>;
-  maxChoices: number;
-  minChoices: number;
+  stepItems?: Record<string, ETK360StepItemOverride>;
+  maxChoices?: number;
+  minChoices?: number;
   displayName?: {
     dflt?: {
-      imp?: any;
+      imp?: any[];
       nameDef?: string;
-      salesSupport?: any;
-      [key: string]: any;
+      salesSupport?: Record<string, any>;
     };
   };
   isModifiable?: boolean;
   nbrWithPrice?: number;
-  specificOpts?: Record<string, any>;
+  specificOpts?: {
+    isNext?: boolean;
+    noButton?: boolean;
+    zeroPrice?: boolean;
+    isCheapest?: boolean;
+    nextButton?: boolean;
+    isExpensive?: boolean;
+    withoutStep?: boolean;
+  };
   nbrWithspecialPrice?: number;
-  img?: ETK360Image; // Kept for backwards compatibility if any
-  rank?: number;     // Kept for backwards compatibility if any
 }
 
 export interface ETK360ModifierStepMeta {

@@ -419,75 +419,144 @@ export async function enrichirCarteAction(
         const safeId = typeof rId === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(rId) ? rId : require("crypto").randomUUID();
 
         const baseClone = JSON.parse(JSON.stringify(found));
-        // Remove duplicate legacy properties
+        // Remove duplicate legacy properties and illegal AI-hallucinated keys
         delete baseClone.name;
+        delete baseClone.id;
+        delete baseClone.type;
+        delete baseClone.qty;
+        delete baseClone.options;
+        delete baseClone.priceTTC;
+        delete baseClone.image;
+        delete baseClone.itemId;
+        delete baseClone.products;
+
+        const orderedItem: any = {};
+        
+        // Ordre canonique strict ETK360 v1
+        orderedItem.fid = found.fid || 0;
+        orderedItem.img = found.img || (found.image ? { dflt: { img: found.image, salesSupport: {} } } : { dflt: { img: "no-pictures.svg", salesSupport: {} } });
+        orderedItem.ing = found.ing || {};
+        orderedItem.opt = found.opt || {};
+        orderedItem.ref = typeof found.ref === 'string' && found.ref.startsWith('REF_') ? found.ref : (found.ref || `REF_${String(safeId).substring(0,8)}`);
+        orderedItem.menu = baseClone.menu !== undefined ? baseClone.menu : { 
+            img: { dflt: { img: "", salesSupport: {} } }, 
+            list: [], 
+            title: {}, 
+            isAfter: true, 
+            isActive: false 
+        };
+        orderedItem.rank = found.rank ?? 0;
+        orderedItem.unit = baseClone.unit !== undefined ? baseClone.unit : { 
+            P: "", 
+            isActive: false 
+        };
+        orderedItem.color = found.color || "#FFFFFF";
+        orderedItem.offer = baseClone.offer !== undefined ? baseClone.offer : { 
+            x: 0, 
+            y: 0, 
+            type: 1, 
+            isMax: false, 
+            isEnabled: false, 
+            serviceType: 1 
+        };
+        orderedItem.price = baseClone.price !== undefined ? baseClone.price : { 
+            ht: 0, 
+            ovr: [], 
+            tva: 10, 
+            dflt: 0, 
+            advanced: {}, 
+            saleModeVAT: [ { uuid: "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7", value: 10 } ] 
+        };
+        orderedItem.steps = baseClone.steps !== undefined ? baseClone.steps : [];
+        orderedItem.title = extractedTitle;
+        orderedItem.parent = found.parent || "";
+        orderedItem.prSize = prSizeNum;
+        orderedItem.showBc = found.showBc ?? true;
+        orderedItem.archive = found.archive || false;
+        orderedItem.barCode = found.barCode || "";
+        orderedItem.extrRef = found.extrRef || "";
+        orderedItem.liaison = Array.isArray(found.liaison) ? found.liaison : [];
+        orderedItem.calories = found.calories ?? 0;
+        orderedItem.outStock = found.outStock || false;
+        orderedItem.printers = found.printers || [];
+        orderedItem.sizeList = sizeListArray;
+        orderedItem.suspSale = found.suspSale || [];
+        orderedItem.variants = found.variants || [];
+        orderedItem.allergens = itemAllergens;
+        orderedItem.basicComp = found.basicComp || {};
+        orderedItem.isComment = found.isComment || false;
+        orderedItem.active_qty = found.active_qty || false;
+        orderedItem.isRedirect = found.isRedirect || false;
+        orderedItem.linkedTags = found.linkedTags || [];
+        orderedItem.nutriScore = found.nutriScore || {};
+        orderedItem.description = normalizedDescription;
+        orderedItem.displayName = normalizedDisplayName;
+        orderedItem.isTitleShow = found.isTitleShow ?? true;
+        orderedItem.creationType = found.creationType || "catalogue";
+        orderedItem.hideZeroPrice = found.hideZeroPrice || false;
+        orderedItem.isOptionChoice = found.isOptionChoice || false;
+        orderedItem.stepVisibility = baseClone.stepVisibility !== undefined ? baseClone.stepVisibility : { dflt: { "1": [1,2,0], "2": [1,2,0], "3": [1,2,0] }, isVisible: true, basicCompVisibility: true };
+        orderedItem.visibilityInfo = baseClone.visibilityInfo !== undefined ? baseClone.visibilityInfo : { dflt: { "1": [1,2,0], "2": [1,2,0], "3": [1,2,0] }, isVisible: true, basicCompVisibility: true };
+
+        // Copie de sécurité pour les clés natives non listées explicitement
+        Object.keys(baseClone).forEach(k => {
+            if (orderedItem[k] === undefined) {
+                orderedItem[k] = baseClone[k];
+            }
+        });
+
+        return orderedItem;
+    };
+
+    const buildBaseETK360Step = (sId: string, sRef: any) => {
+        const baseClone = JSON.parse(JSON.stringify(sRef));
+        delete baseClone.id;
+        delete baseClone.stepItems;
+        delete baseClone.options;
 
         return {
-          ...baseClone, // Clone intégral pour préserver la donnée originelle stricte
-          id: safeId,
-          fid: found.fid || 0,
-          ing: found.ing || {},
-          opt: found.opt || {},
-          ref: typeof found.ref === 'string' && found.ref.startsWith('REF_') ? found.ref : (found.ref || `REF_${String(safeId).substring(0,8)}`),
-          type: found.type === 'modifier' ? 'modifier' : 'item',
-          menu: found.menu || {},
-          rank: found.rank ?? 0,
-          unit: found.unit || {},
-          color: found.color || "#FFFFFF",
-          offer: found.offer || {},
-          price: { dflt: { ttc: rawTtc !== null ? rawTtc : 0 } },
-          steps: found.steps || [],
-          title: extractedTitle,
-          parent: found.parent || "",
-          prSize: prSizeNum,
-          showBc: found.showBc ?? true,
-          archive: found.archive || false,
-          barCode: found.barCode || "",
-          extrRef: found.extrRef || "",
-          liaison: Array.isArray(found.liaison) ? found.liaison : [],
-          calories: found.calories ?? 0,
-          outStock: found.outStock || false,
-          printers: found.printers || [],
-          sizeList: sizeListArray,
-          suspSale: found.suspSale || [],
-          variants: found.variants || [],
-          allergens: itemAllergens,
-          basicComp: found.basicComp || {},
-          isComment: found.isComment || false,
-          active_qty: found.active_qty || false,
-          isRedirect: found.isRedirect || false,
-          linkedTags: found.linkedTags || [],
-          nutriScore: found.nutriScore || {},
-          description: normalizedDescription,
-          displayName: normalizedDisplayName,
-          isTitleShow: found.isTitleShow ?? true,
-          creationType: found.creationType || "catalogue",
-          hideZeroPrice: found.hideZeroPrice || false,
-          isOptionChoice: found.isOptionChoice || false,
-          stepVisibility: found.stepVisibility || {},
-          visibilityInfo: found.visibilityInfo || {},
-          img: found.img || (found.image ? { dflt: { img: found.image, salesSupport: {} } } : { dflt: { img: "no-pictures.svg", salesSupport: {} } }),
-          qty: qtyNum
+            ...baseClone,
+            id: sId,
+            ref: sRef.ref || sId,
+            title: sRef.title || "Choix",
+            archive: sRef.archive || false,
+            isBasic: sRef.isBasic || false,
+            isComment: sRef.isComment || false,
+            stepItems: {}, // Sera peuplé manuellement
+            maxChoices: sRef.maxChoices ?? 1,
+            minChoices: sRef.minChoices ?? 0,
+            displayName: sRef.displayName || { dflt: { imp: [], nameDef: sRef.title || "Choix", salesSupport: {} } },
+            isModifiable: sRef.isModifiable ?? true,
+            img: sRef.img || { dflt: { img: "no-pictures.svg", salesSupport: {} } },
+            msg: sRef.msg || "",
+            req: sRef.req ?? false,
+            nbrWithPrice: sRef.nbrWithPrice ?? null,
+            nbrWithspecialPrice: sRef.nbrWithspecialPrice ?? null,
+            specificOpts: {
+                isNext: true,
+                noButton: false,
+                zeroPrice: false,
+                isCheapest: false,
+                nextButton: false,
+                isExpensive: false,
+                withoutStep: false,
+                ...(sRef.specificOpts || {})
+            },
+            rank: sRef.rank || 0
         };
     };
 
-    const buildBaseETK360Step = (sId: string, sRef: any) => ({
-        ...JSON.parse(JSON.stringify(sRef)), // Clone natif
-        id: sId,
-        ref: sRef.ref || sId,
-        title: sRef.title || "Choix",
-        archive: sRef.archive || false,
-        isBasic: sRef.isBasic || false,
-        isComment: sRef.isComment || false,
-        stepItems: {}, // Sera peuplé manuellement
-        maxChoices: sRef.maxChoices ?? 1,
-        minChoices: sRef.minChoices ?? 0,
-        displayName: sRef.displayName || { dflt: { imp: [], nameDef: sRef.title || "Choix", salesSupport: {} } },
-        isModifiable: sRef.isModifiable ?? true,
-        specificOpts: sRef.specificOpts || {},
-        img: sRef.img || { dflt: { img: "no-pictures.svg", salesSupport: {} } },
-        rank: sRef.rank || 0
-    });
+    const buildBaseETK360Modifier = (parentItemId: string, mRef: any = {}) => {
+        return {
+            "uuid-item": parentItemId,
+            add: mRef.add || {},
+            category: mRef.category || {},
+            typeAdd: mRef.typeAdd ?? false,
+            typeCateg: mRef.typeCateg ?? false,
+            typeSteps: mRef.typeSteps ?? true,
+            steps: {}
+        };
+    };
 
     // Genetic Scavenger Helper - DEEP CLONING (Zero Conflict UUIDs)
     const cloneGeneticModifier = (oldModId: string, parentItemId: string, fData: any): string | null => {
@@ -497,7 +566,7 @@ export async function enrichirCarteAction(
         const { randomUUID } = require("crypto");
         const newModId = randomUUID();
         
-        fData.modifier[newModId] = { ...mod, "uuid-item": parentItemId, steps: {} }; 
+        fData.modifier[newModId] = buildBaseETK360Modifier(parentItemId, mod);
         
         if (mod.steps) {
             Object.keys(mod.steps).forEach(oldStepId => {
@@ -505,7 +574,11 @@ export async function enrichirCarteAction(
                 if (!stp) return;
                 
                 const newStepId = randomUUID();
-                fData.modifier[newModId].steps[newStepId] = { ...mod.steps[oldStepId] };
+                fData.modifier[newModId].steps[newStepId] = {
+                    ovr: mod.steps[oldStepId]?.ovr || {},
+                    rank: mod.steps[oldStepId]?.rank || 1,
+                    items: mod.steps[oldStepId]?.items || {}
+                };
                 fData.steps[newStepId] = buildBaseETK360Step(newStepId, stp);
                 
                 const sourceItems = stp.stepItems || stp.items || stp.values || {};
@@ -518,10 +591,12 @@ export async function enrichirCarteAction(
                         const newItemId = oldItemId;
                         fData.steps[newStepId].stepItems[newItemId] = { 
                             rank: sourceItems[oldItemId]?.rank || 0,
+                            itemPrice: sourceItems[oldItemId]?.itemPrice || { price: {}, isVisible: false },
                             priceStep: sourceItems[oldItemId]?.priceStep || 0,
-                            maxChoices: sourceItems[oldItemId]?.maxChoices || 1,
-                            minChoices: sourceItems[oldItemId]?.minChoices || 0,
-                            ...sourceItems[oldItemId]
+                            nbrWithPrice: sourceItems[oldItemId]?.nbrWithPrice ?? null,
+                            specialPrice: sourceItems[oldItemId]?.specialPrice || 0,
+                            basicCompVisibility: sourceItems[oldItemId]?.basicCompVisibility ?? true,
+                            nbrWithspecialPrice: sourceItems[oldItemId]?.nbrWithspecialPrice ?? null
                         };
                         
                         if (!fData.items[newItemId]) {
@@ -533,8 +608,8 @@ export async function enrichirCarteAction(
                         }
                         
                         // Remap the override pointer if it exists in the modifier configuration
-                        if (fData.modifier[newModId].steps[newStepId].stepItems && mod.steps[oldStepId].stepItems && mod.steps[oldStepId].stepItems[oldItemId]) {
-                             fData.modifier[newModId].steps[newStepId].stepItems[newItemId] = mod.steps[oldStepId].stepItems[oldItemId];
+                        if (fData.modifier[newModId].steps[newStepId].items && mod.steps[oldStepId].items && mod.steps[oldStepId].items[oldItemId]) {
+                             fData.modifier[newModId].steps[newStepId].items[newItemId] = mod.steps[oldStepId].items[oldItemId];
                         }
                     });
                 }
@@ -558,12 +633,7 @@ export async function enrichirCarteAction(
         const { randomUUID } = require("crypto");
         const newModId = randomUUID();
         
-        fData.modifier[newModId] = { 
-            "uuid-item": parentItemId, 
-            archive: false, 
-            status: "ready", 
-            steps: {} 
-        };
+        fData.modifier[newModId] = buildBaseETK360Modifier(parentItemId);
         
         aiSteps.forEach((aiStep, sIndex) => {
             const stepHash = hashStep(aiStep);
@@ -585,7 +655,20 @@ export async function enrichirCarteAction(
                     minChoices: typeof aiStep.minChoices === 'number' ? aiStep.minChoices : 0,
                     displayName: { dflt: { imp: [], nameDef: aiStep.title || "Choix", salesSupport: {} } },
                     isModifiable: true,
-                    specificOpts: {},
+                    img: { dflt: { img: "no-pictures.svg", salesSupport: {} } },
+                    msg: "",
+                    req: false,
+                    nbrWithPrice: null,
+                    nbrWithspecialPrice: null,
+                    specificOpts: {
+                        isNext: true,
+                        noButton: false,
+                        zeroPrice: false,
+                        isCheapest: false,
+                        nextButton: false,
+                        isExpensive: false,
+                        withoutStep: false
+                    },
                     rank: sIndex + 1
                 };
                 
@@ -606,9 +689,12 @@ export async function enrichirCarteAction(
                     
                     fData.steps[newStepId].stepItems[optId] = {
                         rank: oIndex + 1,
+                        itemPrice: { price: {}, isVisible: false },
                         priceStep: opt.priceDelta || opt.price || 0,
-                        maxChoices: 1,
-                        minChoices: 0
+                        nbrWithPrice: null,
+                        specialPrice: 0,
+                        basicCompVisibility: true,
+                        nbrWithspecialPrice: null
                     };
                     
                     if (!fData.items[optId]) {
@@ -626,7 +712,11 @@ export async function enrichirCarteAction(
                 });
             }
             
-            fData.modifier[newModId].steps[newStepId] = { rank: sIndex + 1 };
+            fData.modifier[newModId].steps[newStepId] = {
+                ovr: {},
+                rank: sIndex + 1,
+                items: {}
+            };
         });
         
         return newModId;
@@ -835,8 +925,6 @@ export async function enrichirCarteAction(
                     
                     const newItemId = randomUUID();
                     finalData.items[newItemId] = JSON.parse(JSON.stringify(sourceItem));
-                    finalData.items[newItemId].id = newItemId; 
-                    finalData.items[newItemId].isVisible = true;
                     // FIX 1: Assurer que l'item pointe bien sur sa catégorie visuelle parente
                     finalData.items[newItemId].parent = targetCatId; 
                     
