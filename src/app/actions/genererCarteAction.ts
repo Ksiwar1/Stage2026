@@ -459,11 +459,11 @@ export async function enrichirCarteAction(
             isEnabled: false, 
             serviceType: 1 
         };
-        orderedItem.price = baseClone.price !== undefined ? baseClone.price : { 
-            ht: 0, 
+        orderedItem.price = (baseClone.price !== undefined && typeof baseClone.price === 'object' && !Array.isArray(baseClone.price)) ? baseClone.price : { 
+            ht: rawTtc ? Number((rawTtc / 1.1).toFixed(2)) : 0, 
             ovr: [], 
             tva: 10, 
-            dflt: 0, 
+            dflt: rawTtc || 0, 
             advanced: {}, 
             saleModeVAT: [ { uuid: "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7", value: 10 } ] 
         };
@@ -527,8 +527,8 @@ export async function enrichirCarteAction(
             minChoices: sRef.minChoices ?? 0,
             displayName: sRef.displayName || { dflt: { imp: [], nameDef: sRef.title || "Choix", salesSupport: {} } },
             isModifiable: sRef.isModifiable ?? true,
-            img: sRef.img || { dflt: { img: "no-pictures.svg", salesSupport: {} } },
-            msg: sRef.msg || "",
+            img: sRef.img !== undefined ? sRef.img : "",
+            msg: sRef.msg !== undefined && sRef.msg !== "" ? sRef.msg : { dflt: { imp: [], salesSupport: {} } },
             req: sRef.req ?? false,
             nbrWithPrice: sRef.nbrWithPrice ?? null,
             nbrWithspecialPrice: sRef.nbrWithspecialPrice ?? null,
@@ -655,8 +655,8 @@ export async function enrichirCarteAction(
                     minChoices: typeof aiStep.minChoices === 'number' ? aiStep.minChoices : 0,
                     displayName: { dflt: { imp: [], nameDef: aiStep.title || "Choix", salesSupport: {} } },
                     isModifiable: true,
-                    img: { dflt: { img: "no-pictures.svg", salesSupport: {} } },
-                    msg: "",
+                    img: "",
+                    msg: { dflt: { imp: [], salesSupport: {} } },
                     req: false,
                     nbrWithPrice: null,
                     nbrWithspecialPrice: null,
@@ -870,6 +870,13 @@ export async function enrichirCarteAction(
             finalData.workflow[targetCatId].rank = currentCatRank;
             finalData.categories[targetCatId].rank = currentCatRank;
             finalData.categories[targetCatId].title = aiCatName;
+            finalData.categories[targetCatId].archive = false;
+            finalData.categories[targetCatId].isVisible = true;
+            if (finalData.categories[targetCatId].visibilityInfo) {
+                finalData.categories[targetCatId].visibilityInfo.isVisible = true;
+            } else {
+                finalData.categories[targetCatId].visibilityInfo = { dflt: { 1: [], 2: [], 3: [], 4: [] }, isVisible: true, basicCompVisibility: true };
+            }
             
             if (!finalData.categories[targetCatId].items) finalData.categories[targetCatId].items = [];
             if (!finalData.categories[targetCatId].child) finalData.categories[targetCatId].child = [];
@@ -882,6 +889,9 @@ export async function enrichirCarteAction(
                 aiItemIds.forEach((aiItemId: any) => {
                     // Extract real item ID (if AI sent an object with id instead of string)
                     let realItemId = typeof aiItemId === 'string' ? aiItemId : (aiItemId.id || aiItemId.itemId);
+                    if (!realItemId && typeof aiItemId === 'object' && (aiItemId.name || aiItemId.title)) {
+                        realItemId = randomUUID();
+                    }
                     if (!realItemId) return;
                     let sourceItem = memoryItems[realItemId];
                     
@@ -1125,12 +1135,15 @@ export async function enrichirCarteAction(
         }
     }
     
-    // 2. Append any remaining extra fields (like themeMetadata, theme, etc.) at the end
+    // 2. STRICT ETK360 ISOMORPHISM: Do NOT append any extra fields (like themeMetadata, theme) 
+    // to the final JSON to respect exactly the original data model.
+    /*
     for (const key of Object.keys(finalData)) {
         if (!orderedRootFields.includes(key)) {
             orderedFinalData[key] = finalData[key];
         }
     }
+    */
 
     let jsonResponse = JSON.stringify(orderedFinalData, null, 2);
 

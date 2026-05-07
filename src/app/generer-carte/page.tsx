@@ -167,7 +167,8 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `carte_ia_${Date.now()}.json`;
+    const safeName = submittedRestaurantName.trim().replace(/[^a-zA-Z0-9_-]/g, '_');
+    a.download = `${safeName || 'carte_ia'}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
