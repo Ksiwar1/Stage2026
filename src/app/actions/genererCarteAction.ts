@@ -377,7 +377,7 @@ export async function enrichirCarteAction(
 
     const buildBaseETK360Item = (rId: string, found: any) => {
         // Source de vérité : title en premier, sinon nameDef, sinon name
-        const extractedTitle = found.title || found.displayName?.dflt?.nameDef || found.name || rId;
+        const extractedTitle = found.title || found.t || found.displayName?.dflt?.nameDef || found.name || rId;
         const extractedDesc = typeof found.description === 'string' ? found.description : (found.description?.dflt?.nameDef || "");
 
         // Parsing Allergènes
@@ -402,15 +402,16 @@ export async function enrichirCarteAction(
 
         // Résolution absolue du prix (Null ou Nombre)
         let rawTtc: number | null = null;
-        if (found.price !== undefined && found.price !== null) {
-            if (typeof found.price === 'number') {
-               rawTtc = found.price;
-            } else if (typeof found.price.dflt === 'object' && found.price.dflt !== null) {
-               rawTtc = found.price.dflt.ttc !== undefined ? found.price.dflt.ttc : null;
-            } else if (typeof found.price.dflt === 'number') {
-               rawTtc = found.price.dflt;
-            } else if (typeof found.price.ttc === 'number') {
-               rawTtc = found.price.ttc;
+        const testPrice = found.price !== undefined ? found.price : found.p;
+        if (testPrice !== undefined && testPrice !== null) {
+            if (typeof testPrice === 'number') {
+               rawTtc = testPrice;
+            } else if (typeof testPrice.dflt === 'object' && testPrice.dflt !== null) {
+               rawTtc = testPrice.dflt.ttc !== undefined ? testPrice.dflt.ttc : null;
+            } else if (typeof testPrice.dflt === 'number') {
+               rawTtc = testPrice.dflt;
+            } else if (typeof testPrice.ttc === 'number') {
+               rawTtc = testPrice.ttc;
             }
         } else if (found.priceTTC !== undefined) {
            rawTtc = found.priceTTC;
@@ -459,7 +460,7 @@ export async function enrichirCarteAction(
             isEnabled: false, 
             serviceType: 1 
         };
-        orderedItem.price = (baseClone.price !== undefined && typeof baseClone.price === 'object' && !Array.isArray(baseClone.price)) ? baseClone.price : { 
+        orderedItem.price = ((baseClone.price || baseClone.p) !== undefined && typeof (baseClone.price || baseClone.p) === 'object' && !Array.isArray(baseClone.price || baseClone.p)) ? (baseClone.price || baseClone.p) : { 
             ht: rawTtc ? Number((rawTtc / 1.1).toFixed(2)) : 0, 
             ovr: [], 
             tva: 10, 
@@ -468,6 +469,7 @@ export async function enrichirCarteAction(
             saleModeVAT: [ { uuid: "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7", value: 10 } ] 
         };
         orderedItem.steps = baseClone.steps !== undefined ? baseClone.steps : [];
+        if (found.modifier || found.m) orderedItem.modifier = found.modifier || found.m;
         orderedItem.title = extractedTitle;
         orderedItem.parent = found.parent || "";
         orderedItem.prSize = prSizeNum;
@@ -849,9 +851,10 @@ export async function enrichirCarteAction(
                     items: [],
                     title: aiCatName,
                     video: { url: "", type: "" },
-                    idCard: 1,
+                    idCard: [],
                     parent: "",
                     archive: false,
+                    extrRef: "",
                     liaison: [],
                     isNameShow: true,
                     linkedTags: [],
@@ -860,9 +863,7 @@ export async function enrichirCarteAction(
                     linkedChild: [],
                     linkedItems: [],
                     visibilityInfo: { dflt: { 1: [], 2: [], 3: [], 4: [] }, isVisible: true, basicCompVisibility: true },
-                    isInfoModeActive: false,
-                    id: targetCatId,
-                    isVisible: true
+                    isInfoModeActive: true
                 };
             }
             // FIX 2: Synchronize Rank perfectly with AI intention
@@ -871,7 +872,6 @@ export async function enrichirCarteAction(
             finalData.categories[targetCatId].rank = currentCatRank;
             finalData.categories[targetCatId].title = aiCatName;
             finalData.categories[targetCatId].archive = false;
-            finalData.categories[targetCatId].isVisible = true;
             if (finalData.categories[targetCatId].visibilityInfo) {
                 finalData.categories[targetCatId].visibilityInfo.isVisible = true;
             } else {
@@ -889,7 +889,7 @@ export async function enrichirCarteAction(
                 aiItemIds.forEach((aiItemId: any) => {
                     // Extract real item ID (if AI sent an object with id instead of string)
                     let realItemId = typeof aiItemId === 'string' ? aiItemId : (aiItemId.id || aiItemId.itemId);
-                    if (!realItemId && typeof aiItemId === 'object' && (aiItemId.name || aiItemId.title)) {
+                    if (!realItemId && typeof aiItemId === 'object' && (aiItemId.name || aiItemId.title || aiItemId.t)) {
                         realItemId = randomUUID();
                     }
                     if (!realItemId) return;
@@ -913,7 +913,7 @@ export async function enrichirCarteAction(
 
                     // FEATURE : L'IA a généré l'item de façon dynamique (OCR ou invention contrainte)
                     if (!sourceItem) {
-                        if (typeof aiItemId === 'object' && (aiItemId.name || aiItemId.title)) {
+                        if (typeof aiItemId === 'object' && (aiItemId.name || aiItemId.title || aiItemId.t)) {
                             sourceItem = buildBaseETK360Item(realItemId, aiItemId);
                         } else {
                             const parsedAiItems = intermediate.items || intermediate.products || [];
@@ -989,18 +989,10 @@ export async function enrichirCarteAction(
             // Suppression du code de nettoyage agressif.
         });
         
-        // Nettoyage strict : archiver et cacher toutes les catégories locales non demandées par l'IA
+        // Clean up unreferenced legacy categories completely to avoid empty or dirty data
         Object.keys(finalData.categories).forEach(cId => {
             if (!activeCategoryIds.has(cId)) {
-                finalData.categories[cId].isVisible = false;
-                finalData.categories[cId].archive = true;
-                
-                if (finalData.categories[cId].visibilityInfo) {
-                    finalData.categories[cId].visibilityInfo.isVisible = false;
-                    finalData.categories[cId].visibilityInfo.basicCompVisibility = false;
-                }
-                
-                // Retirer de la racine du workflow pour garantir l'absence totale dans la borne
+                delete finalData.categories[cId];
                 if (finalData.workflow[cId]) {
                     delete finalData.workflow[cId];
                 }
@@ -1107,6 +1099,17 @@ export async function enrichirCarteAction(
                 }
             }
         }
+        
+        // Check 4: Enforce strict ETK360 v1 isomorphism on Categories (Clean dirty legacy data)
+        for (const cId of Object.keys(rootCats)) {
+            const cat = rootCats[cId];
+            delete cat.id; // Root ID is illegal
+            delete cat.isVisible; // Must rely on visibilityInfo instead
+            if (!Array.isArray(cat.idCard)) cat.idCard = []; // Force array
+            if (cat.extrRef === undefined) cat.extrRef = "";
+            if (cat.isInfoModeActive === undefined) cat.isInfoModeActive = true;
+        }
+
         return true;
     };
 

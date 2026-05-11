@@ -450,7 +450,12 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                             { name: 'Healthy (Salade)', p: '#16a34a', s: '#84cc16' },
                             { name: 'Élégant', p: '#1e293b', s: '#94a3b8' },
                             { name: 'Océan (Sushis)', p: '#0284c7', s: '#38bdf8' },
-                            { name: 'Pastel (Gourmandise)', p: '#f43f5e', s: '#fb7185' }
+                            { name: 'Pastel (Gourmandise)', p: '#f43f5e', s: '#fb7185' },
+                            { name: 'Luxury (Or/Noir)', p: '#0f172a', s: '#d4af37' },
+                            { name: 'Sunset (Tex-Mex)', p: '#ea580c', s: '#fcd34d' },
+                            { name: 'Végétal (Vegan)', p: '#047857', s: '#6ee7b7' },
+                            { name: 'Urbain (Street Food)', p: '#7c3aed', s: '#d8b4fe' },
+                            { name: 'Terroir (Bistro)', p: '#78350f', s: '#f59e0b' }
                           ].map(th => (
                              <div key={th.name} onClick={() => setWizardData({...wizardData, primaryColor: th.p, secondaryColor: th.s})} style={{ padding: '0.7rem', border: wizardData.primaryColor === th.p ? '2px solid '+th.p : '1px solid #e2e8f0', borderRadius: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
                                 <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: th.p }}></div>
