@@ -192,7 +192,7 @@ export default function ProductEditorClient({ items, nomFichier }: ProductEditor
                   disabled={isSaving}
                   style={{ 
                     padding: '1rem 2rem', 
-                    background: '#3b82f6', 
+                    background: 'var(--site-secondary)', 
                     color: 'white', 
                     border: 'none', 
                     borderRadius: '8px', 

@@ -128,7 +128,7 @@
 }
 
 input:checked + .slider {
-  background-color: #10b981; /* Emerald green for positive action */
+  background-color: var(--site-primary); /* Primary action color */
 }
 
 input:checked + .slider:before {
@@ -145,7 +145,7 @@ input:checked + .slider:before {
 
 .toast {
   padding: 0.8rem 1.2rem;
-  background: #10b981;
+  background: var(--site-primary);
   color: white;
   border-radius: 10px;
   font-weight: 500;

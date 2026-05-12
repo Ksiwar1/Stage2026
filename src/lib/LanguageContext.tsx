@@ -80,19 +80,22 @@ interface LanguageContextProps {
   lang: SupportedLang;
   setLang: (l: SupportedLang) => void;
   t: (key: string) => string;
+  allowedLanguages: SupportedLang[];
+  setAllowedLanguages: (langs: SupportedLang[]) => void;
 }
 
 const LanguageContext = createContext<LanguageContextProps | undefined>(undefined);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [lang, setLang] = useState<SupportedLang>('FR');
+  const [allowedLanguages, setAllowedLanguages] = useState<SupportedLang[]>(['FR', 'EN']);
 
   const t = (key: string) => {
     return dictionary[key]?.[lang] || key;
   };
 
   return (
-    <LanguageContext.Provider value={{ lang, setLang, t }}>
+    <LanguageContext.Provider value={{ lang, setLang, t, allowedLanguages, setAllowedLanguages }}>
       {children}
     </LanguageContext.Provider>
   );

@@ -161,10 +161,78 @@ const ModifierOptionCard = React.memo(({ opt, isComp, isIncluded, isSelected, is
 });
 ModifierOptionCard.displayName = 'ModifierOptionCard';
 export default function KioskSimulator({ restaurantName, tree, themePalette = { primary: '#F39C12', secondary: '#1A237E', background: '#F8FAFC', surface: '#FFFFFF', text: '#111827', onPrimary: 'white' }, catalogData }: { restaurantName: string, tree: ParsedCategory[], themePalette?: { primary: string, secondary: string, background?: string, surface?: string, text: string, onPrimary: string }, catalogData?: any }) {
-  const { t, lang } = useLanguage();
+  const { t, lang, setAllowedLanguages } = useLanguage();
+  const [activeThemePalette, setActiveThemePalette] = useState(themePalette);
+  const [activeCategoriesTree, setActiveCategoriesTree] = useState(tree);
+
+  useEffect(() => {
+    let finalLangs = ['FR', 'EN'];
+    let finalPrimary = themePalette.primary;
+    let finalSecondary = themePalette.secondary;
+    let finalCategories = [...tree];
+
+    // Read from catalog JSON
+    if (catalogData?.opt?.languages && Array.isArray(catalogData.opt.languages)) {
+      finalLangs = catalogData.opt.languages;
+    }
+
+    // Read from Local Support Overrides
+    try {
+      const saved = localStorage.getItem("softavera_support_settings");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.overrideLanguages && parsed.overrideLanguages.length > 0) {
+          finalLangs = parsed.overrideLanguages;
+        }
+        if (parsed.overridePrimaryColor) {
+          finalPrimary = parsed.overridePrimaryColor;
+        }
+        if (parsed.overrideSecondaryColor) {
+          finalSecondary = parsed.overrideSecondaryColor;
+        }
+        if (parsed.overrideCategoryPriority) {
+          const priorities: string[] = parsed.overrideCategoryPriority.split(',').map((s: string) => s.trim().toLowerCase());
+          finalCategories.sort((a, b) => {
+            const aTitle = a.title.toLowerCase();
+            const bTitle = b.title.toLowerCase();
+            
+            const aIndex = priorities.findIndex(p => aTitle.includes(p));
+            const bIndex = priorities.findIndex(p => bTitle.includes(p));
+            
+            // If both are found in the priority list, sort by their position
+            if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+            // If only one is found, it comes first
+            if (aIndex !== -1) return -1;
+            if (bIndex !== -1) return 1;
+            // Otherwise, keep the original workflow rank
+            return (a.workflowRank || 0) - (b.workflowRank || 0);
+          });
+        }
+      }
+    } catch (e) {
+      console.error("Failed to apply overrides", e);
+    }
+
+    setAllowedLanguages(finalLangs);
+    setActiveThemePalette({
+      ...themePalette,
+      primary: finalPrimary,
+      secondary: finalSecondary,
+      text: finalPrimary // Auto-adapting text color to primary for visibility
+    });
+    setActiveCategoriesTree(finalCategories);
+  }, [catalogData, tree, themePalette, setAllowedLanguages]);
+
   const [diningOption, setDiningOption] = useState<'sur_place' | 'emporter' | null>(null);
-  const activeCategories = useMemo(() => tree.filter(cat => cat.isVisible !== false), [tree]);
-  const [activeCategoryId, setActiveCategoryId] = useState<string>(activeCategories[0]?.id || "");
+  const activeCategories = useMemo(() => activeCategoriesTree.filter(cat => cat.isVisible !== false), [activeCategoriesTree]);
+  const [activeCategoryId, setActiveCategoryId] = useState<string>("");
+  
+  useEffect(() => {
+    if (activeCategories.length > 0 && !activeCategoryId) {
+      setActiveCategoryId(activeCategories[0].id);
+    }
+  }, [activeCategories, activeCategoryId]);
+  
   const activeCategory = activeCategories.find(c => c.id === activeCategoryId) || activeCategories[0];
 
   // -- PANIER --
@@ -397,13 +465,13 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
         alignItems: 'center', 
         height: '100%', 
         width: '100%', 
-        background: `radial-gradient(circle at top left, ${themePalette.secondary} 0%, ${themePalette.primary} 100%)`, 
+        background: `radial-gradient(circle at top left, ${activeThemePalette.secondary} 0%, ${activeThemePalette.primary} 100%)`, 
         fontFamily: 'sans-serif',
         position: 'relative',
         overflow: 'hidden'
       }}>
         <div style={{ position: 'absolute', top: '-10%', right: '-5%', width: '40vw', height: '40vw', background: 'white', opacity: 0.1, borderRadius: '50%', filter: 'blur(100px)' }} />
-        <div style={{ position: 'absolute', bottom: '-15%', left: '-10%', width: '50vw', height: '50vw', background: themePalette.secondary, opacity: 0.4, borderRadius: '50%', filter: 'blur(120px)' }} />
+        <div style={{ position: 'absolute', bottom: '-15%', left: '-10%', width: '50vw', height: '50vw', background: activeThemePalette.secondary, opacity: 0.4, borderRadius: '50%', filter: 'blur(120px)' }} />
 
         <div style={{ 
           width: '90%', 
@@ -422,7 +490,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
         }}>
           
           <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <h1 style={{ fontWeight: 900, fontSize: '2.4rem', margin: '0 0 0.5rem 0', color: themePalette.secondary, letterSpacing: '-0.5px' }}>{restaurantName.toUpperCase()}</h1>
+            <h1 style={{ fontWeight: 900, fontSize: '2.4rem', margin: '0 0 0.5rem 0', color: activeThemePalette.secondary, letterSpacing: '-0.5px' }}>{restaurantName.toUpperCase()}</h1>
             <p style={{ margin: 0, fontSize: '1.2rem', color: '#64748b', fontWeight: 500 }}>{t('kiosk_make_choice')}</p>
           </div>
 
@@ -443,7 +511,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                 justifyContent: 'center', 
                 transition: 'all 0.2s', 
                 padding: '1rem', 
-                color: themePalette.secondary,
+                color: activeThemePalette.secondary,
                 boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)'
               }}>
                 <span style={{ fontSize: '4rem', marginBottom: '1rem' }}>🍽️</span> 
@@ -465,7 +533,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                 justifyContent: 'center', 
                 transition: 'all 0.2s', 
                 padding: '1rem', 
-                color: themePalette.secondary,
+                color: activeThemePalette.secondary,
                 boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)'
               }}>
                 <span style={{ fontSize: '4rem', marginBottom: '1rem' }}>🛍️</span>
@@ -481,12 +549,12 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
 
   return (
     <div style={{ 
-      '--color-primary': themePalette.primary, 
-      '--color-secondary': themePalette.secondary, 
-      '--color-background': themePalette.background, 
-      '--color-surface': themePalette.surface, 
-      '--color-text': themePalette.text, 
-      '--color-on-primary': themePalette.onPrimary 
+      '--color-primary': activeThemePalette.primary, 
+      '--color-secondary': activeThemePalette.secondary, 
+      '--color-background': activeThemePalette.background, 
+      '--color-surface': activeThemePalette.surface, 
+      '--color-text': activeThemePalette.text, 
+      '--color-on-primary': activeThemePalette.onPrimary 
     } as React.CSSProperties}>
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw', background: 'var(--color-background)', fontFamily: catalogData?.themeMetadata?.typeLabel?.toLowerCase().includes('pizza') ? "'Playfair Display', serif" : catalogData?.themeMetadata?.typeLabel?.toLowerCase().includes('gastronomique') ? "'Cinzel', serif" : "'Inter', sans-serif", overflow: 'hidden' }}>
       

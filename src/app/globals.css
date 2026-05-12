@@ -7,6 +7,8 @@
   --card-bg: #ffffff; /* Fond pur */
   --card-border: rgba(0, 0, 0, 0.06); /* Bordure discrète */
   --gradient-text: linear-gradient(135deg, #111827 0%, #374151 100%);
+  --site-primary: #10b981; /* Default to emerald */
+  --site-secondary: #3b82f6; /* Default to blue */
 }
 
 html,

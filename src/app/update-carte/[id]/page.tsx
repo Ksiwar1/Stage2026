@@ -55,7 +55,7 @@ export default async function CarteEditorDashboard(props: { params: Promise<{ id
                 <h2 style={{ marginTop: 0, color: '#1e293b', marginBottom: '1.5rem' }}>Vue d'ensemble</h2>
                 <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
                   <div style={{ background: '#f8fafc', border: '1px solid #f1f5f9', padding: '1.5rem', borderRadius: '16px', flex: '1 1 200px', display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-                    <div style={{ width: '60px', height: '60px', borderRadius: '12px', background: '#eff6ff', color: '#3b82f6', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>
+                    <div style={{ width: '60px', height: '60px', borderRadius: '12px', background: 'color-mix(in srgb, var(--site-secondary) 15%, white)', color: 'var(--site-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>
                       🍽️
                     </div>
                     <div>
@@ -65,7 +65,7 @@ export default async function CarteEditorDashboard(props: { params: Promise<{ id
                   </div>
 
                   <div style={{ background: '#f8fafc', border: '1px solid #f1f5f9', padding: '1.5rem', borderRadius: '16px', flex: '1 1 200px', display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-                    <div style={{ width: '60px', height: '60px', borderRadius: '12px', background: '#ecfdf5', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>
+                    <div style={{ width: '60px', height: '60px', borderRadius: '12px', background: 'color-mix(in srgb, var(--site-primary) 15%, white)', color: 'var(--site-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>
                       🍔
                     </div>
                     <div>
@@ -95,10 +95,15 @@ export default async function CarteEditorDashboard(props: { params: Promise<{ id
                     <span>Éditeur de Catégories</span>
                     <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 400 }}>Ajouter, trier ou masquer (Bientôt)</span>
                   </button>
-                  <Link href={`/update-carte/${params.id}/produits`} style={{ padding: '1.5rem', background: 'white', color: '#0f172a', border: '2px solid #3b82f6', borderRadius: '16px', fontWeight: 600, cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s', display: 'flex', flexDirection: 'column', gap: '0.5rem', textDecoration: 'none', boxShadow: '0 4px 12px rgba(59, 130, 246, 0.15)' }}>
+                  <Link href={`/update-carte/${params.id}/produits`} style={{ padding: '1.5rem', background: 'white', color: '#0f172a', border: '2px solid var(--site-secondary)', borderRadius: '16px', fontWeight: 600, cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s', display: 'flex', flexDirection: 'column', gap: '0.5rem', textDecoration: 'none', boxShadow: '0 4px 12px color-mix(in srgb, var(--site-secondary) 15%, transparent)' }}>
                     <span style={{ fontSize: '1.5rem' }}>🏷️</span>
                     <span>Catalogue Produits</span>
-                    <span style={{ fontSize: '0.8rem', color: '#3b82f6', fontWeight: 500 }}>Éditer les prix, images et descriptions &rarr;</span>
+                    <span style={{ fontSize: '0.8rem', color: 'var(--site-secondary)', fontWeight: 500 }}>Éditer les prix, images et descriptions &rarr;</span>
+                  </Link>
+                  <Link href={`/update-carte/${params.id}/parametres`} style={{ padding: '1.5rem', background: 'white', color: '#0f172a', border: '2px solid var(--site-primary)', borderRadius: '16px', fontWeight: 600, cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s', display: 'flex', flexDirection: 'column', gap: '0.5rem', textDecoration: 'none', boxShadow: '0 4px 12px color-mix(in srgb, var(--site-primary) 15%, transparent)' }}>
+                    <span style={{ fontSize: '1.5rem' }}>⚙️</span>
+                    <span>Paramètres Globaux</span>
+                    <span style={{ fontSize: '0.8rem', color: 'var(--site-primary)', fontWeight: 500 }}>Langues, Couleurs, Ordre &rarr;</span>
                   </Link>
                   <button style={{ padding: '1.5rem', background: 'white', color: '#0f172a', border: '2px dashed #cbd5e1', borderRadius: '16px', fontWeight: 600, cursor: 'pointer', opacity: 0.7, textAlign: 'left', transition: 'all 0.2s', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     <span style={{ fontSize: '1.5rem' }}>🧩</span>
