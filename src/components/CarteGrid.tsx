@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import CarteVisuelle from './CarteVisuelle';
 import styles from '../app/page.module.css';
 
-export default function CarteGrid({ cartes }: { cartes: any[] }) {
+export default function CarteGrid({ cartes, baseRoute }: { cartes: any[], baseRoute?: string }) {
   const [searchTerm, setSearchTerm] = useState('');
 
   const filteredCartes = cartes.filter(carte => {
@@ -52,7 +52,7 @@ export default function CarteGrid({ cartes }: { cartes: any[] }) {
           <p style={{ textAlign: 'center', width: '100%', color: '#666' }}>Aucun résultat trouvé pour "{searchTerm}".</p>
         ) : (
           filteredCartes.map((summary, index) => (
-            <CarteVisuelle key={index} summary={summary} />
+            <CarteVisuelle key={index} summary={summary} baseRoute={baseRoute} />
           ))
         )}
       </div>

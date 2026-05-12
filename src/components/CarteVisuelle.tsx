@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { deleteCarteAction } from '../app/actions/deleteCarteAction';
 
-export default function CarteVisuelle({ summary }: { summary: VisualCardSummary }) {
+export default function CarteVisuelle({ summary, baseRoute = '/borne/' }: { summary: VisualCardSummary, baseRoute?: string }) {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDelete = async (e: React.MouseEvent) => {
@@ -38,7 +38,7 @@ export default function CarteVisuelle({ summary }: { summary: VisualCardSummary 
        }
     }
     return (
-      <Link href={`/borne/${summary.nomFichier.replace('.json', '')}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block', height: '100%', transition: 'transform 0.2s', opacity: isDeleting ? 0.5 : 1, ...({ '&:hover': { transform: 'translateY(-5px)' } } as any) }}>
+      <Link href={`${baseRoute}${summary.nomFichier.replace('.json', '')}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block', height: '100%', transition: 'transform 0.2s', opacity: isDeleting ? 0.5 : 1, ...({ '&:hover': { transform: 'translateY(-5px)' } } as any) }}>
         <div style={{
           background: 'white',
           border: '1px solid #e5e7eb',
