@@ -6,6 +6,7 @@ import { validateETK360Code } from "../../lib/aiValidator";
 import { patchETK360Structure } from "../../lib/autoHealer";
 import fs from "fs";
 import path from "path";
+import { addLog } from "../../lib/logger";
 
 export async function genererArchitectureAction(data: FormData) {
   let sujetDemande = (data.get("sujet") as string) || "Générer une carte à partir de l'image";
@@ -1169,6 +1170,10 @@ export async function enrichirCarteAction(
       }
       
       fs.writeFileSync(filepath, jsonResponse, 'utf-8');
+
+      // Ajouter le log de création
+      addLog(filename, 'CREATE', 'Carte générée avec succès par l\'IA.');
+
       return JSON.stringify({ success: true, json: jsonResponse, savedPath: filename });
     }
 

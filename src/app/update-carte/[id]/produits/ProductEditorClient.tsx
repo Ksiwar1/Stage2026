@@ -14,7 +14,7 @@ export default function ProductEditorClient({ items, nomFichier }: ProductEditor
   
   // States for the form
   const [editName, setEditName] = useState('');
-  const [editPrice, setEditPrice] = useState<number>(0);
+  const [editPrice, setEditPrice] = useState<number | string>(0);
   const [editImg, setEditImg] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage] = useState<{ text: string, type: 'success' | 'error' } | null>(null);
@@ -31,7 +31,9 @@ export default function ProductEditorClient({ items, nomFichier }: ProductEditor
   });
 
   const handleSelectProduct = (itemId: string) => {
-    const item = items[itemId];
+    const item = itemsArray.find(i => i.id === itemId) || items[itemId];
+    if (!item) return;
+    
     setSelectedItemId(itemId);
     setMessage(null);
     
@@ -56,7 +58,7 @@ export default function ProductEditorClient({ items, nomFichier }: ProductEditor
 
     const updates = {
       name: editName,
-      price: editPrice,
+      price: typeof editPrice === 'string' ? (parseFloat(editPrice) || 0) : editPrice,
       img: editImg
     };
 
@@ -162,7 +164,7 @@ export default function ProductEditorClient({ items, nomFichier }: ProductEditor
                   type="number" 
                   step="0.01"
                   value={editPrice}
-                  onChange={(e) => setEditPrice(parseFloat(e.target.value))}
+                  onChange={(e) => setEditPrice(e.target.value === '' ? '' : parseFloat(e.target.value))}
                   style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '1rem' }}
                 />
               </div>

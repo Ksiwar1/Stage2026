@@ -3,6 +3,7 @@
 import fs from 'fs';
 import path from 'path';
 import { revalidatePath } from 'next/cache';
+import { addLog } from '../../lib/logger';
 
 export async function deleteCarteAction(fileName: string) {
   try {
@@ -19,7 +20,10 @@ export async function deleteCarteAction(fileName: string) {
       revalidatePath('/bibliotheque');
       revalidatePath('/menu');
       revalidatePath('/');
-      
+      revalidatePath('/historique');
+
+      addLog(fileName, 'DELETE', 'Carte supprimée définitivement du système.');
+
       return { success: true };
     } else {
       return { success: false, error: "Fichier introuvable sur le disque." };

@@ -3,6 +3,7 @@
 import fs from 'fs';
 import path from 'path';
 import { revalidatePath } from 'next/cache';
+import { addLog } from '../../lib/logger';
 
 export async function updateProduitAction(fileName: string, itemId: string, updates: { name: string, price: number, img: string }) {
   try {
@@ -19,12 +20,17 @@ export async function updateProduitAction(fileName: string, itemId: string, upda
     const content = fs.readFileSync(filepath, 'utf-8');
     const data = JSON.parse(content);
 
-    if (!data.items || !data.items[itemId]) {
-        return { success: false, error: "Produit introuvable dans la carte." };
+    // Récupérer l'item existant pour ne pas casser sa structure (ex: modifier, options...)
+    let item;
+    if (Array.isArray(data.items)) {
+        item = data.items.find((i: any) => i.id === itemId);
+    } else {
+        item = data.items[itemId];
     }
 
-    // Récupérer l'item existant pour ne pas casser sa structure (ex: modifier, options...)
-    const item = data.items[itemId];
+    if (!item) {
+        return { success: false, error: "Produit introuvable dans la carte." };
+    }
 
     // Mise à jour du nom
     if (item.displayName?.dflt) {
@@ -56,6 +62,9 @@ export async function updateProduitAction(fileName: string, itemId: string, upda
     revalidatePath(`/update-carte/${fileName.replace('.json', '')}`);
     revalidatePath(`/update-carte/${fileName.replace('.json', '')}/produits`);
     revalidatePath(`/borne/${fileName.replace('.json', '')}`);
+    revalidatePath(`/historique`);
+
+    addLog(fileName, 'UPDATE', `Modification du produit "${updates.name}" (Prix: ${updates.price}€)`);
 
     return { success: true, updatedItem: item };
 
