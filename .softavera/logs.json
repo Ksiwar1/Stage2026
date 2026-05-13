@@ -1,0 +1,93 @@
+[
+  {
+    "id": "bfb497e1-a94a-43e8-a43c-4b8b378a21be",
+    "timestamp": "2026-05-12T08:12:32.437Z",
+    "nomFichier": "3_1775058850824.json",
+    "actionType": "UPDATE",
+    "details": "Modification du produit \"PETITE FRITES SAUCE CHEDDAR\" (Prix: 1€)"
+  },
+  {
+    "id": "2ac2277f-5b6c-46f7-8d3d-c426bd6c6e68",
+    "timestamp": "2026-05-12T08:13:37.124Z",
+    "nomFichier": "ia_zz_2.json",
+    "actionType": "DELETE",
+    "details": "Carte supprimée définitivement du système."
+  },
+  {
+    "id": "e5832f00-f9d3-4094-8f67-4f815987f447",
+    "timestamp": "2026-05-12T08:13:44.258Z",
+    "nomFichier": "ia_sisiiiii.json",
+    "actionType": "DELETE",
+    "details": "Carte supprimée définitivement du système."
+  },
+  {
+    "id": "a3466583-9bb6-41f3-9e46-0b53f87329c3",
+    "timestamp": "2026-05-12T08:13:46.598Z",
+    "nomFichier": "ia_sisi_.json",
+    "actionType": "DELETE",
+    "details": "Carte supprimée définitivement du système."
+  },
+  {
+    "id": "4f8223f2-b0ce-4768-9abd-6f255b2c8700",
+    "timestamp": "2026-05-12T08:18:31.805Z",
+    "nomFichier": "3_1775058850824.json",
+    "actionType": "UPDATE",
+    "details": "Modification du produit \"PETITE FRITES SAUCE CHEDDAR\" (Prix: 2€)"
+  },
+  {
+    "id": "425f3380-a721-44db-82b9-d72335e650a2",
+    "timestamp": "2026-05-12T09:33:30.304Z",
+    "nomFichier": "ia_nice.json",
+    "actionType": "CREATE",
+    "details": "Carte générée avec succès par l'IA."
+  },
+  {
+    "id": "2ab016c9-2770-43cb-817b-292d73b47d5d",
+    "timestamp": "2026-05-12T09:34:15.629Z",
+    "nomFichier": "ia_nice_2.json",
+    "actionType": "CREATE",
+    "details": "Carte générée avec succès par l'IA."
+  },
+  {
+    "id": "86aa2e30-8d21-4e64-b5a3-d5675a4a6559",
+    "timestamp": "2026-05-12T09:35:03.835Z",
+    "nomFichier": "ia_nice_3.json",
+    "actionType": "CREATE",
+    "details": "Carte générée avec succès par l'IA."
+  },
+  {
+    "id": "447a2a47-6564-45f1-b2f2-afa6014558da",
+    "timestamp": "2026-05-12T10:38:01.297Z",
+    "nomFichier": "ia_nice_4.json",
+    "actionType": "CREATE",
+    "details": "Carte générée avec succès par l'IA."
+  },
+  {
+    "id": "9b249661-3c0e-4a31-9e40-d1243958277d",
+    "timestamp": "2026-05-12T14:46:57.993Z",
+    "nomFichier": "ia_restaurant_ia_7.json",
+    "actionType": "CREATE",
+    "details": "Carte générée avec succès par l'IA."
+  },
+  {
+    "id": "726d1364-c912-4546-9f2d-1c135128ccba",
+    "timestamp": "2026-05-12T14:50:24.861Z",
+    "nomFichier": "ia_restaurant_ia_8.json",
+    "actionType": "CREATE",
+    "details": "Carte générée avec succès par l'IA."
+  },
+  {
+    "id": "7f650e20-98c5-4372-9b8c-3806333b5762",
+    "timestamp": "2026-05-12T15:43:27.978Z",
+    "nomFichier": "ia_marseille.json",
+    "actionType": "CREATE",
+    "details": "Carte générée avec succès par l'IA."
+  },
+  {
+    "id": "81f76af0-dccb-4cca-a82a-89ee32bd3955",
+    "timestamp": "2026-05-13T08:31:47.616Z",
+    "nomFichier": "ia_bourges.json",
+    "actionType": "CREATE",
+    "details": "Carte générée avec succès par l'IA."
+  }
+]

@@ -33,6 +33,7 @@ export default function GenererCarte() {
   const [rawData, setRawData] = useState<any>(null);
   const [libraryCards, setLibraryCards] = useState<string[]>([]);
   const [submittedRestaurantName, setSubmittedRestaurantName] = useState<string>("RESTAURANT IA");
+  const [isExtractingColor, setIsExtractingColor] = useState(false);
 
   // States Wizard Assistant
   const [activeTab, setActiveTab] = useState<"libre" | "wizard">("libre");
@@ -69,6 +70,43 @@ export default function GenererCarte() {
   useEffect(() => {
     getAvailableLibraryCards().then(setLibraryCards).catch(console.error);
   }, []);
+
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setIsExtractingColor(true);
+
+    const img = new Image();
+    img.src = URL.createObjectURL(file);
+    img.onload = async () => {
+      try {
+        const ColorThief = (await import('colorthief')).default;
+        const colorThief = new ColorThief();
+        const dominantRgb = colorThief.getColor(img);
+        const paletteRgb = colorThief.getPalette(img, 3);
+        
+        const rgbToHex = (r: number, g: number, b: number) => '#' + [r, g, b].map(x => {
+          const hex = x.toString(16)
+          return hex.length === 1 ? '0' + hex : hex
+        }).join('');
+
+        const pColor = rgbToHex(dominantRgb[0], dominantRgb[1], dominantRgb[2]);
+        let sColor = pColor;
+        
+        if (paletteRgb && paletteRgb.length > 1) {
+          sColor = rgbToHex(paletteRgb[1][0], paletteRgb[1][1], paletteRgb[1][2]);
+        }
+        
+        setWizardData(prev => ({ ...prev, primaryColor: pColor, secondaryColor: sColor }));
+      } catch(err) {
+        console.error("Color extraction failed", err);
+        alert("Impossible d'extraire les couleurs de cette image. (Format non supporté ou image corrompue)");
+      } finally {
+        setIsExtractingColor(false);
+        URL.revokeObjectURL(img.src);
+      }
+    };
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -442,26 +480,98 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                          ))}
                       </div>
 
-                      <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: '#1e293b', fontSize: '1.2rem' }}>Style global de l'app</label>
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem', marginBottom: '1.5rem' }}>
+                      <label style={{ display: 'block', fontWeight: 800, marginBottom: '1rem', color: '#1e293b', fontSize: '1.2rem' }}>Ambiance Visuelle (Couleurs)</label>
+
+                      <div style={{ marginBottom: '1.5rem' }}>
+                        <label style={{
+                            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.8rem',
+                            background: 'linear-gradient(135deg, #1e293b, #0f172a)', color: 'white',
+                            padding: '1rem', borderRadius: '12px', cursor: 'pointer',
+                            boxShadow: '0 4px 15px rgba(0,0,0,0.1)', transition: 'all 0.3s',
+                            border: '1px solid rgba(255,255,255,0.1)'
+                        }}>
+                            {isExtractingColor ? (
+                               <span style={{ fontWeight: 600 }}>🪄 Analyse magique en cours...</span>
+                            ) : (
+                               <>
+                                  <span style={{ fontSize: '1.2rem' }}>📸</span>
+                                  <span style={{ fontWeight: 600, fontSize: '0.95rem' }}>Magic Color : Extraire depuis mon Logo</span>
+                                  <input type="file" accept="image/*" onChange={handleLogoUpload} style={{ display: 'none' }} />
+                               </>
+                            )}
+                        </label>
+                      </div>
+
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: '0.8rem', marginBottom: '1rem' }}>
                           {[
                             { name: 'Moderne', p: '#4f46e5', s: '#10b981' },
-                            { name: 'Gourmand (Viande/Pizza)', p: '#dc2626', s: '#ea580c' },
-                            { name: 'Healthy (Salade)', p: '#16a34a', s: '#84cc16' },
+                            { name: 'Gourmand', p: '#dc2626', s: '#ea580c' },
+                            { name: 'Healthy', p: '#16a34a', s: '#84cc16' },
                             { name: 'Élégant', p: '#1e293b', s: '#94a3b8' },
-                            { name: 'Océan (Sushis)', p: '#0284c7', s: '#38bdf8' },
-                            { name: 'Pastel (Gourmandise)', p: '#f43f5e', s: '#fb7185' },
-                            { name: 'Luxury (Or/Noir)', p: '#0f172a', s: '#d4af37' },
-                            { name: 'Sunset (Tex-Mex)', p: '#ea580c', s: '#fcd34d' },
-                            { name: 'Végétal (Vegan)', p: '#047857', s: '#6ee7b7' },
-                            { name: 'Urbain (Street Food)', p: '#7c3aed', s: '#d8b4fe' },
-                            { name: 'Terroir (Bistro)', p: '#78350f', s: '#f59e0b' }
-                          ].map(th => (
-                             <div key={th.name} onClick={() => setWizardData({...wizardData, primaryColor: th.p, secondaryColor: th.s})} style={{ padding: '0.7rem', border: wizardData.primaryColor === th.p ? '2px solid '+th.p : '1px solid #e2e8f0', borderRadius: '12px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
-                                <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: th.p }}></div>
-                                <span style={{ fontWeight: 600, color: '#334155', fontSize: '0.85rem' }}>{th.name}</span>
-                             </div>
-                          ))}
+                            { name: 'Océan', p: '#0284c7', s: '#38bdf8' },
+                            { name: 'Pastel', p: '#f43f5e', s: '#fb7185' },
+                            { name: 'Luxury', p: '#0f172a', s: '#d4af37' },
+                            { name: 'Sunset', p: '#ea580c', s: '#fcd34d' },
+                          ].map(th => {
+                              const isSelected = wizardData.primaryColor === th.p && wizardData.secondaryColor === th.s;
+                              return (
+                                <div 
+                                    key={th.name} 
+                                    onClick={() => setWizardData({...wizardData, primaryColor: th.p, secondaryColor: th.s})} 
+                                    style={{ 
+                                        position: 'relative',
+                                        height: '70px',
+                                        borderRadius: '12px', 
+                                        cursor: 'pointer', 
+                                        display: 'flex', 
+                                        alignItems: 'flex-end', 
+                                        padding: '0.6rem',
+                                        background: `linear-gradient(135deg, ${th.p}, ${th.s})`,
+                                        boxShadow: isSelected ? `0 8px 20px -5px ${th.p}80` : '0 4px 10px rgba(0,0,0,0.05)',
+                                        transform: isSelected ? 'translateY(-3px)' : 'none',
+                                        transition: 'all 0.3s ease',
+                                        border: isSelected ? '2px solid white' : '2px solid transparent',
+                                        outline: isSelected ? `2px solid ${th.p}` : 'none',
+                                        overflow: 'hidden'
+                                    }}
+                                >
+                                    <div style={{ 
+                                        background: 'rgba(255, 255, 255, 0.25)', 
+                                        backdropFilter: 'blur(4px)',
+                                        padding: '0.2rem 0.5rem',
+                                        borderRadius: '6px',
+                                        width: '100%',
+                                        textAlign: 'center',
+                                        border: '1px solid rgba(255, 255, 255, 0.3)'
+                                    }}>
+                                        <span style={{ fontWeight: 700, color: 'white', fontSize: '0.8rem', textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>{th.name}</span>
+                                    </div>
+                                    
+                                    {isSelected && (
+                                        <div style={{ position: 'absolute', top: '6px', right: '6px', background: 'white', borderRadius: '50%', width: '18px', height: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: th.p, fontSize: '0.6rem', fontWeight: 'bold', boxShadow: '0 2px 5px rgba(0,0,0,0.2)' }}>
+                                            ✓
+                                        </div>
+                                    )}
+                                </div>
+                              );
+                          })}
+                      </div>
+
+                      <div style={{ display: 'flex', gap: '1rem', padding: '1rem', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0', marginBottom: '1.5rem' }}>
+                          <div style={{ flex: 1 }}>
+                              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#64748b', marginBottom: '0.3rem' }}>Primaire</label>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                  <input type="color" value={wizardData.primaryColor} onChange={(e) => setWizardData({...wizardData, primaryColor: e.target.value})} style={{ width: '35px', height: '35px', padding: 0, border: 'none', borderRadius: '8px', cursor: 'pointer', background: 'transparent' }} />
+                                  <code style={{ fontSize: '0.85rem', color: '#334155', fontWeight: 600 }}>{wizardData.primaryColor}</code>
+                              </div>
+                          </div>
+                          <div style={{ flex: 1 }}>
+                              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#64748b', marginBottom: '0.3rem' }}>Secondaire</label>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                  <input type="color" value={wizardData.secondaryColor} onChange={(e) => setWizardData({...wizardData, secondaryColor: e.target.value})} style={{ width: '35px', height: '35px', padding: 0, border: 'none', borderRadius: '8px', cursor: 'pointer', background: 'transparent' }} />
+                                  <code style={{ fontSize: '0.85rem', color: '#334155', fontWeight: 600 }}>{wizardData.secondaryColor}</code>
+                              </div>
+                          </div>
                       </div>
 
                       <label style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', background: '#f8fafc', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0', cursor: 'pointer', marginBottom: '0.5rem' }}>

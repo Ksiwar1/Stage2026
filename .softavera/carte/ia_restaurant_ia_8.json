@@ -1,0 +1,2041 @@
+{
+  "items": {
+    "77fc4527-7251-4de8-ba4b-219f1d0ac66b": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_27f7193b",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 5.36,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 5.9,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "BURRATA CRÉMEUSE & TOMATES CONFITES",
+      "parent": "9d72fb0b-292f-4090-95c4-5913c98b6975",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Burrata italienne, tomates confites, pesto basilic et huile d'olive. (A)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "BURRATA CRÉMEUSE & TOMATES CONFITES",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
+    },
+    "856cffab-1efe-4c43-8116-7c4be3bba5bc": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_e8109d3b",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 6.27,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 6.9,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "ŒUF PARFAIT AUX CHAMPIGNONS",
+      "parent": "9d72fb0b-292f-4090-95c4-5913c98b6975",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Œuf basse température, crème de champignons, éclats de noisettes. (A)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "ŒUF PARFAIT AUX CHAMPIGNONS",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
+    },
+    "3eede534-f302-4130-b169-cc6ffe881f82": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_e30e77d0",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 7.27,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 8,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "TARTARE DE SAUMON FRAIS",
+      "parent": "9d72fb0b-292f-4090-95c4-5913c98b6975",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Saumon coupé au couteau, citron vert, aneth, assaisonnement maison. (A)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "TARTARE DE SAUMON FRAIS",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
+    },
+    "0783f36c-5325-4aa2-b840-fc118db960dc": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_67417578",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 6.36,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 7,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "VELOUTÉ DE POTIMARRON RÔTI",
+      "parent": "9d72fb0b-292f-4090-95c4-5913c98b6975",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Potimarron rôti, crème légère, pointe d'huile de truffe. (A)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "VELOUTÉ DE POTIMARRON RÔTI",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
+    },
+    "3af6d7a8-8aef-4ca4-85ad-ed280fff840d": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_f5e92150",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 18.18,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 20,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "FILET DE BŒUF GRILLÉ, JUS RÉDUIT",
+      "parent": "cde102ef-8786-44fd-b00b-578faa003279",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Filet de bœuf, jus corsé, pommes grenailles rôties. (A)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "FILET DE BŒUF GRILLÉ, JUS RÉDUIT",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
+    },
+    "096e251b-4a41-4221-a584-e9138b95cc37": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_65163152",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 14.55,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 16,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "PAVÉ DE SAUMON RÔTI AU FOUR",
+      "parent": "cde102ef-8786-44fd-b00b-578faa003279",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Saumon rôti, risotto crémeux au parmesan. (A)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "PAVÉ DE SAUMON RÔTI AU FOUR",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
+    },
+    "e6ac6a0e-736c-497e-bea2-4ff10c3deabe": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_d16c05b8",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 18.18,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 20,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "SUPRÊME DE VOLAILLE FERMIÈRE",
+      "parent": "cde102ef-8786-44fd-b00b-578faa003279",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Volaille rôtie, sauce forestière, écrasé de pommes de terre. (A)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "SUPRÊME DE VOLAILLE FERMIÈRE",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
+    },
+    "f4556cce-e9fb-4592-8e86-a81440661095": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_9d903f56",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 19.09,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 21,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "BURGER DU CHEF AU CHEDDAR AFFINÉ",
+      "parent": "cde102ef-8786-44fd-b00b-578faa003279",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Steak haché, cheddar affiné, bacon croustillant, frites maison. (A)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "BURGER DU CHEF AU CHEDDAR AFFINÉ",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
+    },
+    "0d5090e4-fe7e-40e5-b611-13459450d1b1": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_2700305a",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 8.09,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 8.9,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "TIRAMISU TRADITIONNEL MAISON",
+      "parent": "82624a2a-32cb-49f0-a75d-59cd85993b86",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Mascarpone, café espresso, cacao amer. (A)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "TIRAMISU TRADITIONNEL MAISON",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
+    },
+    "faf3902d-5721-426a-9912-3b49bc1d60b9": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_7662c129",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 6.27,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 6.9,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "FONDANT AU CHOCOLAT CŒUR COULANT",
+      "parent": "82624a2a-32cb-49f0-a75d-59cd85993b86",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Gâteau chaud au chocolat noir, cœur fondant. (A)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "FONDANT AU CHOCOLAT CŒUR COULANT",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
+    },
+    "95e8246d-f93e-4770-9acf-cb55aafaa47b": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_761c563d",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 5,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 5.5,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "VIN ROUGE",
+      "parent": "aeca7296-adf5-4dd5-b0e3-1c4c3e9de2ae",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Sélection de vins français de différentes régions. (A)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "VIN ROUGE",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
+    },
+    "442fe86d-cc12-45f1-b095-8c6bdc4ba838": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_3e46c7cf",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 5.45,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 6,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "VIN ROUGE",
+      "parent": "aeca7296-adf5-4dd5-b0e3-1c4c3e9de2ae",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Sélection de vins français de différentes régions. (A)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "VIN ROUGE",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
+    },
+    "499b12eb-bdff-41e5-98db-36050c5f4e77": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_d04368b6",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 5.45,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 6,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "CAFÉ",
+      "parent": "aeca7296-adf5-4dd5-b0e3-1c4c3e9de2ae",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Apéritif à base de crème de cassis et de vin blanc. (A)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "CAFÉ",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
+    }
+  },
+  "steps": {},
+  "title": "Nouveau Restaurant",
+  "modifier": {},
+  "workflow": {
+    "9d72fb0b-292f-4090-95c4-5913c98b6975": {
+      "type": "categories",
+      "rank": 1,
+      "content": {
+        "77fc4527-7251-4de8-ba4b-219f1d0ac66b": {
+          "type": "items",
+          "rank": 1
+        },
+        "856cffab-1efe-4c43-8116-7c4be3bba5bc": {
+          "type": "items",
+          "rank": 2
+        },
+        "3eede534-f302-4130-b169-cc6ffe881f82": {
+          "type": "items",
+          "rank": 3
+        },
+        "0783f36c-5325-4aa2-b840-fc118db960dc": {
+          "type": "items",
+          "rank": 4
+        }
+      }
+    },
+    "cde102ef-8786-44fd-b00b-578faa003279": {
+      "type": "categories",
+      "rank": 2,
+      "content": {
+        "3af6d7a8-8aef-4ca4-85ad-ed280fff840d": {
+          "type": "items",
+          "rank": 1
+        },
+        "096e251b-4a41-4221-a584-e9138b95cc37": {
+          "type": "items",
+          "rank": 2
+        },
+        "e6ac6a0e-736c-497e-bea2-4ff10c3deabe": {
+          "type": "items",
+          "rank": 3
+        },
+        "f4556cce-e9fb-4592-8e86-a81440661095": {
+          "type": "items",
+          "rank": 4
+        }
+      }
+    },
+    "82624a2a-32cb-49f0-a75d-59cd85993b86": {
+      "type": "categories",
+      "rank": 3,
+      "content": {
+        "0d5090e4-fe7e-40e5-b611-13459450d1b1": {
+          "type": "items",
+          "rank": 1
+        },
+        "faf3902d-5721-426a-9912-3b49bc1d60b9": {
+          "type": "items",
+          "rank": 2
+        }
+      }
+    },
+    "aeca7296-adf5-4dd5-b0e3-1c4c3e9de2ae": {
+      "type": "categories",
+      "rank": 4,
+      "content": {
+        "95e8246d-f93e-4770-9acf-cb55aafaa47b": {
+          "type": "items",
+          "rank": 1
+        },
+        "442fe86d-cc12-45f1-b095-8c6bdc4ba838": {
+          "type": "items",
+          "rank": 2
+        },
+        "499b12eb-bdff-41e5-98db-36050c5f4e77": {
+          "type": "items",
+          "rank": 3
+        }
+      }
+    }
+  },
+  "categories": {
+    "9d72fb0b-292f-4090-95c4-5913c98b6975": {
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "CAT_9d72fb",
+      "rank": 1,
+      "child": [],
+      "color": "#0f172a",
+      "items": [
+        "77fc4527-7251-4de8-ba4b-219f1d0ac66b",
+        "856cffab-1efe-4c43-8116-7c4be3bba5bc",
+        "3eede534-f302-4130-b169-cc6ffe881f82",
+        "0783f36c-5325-4aa2-b840-fc118db960dc"
+      ],
+      "title": "ENTRÉE",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": [],
+      "parent": "",
+      "archive": false,
+      "extrRef": "",
+      "liaison": [],
+      "isNameShow": true,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "ENTRÉE",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [],
+          "2": [],
+          "3": [],
+          "4": []
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "isInfoModeActive": true
+    },
+    "cde102ef-8786-44fd-b00b-578faa003279": {
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "CAT_cde102",
+      "rank": 2,
+      "child": [],
+      "color": "#d4af37",
+      "items": [
+        "3af6d7a8-8aef-4ca4-85ad-ed280fff840d",
+        "096e251b-4a41-4221-a584-e9138b95cc37",
+        "e6ac6a0e-736c-497e-bea2-4ff10c3deabe",
+        "f4556cce-e9fb-4592-8e86-a81440661095"
+      ],
+      "title": "PLATS",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": [],
+      "parent": "",
+      "archive": false,
+      "extrRef": "",
+      "liaison": [],
+      "isNameShow": true,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "PLATS",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [],
+          "2": [],
+          "3": [],
+          "4": []
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "isInfoModeActive": true
+    },
+    "82624a2a-32cb-49f0-a75d-59cd85993b86": {
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "CAT_82624a",
+      "rank": 3,
+      "child": [],
+      "color": "#0f172a",
+      "items": [
+        "0d5090e4-fe7e-40e5-b611-13459450d1b1",
+        "faf3902d-5721-426a-9912-3b49bc1d60b9"
+      ],
+      "title": "DESSERTS",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": [],
+      "parent": "",
+      "archive": false,
+      "extrRef": "",
+      "liaison": [],
+      "isNameShow": true,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "DESSERTS",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [],
+          "2": [],
+          "3": [],
+          "4": []
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "isInfoModeActive": true
+    },
+    "aeca7296-adf5-4dd5-b0e3-1c4c3e9de2ae": {
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "CAT_aeca72",
+      "rank": 4,
+      "child": [],
+      "color": "#0f172a",
+      "items": [
+        "95e8246d-f93e-4770-9acf-cb55aafaa47b",
+        "442fe86d-cc12-45f1-b095-8c6bdc4ba838",
+        "499b12eb-bdff-41e5-98db-36050c5f4e77"
+      ],
+      "title": "BOISSONS",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": [],
+      "parent": "",
+      "archive": false,
+      "extrRef": "",
+      "liaison": [],
+      "isNameShow": true,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "BOISSONS",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [],
+          "2": [],
+          "3": [],
+          "4": []
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "isInfoModeActive": true
+    }
+  }
+}

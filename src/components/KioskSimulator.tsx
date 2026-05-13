@@ -161,7 +161,7 @@ const ModifierOptionCard = React.memo(({ opt, isComp, isIncluded, isSelected, is
 });
 ModifierOptionCard.displayName = 'ModifierOptionCard';
 export default function KioskSimulator({ restaurantName, tree, themePalette = { primary: '#F39C12', secondary: '#1A237E', background: '#F8FAFC', surface: '#FFFFFF', text: '#111827', onPrimary: 'white' }, catalogData }: { restaurantName: string, tree: ParsedCategory[], themePalette?: { primary: string, secondary: string, background?: string, surface?: string, text: string, onPrimary: string }, catalogData?: any }) {
-  const { t, lang, setAllowedLanguages } = useLanguage();
+  const { t, lang, setAllowedLanguages, allowedLanguages } = useLanguage();
   const [activeThemePalette, setActiveThemePalette] = useState(themePalette);
   const [activeCategoriesTree, setActiveCategoriesTree] = useState(tree);
 
@@ -213,7 +213,9 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
       console.error("Failed to apply overrides", e);
     }
 
-    setAllowedLanguages(finalLangs);
+    if (finalLangs.join(',') !== allowedLanguages.join(',')) {
+      setAllowedLanguages(finalLangs);
+    }
     setActiveThemePalette({
       ...themePalette,
       primary: finalPrimary,
@@ -221,7 +223,15 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
       text: finalPrimary // Auto-adapting text color to primary for visibility
     });
     setActiveCategoriesTree(finalCategories);
-  }, [catalogData, tree, themePalette, setAllowedLanguages]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    catalogData?.opt?.languages?.join(','), 
+    themePalette.primary, 
+    themePalette.secondary, 
+    tree.length, // approximation to avoid deep equality check on tree
+    setAllowedLanguages,
+    allowedLanguages
+  ]);
 
   const [diningOption, setDiningOption] = useState<'sur_place' | 'emporter' | null>(null);
   const activeCategories = useMemo(() => activeCategoriesTree.filter(cat => cat.isVisible !== false), [activeCategoriesTree]);

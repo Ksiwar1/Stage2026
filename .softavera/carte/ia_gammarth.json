@@ -4,398 +4,442 @@
   "tags": {},
   "color": "",
   "items": {
-    "7cae1b82-ac6d-452d-a437-65b64953c0e5": {
-      "id": 1588,
-      "name": "fdsq Supreme",
-      "price": {
+    "43a85051-24d9-4db6-98a8-ea836b2ff878": {
+      "fid": 0,
+      "img": {
         "dflt": {
-          "ttc": 12.99
+          "img": "no-pictures.svg",
+          "salesSupport": {}
         }
       },
-      "description": "Poulet, jambon, fromage, oignons et poivrons sur une base de sauce tomate. (A: fromage)",
-      "steps": [
-        {
-          "title": "Choix de la base",
-          "minChoices": 1,
-          "maxChoices": 1,
-          "options": [
-            {
-              "id": "base_1",
-              "name": "Sauce tomate",
-              "priceDelta": 0
-            }
-          ]
+      "ing": {},
+      "opt": {},
+      "ref": "REF_550e8400",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
         },
-        {
-          "title": "Choix des ingrédients",
-          "minChoices": 1,
-          "maxChoices": 3,
-          "options": [
-            {
-              "id": "ingr_1",
-              "name": "Poulet",
-              "priceDelta": 0.5
-            },
-            {
-              "id": "ingr_2",
-              "name": "Jambon",
-              "priceDelta": 0.5
-            },
-            {
-              "id": "ingr_3",
-              "name": "Fromage",
-              "priceDelta": 0.5
-            },
-            {
-              "id": "ingr_4",
-              "name": "Oignons",
-              "priceDelta": 0.5
-            },
-            {
-              "id": "ingr_5",
-              "name": "Poivrons",
-              "priceDelta": 0.5
-            }
-          ]
-        }
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 9.55,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 10.5,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Pizza Margherita",
+      "parent": "3eb7934d-d32c-4447-8999-8dde1b2f7203",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [
+        "a1000000-0000-0000-0000-000000000001"
       ],
-      "ref": "REF_pizza_01",
-      "type": "item",
-      "title": "fdsq Supreme",
-      "img": {
-        "dflt": {
-          "img": "no-pictures.svg",
-          "salesSupport": {}
-        }
-      },
-      "fid": "",
-      "opt": {},
-      "qty": 1,
-      "rank": 0,
-      "unit": "unit",
-      "offer": "",
-      "prSize": "",
-      "archive": false,
-      "barCode": "",
-      "liaison": [],
-      "calories": 0,
-      "outStock": false,
-      "printers": [],
-      "sizeList": [],
-      "suspSale": false,
-      "variants": [],
-      "allergens": [],
-      "basicComp": false,
+      "basicComp": {},
       "isComment": false,
       "active_qty": false,
       "isRedirect": false,
       "linkedTags": [],
-      "nutriScore": "",
-      "stepVisibility": {
+      "nutriScore": {},
+      "description": {
         "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
-        },
-        "isVisible": true,
-        "basicCompVisibility": true
+          "nameDef": "Une pizza italienne traditionnelle avec tomate, mozzarella et basilic. (A: Lactose, Gluten)",
+          "imp": [],
+          "salesSupport": {}
+        }
       },
-      "visibilityInfo": {
+      "displayName": {
         "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
-        },
-        "isVisible": true,
-        "basicCompVisibility": true
+          "nameDef": "Pizza Margherita",
+          "imp": [],
+          "salesSupport": {}
+        }
       },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
       "isOptionChoice": false,
-      "isVisible": true,
-      "parent": "47102585-9e45-47c8-96e8-6a619e41015f",
-      "modifier": "db400a0c-1c50-4c70-b00b-feadf2beac2f"
-    },
-    "base_1": {
-      "id": "base_1",
-      "name": "Sauce tomate",
-      "priceDelta": 0,
-      "ref": "REF_base_1",
-      "type": "item",
-      "title": "Sauce tomate",
-      "price": {
-        "dflt": {
-          "ttc": 0
-        }
-      },
-      "img": {
-        "dflt": {
-          "img": "no-pictures.svg",
-          "salesSupport": {}
-        }
-      },
-      "fid": "",
-      "opt": {},
-      "qty": 1,
-      "rank": 0,
-      "unit": "unit",
-      "offer": "",
-      "prSize": "",
-      "archive": false,
-      "barCode": "",
-      "liaison": [],
-      "calories": 0,
-      "outStock": false,
-      "printers": [],
-      "sizeList": [],
-      "suspSale": false,
-      "variants": [],
-      "allergens": [],
-      "basicComp": false,
-      "isComment": false,
-      "active_qty": false,
-      "isRedirect": false,
-      "linkedTags": [],
-      "nutriScore": "",
       "stepVisibility": {
         "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
         },
         "isVisible": true,
         "basicCompVisibility": true
       },
       "visibilityInfo": {
         "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
         },
         "isVisible": true,
         "basicCompVisibility": true
-      },
-      "isOptionChoice": false
+      }
     },
-    "ingr_1": {
-      "id": "ingr_1",
-      "name": "Poulet",
-      "priceDelta": 0.5,
-      "ref": "REF_ingr_1",
-      "type": "item",
-      "title": "Poulet",
-      "price": {
-        "dflt": {
-          "ttc": 0
-        }
-      },
+    "f32b79f2-b62c-4a82-a3ce-de0d815b4dfa": {
+      "fid": 0,
       "img": {
         "dflt": {
           "img": "no-pictures.svg",
           "salesSupport": {}
         }
       },
-      "fid": "",
+      "ing": {},
       "opt": {},
-      "qty": 1,
+      "ref": "REF_123e4567",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
       "rank": 0,
-      "unit": "unit",
-      "offer": "",
-      "prSize": "",
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 10.91,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 12,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Pizza Quattro Formaggi",
+      "parent": "3eb7934d-d32c-4447-8999-8dde1b2f7203",
+      "prSize": 0,
+      "showBc": true,
       "archive": false,
       "barCode": "",
+      "extrRef": "",
       "liaison": [],
       "calories": 0,
       "outStock": false,
       "printers": [],
       "sizeList": [],
-      "suspSale": false,
+      "suspSale": [],
       "variants": [],
-      "allergens": [],
-      "basicComp": false,
+      "allergens": [
+        "a1000000-0000-0000-0000-000000000007"
+      ],
+      "basicComp": {},
       "isComment": false,
       "active_qty": false,
       "isRedirect": false,
       "linkedTags": [],
-      "nutriScore": "",
-      "stepVisibility": {
+      "nutriScore": {},
+      "description": {
         "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
-        },
-        "isVisible": true,
-        "basicCompVisibility": true
-      },
-      "visibilityInfo": {
-        "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
-        },
-        "isVisible": true,
-        "basicCompVisibility": true
-      },
-      "isOptionChoice": false
-    },
-    "ingr_2": {
-      "id": "ingr_2",
-      "name": "Jambon",
-      "priceDelta": 0.5,
-      "ref": "REF_ingr_2",
-      "type": "item",
-      "title": "Jambon",
-      "price": {
-        "dflt": {
-          "ttc": 0
-        }
-      },
-      "img": {
-        "dflt": {
-          "img": "no-pictures.svg",
+          "nameDef": "Une pizza italienne avec quatre fromages : mozzarella, parmesan, gorgonzola et feta. (A: Lactose)",
+          "imp": [],
           "salesSupport": {}
         }
       },
-      "fid": "",
-      "opt": {},
-      "qty": 1,
-      "rank": 0,
-      "unit": "unit",
-      "offer": "",
-      "prSize": "",
-      "archive": false,
-      "barCode": "",
-      "liaison": [],
-      "calories": 0,
-      "outStock": false,
-      "printers": [],
-      "sizeList": [],
-      "suspSale": false,
-      "variants": [],
-      "allergens": [],
-      "basicComp": false,
-      "isComment": false,
-      "active_qty": false,
-      "isRedirect": false,
-      "linkedTags": [],
-      "nutriScore": "",
-      "stepVisibility": {
+      "displayName": {
         "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
-        },
-        "isVisible": true,
-        "basicCompVisibility": true
-      },
-      "visibilityInfo": {
-        "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
-        },
-        "isVisible": true,
-        "basicCompVisibility": true
-      },
-      "isOptionChoice": false
-    },
-    "ingr_3": {
-      "id": "ingr_3",
-      "name": "Fromage",
-      "priceDelta": 0.5,
-      "ref": "REF_ingr_3",
-      "type": "item",
-      "title": "Fromage",
-      "price": {
-        "dflt": {
-          "ttc": 0
-        }
-      },
-      "img": {
-        "dflt": {
-          "img": "no-pictures.svg",
+          "nameDef": "Pizza Quattro Formaggi",
+          "imp": [],
           "salesSupport": {}
         }
       },
-      "fid": "",
-      "opt": {},
-      "qty": 1,
-      "rank": 0,
-      "unit": "unit",
-      "offer": "",
-      "prSize": "",
-      "archive": false,
-      "barCode": "",
-      "liaison": [],
-      "calories": 0,
-      "outStock": false,
-      "printers": [],
-      "sizeList": [],
-      "suspSale": false,
-      "variants": [],
-      "allergens": [],
-      "basicComp": false,
-      "isComment": false,
-      "active_qty": false,
-      "isRedirect": false,
-      "linkedTags": [],
-      "nutriScore": "",
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
       "stepVisibility": {
         "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
         },
         "isVisible": true,
         "basicCompVisibility": true
       },
       "visibilityInfo": {
         "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
         },
         "isVisible": true,
         "basicCompVisibility": true
-      },
-      "isOptionChoice": false
+      }
     },
-    "d060b9bd-306f-4526-a804-2d7d20807155": {
-      "id": "d060b9bd-306f-4526-a804-2d7d20807155",
-      "fid": "",
+    "196c298b-4e80-4c7f-b437-ce5625fb9373": {
+      "id": 299,
+      "fid": 0,
       "img": {
         "dflt": {
-          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "img": "https://beta-catalogue-api.etk360.com/franchise_30358_grill_station/Items/20260401_172046451.webp",
           "salesSupport": {}
         }
       },
       "opt": {},
       "qty": "0",
-      "ref": "*00014",
+      "ref": "*00029",
       "rank": 0,
-      "color": "#99FFCC",
+      "color": "#FFFF00",
       "price": {
-        "dflt": {
-          "ttc": 0
-        }
+        "ht": 0,
+        "ovr": [],
+        "tva": 1,
+        "dflt": 0,
+        "advanced": {
+          "06dfd3fb-80dd-558b-bea1-4b770bac6217": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "2f1b476c-a679-5229-bf04-6ef158a2ed64": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "3a1d097d-dfe2-5918-9f9a-c22b5051bdf2": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5af245c0-a348-5ec2-9e5b-54dca28d537b": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "6d19a662-ee25-5264-8ced-b54e04b5a9de": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "WEB"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9424063b-4937-515d-8ddf-d8e1cb149b06": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9daa02db-f055-5243-bee6-601adf456ba1": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "WEB"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9dee0ea2-fdcf-54f1-b698-62d69ee1794a": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a2bd69ab-5597-5af6-846a-3c178d3824ee": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a4591a7f-c902-53ba-bda4-a9ec1d8c04d7": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "df012718-df66-5819-ab9c-4d568e762179": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "WEB"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          }
+        },
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
       },
       "steps": [],
-      "title": "OIGNONS",
+      "title": "ANANAS",
       "unity": "",
-      "parent": "26802592-252c-411f-95d7-15dce9e50722",
+      "parent": "3eb7934d-d32c-4447-8999-8dde1b2f7203",
       "prSize": "0",
       "archive": false,
       "barCode": "",
       "liaison": [],
-      "calories": 0,
+      "calories": null,
       "outStock": false,
       "printers": [],
       "sizeList": "0",
@@ -501,382 +545,742 @@
         },
         "isVisible": true,
         "basicCompVisibility": true
-      },
-      "type": "item",
-      "unit": "unit",
-      "offer": ""
+      }
     },
-    "ingr_5": {
-      "id": "ingr_5",
-      "name": "Poivrons",
-      "priceDelta": 0.5,
-      "ref": "REF_ingr_5",
-      "type": "item",
-      "title": "Poivrons",
-      "price": {
-        "dflt": {
-          "ttc": 0
-        }
-      },
+    "6d4b4637-dbb7-4b02-bee4-ffe7e07a5bd5": {
+      "fid": 0,
       "img": {
         "dflt": {
           "img": "no-pictures.svg",
           "salesSupport": {}
         }
       },
-      "fid": "",
+      "ing": {},
       "opt": {},
-      "qty": 1,
+      "ref": "REF_9876f432",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
       "rank": 0,
-      "unit": "unit",
-      "offer": "",
-      "prSize": "",
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 9.09,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 10,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Pizza Vegetarienne",
+      "parent": "3eb7934d-d32c-4447-8999-8dde1b2f7203",
+      "prSize": 0,
+      "showBc": true,
       "archive": false,
       "barCode": "",
+      "extrRef": "",
       "liaison": [],
       "calories": 0,
       "outStock": false,
       "printers": [],
       "sizeList": [],
-      "suspSale": false,
+      "suspSale": [],
       "variants": [],
-      "allergens": [],
-      "basicComp": false,
-      "isComment": false,
-      "active_qty": false,
-      "isRedirect": false,
-      "linkedTags": [],
-      "nutriScore": "",
-      "stepVisibility": {
-        "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
-        },
-        "isVisible": true,
-        "basicCompVisibility": true
-      },
-      "visibilityInfo": {
-        "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
-        },
-        "isVisible": true,
-        "basicCompVisibility": true
-      },
-      "isOptionChoice": false
-    },
-    "b6066087-ee2d-49a0-8fe7-1f1f443fa976": {
-      "id": 1194,
-      "name": "fdsq Veggie",
-      "price": {
-        "dflt": {
-          "ttc": 10.99
-        }
-      },
-      "description": "Poivrons, oignons, aubergines, champignons et fromage sur une base de sauce tomate. (A: fromage, gluten)",
-      "steps": [
-        {
-          "title": "Choix de la base",
-          "minChoices": 1,
-          "maxChoices": 1,
-          "options": [
-            {
-              "id": "base_1",
-              "name": "Sauce tomate",
-              "priceDelta": 0
-            }
-          ]
-        },
-        {
-          "title": "Choix des ingrédients",
-          "minChoices": 1,
-          "maxChoices": 4,
-          "options": [
-            {
-              "id": "ingr_1",
-              "name": "Poivrons",
-              "priceDelta": 0.5
-            },
-            {
-              "id": "ingr_2",
-              "name": "Oignons",
-              "priceDelta": 0.5
-            },
-            {
-              "id": "ingr_3",
-              "name": "Aubergines",
-              "priceDelta": 0.5
-            },
-            {
-              "id": "ingr_4",
-              "name": "Champignons",
-              "priceDelta": 0.5
-            },
-            {
-              "id": "ingr_5",
-              "name": "Fromage",
-              "priceDelta": 0.5
-            }
-          ]
-        }
+      "allergens": [
+        "a1000000-0000-0000-0000-000000000001"
       ],
-      "ref": "REF_pizza_02",
-      "type": "item",
-      "title": "fdsq Veggie",
-      "img": {
-        "dflt": {
-          "img": "no-pictures.svg",
-          "salesSupport": {}
-        }
-      },
-      "fid": "",
-      "opt": {},
-      "qty": 1,
-      "rank": 0,
-      "unit": "unit",
-      "offer": "",
-      "prSize": "",
-      "archive": false,
-      "barCode": "",
-      "liaison": [],
-      "calories": 0,
-      "outStock": false,
-      "printers": [],
-      "sizeList": [],
-      "suspSale": false,
-      "variants": [],
-      "allergens": [],
-      "basicComp": false,
+      "basicComp": {},
       "isComment": false,
       "active_qty": false,
       "isRedirect": false,
       "linkedTags": [],
-      "nutriScore": "",
-      "stepVisibility": {
+      "nutriScore": {},
+      "description": {
         "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
-        },
-        "isVisible": true,
-        "basicCompVisibility": true
+          "nameDef": "Une pizza italienne avec des légumes variés. (A: Lactose, Gluten)",
+          "imp": [],
+          "salesSupport": {}
+        }
       },
-      "visibilityInfo": {
+      "displayName": {
         "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
-        },
-        "isVisible": true,
-        "basicCompVisibility": true
+          "nameDef": "Pizza Vegetarienne",
+          "imp": [],
+          "salesSupport": {}
+        }
       },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
       "isOptionChoice": false,
-      "isVisible": true,
-      "parent": "47102585-9e45-47c8-96e8-6a619e41015f",
-      "modifier": "34a6710e-9871-4fca-b984-98370b6f9d83"
-    },
-    "ingr_4": {
-      "id": "ingr_4",
-      "name": "Champignons",
-      "priceDelta": 0.5,
-      "ref": "REF_ingr_4",
-      "type": "item",
-      "title": "Champignons",
-      "price": {
-        "dflt": {
-          "ttc": 0
-        }
-      },
-      "img": {
-        "dflt": {
-          "img": "no-pictures.svg",
-          "salesSupport": {}
-        }
-      },
-      "fid": "",
-      "opt": {},
-      "qty": 1,
-      "rank": 0,
-      "unit": "unit",
-      "offer": "",
-      "prSize": "",
-      "archive": false,
-      "barCode": "",
-      "liaison": [],
-      "calories": 0,
-      "outStock": false,
-      "printers": [],
-      "sizeList": [],
-      "suspSale": false,
-      "variants": [],
-      "allergens": [],
-      "basicComp": false,
-      "isComment": false,
-      "active_qty": false,
-      "isRedirect": false,
-      "linkedTags": [],
-      "nutriScore": "",
       "stepVisibility": {
         "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
         },
         "isVisible": true,
         "basicCompVisibility": true
       },
       "visibilityInfo": {
         "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
         },
         "isVisible": true,
         "basicCompVisibility": true
-      },
-      "isOptionChoice": false
+      }
     },
-    "f30739e5-29fc-4aa6-bfeb-9fdfb14404b9": {
-      "id": 1624,
-      "name": "fdsq Margherita",
-      "price": {
+    "ca724cf0-e72e-423e-9481-030dcf280dc2": {
+      "fid": 0,
+      "img": {
         "dflt": {
-          "ttc": 8.99
+          "img": "no-pictures.svg",
+          "salesSupport": {}
         }
       },
-      "description": "Tomates, fromage et basilic sur une base de sauce tomate. (A: fromage, gluten)",
-      "steps": [
-        {
-          "title": "Choix de la base",
-          "minChoices": 1,
-          "maxChoices": 1,
-          "options": [
-            {
-              "id": "base_1",
-              "name": "Sauce tomate",
-              "priceDelta": 0
-            }
-          ]
+      "ing": {},
+      "opt": {},
+      "ref": "REF_3210f432",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
         },
-        {
-          "title": "Choix des ingrédients",
-          "minChoices": 1,
-          "maxChoices": 2,
-          "options": [
-            {
-              "id": "ingr_1",
-              "name": "Tomates",
-              "priceDelta": 0.5
-            },
-            {
-              "id": "ingr_2",
-              "name": "Fromage",
-              "priceDelta": 0.5
-            },
-            {
-              "id": "ingr_3",
-              "name": "Basilic",
-              "priceDelta": 0
-            }
-          ]
-        }
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 10,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 11,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Pizza Toscane",
+      "parent": "3eb7934d-d32c-4447-8999-8dde1b2f7203",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [
+        "a1000000-0000-0000-0000-000000000001"
       ],
-      "ref": "REF_pizza_03",
-      "type": "item",
-      "title": "fdsq Margherita",
-      "img": {
-        "dflt": {
-          "img": "no-pictures.svg",
-          "salesSupport": {}
-        }
-      },
-      "fid": "",
-      "opt": {},
-      "qty": 1,
-      "rank": 0,
-      "unit": "unit",
-      "offer": "",
-      "prSize": "",
-      "archive": false,
-      "barCode": "",
-      "liaison": [],
-      "calories": 0,
-      "outStock": false,
-      "printers": [],
-      "sizeList": [],
-      "suspSale": false,
-      "variants": [],
-      "allergens": [],
-      "basicComp": false,
+      "basicComp": {},
       "isComment": false,
       "active_qty": false,
       "isRedirect": false,
       "linkedTags": [],
-      "nutriScore": "",
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Une pizza italienne avec des tomates, des olives et du parmesan. (A: Lactose, Gluten)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Pizza Toscane",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
       "stepVisibility": {
         "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
         },
         "isVisible": true,
         "basicCompVisibility": true
       },
       "visibilityInfo": {
         "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
+    },
+    "70667e44-91c3-4e08-b850-2db48e5497de": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_4321f432",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 11.36,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 12.5,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Pizza Capricciosa",
+      "parent": "3eb7934d-d32c-4447-8999-8dde1b2f7203",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [
+        "a1000000-0000-0000-0000-000000000001"
+      ],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Une pizza italienne avec des tomates, des anchois et du parmesan. (A: Lactose, Gluten)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Pizza Capricciosa",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
         },
         "isVisible": true,
         "basicCompVisibility": true
       },
-      "isOptionChoice": false,
-      "isVisible": true,
-      "parent": "47102585-9e45-47c8-96e8-6a619e41015f",
-      "modifier": "db6226e6-0983-4fe0-b6f9-29860646478a"
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
     },
-    "44b129c4-aa4d-4542-93f6-dc85af86d3be": {
-      "id": "44b129c4-aa4d-4542-93f6-dc85af86d3be",
-      "fid": "",
+    "0ebd2aa1-cf38-4cde-8997-5b189ec628a1": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_0987f432",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 2.27,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 2.5,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Coca-Cola",
+      "parent": "152afa86-41d9-4058-a85a-83898bf04134",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Une boisson gazeuse américaine. (A: Sucres)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Coca-Cola",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "modifier": "27700662-3f8d-4734-949a-ae033e6be40e"
+    },
+    "0840069f-0b5f-4734-a299-efc7907da47d": {
+      "fid": 0,
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
           "salesSupport": {}
         }
       },
+      "ing": {},
       "opt": {},
-      "qty": "0",
-      "ref": "*00013",
-      "rank": 0,
-      "color": "#99FFCC",
-      "price": {
-        "dflt": {
-          "ttc": 0
-        }
+      "ref": "000096",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
       },
-      "steps": [],
-      "title": "TOMATES",
-      "unity": "",
-      "parent": "26802592-252c-411f-95d7-15dce9e50722",
-      "prSize": "0",
+      "rank": 2,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFF00",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 1.82,
+        "ovr": [],
+        "tva": 1,
+        "dflt": 2,
+        "advanced": {
+          "06dfd3fb-80dd-558b-bea1-4b770bac6217": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "2f1b476c-a679-5229-bf04-6ef158a2ed64": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "3a1d097d-dfe2-5918-9f9a-c22b5051bdf2": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5af245c0-a348-5ec2-9e5b-54dca28d537b": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "6d19a662-ee25-5264-8ced-b54e04b5a9de": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "WEB"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9424063b-4937-515d-8ddf-d8e1cb149b06": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9daa02db-f055-5243-bee6-601adf456ba1": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "WEB"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9dee0ea2-fdcf-54f1-b698-62d69ee1794a": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a2bd69ab-5597-5af6-846a-3c178d3824ee": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a4591a7f-c902-53ba-bda4-a9ec1d8c04d7": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "df012718-df66-5819-ab9c-4d568e762179": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "WEB"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          }
+        },
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [
+        "dd2106db-2c15-485a-a44b-39b11dbf1f7c"
+      ],
+      "title": "CANETTE",
+      "parent": "28474a82-8fd7-402d-abc0-0e42d6c9d246",
+      "prSize": 0,
+      "showBc": true,
       "archive": false,
       "barCode": "",
+      "extrRef": "",
       "liaison": [],
       "calories": 0,
       "outStock": false,
       "printers": [],
-      "sizeList": "0",
+      "sizeList": [],
       "suspSale": [],
       "variants": [],
       "allergens": [],
@@ -891,18 +1295,21 @@
       },
       "description": {
         "dflt": {
-          "imp": [],
           "nameDef": "",
+          "imp": [],
           "salesSupport": {}
         }
       },
       "displayName": {
         "dflt": {
+          "nameDef": "CANETTE",
           "imp": [],
-          "nameDef": "",
           "salesSupport": {}
         }
       },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
       "isOptionChoice": false,
       "stepVisibility": {
         "dflt": {
@@ -980,242 +1387,1369 @@
         "isVisible": true,
         "basicCompVisibility": true
       },
-      "type": "item",
-      "unit": "unit",
-      "offer": ""
+      "unity": ""
+    },
+    "75467441-10dc-4989-97d3-696155d7ba06": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "000095",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 1,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFF00",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 2.73,
+        "ovr": [],
+        "tva": 1,
+        "dflt": 3,
+        "advanced": {
+          "06dfd3fb-80dd-558b-bea1-4b770bac6217": {
+            "ht": 2.73,
+            "ttc": 3,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "2f1b476c-a679-5229-bf04-6ef158a2ed64": {
+            "ht": 2.73,
+            "ttc": 3,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "3a1d097d-dfe2-5918-9f9a-c22b5051bdf2": {
+            "ht": 2.73,
+            "ttc": 3,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5af245c0-a348-5ec2-9e5b-54dca28d537b": {
+            "ht": 2.73,
+            "ttc": 3,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "6d19a662-ee25-5264-8ced-b54e04b5a9de": {
+            "ht": 2.73,
+            "ttc": 3,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "WEB"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9424063b-4937-515d-8ddf-d8e1cb149b06": {
+            "ht": 2.73,
+            "ttc": 3,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9daa02db-f055-5243-bee6-601adf456ba1": {
+            "ht": 2.73,
+            "ttc": 3,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "WEB"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9dee0ea2-fdcf-54f1-b698-62d69ee1794a": {
+            "ht": 2.73,
+            "ttc": 3,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a2bd69ab-5597-5af6-846a-3c178d3824ee": {
+            "ht": 2.73,
+            "ttc": 3,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a4591a7f-c902-53ba-bda4-a9ec1d8c04d7": {
+            "ht": 2.73,
+            "ttc": 3,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "df012718-df66-5819-ab9c-4d568e762179": {
+            "ht": 2.73,
+            "ttc": 3,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "WEB"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          }
+        },
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [
+        "dd2106db-2c15-485a-a44b-39b11dbf1f7c"
+      ],
+      "title": "BOUTEILLE EN VERRE",
+      "parent": "28474a82-8fd7-402d-abc0-0e42d6c9d246",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {
+        "label": "",
+        "value": ""
+      },
+      "description": {
+        "dflt": {
+          "nameDef": "",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "BOUTEILLE EN VERRE",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "unity": ""
+    },
+    "cd9a2bd5-a87e-458e-88fb-f5ab3ee7394c": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_7654f432",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 1.36,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 1.5,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Eau Plate",
+      "parent": "152afa86-41d9-4058-a85a-83898bf04134",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Une eau pure et naturelle. (A: Rien)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Eau Plate",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "modifier": "f09a9bd9-66a6-4416-9864-49c85818bbca"
+    },
+    "160d0274-662e-4a24-9890-48875dad811f": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_4321f432",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 2.27,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 2.5,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Coca-Cola Zéro",
+      "parent": "152afa86-41d9-4058-a85a-83898bf04134",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Une boisson gazeuse américaine sans sucres. (A: Sucres)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Coca-Cola Zéro",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "modifier": "76f980bd-9414-4885-83f7-54e94ff0220e"
+    },
+    "c55ecd02-0eae-4085-b19b-44974b700472": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_8765f432",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 1.82,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 2,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Oasis",
+      "parent": "152afa86-41d9-4058-a85a-83898bf04134",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Une boisson gazeuse arabe. (A: Sucres)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Oasis",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "modifier": "4b0a15fa-510f-49f3-9c01-8fe4d1879af2"
+    },
+    "228f8a21-94bc-466e-999c-0036f4f49ec9": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_5432f432",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 2.73,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 3,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Perrier",
+      "parent": "152afa86-41d9-4058-a85a-83898bf04134",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Une eau gazeuse française. (A: Rien)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Perrier",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "modifier": "ba4029f0-6a92-47f5-8e4f-788d48400736"
+    },
+    "3eef1168-4c83-4040-a2d8-948e9df8574f": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_9876f432",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 2.27,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 2.5,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Fanta",
+      "parent": "152afa86-41d9-4058-a85a-83898bf04134",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Une boisson gazeuse américaine. (A: Sucres)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Fanta",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "modifier": "b661f563-bfe2-4a47-b3b2-f95c07d5c241"
     }
   },
   "steps": {
-    "b6d1f3cf-a493-4d67-a604-04244a029d23": {
-      "id": "b6d1f3cf-a493-4d67-a604-04244a029d23",
-      "ref": "STEP_b6d1f3",
-      "title": "Choix de la base",
+    "b0b30213-440c-4cc3-a5af-cf002a544d58": {
+      "img": "",
+      "ref": "*000059",
+      "req": false,
+      "title": "SODA",
       "archive": false,
       "isBasic": false,
-      "isComment": false,
-      "stepItems": {
-        "base_1": {
-          "rank": 1,
-          "priceStep": 0,
-          "maxChoices": 1,
-          "minChoices": 0
-        }
-      },
       "maxChoices": 1,
-      "minChoices": 1,
+      "minChoices": 0,
       "displayName": {
         "dflt": {
           "imp": [],
-          "nameDef": "Choix de la base",
+          "nameDef": "",
           "salesSupport": {}
         }
       },
-      "isModifiable": true,
-      "specificOpts": {},
-      "rank": 1
-    },
-    "f5e82548-26c2-4ca2-ad80-7fef5cf772de": {
-      "id": "f5e82548-26c2-4ca2-ad80-7fef5cf772de",
-      "ref": "STEP_f5e825",
-      "title": "Choix des ingrédients",
-      "archive": false,
-      "isBasic": false,
+      "isModifiable": false,
+      "nbrWithPrice": 0,
+      "specificOpts": {
+        "isNext": false,
+        "noButton": false,
+        "zeroPrice": false,
+        "isCheapest": false,
+        "nextButton": false,
+        "isExpensive": false,
+        "withoutStep": false
+      },
+      "nbrWithspecialPrice": 0,
+      "id": "b0b30213-440c-4cc3-a5af-cf002a544d58",
       "isComment": false,
       "stepItems": {
-        "ingr_1": {
-          "rank": 1,
-          "priceStep": 0.5,
-          "maxChoices": 1,
-          "minChoices": 0
-        },
-        "ingr_2": {
+        "0840069f-0b5f-4734-a299-efc7907da47d": {
           "rank": 2,
-          "priceStep": 0.5,
-          "maxChoices": 1,
-          "minChoices": 0
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
         },
-        "ingr_3": {
-          "rank": 3,
-          "priceStep": 0.5,
-          "maxChoices": 1,
-          "minChoices": 0
-        },
-        "d060b9bd-306f-4526-a804-2d7d20807155": {
-          "rank": 4,
-          "priceStep": 0.5,
-          "maxChoices": 1,
-          "minChoices": 0
-        },
-        "ingr_5": {
-          "rank": 5,
-          "priceStep": 0.5,
-          "maxChoices": 1,
-          "minChoices": 0
+        "75467441-10dc-4989-97d3-696155d7ba06": {
+          "rank": 1,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
         }
       },
-      "maxChoices": 3,
-      "minChoices": 1,
-      "displayName": {
+      "msg": {
         "dflt": {
           "imp": [],
-          "nameDef": "Choix des ingrédients",
           "salesSupport": {}
         }
       },
-      "isModifiable": true,
-      "specificOpts": {},
-      "rank": 2
+      "rank": 0
     },
-    "1f48f1e1-150a-4e94-8359-d1a176893dba": {
-      "id": "1f48f1e1-150a-4e94-8359-d1a176893dba",
-      "ref": "STEP_1f48f1",
-      "title": "Choix de la base",
+    "86d537ef-f62c-4587-a96c-1d161f3b5a93": {
+      "img": "",
+      "ref": "*000059",
+      "req": false,
+      "title": "SODA",
       "archive": false,
       "isBasic": false,
-      "isComment": false,
-      "stepItems": {
-        "base_1": {
-          "rank": 1,
-          "priceStep": 0,
-          "maxChoices": 1,
-          "minChoices": 0
-        }
-      },
       "maxChoices": 1,
-      "minChoices": 1,
+      "minChoices": 0,
       "displayName": {
         "dflt": {
           "imp": [],
-          "nameDef": "Choix de la base",
+          "nameDef": "",
           "salesSupport": {}
         }
       },
-      "isModifiable": true,
-      "specificOpts": {},
-      "rank": 1
-    },
-    "dd89b4cd-0873-4125-961b-237341702cdc": {
-      "id": "dd89b4cd-0873-4125-961b-237341702cdc",
-      "ref": "STEP_dd89b4",
-      "title": "Choix des ingrédients",
-      "archive": false,
-      "isBasic": false,
+      "isModifiable": false,
+      "nbrWithPrice": 0,
+      "specificOpts": {
+        "isNext": false,
+        "noButton": false,
+        "zeroPrice": false,
+        "isCheapest": false,
+        "nextButton": false,
+        "isExpensive": false,
+        "withoutStep": false
+      },
+      "nbrWithspecialPrice": 0,
+      "id": "86d537ef-f62c-4587-a96c-1d161f3b5a93",
       "isComment": false,
       "stepItems": {
-        "ingr_1": {
-          "rank": 1,
-          "priceStep": 0.5,
-          "maxChoices": 1,
-          "minChoices": 0
-        },
-        "d060b9bd-306f-4526-a804-2d7d20807155": {
+        "0840069f-0b5f-4734-a299-efc7907da47d": {
           "rank": 2,
-          "priceStep": 0.5,
-          "maxChoices": 1,
-          "minChoices": 0
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
         },
-        "ingr_3": {
-          "rank": 3,
-          "priceStep": 0.5,
-          "maxChoices": 1,
-          "minChoices": 0
-        },
-        "ingr_4": {
-          "rank": 4,
-          "priceStep": 0.5,
-          "maxChoices": 1,
-          "minChoices": 0
-        },
-        "ingr_5": {
-          "rank": 5,
-          "priceStep": 0.5,
-          "maxChoices": 1,
-          "minChoices": 0
+        "75467441-10dc-4989-97d3-696155d7ba06": {
+          "rank": 1,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
         }
       },
-      "maxChoices": 4,
-      "minChoices": 1,
-      "displayName": {
+      "msg": {
         "dflt": {
           "imp": [],
-          "nameDef": "Choix des ingrédients",
           "salesSupport": {}
         }
       },
-      "isModifiable": true,
-      "specificOpts": {},
-      "rank": 2
+      "rank": 0
     },
-    "fb2c16e9-dc1d-461c-a26c-ebe6ece8acf8": {
-      "id": "fb2c16e9-dc1d-461c-a26c-ebe6ece8acf8",
-      "ref": "STEP_fb2c16",
-      "title": "Choix de la base",
+    "3ff8efcb-ecfc-48e9-bd2a-e4fc0a7dd532": {
+      "img": "",
+      "ref": "*000059",
+      "req": false,
+      "title": "SODA",
       "archive": false,
       "isBasic": false,
-      "isComment": false,
-      "stepItems": {
-        "base_1": {
-          "rank": 1,
-          "priceStep": 0,
-          "maxChoices": 1,
-          "minChoices": 0
-        }
-      },
       "maxChoices": 1,
-      "minChoices": 1,
+      "minChoices": 0,
       "displayName": {
         "dflt": {
           "imp": [],
-          "nameDef": "Choix de la base",
+          "nameDef": "",
           "salesSupport": {}
         }
       },
-      "isModifiable": true,
-      "specificOpts": {},
-      "rank": 1
-    },
-    "37f7bf70-83d4-47eb-a496-540627036af3": {
-      "id": "37f7bf70-83d4-47eb-a496-540627036af3",
-      "ref": "STEP_37f7bf",
-      "title": "Choix des ingrédients",
-      "archive": false,
-      "isBasic": false,
+      "isModifiable": false,
+      "nbrWithPrice": 0,
+      "specificOpts": {
+        "isNext": false,
+        "noButton": false,
+        "zeroPrice": false,
+        "isCheapest": false,
+        "nextButton": false,
+        "isExpensive": false,
+        "withoutStep": false
+      },
+      "nbrWithspecialPrice": 0,
+      "id": "3ff8efcb-ecfc-48e9-bd2a-e4fc0a7dd532",
       "isComment": false,
       "stepItems": {
-        "44b129c4-aa4d-4542-93f6-dc85af86d3be": {
-          "rank": 1,
-          "priceStep": 0.5,
-          "maxChoices": 1,
-          "minChoices": 0
-        },
-        "ingr_2": {
+        "0840069f-0b5f-4734-a299-efc7907da47d": {
           "rank": 2,
-          "priceStep": 0.5,
-          "maxChoices": 1,
-          "minChoices": 0
-        },
-        "ingr_3": {
-          "rank": 3,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
           "priceStep": 0,
-          "maxChoices": 1,
-          "minChoices": 0
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        },
+        "75467441-10dc-4989-97d3-696155d7ba06": {
+          "rank": 1,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
         }
       },
-      "maxChoices": 2,
-      "minChoices": 1,
-      "displayName": {
+      "msg": {
         "dflt": {
           "imp": [],
-          "nameDef": "Choix des ingrédients",
           "salesSupport": {}
         }
       },
-      "isModifiable": true,
-      "specificOpts": {},
-      "rank": 2
+      "rank": 0
+    },
+    "2576e81e-49c4-41bf-aebe-252b9c84442b": {
+      "img": "",
+      "ref": "*000059",
+      "req": false,
+      "title": "SODA",
+      "archive": false,
+      "isBasic": false,
+      "maxChoices": 1,
+      "minChoices": 0,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "isModifiable": false,
+      "nbrWithPrice": 0,
+      "specificOpts": {
+        "isNext": false,
+        "noButton": false,
+        "zeroPrice": false,
+        "isCheapest": false,
+        "nextButton": false,
+        "isExpensive": false,
+        "withoutStep": false
+      },
+      "nbrWithspecialPrice": 0,
+      "id": "2576e81e-49c4-41bf-aebe-252b9c84442b",
+      "isComment": false,
+      "stepItems": {
+        "0840069f-0b5f-4734-a299-efc7907da47d": {
+          "rank": 2,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        },
+        "75467441-10dc-4989-97d3-696155d7ba06": {
+          "rank": 1,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        }
+      },
+      "msg": {
+        "dflt": {
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "rank": 0
+    },
+    "827bdc3a-4caf-43ca-97cd-d2f01480ef8c": {
+      "img": "",
+      "ref": "*000059",
+      "req": false,
+      "title": "SODA",
+      "archive": false,
+      "isBasic": false,
+      "maxChoices": 1,
+      "minChoices": 0,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "isModifiable": false,
+      "nbrWithPrice": 0,
+      "specificOpts": {
+        "isNext": false,
+        "noButton": false,
+        "zeroPrice": false,
+        "isCheapest": false,
+        "nextButton": false,
+        "isExpensive": false,
+        "withoutStep": false
+      },
+      "nbrWithspecialPrice": 0,
+      "id": "827bdc3a-4caf-43ca-97cd-d2f01480ef8c",
+      "isComment": false,
+      "stepItems": {
+        "0840069f-0b5f-4734-a299-efc7907da47d": {
+          "rank": 2,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        },
+        "75467441-10dc-4989-97d3-696155d7ba06": {
+          "rank": 1,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        }
+      },
+      "msg": {
+        "dflt": {
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "rank": 0
+    },
+    "05274f74-ebff-4025-8d50-46d47b75aea8": {
+      "img": "",
+      "ref": "*000059",
+      "req": false,
+      "title": "SODA",
+      "archive": false,
+      "isBasic": false,
+      "maxChoices": 1,
+      "minChoices": 0,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "isModifiable": false,
+      "nbrWithPrice": 0,
+      "specificOpts": {
+        "isNext": false,
+        "noButton": false,
+        "zeroPrice": false,
+        "isCheapest": false,
+        "nextButton": false,
+        "isExpensive": false,
+        "withoutStep": false
+      },
+      "nbrWithspecialPrice": 0,
+      "id": "05274f74-ebff-4025-8d50-46d47b75aea8",
+      "isComment": false,
+      "stepItems": {
+        "0840069f-0b5f-4734-a299-efc7907da47d": {
+          "rank": 2,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        },
+        "75467441-10dc-4989-97d3-696155d7ba06": {
+          "rank": 1,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        }
+      },
+      "msg": {
+        "dflt": {
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "rank": 0
     }
   },
-  "title": "fdsq",
+  "title": "Gammarth",
   "remark": "",
   "status": "En attente",
   "Planning": "",
@@ -1226,42 +2760,93 @@
     3
   ],
   "modifier": {
-    "db400a0c-1c50-4c70-b00b-feadf2beac2f": {
-      "uuid-item": "7cae1b82-ac6d-452d-a437-65b64953c0e5",
-      "archive": false,
-      "status": "ready",
+    "27700662-3f8d-4734-949a-ae033e6be40e": {
+      "uuid-item": "0ebd2aa1-cf38-4cde-8997-5b189ec628a1",
+      "add": {},
+      "category": {},
+      "typeAdd": false,
+      "typeCateg": false,
+      "typeSteps": true,
       "steps": {
-        "b6d1f3cf-a493-4d67-a604-04244a029d23": {
-          "rank": 1
-        },
-        "f5e82548-26c2-4ca2-ad80-7fef5cf772de": {
-          "rank": 2
+        "b0b30213-440c-4cc3-a5af-cf002a544d58": {
+          "ovr": {},
+          "rank": 1,
+          "items": {}
         }
       }
     },
-    "34a6710e-9871-4fca-b984-98370b6f9d83": {
-      "uuid-item": "b6066087-ee2d-49a0-8fe7-1f1f443fa976",
-      "archive": false,
-      "status": "ready",
+    "f09a9bd9-66a6-4416-9864-49c85818bbca": {
+      "uuid-item": "cd9a2bd5-a87e-458e-88fb-f5ab3ee7394c",
+      "add": {},
+      "category": {},
+      "typeAdd": false,
+      "typeCateg": false,
+      "typeSteps": true,
       "steps": {
-        "1f48f1e1-150a-4e94-8359-d1a176893dba": {
-          "rank": 1
-        },
-        "dd89b4cd-0873-4125-961b-237341702cdc": {
-          "rank": 2
+        "86d537ef-f62c-4587-a96c-1d161f3b5a93": {
+          "ovr": {},
+          "rank": 1,
+          "items": {}
         }
       }
     },
-    "db6226e6-0983-4fe0-b6f9-29860646478a": {
-      "uuid-item": "f30739e5-29fc-4aa6-bfeb-9fdfb14404b9",
-      "archive": false,
-      "status": "ready",
+    "76f980bd-9414-4885-83f7-54e94ff0220e": {
+      "uuid-item": "160d0274-662e-4a24-9890-48875dad811f",
+      "add": {},
+      "category": {},
+      "typeAdd": false,
+      "typeCateg": false,
+      "typeSteps": true,
       "steps": {
-        "fb2c16e9-dc1d-461c-a26c-ebe6ece8acf8": {
-          "rank": 1
-        },
-        "37f7bf70-83d4-47eb-a496-540627036af3": {
-          "rank": 2
+        "3ff8efcb-ecfc-48e9-bd2a-e4fc0a7dd532": {
+          "ovr": {},
+          "rank": 1,
+          "items": {}
+        }
+      }
+    },
+    "4b0a15fa-510f-49f3-9c01-8fe4d1879af2": {
+      "uuid-item": "c55ecd02-0eae-4085-b19b-44974b700472",
+      "add": {},
+      "category": {},
+      "typeAdd": false,
+      "typeCateg": false,
+      "typeSteps": true,
+      "steps": {
+        "2576e81e-49c4-41bf-aebe-252b9c84442b": {
+          "ovr": {},
+          "rank": 1,
+          "items": {}
+        }
+      }
+    },
+    "ba4029f0-6a92-47f5-8e4f-788d48400736": {
+      "uuid-item": "228f8a21-94bc-466e-999c-0036f4f49ec9",
+      "add": {},
+      "category": {},
+      "typeAdd": false,
+      "typeCateg": false,
+      "typeSteps": true,
+      "steps": {
+        "827bdc3a-4caf-43ca-97cd-d2f01480ef8c": {
+          "ovr": {},
+          "rank": 1,
+          "items": {}
+        }
+      }
+    },
+    "b661f563-bfe2-4a47-b3b2-f95c07d5c241": {
+      "uuid-item": "3eef1168-4c83-4040-a2d8-948e9df8574f",
+      "add": {},
+      "category": {},
+      "typeAdd": false,
+      "typeCateg": false,
+      "typeSteps": true,
+      "steps": {
+        "05274f74-ebff-4025-8d50-46d47b75aea8": {
+          "ovr": {},
+          "rank": 1,
+          "items": {}
         }
       }
     }
@@ -1270,50 +2855,111 @@
   "shoplist": {
     "cb36ff5f-2967-4bfd-9ac8-574fa54b92b9": {
       "cp": "761",
-      "img": "undefined",
+      "img": null,
       "town": "Rouen",
       "Nature": "boutique",
       "shopid": 2,
       "Address": "126 Avenue de Caen",
-      "Company": "fdsq",
+      "Company": "Gammarth",
       "Country": "France",
       "Responsible": ""
     }
   },
   "workflow": {
-    "47102585-9e45-47c8-96e8-6a619e41015f": {
+    "152afa86-41d9-4058-a85a-83898bf04134": {
+      "ovr": {},
+      "rank": 2,
       "type": "categories",
-      "rank": 1,
       "content": {
-        "7cae1b82-ac6d-452d-a437-65b64953c0e5": {
+        "0ebd2aa1-cf38-4cde-8997-5b189ec628a1": {
           "type": "items",
           "rank": 1,
           "content": {
-            "db400a0c-1c50-4c70-b00b-feadf2beac2f": {
+            "27700662-3f8d-4734-949a-ae033e6be40e": {
               "type": "modifier",
               "rank": 1
             }
           }
         },
-        "b6066087-ee2d-49a0-8fe7-1f1f443fa976": {
+        "cd9a2bd5-a87e-458e-88fb-f5ab3ee7394c": {
           "type": "items",
           "rank": 2,
           "content": {
-            "34a6710e-9871-4fca-b984-98370b6f9d83": {
+            "f09a9bd9-66a6-4416-9864-49c85818bbca": {
               "type": "modifier",
               "rank": 1
             }
           }
         },
-        "f30739e5-29fc-4aa6-bfeb-9fdfb14404b9": {
+        "160d0274-662e-4a24-9890-48875dad811f": {
           "type": "items",
           "rank": 3,
           "content": {
-            "db6226e6-0983-4fe0-b6f9-29860646478a": {
+            "76f980bd-9414-4885-83f7-54e94ff0220e": {
               "type": "modifier",
               "rank": 1
             }
           }
+        },
+        "c55ecd02-0eae-4085-b19b-44974b700472": {
+          "type": "items",
+          "rank": 4,
+          "content": {
+            "4b0a15fa-510f-49f3-9c01-8fe4d1879af2": {
+              "type": "modifier",
+              "rank": 1
+            }
+          }
+        },
+        "228f8a21-94bc-466e-999c-0036f4f49ec9": {
+          "type": "items",
+          "rank": 5,
+          "content": {
+            "ba4029f0-6a92-47f5-8e4f-788d48400736": {
+              "type": "modifier",
+              "rank": 1
+            }
+          }
+        },
+        "3eef1168-4c83-4040-a2d8-948e9df8574f": {
+          "type": "items",
+          "rank": 6,
+          "content": {
+            "b661f563-bfe2-4a47-b3b2-f95c07d5c241": {
+              "type": "modifier",
+              "rank": 1
+            }
+          }
+        }
+      }
+    },
+    "3eb7934d-d32c-4447-8999-8dde1b2f7203": {
+      "type": "categories",
+      "rank": 1,
+      "content": {
+        "43a85051-24d9-4db6-98a8-ea836b2ff878": {
+          "type": "items",
+          "rank": 1
+        },
+        "f32b79f2-b62c-4a82-a3ce-de0d815b4dfa": {
+          "type": "items",
+          "rank": 2
+        },
+        "196c298b-4e80-4c7f-b437-ce5625fb9373": {
+          "type": "items",
+          "rank": 3
+        },
+        "6d4b4637-dbb7-4b02-bee4-ffe7e07a5bd5": {
+          "type": "items",
+          "rank": 4
+        },
+        "ca724cf0-e72e-423e-9481-030dcf280dc2": {
+          "type": "items",
+          "rank": 5
+        },
+        "70667e44-91c3-4e08-b850-2db48e5497de": {
+          "type": "items",
+          "rank": 6
         }
       }
     }
@@ -1673,7 +3319,6 @@
   "isAutoRef": false,
   "categories": {
     "09cfa2dd-65f3-4dd2-a026-454e96c093aa": {
-      "id": "09cfa2dd-65f3-4dd2-a026-454e96c093aa",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -1690,7 +3335,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": true,
       "liaison": [],
@@ -1723,10 +3368,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "0c75e618-071e-4fc2-bbd9-58e78509cfca": {
-      "id": "0c75e618-071e-4fc2-bbd9-58e78509cfca",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -1743,7 +3387,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": true,
       "liaison": [],
@@ -1776,10 +3420,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "0c7e26f9-188a-4678-8002-4386d5a8bada": {
-      "id": "0c7e26f9-188a-4678-8002-4386d5a8bada",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -1796,7 +3439,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": true,
       "liaison": [],
@@ -1857,10 +3500,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "0feb7e58-1805-4bfb-99aa-0822754b22e6": {
-      "id": "0feb7e58-1805-4bfb-99aa-0822754b22e6",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -1877,7 +3519,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": true,
       "liaison": [],
@@ -1938,10 +3580,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "14a34868-3998-4974-8b5b-155ad1685e53": {
-      "id": "14a34868-3998-4974-8b5b-155ad1685e53",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -1958,7 +3599,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": true,
       "liaison": [],
@@ -1991,10 +3632,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "152afa86-41d9-4058-a85a-83898bf04134": {
-      "id": "152afa86-41d9-4058-a85a-83898bf04134",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -2002,18 +3642,25 @@
         }
       },
       "ref": "000066",
-      "rank": 23,
+      "rank": 2,
       "child": [],
       "color": "#33FFFF",
-      "items": [],
-      "title": "BOISSONS",
+      "items": [
+        "0ebd2aa1-cf38-4cde-8997-5b189ec628a1",
+        "cd9a2bd5-a87e-458e-88fb-f5ab3ee7394c",
+        "160d0274-662e-4a24-9890-48875dad811f",
+        "c55ecd02-0eae-4085-b19b-44974b700472",
+        "228f8a21-94bc-466e-999c-0036f4f49ec9",
+        "3eef1168-4c83-4040-a2d8-948e9df8574f"
+      ],
+      "title": "Boissons",
       "video": {
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
-      "archive": true,
+      "archive": false,
       "liaison": [],
       "isNameShow": true,
       "linkedTags": [],
@@ -2068,14 +3715,13 @@
             0
           ]
         },
-        "isVisible": false,
-        "basicCompVisibility": false
+        "isVisible": true,
+        "basicCompVisibility": true
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "26802592-252c-411f-95d7-15dce9e50722": {
-      "id": "26802592-252c-411f-95d7-15dce9e50722",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -2092,7 +3738,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "14a34868-3998-4974-8b5b-155ad1685e53",
       "archive": true,
       "liaison": [],
@@ -2153,10 +3799,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "28474a82-8fd7-402d-abc0-0e42d6c9d246": {
-      "id": "28474a82-8fd7-402d-abc0-0e42d6c9d246",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -2173,7 +3818,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": true,
       "liaison": [],
@@ -2206,10 +3851,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "2a532922-3c2a-4535-8ce7-0268eaf24807": {
-      "id": "2a532922-3c2a-4535-8ce7-0268eaf24807",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -2226,7 +3870,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": true,
       "liaison": [],
@@ -2287,10 +3931,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "2fcb85fb-ec0c-415b-b405-ce0b3c763a3c": {
-      "id": "2fcb85fb-ec0c-415b-b405-ce0b3c763a3c",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -2307,7 +3950,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": true,
       "liaison": [],
@@ -2340,10 +3983,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "37efc651-d5e5-470c-af8d-b17cd53f9c14": {
-      "id": "37efc651-d5e5-470c-af8d-b17cd53f9c14",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -2360,7 +4002,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "14a34868-3998-4974-8b5b-155ad1685e53",
       "archive": true,
       "liaison": [],
@@ -2421,10 +4063,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "38eb9033-64c3-49fa-986e-758bb9322940": {
-      "id": "38eb9033-64c3-49fa-986e-758bb9322940",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -2441,7 +4082,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "14a34868-3998-4974-8b5b-155ad1685e53",
       "archive": true,
       "liaison": [],
@@ -2502,10 +4143,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "3b55b780-e20f-4709-9956-3f3bdcfaba48": {
-      "id": "3b55b780-e20f-4709-9956-3f3bdcfaba48",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -2522,7 +4162,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": true,
       "liaison": [],
@@ -2583,10 +4223,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "3ed63b14-5e31-473b-9607-e60bddf681c6": {
-      "id": "3ed63b14-5e31-473b-9607-e60bddf681c6",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -2603,7 +4242,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": true,
       "liaison": [],
@@ -2664,10 +4303,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "4fc2dc74-ecbe-4fdf-bcdc-63ad59508bb5": {
-      "id": "4fc2dc74-ecbe-4fdf-bcdc-63ad59508bb5",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -2684,7 +4322,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": true,
       "liaison": [],
@@ -2745,10 +4383,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "5cfde92f-7246-406e-84a2-f76161814e07": {
-      "id": "5cfde92f-7246-406e-84a2-f76161814e07",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -2765,7 +4402,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": true,
       "liaison": [],
@@ -2798,10 +4435,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "65d41615-d40d-4b31-a17a-2a35604b736c": {
-      "id": "65d41615-d40d-4b31-a17a-2a35604b736c",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -2818,7 +4454,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "14a34868-3998-4974-8b5b-155ad1685e53",
       "archive": true,
       "liaison": [],
@@ -2879,10 +4515,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "694a050a-2eb6-46e4-bab8-8f53c0890a45": {
-      "id": "694a050a-2eb6-46e4-bab8-8f53c0890a45",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -2899,7 +4534,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": true,
       "liaison": [],
@@ -2932,10 +4567,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "75314550-80a0-4324-a0f7-4263de70de4a": {
-      "id": "75314550-80a0-4324-a0f7-4263de70de4a",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -2952,7 +4586,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": true,
       "liaison": [],
@@ -2985,10 +4619,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "8aa15f90-5e3b-48a0-a929-669174efa722": {
-      "id": "8aa15f90-5e3b-48a0-a929-669174efa722",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -3005,7 +4638,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": true,
       "liaison": [],
@@ -3038,10 +4671,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "a329849e-dd18-4c94-a47d-8b68d5f8e4d1": {
-      "id": "a329849e-dd18-4c94-a47d-8b68d5f8e4d1",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -3058,7 +4690,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": true,
       "liaison": [],
@@ -3119,10 +4751,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "acf2c1b6-f3fd-4a36-81e1-b8a6669fc147": {
-      "id": "acf2c1b6-f3fd-4a36-81e1-b8a6669fc147",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -3139,7 +4770,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": true,
       "liaison": [],
@@ -3200,10 +4831,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "ae42bc55-f192-4626-a2f4-04b3d07e741d": {
-      "id": "ae42bc55-f192-4626-a2f4-04b3d07e741d",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -3220,7 +4850,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": true,
       "liaison": [],
@@ -3253,10 +4883,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "bceca88a-174f-4ccd-b370-813664ba69ea": {
-      "id": "bceca88a-174f-4ccd-b370-813664ba69ea",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -3273,7 +4902,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "14a34868-3998-4974-8b5b-155ad1685e53",
       "archive": true,
       "liaison": [],
@@ -3334,10 +4963,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "bcf25011-8341-4067-bbf0-75a24b440081": {
-      "id": "bcf25011-8341-4067-bbf0-75a24b440081",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -3354,7 +4982,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "14a34868-3998-4974-8b5b-155ad1685e53",
       "archive": true,
       "liaison": [],
@@ -3415,10 +5043,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "d2d108c3-54da-4fbc-9cd9-7af6bc8caa29": {
-      "id": "d2d108c3-54da-4fbc-9cd9-7af6bc8caa29",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -3435,7 +5062,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "14a34868-3998-4974-8b5b-155ad1685e53",
       "archive": true,
       "liaison": [],
@@ -3496,10 +5123,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "dce9ab00-00a2-436f-a235-a1ee2463c4b4": {
-      "id": "dce9ab00-00a2-436f-a235-a1ee2463c4b4",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -3516,7 +5142,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": true,
       "liaison": [],
@@ -3577,10 +5203,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "ea05a029-7568-49cf-a8db-57374c8a04b8": {
-      "id": "ea05a029-7568-49cf-a8db-57374c8a04b8",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -3597,7 +5222,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": true,
       "liaison": [],
@@ -3658,10 +5283,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "ebb2e7ec-bceb-45cf-917f-61e4a86a2b55": {
-      "id": "ebb2e7ec-bceb-45cf-917f-61e4a86a2b55",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -3678,7 +5302,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": true,
       "liaison": [],
@@ -3739,10 +5363,9 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
     "f9965f23-4f0a-4821-9522-cba2ac747aef": {
-      "id": "f9965f23-4f0a-4821-9522-cba2ac747aef",
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
@@ -3759,7 +5382,7 @@
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": true,
       "liaison": [],
@@ -3820,32 +5443,36 @@
         "basicCompVisibility": false
       },
       "isInfoModeActive": true,
-      "isVisible": false
+      "extrRef": ""
     },
-    "47102585-9e45-47c8-96e8-6a619e41015f": {
+    "3eb7934d-d32c-4447-8999-8dde1b2f7203": {
       "img": {
         "dflt": {
           "img": "no-pictures.svg",
           "salesSupport": {}
         }
       },
-      "ref": "CAT_471025",
+      "ref": "CAT_3eb793",
       "rank": 1,
       "child": [],
-      "color": "#4f46e5",
+      "color": "#7c3aed",
       "items": [
-        "7cae1b82-ac6d-452d-a437-65b64953c0e5",
-        "b6066087-ee2d-49a0-8fe7-1f1f443fa976",
-        "f30739e5-29fc-4aa6-bfeb-9fdfb14404b9"
+        "43a85051-24d9-4db6-98a8-ea836b2ff878",
+        "f32b79f2-b62c-4a82-a3ce-de0d815b4dfa",
+        "196c298b-4e80-4c7f-b437-ce5625fb9373",
+        "6d4b4637-dbb7-4b02-bee4-ffe7e07a5bd5",
+        "ca724cf0-e72e-423e-9481-030dcf280dc2",
+        "70667e44-91c3-4e08-b850-2db48e5497de"
       ],
       "title": "Pizzas",
       "video": {
         "url": "",
         "type": ""
       },
-      "idCard": 1,
+      "idCard": [],
       "parent": "",
       "archive": false,
+      "extrRef": "",
       "liaison": [],
       "isNameShow": true,
       "linkedTags": [],
@@ -3875,9 +5502,7 @@
         "isVisible": true,
         "basicCompVisibility": true
       },
-      "isInfoModeActive": false,
-      "id": "47102585-9e45-47c8-96e8-6a619e41015f",
-      "isVisible": true
+      "isInfoModeActive": true
     }
   },
   "workflowList": {},
@@ -3911,17 +5536,5 @@
     }
   },
   "dateModification": "Le 31/03/2026 à 17:56",
-  "iuudCardReference": 0,
-  "theme": {
-    "palette": [
-      "#4f46e5",
-      "#10b981",
-      "#4f46e5"
-    ]
-  },
-  "themeMetadata": {
-    "typeLabel": "Pizzeria / Grill",
-    "theme": "Coloré",
-    "style": "Moderne"
-  }
+  "iuudCardReference": 0
 }

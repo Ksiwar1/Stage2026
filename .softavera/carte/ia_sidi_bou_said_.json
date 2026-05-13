@@ -4,304 +4,1212 @@
   "tags": {},
   "color": "",
   "items": {
-    "c3f93296-0a43-4bbe-9e24-58a23f63d2ba": {
-      "id": 1462,
-      "name": "Pizza Margherita",
-      "price": {
+    "e4d5522a-4d16-4b3f-b62f-b3868598905f": {
+      "fid": 0,
+      "img": {
         "dflt": {
-          "ttc": 10.99
+          "img": "no-pictures.svg",
+          "salesSupport": {}
         }
       },
-      "description": "Tomme de mozzarella, feuilles de basilic, sauce tomate (A : gluten, lait)",
-      "steps": [],
-      "ref": "REF_be29e0ea",
-      "type": "item",
+      "ing": {},
+      "opt": {},
+      "ref": "REF_550e8400",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 11.36,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 12.5,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [
+        {
+          "title": "Choix de la taille",
+          "minChoices": 1,
+          "maxChoices": 1,
+          "options": [
+            {
+              "id": "123e4567-e89b-12d3-a456-426614174000",
+              "name": "Petite",
+              "priceDelta": 0
+            },
+            {
+              "id": "123e4567-e89b-12d3-a456-426614174001",
+              "name": "Moyenne",
+              "priceDelta": 2
+            },
+            {
+              "id": "123e4567-e89b-12d3-a456-426614174002",
+              "name": "Grande",
+              "priceDelta": 4
+            }
+          ]
+        }
+      ],
       "title": "Pizza Margherita",
-      "img": {
-        "dflt": {
-          "img": "no-pictures.svg",
-          "salesSupport": {}
-        }
-      },
-      "fid": "",
-      "opt": {},
-      "qty": 1,
-      "rank": 0,
-      "unit": "unit",
-      "offer": "",
-      "prSize": "",
+      "parent": "10331b20-058d-4a98-83a2-48cd04fbfe05",
+      "prSize": 0,
+      "showBc": true,
       "archive": false,
       "barCode": "",
+      "extrRef": "",
       "liaison": [],
       "calories": 0,
       "outStock": false,
       "printers": [],
       "sizeList": [],
-      "suspSale": false,
+      "suspSale": [],
       "variants": [],
       "allergens": [],
-      "basicComp": false,
+      "basicComp": {},
       "isComment": false,
       "active_qty": false,
       "isRedirect": false,
       "linkedTags": [],
-      "nutriScore": "",
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Tomates fraîches, mozzarella et basilic, un classique italien ! (A)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Pizza Margherita",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
       "stepVisibility": {
         "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
         },
         "isVisible": true,
         "basicCompVisibility": true
       },
       "visibilityInfo": {
         "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
         },
         "isVisible": true,
         "basicCompVisibility": true
       },
-      "isOptionChoice": false,
-      "isVisible": true,
-      "parent": "7eef4739-03a8-45ce-b810-155cd8422d92"
+      "modifier": "f3277ee3-3492-40ef-ab12-1e69e432e963"
     },
-    "c2daa8d2-f632-484e-abe7-7c3aed43794a": {
-      "id": 1548,
-      "name": "Pizza Provençale",
-      "price": {
+    "123e4567-e89b-12d3-a456-426614174000": {
+      "fid": 0,
+      "img": {
         "dflt": {
-          "ttc": 12.99
+          "img": "no-pictures.svg",
+          "salesSupport": {}
         }
       },
-      "description": "Tomme de mozzarella, anchois, olives, sauce tomate (A : gluten, lait, poissons)",
+      "ing": {},
+      "opt": {},
+      "ref": "REF_123e4567",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 0,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 0,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
       "steps": [],
-      "ref": "REF_779375f8",
-      "type": "item",
+      "title": "Petite",
+      "parent": "",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Petite",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "priceDelta": 0
+    },
+    "123e4567-e89b-12d3-a456-426614174001": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_123e4567",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 0,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 0,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Moyenne",
+      "parent": "",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Moyenne",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "priceDelta": 2
+    },
+    "123e4567-e89b-12d3-a456-426614174002": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_123e4567",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 0,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 0,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Grande",
+      "parent": "",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Grande",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "priceDelta": 4
+    },
+    "e5ee45ee-537a-40bd-baa8-3a0b38562dfc": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_550e8401",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 13.18,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 14.5,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [
+        {
+          "title": "Choix de la taille",
+          "minChoices": 1,
+          "maxChoices": 1,
+          "options": [
+            {
+              "id": "123e4567-e89b-12d3-a456-426614174003",
+              "name": "Petite",
+              "priceDelta": 0
+            },
+            {
+              "id": "123e4567-e89b-12d3-a456-426614174004",
+              "name": "Moyenne",
+              "priceDelta": 2
+            },
+            {
+              "id": "123e4567-e89b-12d3-a456-426614174005",
+              "name": "Grande",
+              "priceDelta": 4
+            }
+          ]
+        }
+      ],
       "title": "Pizza Provençale",
-      "img": {
-        "dflt": {
-          "img": "no-pictures.svg",
-          "salesSupport": {}
-        }
-      },
-      "fid": "",
-      "opt": {},
-      "qty": 1,
-      "rank": 0,
-      "unit": "unit",
-      "offer": "",
-      "prSize": "",
+      "parent": "10331b20-058d-4a98-83a2-48cd04fbfe05",
+      "prSize": 0,
+      "showBc": true,
       "archive": false,
       "barCode": "",
+      "extrRef": "",
       "liaison": [],
       "calories": 0,
       "outStock": false,
       "printers": [],
       "sizeList": [],
-      "suspSale": false,
+      "suspSale": [],
       "variants": [],
-      "allergens": [],
-      "basicComp": false,
+      "allergens": [
+        "a1000000-0000-0000-0000-000000000007"
+      ],
+      "basicComp": {},
       "isComment": false,
       "active_qty": false,
       "isRedirect": false,
       "linkedTags": [],
-      "nutriScore": "",
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Anchois, olives et fromage, une délicieuse combinaison ! (A)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Pizza Provençale",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
       "stepVisibility": {
         "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
         },
         "isVisible": true,
         "basicCompVisibility": true
       },
       "visibilityInfo": {
         "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
         },
         "isVisible": true,
         "basicCompVisibility": true
       },
-      "isOptionChoice": false,
-      "isVisible": true,
-      "parent": "7eef4739-03a8-45ce-b810-155cd8422d92"
+      "modifier": "fdd85136-327d-4fc1-b9bd-8152f6f8f10d"
     },
-    "b296be27-f462-4410-9c83-dc505896fce4": {
-      "id": 1339,
-      "name": "Pizza Toscane",
-      "price": {
-        "dflt": {
-          "ttc": 13.99
-        }
-      },
-      "description": "Tomme de mozzarella, jambon, champignons, sauce tomate (A : gluten, lait)",
-      "steps": [],
-      "ref": "REF_f9f24a3c",
-      "type": "item",
-      "title": "Pizza Toscane",
+    "8743b3aa-65fe-4833-9687-534aa9e5f4b1": {
+      "fid": 0,
       "img": {
         "dflt": {
           "img": "no-pictures.svg",
           "salesSupport": {}
         }
       },
-      "fid": "",
+      "ing": {},
       "opt": {},
-      "qty": 1,
+      "ref": "REF_550e8402",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
       "rank": 0,
-      "unit": "unit",
-      "offer": "",
-      "prSize": "",
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 15,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 16.5,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [
+        {
+          "title": "Choix de la taille",
+          "minChoices": 1,
+          "maxChoices": 1,
+          "options": [
+            {
+              "id": "123e4567-e89b-12d3-a456-426614174006",
+              "name": "Petite",
+              "priceDelta": 0
+            },
+            {
+              "id": "123e4567-e89b-12d3-a456-426614174007",
+              "name": "Moyenne",
+              "priceDelta": 2
+            },
+            {
+              "id": "123e4567-e89b-12d3-a456-426614174008",
+              "name": "Grande",
+              "priceDelta": 4
+            }
+          ]
+        }
+      ],
+      "title": "Pizza Quattro Formaggi",
+      "parent": "10331b20-058d-4a98-83a2-48cd04fbfe05",
+      "prSize": 0,
+      "showBc": true,
       "archive": false,
       "barCode": "",
+      "extrRef": "",
       "liaison": [],
       "calories": 0,
       "outStock": false,
       "printers": [],
       "sizeList": [],
-      "suspSale": false,
+      "suspSale": [],
       "variants": [],
-      "allergens": [],
-      "basicComp": false,
+      "allergens": [
+        "a1000000-0000-0000-0000-000000000007"
+      ],
+      "basicComp": {},
       "isComment": false,
       "active_qty": false,
       "isRedirect": false,
       "linkedTags": [],
-      "nutriScore": "",
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Quatre fromages italiens, un délice pour les fromagistes ! (A)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Pizza Quattro Formaggi",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
       "stepVisibility": {
         "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
         },
         "isVisible": true,
         "basicCompVisibility": true
       },
       "visibilityInfo": {
         "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
         },
         "isVisible": true,
         "basicCompVisibility": true
       },
-      "isOptionChoice": false,
-      "isVisible": true,
-      "parent": "7eef4739-03a8-45ce-b810-155cd8422d92"
+      "modifier": "89642ba0-fb41-467b-bd34-fe5c8ee8f3d6"
     },
-    "0f0d066e-0287-4e26-b5c3-673a58e643c0": {
-      "id": 1731,
-      "name": "Eau",
-      "price": {
-        "dflt": {
-          "ttc": 0
-        }
-      },
-      "description": "Biberon d'eau fraîche (A : aucun)",
-      "steps": [],
-      "ref": "REF_f10b8dbd",
-      "type": "item",
-      "title": "Eau",
+    "5c8e6746-a09a-4041-a388-5c835f657846": {
+      "fid": 0,
       "img": {
         "dflt": {
           "img": "no-pictures.svg",
           "salesSupport": {}
         }
       },
-      "fid": "",
+      "ing": {},
       "opt": {},
-      "qty": 1,
+      "ref": "REF_123e4567",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
       "rank": 0,
-      "unit": "unit",
-      "offer": "",
-      "prSize": "",
-      "archive": false,
-      "barCode": "",
-      "liaison": [],
-      "calories": 0,
-      "outStock": false,
-      "printers": [],
-      "sizeList": [],
-      "suspSale": false,
-      "variants": [],
-      "allergens": [],
-      "basicComp": false,
-      "isComment": false,
-      "active_qty": false,
-      "isRedirect": false,
-      "linkedTags": [],
-      "nutriScore": "",
-      "stepVisibility": {
-        "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
-        },
-        "isVisible": true,
-        "basicCompVisibility": true
+      "unit": {
+        "P": "",
+        "isActive": false
       },
-      "visibilityInfo": {
-        "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
-        },
-        "isVisible": true,
-        "basicCompVisibility": true
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
       },
-      "isOptionChoice": false,
-      "isVisible": true,
+      "price": {
+        "ht": 3.18,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 3.5,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Coca-Cola",
       "parent": "152afa86-41d9-4058-a85a-83898bf04134",
-      "modifier": "a82a57a6-55e3-4056-a4b8-ab7cc4b8328e"
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "La boisson classique, une légende ! (A)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Coca-Cola",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "modifier": "9e759769-3ff1-4b05-bead-6961b2aebabc"
     },
     "0840069f-0b5f-4734-a299-efc7907da47d": {
-      "id": "0840069f-0b5f-4734-a299-efc7907da47d",
-      "fid": "",
+      "fid": 0,
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
           "salesSupport": {}
         }
       },
+      "ing": {},
       "opt": {},
-      "qty": "0",
       "ref": "000096",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
       "rank": 2,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
       "color": "#FFFF00",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
       "price": {
-        "dflt": {
-          "ttc": 2
-        }
+        "ht": 1.82,
+        "ovr": [],
+        "tva": 1,
+        "dflt": 2,
+        "advanced": {
+          "06dfd3fb-80dd-558b-bea1-4b770bac6217": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "2f1b476c-a679-5229-bf04-6ef158a2ed64": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "3a1d097d-dfe2-5918-9f9a-c22b5051bdf2": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5af245c0-a348-5ec2-9e5b-54dca28d537b": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "6d19a662-ee25-5264-8ced-b54e04b5a9de": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "WEB"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9424063b-4937-515d-8ddf-d8e1cb149b06": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9daa02db-f055-5243-bee6-601adf456ba1": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "WEB"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9dee0ea2-fdcf-54f1-b698-62d69ee1794a": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a2bd69ab-5597-5af6-846a-3c178d3824ee": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a4591a7f-c902-53ba-bda4-a9ec1d8c04d7": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "df012718-df66-5819-ab9c-4d568e762179": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "WEB"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          }
+        },
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
       },
       "steps": [
         "dd2106db-2c15-485a-a44b-39b11dbf1f7c"
       ],
       "title": "CANETTE",
-      "unity": "",
       "parent": "28474a82-8fd7-402d-abc0-0e42d6c9d246",
-      "prSize": "0",
+      "prSize": 0,
+      "showBc": true,
       "archive": false,
       "barCode": "",
+      "extrRef": "",
       "liaison": [],
       "calories": 0,
       "outStock": false,
       "printers": [],
-      "sizeList": "0",
+      "sizeList": [],
       "suspSale": [],
       "variants": [],
       "allergens": [],
@@ -316,18 +1224,21 @@
       },
       "description": {
         "dflt": {
-          "imp": [],
           "nameDef": "",
+          "imp": [],
           "salesSupport": {}
         }
       },
       "displayName": {
         "dflt": {
+          "nameDef": "CANETTE",
           "imp": [],
-          "nameDef": "",
           "salesSupport": {}
         }
       },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
       "isOptionChoice": false,
       "stepVisibility": {
         "dflt": {
@@ -405,43 +1316,203 @@
         "isVisible": true,
         "basicCompVisibility": true
       },
-      "type": "item",
-      "unit": "unit",
-      "offer": ""
+      "unity": ""
     },
     "75467441-10dc-4989-97d3-696155d7ba06": {
-      "id": "75467441-10dc-4989-97d3-696155d7ba06",
-      "fid": "",
+      "fid": 0,
       "img": {
         "dflt": {
           "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
           "salesSupport": {}
         }
       },
+      "ing": {},
       "opt": {},
-      "qty": "0",
       "ref": "000095",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
       "rank": 1,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
       "color": "#FFFF00",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
       "price": {
-        "dflt": {
-          "ttc": 3
-        }
+        "ht": 2.73,
+        "ovr": [],
+        "tva": 1,
+        "dflt": 3,
+        "advanced": {
+          "06dfd3fb-80dd-558b-bea1-4b770bac6217": {
+            "ht": 2.73,
+            "ttc": 3,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "2f1b476c-a679-5229-bf04-6ef158a2ed64": {
+            "ht": 2.73,
+            "ttc": 3,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "3a1d097d-dfe2-5918-9f9a-c22b5051bdf2": {
+            "ht": 2.73,
+            "ttc": 3,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5af245c0-a348-5ec2-9e5b-54dca28d537b": {
+            "ht": 2.73,
+            "ttc": 3,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "6d19a662-ee25-5264-8ced-b54e04b5a9de": {
+            "ht": 2.73,
+            "ttc": 3,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "WEB"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9424063b-4937-515d-8ddf-d8e1cb149b06": {
+            "ht": 2.73,
+            "ttc": 3,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9daa02db-f055-5243-bee6-601adf456ba1": {
+            "ht": 2.73,
+            "ttc": 3,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "WEB"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9dee0ea2-fdcf-54f1-b698-62d69ee1794a": {
+            "ht": 2.73,
+            "ttc": 3,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a2bd69ab-5597-5af6-846a-3c178d3824ee": {
+            "ht": 2.73,
+            "ttc": 3,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a4591a7f-c902-53ba-bda4-a9ec1d8c04d7": {
+            "ht": 2.73,
+            "ttc": 3,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "df012718-df66-5819-ab9c-4d568e762179": {
+            "ht": 2.73,
+            "ttc": 3,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "WEB"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          }
+        },
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
       },
       "steps": [
         "dd2106db-2c15-485a-a44b-39b11dbf1f7c"
       ],
       "title": "BOUTEILLE EN VERRE",
-      "unity": "",
       "parent": "28474a82-8fd7-402d-abc0-0e42d6c9d246",
-      "prSize": "0",
+      "prSize": 0,
+      "showBc": true,
       "archive": false,
       "barCode": "",
+      "extrRef": "",
       "liaison": [],
       "calories": 0,
       "outStock": false,
       "printers": [],
-      "sizeList": "0",
+      "sizeList": [],
       "suspSale": [],
       "variants": [],
       "allergens": [],
@@ -456,18 +1527,21 @@
       },
       "description": {
         "dflt": {
-          "imp": [],
           "nameDef": "",
+          "imp": [],
           "salesSupport": {}
         }
       },
       "displayName": {
         "dflt": {
+          "nameDef": "BOUTEILLE EN VERRE",
           "imp": [],
-          "nameDef": "",
           "salesSupport": {}
         }
       },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
       "isOptionChoice": false,
       "stepVisibility": {
         "dflt": {
@@ -545,188 +1619,361 @@
         "isVisible": true,
         "basicCompVisibility": true
       },
-      "type": "item",
-      "unit": "unit",
-      "offer": ""
+      "unity": ""
     },
-    "1036d09c-e4d0-46d4-98a0-2edb791703de": {
-      "id": 1788,
-      "name": "Coca-Cola",
-      "price": {
-        "dflt": {
-          "ttc": 2.99
-        }
-      },
-      "description": "Canette de 33cl (A : aucun)",
-      "steps": [],
-      "ref": "REF_cfdfdacd",
-      "type": "item",
-      "title": "Coca-Cola",
+    "b7a10b66-cd89-4b65-ac32-ab3fb0052e40": {
+      "fid": 0,
       "img": {
         "dflt": {
           "img": "no-pictures.svg",
           "salesSupport": {}
         }
       },
-      "fid": "",
+      "ing": {},
       "opt": {},
-      "qty": 1,
+      "ref": "REF_123e4567",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
       "rank": 0,
-      "unit": "unit",
-      "offer": "",
-      "prSize": "",
-      "archive": false,
-      "barCode": "",
-      "liaison": [],
-      "calories": 0,
-      "outStock": false,
-      "printers": [],
-      "sizeList": [],
-      "suspSale": false,
-      "variants": [],
-      "allergens": [],
-      "basicComp": false,
-      "isComment": false,
-      "active_qty": false,
-      "isRedirect": false,
-      "linkedTags": [],
-      "nutriScore": "",
-      "stepVisibility": {
-        "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
-        },
-        "isVisible": true,
-        "basicCompVisibility": true
+      "unit": {
+        "P": "",
+        "isActive": false
       },
-      "visibilityInfo": {
-        "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
-        },
-        "isVisible": true,
-        "basicCompVisibility": true
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
       },
-      "isOptionChoice": false,
-      "isVisible": true,
+      "price": {
+        "ht": 2.27,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 2.5,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Eau Plate",
       "parent": "152afa86-41d9-4058-a85a-83898bf04134",
-      "modifier": "24f1a8fb-a176-4608-9a9f-bcc504520fa5"
-    },
-    "eb65cd41-0a05-459d-896c-87cfb06ad7b1": {
-      "id": 1739,
-      "name": "Crème Brûlée",
-      "price": {
-        "dflt": {
-          "ttc": 5.99
-        }
-      },
-      "description": "Crème de lait, sucre, eau (A : lait, œufs)",
-      "steps": [],
-      "ref": "REF_cca7e22a",
-      "type": "item",
-      "title": "Crème Brûlée",
-      "img": {
-        "dflt": {
-          "img": "no-pictures.svg",
-          "salesSupport": {}
-        }
-      },
-      "fid": "",
-      "opt": {},
-      "qty": 1,
-      "rank": 0,
-      "unit": "unit",
-      "offer": "",
-      "prSize": "",
+      "prSize": 0,
+      "showBc": true,
       "archive": false,
       "barCode": "",
+      "extrRef": "",
       "liaison": [],
       "calories": 0,
       "outStock": false,
       "printers": [],
       "sizeList": [],
-      "suspSale": false,
+      "suspSale": [],
       "variants": [],
       "allergens": [],
-      "basicComp": false,
+      "basicComp": {},
       "isComment": false,
       "active_qty": false,
       "isRedirect": false,
       "linkedTags": [],
-      "nutriScore": "",
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "L'eau la plus pure ! (A)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Eau Plate",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
       "stepVisibility": {
         "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
         },
         "isVisible": true,
         "basicCompVisibility": true
       },
       "visibilityInfo": {
         "dflt": {
-          "1": [],
-          "2": [],
-          "3": [],
-          "4": []
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
         },
         "isVisible": true,
         "basicCompVisibility": true
       },
+      "modifier": "b45229f3-a9fa-4538-96fd-56d40c9bcbd9"
+    },
+    "f6d5cac0-175e-440a-bc92-0f3cd6e8e606": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_123e4567",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 3.18,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 3.5,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Coca-Cola Zéro",
+      "parent": "152afa86-41d9-4058-a85a-83898bf04134",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "La version zéro calorie de la classique ! (A)",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Coca-Cola Zéro",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
       "isOptionChoice": false,
-      "isVisible": true,
-      "parent": "ae42bc55-f192-4626-a2f4-04b3d07e741d"
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "modifier": "ac4ec153-b8f8-4449-bccc-97f8f8285cd0"
     }
   },
   "steps": {
-    "44e60961-10f8-4eb8-890b-9e8c8d6f0f6c": {
-      "id": 59,
-      "img": {
+    "333091e6-594e-4f88-9e43-f9bba37a0f55": {
+      "id": "333091e6-594e-4f88-9e43-f9bba37a0f55",
+      "ref": "STEP_333091",
+      "title": "Choix de la taille",
+      "archive": false,
+      "isBasic": false,
+      "isComment": false,
+      "stepItems": {
+        "123e4567-e89b-12d3-a456-426614174000": {
+          "rank": 1,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": null,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": null
+        },
+        "123e4567-e89b-12d3-a456-426614174001": {
+          "rank": 2,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 2,
+          "nbrWithPrice": null,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": null
+        },
+        "123e4567-e89b-12d3-a456-426614174002": {
+          "rank": 3,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 4,
+          "nbrWithPrice": null,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": null
+        }
+      },
+      "maxChoices": 1,
+      "minChoices": 1,
+      "displayName": {
         "dflt": {
-          "img": "no-pictures.svg",
+          "imp": [],
+          "nameDef": "Choix de la taille",
           "salesSupport": {}
         }
       },
+      "isModifiable": true,
+      "img": "",
+      "msg": {
+        "dflt": {
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "req": false,
+      "nbrWithPrice": null,
+      "nbrWithspecialPrice": null,
+      "specificOpts": {
+        "isNext": true,
+        "noButton": false,
+        "zeroPrice": false,
+        "isCheapest": false,
+        "nextButton": false,
+        "isExpensive": false,
+        "withoutStep": false
+      },
+      "rank": 1
+    },
+    "6ebd46f6-fd21-47f7-b9b7-92380e61cd96": {
+      "img": "",
       "ref": "*000059",
       "req": false,
       "title": "SODA",
       "archive": false,
       "isBasic": false,
-      "stepItems": {
-        "0840069f-0b5f-4734-a299-efc7907da47d": {
-          "rank": 2,
-          "priceStep": 0,
-          "maxChoices": 1,
-          "minChoices": 1,
-          "itemPrice": {
-            "price": {},
-            "isVisible": false
-          },
-          "nbrWithPrice": 0,
-          "specialPrice": 0,
-          "basicCompVisibility": true,
-          "nbrWithspecialPrice": 0
-        },
-        "75467441-10dc-4989-97d3-696155d7ba06": {
-          "rank": 1,
-          "priceStep": 0,
-          "maxChoices": 1,
-          "minChoices": 1,
-          "itemPrice": {
-            "price": {},
-            "isVisible": false
-          },
-          "nbrWithPrice": 0,
-          "specialPrice": 0,
-          "basicCompVisibility": true,
-          "nbrWithspecialPrice": 0
-        }
-      },
       "maxChoices": 1,
       "minChoices": 0,
       "displayName": {
@@ -748,52 +1995,49 @@
         "withoutStep": false
       },
       "nbrWithspecialPrice": 0,
+      "id": "6ebd46f6-fd21-47f7-b9b7-92380e61cd96",
       "isComment": false,
+      "stepItems": {
+        "0840069f-0b5f-4734-a299-efc7907da47d": {
+          "rank": 2,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        },
+        "75467441-10dc-4989-97d3-696155d7ba06": {
+          "rank": 1,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        }
+      },
+      "msg": {
+        "dflt": {
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
       "rank": 0
     },
-    "834148c3-2118-4e67-9b75-49bf301eb5f8": {
-      "id": 59,
-      "img": {
-        "dflt": {
-          "img": "no-pictures.svg",
-          "salesSupport": {}
-        }
-      },
+    "151b8686-2481-4c2c-b5b8-fea205859b14": {
+      "img": "",
       "ref": "*000059",
       "req": false,
       "title": "SODA",
       "archive": false,
       "isBasic": false,
-      "stepItems": {
-        "0840069f-0b5f-4734-a299-efc7907da47d": {
-          "rank": 2,
-          "priceStep": 0,
-          "maxChoices": 1,
-          "minChoices": 1,
-          "itemPrice": {
-            "price": {},
-            "isVisible": false
-          },
-          "nbrWithPrice": 0,
-          "specialPrice": 0,
-          "basicCompVisibility": true,
-          "nbrWithspecialPrice": 0
-        },
-        "75467441-10dc-4989-97d3-696155d7ba06": {
-          "rank": 1,
-          "priceStep": 0,
-          "maxChoices": 1,
-          "minChoices": 1,
-          "itemPrice": {
-            "price": {},
-            "isVisible": false
-          },
-          "nbrWithPrice": 0,
-          "specialPrice": 0,
-          "basicCompVisibility": true,
-          "nbrWithspecialPrice": 0
-        }
-      },
       "maxChoices": 1,
       "minChoices": 0,
       "displayName": {
@@ -815,11 +2059,108 @@
         "withoutStep": false
       },
       "nbrWithspecialPrice": 0,
+      "id": "151b8686-2481-4c2c-b5b8-fea205859b14",
       "isComment": false,
+      "stepItems": {
+        "0840069f-0b5f-4734-a299-efc7907da47d": {
+          "rank": 2,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        },
+        "75467441-10dc-4989-97d3-696155d7ba06": {
+          "rank": 1,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        }
+      },
+      "msg": {
+        "dflt": {
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "rank": 0
+    },
+    "3c28cf49-5f15-4b57-a0ca-8433fdf5a370": {
+      "img": "",
+      "ref": "*000059",
+      "req": false,
+      "title": "SODA",
+      "archive": false,
+      "isBasic": false,
+      "maxChoices": 1,
+      "minChoices": 0,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "isModifiable": false,
+      "nbrWithPrice": 0,
+      "specificOpts": {
+        "isNext": false,
+        "noButton": false,
+        "zeroPrice": false,
+        "isCheapest": false,
+        "nextButton": false,
+        "isExpensive": false,
+        "withoutStep": false
+      },
+      "nbrWithspecialPrice": 0,
+      "id": "3c28cf49-5f15-4b57-a0ca-8433fdf5a370",
+      "isComment": false,
+      "stepItems": {
+        "0840069f-0b5f-4734-a299-efc7907da47d": {
+          "rank": 2,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        },
+        "75467441-10dc-4989-97d3-696155d7ba06": {
+          "rank": 1,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        }
+      },
+      "msg": {
+        "dflt": {
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
       "rank": 0
     }
   },
-  "title": "Sisiiiii",
+  "title": "sidi bou said ",
   "remark": "",
   "status": "En attente",
   "Planning": "",
@@ -830,47 +2171,107 @@
     3
   ],
   "modifier": {
-    "a82a57a6-55e3-4056-a4b8-ab7cc4b8328e": {
+    "f3277ee3-3492-40ef-ab12-1e69e432e963": {
+      "uuid-item": "e4d5522a-4d16-4b3f-b62f-b3868598905f",
       "add": {},
+      "category": {},
+      "typeAdd": false,
+      "typeCateg": false,
+      "typeSteps": true,
       "steps": {
-        "44e60961-10f8-4eb8-890b-9e8c8d6f0f6c": {
+        "333091e6-594e-4f88-9e43-f9bba37a0f55": {
           "ovr": {},
           "rank": 1,
           "items": {}
         }
-      },
-      "typeAdd": false,
-      "category": {},
-      "typeCateg": false,
-      "typeSteps": true,
-      "uuid-item": "0f0d066e-0287-4e26-b5c3-673a58e643c0"
+      }
     },
-    "24f1a8fb-a176-4608-9a9f-bcc504520fa5": {
+    "fdd85136-327d-4fc1-b9bd-8152f6f8f10d": {
+      "uuid-item": "e5ee45ee-537a-40bd-baa8-3a0b38562dfc",
       "add": {},
+      "category": {},
+      "typeAdd": false,
+      "typeCateg": false,
+      "typeSteps": true,
       "steps": {
-        "834148c3-2118-4e67-9b75-49bf301eb5f8": {
+        "333091e6-594e-4f88-9e43-f9bba37a0f55": {
           "ovr": {},
           "rank": 1,
           "items": {}
         }
-      },
-      "typeAdd": false,
+      }
+    },
+    "89642ba0-fb41-467b-bd34-fe5c8ee8f3d6": {
+      "uuid-item": "8743b3aa-65fe-4833-9687-534aa9e5f4b1",
+      "add": {},
       "category": {},
+      "typeAdd": false,
       "typeCateg": false,
       "typeSteps": true,
-      "uuid-item": "1036d09c-e4d0-46d4-98a0-2edb791703de"
+      "steps": {
+        "333091e6-594e-4f88-9e43-f9bba37a0f55": {
+          "ovr": {},
+          "rank": 1,
+          "items": {}
+        }
+      }
+    },
+    "9e759769-3ff1-4b05-bead-6961b2aebabc": {
+      "uuid-item": "5c8e6746-a09a-4041-a388-5c835f657846",
+      "add": {},
+      "category": {},
+      "typeAdd": false,
+      "typeCateg": false,
+      "typeSteps": true,
+      "steps": {
+        "6ebd46f6-fd21-47f7-b9b7-92380e61cd96": {
+          "ovr": {},
+          "rank": 1,
+          "items": {}
+        }
+      }
+    },
+    "b45229f3-a9fa-4538-96fd-56d40c9bcbd9": {
+      "uuid-item": "b7a10b66-cd89-4b65-ac32-ab3fb0052e40",
+      "add": {},
+      "category": {},
+      "typeAdd": false,
+      "typeCateg": false,
+      "typeSteps": true,
+      "steps": {
+        "151b8686-2481-4c2c-b5b8-fea205859b14": {
+          "ovr": {},
+          "rank": 1,
+          "items": {}
+        }
+      }
+    },
+    "ac4ec153-b8f8-4449-bccc-97f8f8285cd0": {
+      "uuid-item": "f6d5cac0-175e-440a-bc92-0f3cd6e8e606",
+      "add": {},
+      "category": {},
+      "typeAdd": false,
+      "typeCateg": false,
+      "typeSteps": true,
+      "steps": {
+        "3c28cf49-5f15-4b57-a0ca-8433fdf5a370": {
+          "ovr": {},
+          "rank": 1,
+          "items": {}
+        }
+      }
     }
   },
   "operator": "Administrateur",
   "shoplist": {
     "cb36ff5f-2967-4bfd-9ac8-574fa54b92b9": {
       "cp": "761",
-      "img": "undefined",
+      "img": null,
       "town": "Rouen",
       "Nature": "boutique",
       "shopid": 2,
       "Address": "126 Avenue de Caen",
-      "Company": "HARIS BISTRO",
+      "Company": "sidi bou said ",
       "Country": "France",
       "Responsible": ""
     }
@@ -881,21 +2282,31 @@
       "rank": 2,
       "type": "categories",
       "content": {
-        "0f0d066e-0287-4e26-b5c3-673a58e643c0": {
+        "5c8e6746-a09a-4041-a388-5c835f657846": {
           "type": "items",
           "rank": 1,
           "content": {
-            "a82a57a6-55e3-4056-a4b8-ab7cc4b8328e": {
+            "9e759769-3ff1-4b05-bead-6961b2aebabc": {
               "type": "modifier",
               "rank": 1
             }
           }
         },
-        "1036d09c-e4d0-46d4-98a0-2edb791703de": {
+        "b7a10b66-cd89-4b65-ac32-ab3fb0052e40": {
           "type": "items",
           "rank": 2,
           "content": {
-            "24f1a8fb-a176-4608-9a9f-bcc504520fa5": {
+            "b45229f3-a9fa-4538-96fd-56d40c9bcbd9": {
+              "type": "modifier",
+              "rank": 1
+            }
+          }
+        },
+        "f6d5cac0-175e-440a-bc92-0f3cd6e8e606": {
+          "type": "items",
+          "rank": 3,
+          "content": {
+            "ac4ec153-b8f8-4449-bccc-97f8f8285cd0": {
               "type": "modifier",
               "rank": 1
             }
@@ -903,32 +2314,39 @@
         }
       }
     },
-    "ae42bc55-f192-4626-a2f4-04b3d07e741d": {
-      "ovr": {},
-      "rank": 3,
-      "type": "categories",
-      "content": {
-        "eb65cd41-0a05-459d-896c-87cfb06ad7b1": {
-          "type": "items",
-          "rank": 1
-        }
-      }
-    },
-    "7eef4739-03a8-45ce-b810-155cd8422d92": {
+    "10331b20-058d-4a98-83a2-48cd04fbfe05": {
       "type": "categories",
       "rank": 1,
       "content": {
-        "c3f93296-0a43-4bbe-9e24-58a23f63d2ba": {
+        "e4d5522a-4d16-4b3f-b62f-b3868598905f": {
           "type": "items",
-          "rank": 1
+          "rank": 1,
+          "content": {
+            "f3277ee3-3492-40ef-ab12-1e69e432e963": {
+              "type": "modifier",
+              "rank": 1
+            }
+          }
         },
-        "c2daa8d2-f632-484e-abe7-7c3aed43794a": {
+        "e5ee45ee-537a-40bd-baa8-3a0b38562dfc": {
           "type": "items",
-          "rank": 2
+          "rank": 2,
+          "content": {
+            "fdd85136-327d-4fc1-b9bd-8152f6f8f10d": {
+              "type": "modifier",
+              "rank": 1
+            }
+          }
         },
-        "b296be27-f462-4410-9c83-dc505896fce4": {
+        "8743b3aa-65fe-4833-9687-534aa9e5f4b1": {
           "type": "items",
-          "rank": 3
+          "rank": 3,
+          "content": {
+            "89642ba0-fb41-467b-bd34-fe5c8ee8f3d6": {
+              "type": "modifier",
+              "rank": 1
+            }
+          }
         }
       }
     }
@@ -1621,8 +3039,9 @@
       "child": [],
       "color": "#33FFFF",
       "items": [
-        "0f0d066e-0287-4e26-b5c3-673a58e643c0",
-        "1036d09c-e4d0-46d4-98a0-2edb791703de"
+        "5c8e6746-a09a-4041-a388-5c835f657846",
+        "b7a10b66-cd89-4b65-ac32-ab3fb0052e40",
+        "f6d5cac0-175e-440a-bc92-0f3cd6e8e606"
       ],
       "title": "Boissons",
       "video": {
@@ -1689,7 +3108,8 @@
         "isVisible": true,
         "basicCompVisibility": true
       },
-      "isInfoModeActive": true
+      "isInfoModeActive": true,
+      "isVisible": true
     },
     "26802592-252c-411f-95d7-15dce9e50722": {
       "id": "26802592-252c-411f-95d7-15dce9e50722",
@@ -2828,20 +4248,18 @@
         }
       },
       "ref": "000061",
-      "rank": 3,
+      "rank": 18,
       "child": [],
       "color": "#FFFFFF",
-      "items": [
-        "eb65cd41-0a05-459d-896c-87cfb06ad7b1"
-      ],
-      "title": "Desserts",
+      "items": [],
+      "title": "DESSERTS",
       "video": {
         "url": "",
         "type": ""
       },
       "idCard": 1,
       "parent": "",
-      "archive": false,
+      "archive": true,
       "liaison": [],
       "isNameShow": true,
       "linkedTags": [],
@@ -2868,10 +4286,11 @@
           "3": [],
           "4": []
         },
-        "isVisible": true,
-        "basicCompVisibility": true
+        "isVisible": false,
+        "basicCompVisibility": false
       },
-      "isInfoModeActive": true
+      "isInfoModeActive": true,
+      "isVisible": false
     },
     "bceca88a-174f-4ccd-b370-813664ba69ea": {
       "id": "bceca88a-174f-4ccd-b370-813664ba69ea",
@@ -3440,21 +4859,21 @@
       "isInfoModeActive": true,
       "isVisible": false
     },
-    "7eef4739-03a8-45ce-b810-155cd8422d92": {
+    "10331b20-058d-4a98-83a2-48cd04fbfe05": {
       "img": {
         "dflt": {
           "img": "no-pictures.svg",
           "salesSupport": {}
         }
       },
-      "ref": "CAT_7eef47",
+      "ref": "CAT_10331b",
       "rank": 1,
       "child": [],
-      "color": "#f43f5e",
+      "color": "#94a3b8",
       "items": [
-        "c3f93296-0a43-4bbe-9e24-58a23f63d2ba",
-        "c2daa8d2-f632-484e-abe7-7c3aed43794a",
-        "b296be27-f462-4410-9c83-dc505896fce4"
+        "e4d5522a-4d16-4b3f-b62f-b3868598905f",
+        "e5ee45ee-537a-40bd-baa8-3a0b38562dfc",
+        "8743b3aa-65fe-4833-9687-534aa9e5f4b1"
       ],
       "title": "Pizzas",
       "video": {
@@ -3494,7 +4913,7 @@
         "basicCompVisibility": true
       },
       "isInfoModeActive": false,
-      "id": "7eef4739-03a8-45ce-b810-155cd8422d92",
+      "id": "10331b20-058d-4a98-83a2-48cd04fbfe05",
       "isVisible": true
     }
   },
@@ -3529,17 +4948,5 @@
     }
   },
   "dateModification": "Le 31/03/2026 à 17:56",
-  "iuudCardReference": 0,
-  "theme": {
-    "palette": [
-      "#f43f5e",
-      "#fb7185",
-      "#f43f5e"
-    ]
-  },
-  "themeMetadata": {
-    "typeLabel": "Pizzeria / Grill",
-    "theme": "Coloré",
-    "style": "Moderne"
-  }
+  "iuudCardReference": 0
 }

@@ -471,7 +471,8 @@
             "uuid": "d95b28cd-21eb-42a1-87fc-4f8dc58af8d7",
             "value": 10
           }
-        ]
+        ],
+        "ttc": 2
       },
       "steps": [],
       "title": "PETITE FRITES SAUCE CHEDDAR",
@@ -507,7 +508,7 @@
       "displayName": {
         "dflt": {
           "imp": [],
-          "nameDef": "",
+          "nameDef": "PETITE FRITES SAUCE CHEDDAR",
           "salesSupport": {}
         }
       },
