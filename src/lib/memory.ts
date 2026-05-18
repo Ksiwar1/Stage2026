@@ -254,6 +254,17 @@ export function getCartesVisualSummary(): VisualCardSummary[] {
               }
            }
         }
+        
+        // Extraction du nom de franchise pour les anciennes cartes ETK360
+        if (!restaurantName && images.length > 0) {
+           const firstImage = images.find(img => img.includes('franchise_'));
+           if (firstImage) {
+               const match = firstImage.match(/franchise_\d+_([a-zA-Z0-9_]+)/);
+               if (match && match[1]) {
+                   restaurantName = match[1].replace(/_/g, ' ').split(' ').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+               }
+           }
+        }
 
         summaries.push({
           nomFichier: file,

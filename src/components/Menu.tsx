@@ -54,7 +54,7 @@ export default function Menu() {
           <img 
             src="https://softavera.com/assets/logos/softavera/logo-softavera1.png" 
             alt="Logo Softavera" 
-            height="45" 
+            height="55" 
             style={{ objectFit: 'contain' }} 
           />
         </Link>

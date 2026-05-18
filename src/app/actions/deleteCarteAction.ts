@@ -22,7 +22,20 @@ export async function deleteCarteAction(fileName: string) {
       revalidatePath('/');
       revalidatePath('/historique');
 
-      addLog(fileName, 'DELETE', 'Carte supprimée définitivement du système.');
+      // Supprimer l'historique de cette carte dans logs.json pour qu'elle disparaisse complètement
+      const logFilePath = path.join(process.cwd(), '.softavera', 'logs.json');
+      if (fs.existsSync(logFilePath)) {
+         try {
+             let logs = JSON.parse(fs.readFileSync(logFilePath, 'utf-8'));
+             const originalLength = logs.length;
+             logs = logs.filter((log: any) => log.nomFichier !== fileName);
+             if (logs.length !== originalLength) {
+                 fs.writeFileSync(logFilePath, JSON.stringify(logs, null, 2));
+             }
+         } catch (e) {
+             console.error("Erreur lors de la purge des logs:", e);
+         }
+      }
 
       return { success: true };
     } else {

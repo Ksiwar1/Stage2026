@@ -141,7 +141,7 @@ ${Object.keys(wizardData.forcedItems).length > 0 ?
 ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génères une catégorie de boissons, tu DOIS obligatoirement inclure toutes ces boissons : ${wizardData.drinks.list}. N'en oublie aucune.` : ""}
 `;
       formData.set("sujet", compiledSubject.trim());
-      formData.set("sourceInspiration", wizardData.theme);
+      formData.set("sourceInspiration", ['custom', 'coffeeshop'].includes(wizardData.theme) ? 'standard' : wizardData.theme);
       formData.set("systemConfigJSON", JSON.stringify({
           typeLabel: wizardData.typeLabel,
           visualTheme: wizardData.visualTheme,
@@ -298,7 +298,7 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
             <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 1 ? 1 : 0.4, transition: 'opacity 0.5s' }}>
                <div style={{ background: '#ffffff', borderRadius: '16px', padding: '2rem', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)', border: '1px solid #f1f5f9' }}>
                    <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: '#1e293b', fontSize: '1.2rem' }}>Nom de l'enseigne <span style={{color: '#ef4444'}}>*</span></label>
-                   <input type="text" name="restaurantName" required={!hasImage} value={wizardData.restaurantName} onChange={(e) => setWizardData({...wizardData, restaurantName: e.target.value})} placeholder="Ex: L'Atelier du Burger..." style={{ width: '100%', padding: '1.2rem', borderRadius: '12px', border: '2px solid #cbd5e1', fontSize: '1.2rem', fontWeight: 600, color: '#0f172a', outline: 'none', transition: 'border 0.2s', marginBottom: '1.5rem' }} />
+                   <input type="text" name="restaurantName" required={true} value={wizardData.restaurantName} onChange={(e) => setWizardData({...wizardData, restaurantName: e.target.value})} placeholder="Ex: L'Atelier du Burger..." style={{ width: '100%', padding: '1.2rem', borderRadius: '12px', border: '2px solid #cbd5e1', fontSize: '1.2rem', fontWeight: 600, color: '#0f172a', outline: 'none', transition: 'border 0.2s', marginBottom: '1.5rem' }} />
                    
                    <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: '#1e293b', fontSize: '1.2rem' }}>Langue(s) du catalogue</label>
                    <select value={wizardData.language} onChange={(e) => setWizardData({...wizardData, language: e.target.value})} style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '1rem', marginBottom: '1.5rem', color: '#334155', background: '#f8fafc' }}>
@@ -309,20 +309,66 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                        <option>Bilingue FR/EN</option>
                    </select>
 
-                   <label style={{ display: 'block', fontWeight: 800, margin: '0 0 0.5rem 0', color: '#1e293b', fontSize: '1.2rem' }}>Type de Restaurant <span style={{color: '#ef4444'}}>*</span></label>
-                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '1rem' }}>
+                   <label style={{ display: 'block', fontWeight: 800, margin: '0 0 1rem 0', color: '#1e293b', fontSize: '1.2rem' }}>Concept du Restaurant <span style={{color: '#ef4444'}}>*</span></label>
+                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1rem', marginBottom: wizardData.theme === 'custom' ? '1rem' : '0' }}>
                       {[
-                        { label: 'Fast-Food / Burger', icon: '🍔', c: 'fastfood' },
-                        { label: 'Pizzeria / Grill', icon: '🍕', c: 'pizzeria' },
-                        { label: 'Tacos / Kebab', icon: '🌯', c: 'tacos' },
-                        { label: 'Gastronomique', icon: '🍷', c: 'gastronomique' },
-                        { label: 'Standard ETK360', icon: '📱', c: 'standard' }
-                      ].map(t => (
-                        <div key={t.c} onClick={() => setWizardData({...wizardData, typeLabel: t.label, theme: t.c})} style={{ padding: '1rem', background: wizardData.theme === t.c ? '#eef2ff' : '#f8fafc', border: wizardData.theme === t.c ? '2px solid #4f46e5' : '1px solid #e2e8f0', borderRadius: '12px', cursor: 'pointer', textAlign: 'center', transition: 'all 0.2s', transform: wizardData.theme === t.c ? 'translateY(-2px)' : 'none', boxShadow: wizardData.theme === t.c ? '0 8px 15px -3px rgba(79, 70, 229, 0.1)' : 'none' }}>
-                           <div style={{ fontSize: '2rem', marginBottom: '0.2rem' }}>{t.icon}</div>
-                           <div style={{ fontWeight: 600, fontSize: '0.85rem', color: wizardData.theme === t.c ? '#4f46e5' : '#475569' }}>{t.label}</div>
+                        { label: 'Fast-Food / Burger', icon: '🍔', c: 'fastfood', gradient: 'linear-gradient(135deg, #f59e0b, #ef4444)' },
+                        { label: 'Pizzeria / Grill', icon: '🍕', c: 'pizzeria', gradient: 'linear-gradient(135deg, #ef4444, #b91c1c)' },
+                        { label: 'Tacos / Kebab', icon: '🌯', c: 'tacos', gradient: 'linear-gradient(135deg, #10b981, #047857)' },
+                        { label: 'Gastronomique', icon: '🍷', c: 'gastronomique', gradient: 'linear-gradient(135deg, #6366f1, #4338ca)' },
+                        { label: 'Coffee Shop / Café', icon: '☕', c: 'coffeeshop', gradient: 'linear-gradient(135deg, #d97706, #78350f)' },
+                        { label: 'Standard ETK360', icon: '📱', c: 'standard', gradient: 'linear-gradient(135deg, #64748b, #475569)' },
+                        { label: 'Sur Mesure...', icon: '✨', c: 'custom', gradient: 'linear-gradient(135deg, #1e293b, #0f172a)' }
+                      ].map(t => {
+                        const isSelected = wizardData.theme === t.c;
+                        return (
+                        <div 
+                          key={t.c} 
+                          onClick={() => setWizardData({...wizardData, typeLabel: t.c === 'custom' ? '' : t.label, theme: t.c})} 
+                          style={{ 
+                             position: 'relative',
+                             padding: '1.2rem 1rem', 
+                             background: isSelected ? t.gradient : '#f8fafc', 
+                             border: isSelected ? 'none' : '1px solid #e2e8f0', 
+                             borderRadius: '16px', 
+                             cursor: 'pointer', 
+                             textAlign: 'center', 
+                             transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', 
+                             transform: isSelected ? 'translateY(-4px)' : 'none', 
+                             boxShadow: isSelected ? '0 10px 20px -5px rgba(0,0,0,0.2)' : '0 2px 4px rgba(0,0,0,0.02)',
+                             color: isSelected ? 'white' : '#475569',
+                             overflow: 'hidden'
+                          }}
+                        >
+                           {isSelected && <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 100%)', pointerEvents: 'none' }}></div>}
+                           <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem', filter: isSelected ? 'drop-shadow(0 4px 6px rgba(0,0,0,0.2))' : 'none', transition: 'all 0.3s' }}>{t.icon}</div>
+                           <div style={{ fontWeight: 700, fontSize: '0.9rem', letterSpacing: '-0.01em' }}>{t.label}</div>
+                           
+                           {isSelected && (
+                                <div style={{ position: 'absolute', top: '10px', right: '10px', background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(4px)', borderRadius: '50%', width: '22px', height: '22px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '0.7rem', fontWeight: 'bold' }}>
+                                    ✓
+                                </div>
+                           )}
                         </div>
-                      ))}
+                      )})}
+                   </div>
+                   
+                   <div style={{ 
+                        height: wizardData.theme === 'custom' ? 'auto' : '0', 
+                        opacity: wizardData.theme === 'custom' ? 1 : 0, 
+                        overflow: 'hidden', 
+                        transition: 'all 0.3s ease' 
+                   }}>
+                        <div style={{ background: '#f8fafc', padding: '1.2rem', borderRadius: '12px', border: '1px solid #cbd5e1', borderLeft: '4px solid #1e293b' }}>
+                            <label style={{ display: 'block', fontWeight: 600, color: '#334155', fontSize: '0.95rem', marginBottom: '0.5rem' }}>Quel est votre concept ? (L'IA s'en inspirera pour les noms et descriptions)</label>
+                            <input 
+                                type="text" 
+                                value={wizardData.typeLabel} 
+                                onChange={e => setWizardData({...wizardData, typeLabel: e.target.value})} 
+                                placeholder="Ex: Bar à Salades, Spécialité Libanaise, Boulangerie..." 
+                                style={{ width: '100%', padding: '1rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '1.05rem', outline: 'none' }} 
+                            />
+                        </div>
                    </div>
                    
                    <div style={{ display: 'flex', alignItems: 'center', margin: '2rem 0', color: '#94a3b8' }}>
@@ -357,7 +403,7 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                    </div>
                </div>
                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.5rem' }}>
-                   <button type="button" onClick={() => setWizardStep(hasImage ? 4 : 2)} disabled={(!wizardData.restaurantName || !wizardData.theme) && !hasImage} style={{ padding: '1rem 2rem', background: '#4f46e5', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', opacity: ((!wizardData.restaurantName || !wizardData.theme) && !hasImage) ? 0.5 : 1, transition: 'all 0.2s', boxShadow: '0 4px 15px rgba(79, 70, 229, 0.3)' }}>{hasImage ? "Mode Photo : Aller au Design →" : t('gen_continue')}</button>
+                   <button type="button" onClick={() => setWizardStep(hasImage ? 4 : 2)} disabled={!wizardData.restaurantName || (!wizardData.theme && !hasImage)} style={{ padding: '1rem 2rem', background: '#4f46e5', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', opacity: (!wizardData.restaurantName || (!wizardData.theme && !hasImage)) ? 0.5 : 1, transition: 'all 0.2s', boxShadow: '0 4px 15px rgba(79, 70, 229, 0.3)' }}>{hasImage ? "Mode Photo : Aller au Design →" : t('gen_continue')}</button>
                </div>
             </div>
 
@@ -706,16 +752,31 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
 
       {/* MODAL SIMULATEUR */}
       {isVisualizing && (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 50, background: 'rgba(0,0,0,0.9)', display: 'flex', flexDirection: 'column' }}>
-           <div style={{ padding: '1rem', display: 'flex', justifyContent: 'flex-end', background: '#111827' }}>
+        <div style={{ position: 'fixed', inset: 0, zIndex: 100, background: 'rgba(15, 23, 42, 0.95)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(10px)' }}>
+           
+           <div style={{ position: 'absolute', top: '2rem', right: '2rem', zIndex: 110 }}>
               <button 
                 onClick={() => setIsVisualizing(false)}
-                style={{ padding: '0.5rem 1rem', background: '#ef4444', color: 'white', border: 'none', borderRadius: '6px', fontWeight: 600, cursor: 'pointer' }}
+                style={{ padding: '0.75rem 1.5rem', background: '#ef4444', color: 'white', border: 'none', borderRadius: '99px', fontWeight: 700, cursor: 'pointer', boxShadow: '0 10px 20px rgba(239,68,68,0.3)', display: 'flex', alignItems: 'center', gap: '0.5rem', transition: 'transform 0.2s' }}
+                onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
               >
-                 ✕ Fermer la Visualisation
+                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                 Fermer l'aperçu
               </button>
            </div>
-           <div style={{ flex: 1, position: 'relative', background: '#f9fafb', overflow: 'hidden' }}>
+           
+           {/* Cadre de la Borne Physique */}
+           <div style={{ 
+              width: '480px', 
+              height: '820px', 
+              background: 'white',
+              borderRadius: '24px',
+              boxShadow: '0 30px 60px -12px rgba(0, 0, 0, 0.6), 0 0 0 16px #0f172a, 0 0 0 18px rgba(255,255,255,0.1)', // Gros cadre plastique noir avec reflet
+              overflow: 'hidden', 
+              position: 'relative',
+              animation: 'fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+           }}>
               <KioskSimulator 
                  restaurantName={submittedRestaurantName}
                  tree={parsedTree} 

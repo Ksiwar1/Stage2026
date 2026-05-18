@@ -3,13 +3,14 @@
   top: 0;
   z-index: 50;
   width: 100%;
-  padding: 2rem 3rem; /* Agrandissement du cadre (hauteur et largeur) */
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
-  animation: fadeInDown 0.8s ease-out forwards;
+  padding: 2rem 4rem; /* Plus aéré verticalement pour élargir la barre */
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
+  animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: var(--transition-smooth);
 }
 
 .container {
@@ -24,17 +25,22 @@
   font-size: 1.5rem;
   font-weight: 800;
   letter-spacing: -0.5px;
-  color: #111827;
+  color: var(--foreground);
   text-decoration: none;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  transition: opacity 0.2s ease;
+}
+
+.logo:hover {
+  opacity: 0.85;
 }
 
 .logoIcon {
   width: 32px;
   height: 32px;
-  background: #2563eb;
+  background: var(--primary);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -45,32 +51,50 @@
 
 .links {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
   align-items: center;
 }
 
 .link {
-  color: #4b5563; /* Gris moyen lisible */
+  color: #475569; /* Slate 600 */
   font-weight: 600;
   font-size: 0.95rem;
   padding: 0.5rem 1rem;
-  border-radius: 99px;
-  transition: all 0.2s ease;
+  border-radius: 9999px;
+  transition: var(--transition-smooth);
   text-decoration: none;
+  position: relative;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 50%; right: 50%;
+  height: 2px;
+  background-color: var(--primary);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 2px;
+  opacity: 0;
 }
 
 .link:hover {
-  color: #111827; /* Devient noir au survol */
-  background: rgba(0, 0, 0, 0.03);
-  transform: translateY(-1px);
+  color: var(--foreground);
+}
+
+.link:hover::after {
+  left: 20%; right: 20%;
+  opacity: 1;
 }
 
 .active {
-  color: #2563eb;
-  background: rgba(37, 99, 235, 0.08); /* Effet Blue Light */
+  color: var(--primary);
+  background: rgba(37, 99, 235, 0.06);
 }
 .active:hover {
-  color: #1d4ed8;
+  color: var(--primary-hover);
+}
+.active::after {
+  display: none; /* No underline for pill-active state */
 }
 
 @keyframes fadeInDown {

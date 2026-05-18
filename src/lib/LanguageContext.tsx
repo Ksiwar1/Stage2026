@@ -34,6 +34,13 @@ const dictionary: Record<string, Record<SupportedLang, string>> = {
   // Home Page
   "home_welcome": { FR: "Bienvenue", EN: "Welcome" },
   "home_desc": { FR: "Cartes Softavera", EN: "Softavera Menus" },
+  "home_title": { FR: "Centre de Contrôle ETK360", EN: "ETK360 Control Center" },
+  "home_subtitle": { FR: "Espace réservé à l'équipe Support & Prod Softavera. Gérez les catalogues, générez des cartes par IA et supervisez le parc d'applications Kiosk.", EN: "Workspace for Softavera Support & Prod team. Manage catalogs, generate AI menus, and supervise the Kiosk application fleet." },
+  "home_cta_primary": { FR: "Ouvrir l'Espace de Travail", EN: "Open Workspace" },
+  "home_cta_secondary": { FR: "Consulter l'Historique", EN: "View Logs & History" },
+  "stat_clients": { FR: "Génération par IA", EN: "AI Generation" },
+  "stat_orders": { FR: "Compatibilité ETK360", EN: "ETK360 Compatibility" },
+  "stat_uptime": { FR: "Déploiement Kiosk", EN: "Kiosk Deployment" },
   
   // Generator Page
   "gen_title": { FR: "Générateur de cartes", EN: "Menu Generator" },

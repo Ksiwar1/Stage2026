@@ -35,27 +35,6 @@
     "details": "Modification du produit \"PETITE FRITES SAUCE CHEDDAR\" (Prix: 2€)"
   },
   {
-    "id": "425f3380-a721-44db-82b9-d72335e650a2",
-    "timestamp": "2026-05-12T09:33:30.304Z",
-    "nomFichier": "ia_nice.json",
-    "actionType": "CREATE",
-    "details": "Carte générée avec succès par l'IA."
-  },
-  {
-    "id": "2ab016c9-2770-43cb-817b-292d73b47d5d",
-    "timestamp": "2026-05-12T09:34:15.629Z",
-    "nomFichier": "ia_nice_2.json",
-    "actionType": "CREATE",
-    "details": "Carte générée avec succès par l'IA."
-  },
-  {
-    "id": "86aa2e30-8d21-4e64-b5a3-d5675a4a6559",
-    "timestamp": "2026-05-12T09:35:03.835Z",
-    "nomFichier": "ia_nice_3.json",
-    "actionType": "CREATE",
-    "details": "Carte générée avec succès par l'IA."
-  },
-  {
     "id": "447a2a47-6564-45f1-b2f2-afa6014558da",
     "timestamp": "2026-05-12T10:38:01.297Z",
     "nomFichier": "ia_nice_4.json",

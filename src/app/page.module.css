@@ -68,7 +68,7 @@
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
   z-index: 1;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.88) 70%, rgba(255, 255, 255, 1) 100%);
+  background: linear-gradient(to bottom, rgba(253, 253, 253, 0.6) 0%, rgba(253, 253, 253, 0.95) 70%, rgba(253, 253, 253, 1) 100%);
   pointer-events: none;
 }
 
@@ -83,24 +83,24 @@
 }
 
 .title {
-  font-size: 2.8rem;
+  font-size: 3.2rem;
   font-weight: 800;
   line-height: 1.15;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.04em;
   margin-bottom: 1.5rem;
   color: var(--foreground);
-  animation: slideUp 0.8s ease-out forwards;
+  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .description {
-  font-size: 1.1rem;
-  color: #4b5563; /* Gris sombre pro */
-  margin-bottom: 3rem;
-  line-height: 1.5;
+  font-size: 1.15rem;
+  color: #475569; /* Slate 600 plus premium */
+  margin-bottom: 3.5rem;
+  line-height: 1.6;
   font-weight: 400;
   max-width: 700px;
   opacity: 0;
-  animation: slideUp 0.8s ease-out 0.2s forwards;
+  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
 }
 
 /* Ligne des Boutons */
@@ -109,43 +109,49 @@
   gap: 1.5rem;
   margin-bottom: 5rem;
   opacity: 0;
-  animation: slideUp 0.8s ease-out 0.3s forwards;
+  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
 }
 
 .btnPrimary {
-  background: #007aff; /* Bleu très vif Apple/Softavera */
+  background: var(--primary);
   color: white;
-  padding: 1.2rem 2.5rem;
-  border-radius: 99px;
+  padding: 1.25rem 2.5rem;
+  border-radius: 9999px;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   border: none;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 10px 15px -3px rgba(0, 122, 255, 0.3);
+  transition: var(--transition-smooth);
+  box-shadow: var(--shadow-primary);
+  letter-spacing: 0.01em;
 }
 .btnPrimary:hover {
-  background: #005bb5;
+  background: var(--primary-hover);
   transform: translateY(-2px);
+  box-shadow: 0 15px 30px -5px rgba(37, 99, 235, 0.4);
 }
 
 .btnSecondary {
-  background: transparent;
-  color: #007aff;
-  padding: 1.2rem 2.5rem;
-  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  color: var(--foreground);
+  padding: 1.25rem 2.5rem;
+  border-radius: 9999px;
   font-weight: 600;
-  font-size: 1.1rem;
-  border: 2px solid #007aff;
+  font-size: 1.05rem;
+  border: 1px solid var(--card-border);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: var(--transition-smooth);
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  box-shadow: var(--shadow-sm);
 }
 .btnSecondary:hover {
-  background: rgba(0, 122, 255, 0.05);
+  background: rgba(255, 255, 255, 1);
   transform: translateY(-2px);
+  border-color: rgba(15, 23, 42, 0.12);
+  box-shadow: var(--shadow-md);
 }
 
 /* Statistiques */
@@ -211,64 +217,80 @@
   position: relative;
   z-index: 1;
   max-width: 800px;
-  animation: fadeIn 1s ease-out;
-  margin: 3rem auto 2rem auto;
+  animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1);
+  margin: 4rem auto 2.5rem auto;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
   width: 100%;
   max-width: 1100px;
-  margin: 0 auto 4rem auto;
+  margin: 0 auto 5rem auto;
   padding: 0 1.5rem;
   position: relative;
   z-index: 1;
 }
 
 .card {
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  border-radius: 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
   padding: 2.5rem 2rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-smooth);
   text-align: left;
   text-decoration: none;
   display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, transparent, transparent);
+  transition: var(--transition-smooth);
 }
 
 .card:hover {
-  transform: translateY(-8px);
-  border-color: rgba(37, 99, 235, 0.2); 
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+  transform: translateY(-6px);
+  border-color: rgba(37, 99, 235, 0.15); 
+  box-shadow: var(--shadow-xl);
+}
+
+.card:hover::after {
+  background: linear-gradient(90deg, var(--site-primary), var(--site-secondary));
 }
 
 .card h2 {
-  font-size: 1.3rem;
+  font-size: 1.35rem;
   font-weight: 700;
   margin-bottom: 0.8rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #111827;
+  color: var(--foreground);
+  letter-spacing: -0.01em;
 }
 
 .card h2 span {
   display: inline-block;
-  color: #2563eb; 
-  transition: transform 0.3s ease;
+  color: var(--primary); 
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card:hover h2 span {
-  transform: translateX(6px);
+  transform: translateX(4px);
 }
 
 .card p {
-  color: #6b7280; 
+  color: #475569; /* Slate 600 */
   line-height: 1.6;
   margin: 0;
+  font-size: 1rem;
 }
 
 /* --- Style Premium pour les Boutons d'Action Principaux --- */
@@ -276,29 +298,29 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #2563eb, #1e40af); /* Dégradé Bleu Softavera */
+  background: linear-gradient(135deg, var(--site-primary, #2563eb), var(--site-secondary, #0ea5e9));
   color: #ffffff;
   padding: 14px 32px;
-  border-radius: 9999px; /* Bouton Pilule très moderne */
+  border-radius: 9999px;
   font-weight: 600;
   font-size: 1.05rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.39);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-primary);
+  transition: var(--transition-smooth);
   text-decoration: none;
 }
 
 .button_primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.23);
-  background: linear-gradient(135deg, var(--site-secondary), color-mix(in srgb, var(--site-secondary) 60%, black));
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px -5px rgba(37, 99, 235, 0.4);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--site-primary, #2563eb) 90%, black), var(--site-secondary, #0ea5e9));
 }
 
 .button_primary:active {
   transform: translateY(1px);
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+  box-shadow: var(--shadow-md);
 }
 
 .button_primary:disabled {
@@ -313,24 +335,24 @@
 .backButton {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.7rem 1.4rem;
-  background-color: white;
-  color: #4b5563;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--card-bg);
+  color: var(--foreground);
   font-weight: 600;
   font-size: 0.95rem;
-  border-radius: 99px;
+  border-radius: 9999px;
   text-decoration: none;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-  transition: all 0.2s ease;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-smooth);
   margin-top: 1.5rem;
 }
 .backButton:hover {
   transform: translateY(-2px);
-  color: #2563eb;
-  border-color: rgba(37, 99, 235, 0.3);
-  box-shadow: 0 6px 12px -2px rgba(37, 99, 235, 0.15);
+  color: var(--primary);
+  border-color: rgba(37, 99, 235, 0.2);
+  box-shadow: var(--shadow-md);
 }
 
 /* Modal de Chargement IA */
@@ -401,4 +423,50 @@
   0% { opacity: 0.7; transform: scale(0.98); }
   50% { opacity: 1; transform: scale(1); }
   100% { opacity: 0.7; transform: scale(0.98); }
+}
+
+/* --- Logo Marquee --- */
+.marqueeContainer {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  overflow: hidden;
+  padding: 3rem 0;
+  margin-top: 5rem;
+  position: relative;
+  z-index: 2; /* Pour passer au-dessus du dégradé blanc */
+  opacity: 0;
+  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+  /* Masque les débordements gauche/droite pour un scroll propre */
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marqueeContent {
+  display: flex;
+  gap: 5rem;
+  align-items: center;
+  width: max-content;
+  animation: scrollMarquee 35s linear infinite;
+  padding: 0 2.5rem;
+}
+
+.marqueeContent:hover {
+  animation-play-state: paused;
+}
+
+.marqueeLogo {
+  height: 45px; /* Légèrement plus grand pour plus d'impact */
+  object-fit: contain;
+  transition: all 0.4s ease;
+  user-select: none;
+}
+
+.marqueeLogo:hover {
+  transform: scale(1.1);
+}
+
+@keyframes scrollMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 2.5rem)); } /* Moitié du conteneur dupliqué */
 }

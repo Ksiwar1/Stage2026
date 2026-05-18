@@ -40,17 +40,38 @@ export default async function BornePage({ params }: { params: Promise<{ id: stri
     );
   }
 
-  const rawTitle = fileName
-    .replace('.json', '')
-    .replace('carte_', '')
-    .replace('ia_', '')
-    .replace(/_[0-9]+$/, '')
-    .replace(/^[0-9_]+/, '')
-    .replace(/_/g, ' ')
-    .trim();
-  const restaurantName = rawTitle 
-    ? rawTitle.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
-    : "Borne Interactive";
+  let jsonRestaurantName = null;
+  if (data.shoplist && typeof data.shoplist === 'object') {
+     const firstShop = Object.values(data.shoplist)[0] as any;
+     if (firstShop && firstShop.name) jsonRestaurantName = firstShop.name;
+     if (firstShop && firstShop.Company) jsonRestaurantName = firstShop.Company;
+  }
+  if (!jsonRestaurantName && data.opt && data.opt.restaurantName) {
+     jsonRestaurantName = data.opt.restaurantName;
+  }
+  if (!jsonRestaurantName && data.title) {
+     jsonRestaurantName = data.title;
+  }
+  
+  // Extraire le nom de la franchise depuis les vieilles URL d'images ETK360
+  if (!jsonRestaurantName && data.items) {
+      const firstItem = Object.values(data.items).find((item: any) => item?.img?.dflt?.img?.includes('franchise_')) as any;
+      if (firstItem) {
+          const match = firstItem.img.dflt.img.match(/franchise_\d+_([a-zA-Z0-9_]+)/);
+          if (match && match[1]) {
+              jsonRestaurantName = match[1].replace(/_/g, ' ');
+          }
+      }
+  }
+
+  let rawTitle = fileName.replace('.json', '').replace(/^ia_*/, '').replace(/_/g, ' ').trim();
+  if (rawTitle === '' || rawTitle.startsWith('INSTRUCTIONS STRUCT')) {
+      rawTitle = "Restaurant IA";
+  }
+
+  const restaurantName = jsonRestaurantName 
+    ? jsonRestaurantName 
+    : rawTitle.split(' ').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
   let themePalette = { primary: '#F39C12', secondary: '#1A237E', background: '#F8FAFC', surface: '#FFFFFF', text: '#111827', onPrimary: 'white' };
   
@@ -211,6 +232,27 @@ export default async function BornePage({ params }: { params: Promise<{ id: stri
     themePalette.secondary = hslToHex(h2, s2, l2);
   }
 
-  // Renvoi de la "Base Propre" vers le composant Visuel
-  return <KioskSimulator restaurantName={restaurantName} tree={tree} themePalette={themePalette} catalogData={data} />;
+  // Renvoi de la "Base Propre" vers le composant Visuel avec un cadre "Borne" (Device Frame)
+  return (
+    <div style={{ 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      minHeight: '100vh', 
+      background: '#f1f5f9', // Fond gris clair derrière la borne
+      padding: '2rem' 
+    }}>
+      <div style={{ 
+        width: '480px', // Taille fixe pour être bien "rapproché" et lisible
+        height: '820px', // Hauteur fixe proportionnelle
+        background: 'white',
+        borderRadius: '24px',
+        boxShadow: '0 30px 60px -12px rgba(0, 0, 0, 0.4), 0 0 0 16px #0f172a', // Gros cadre plastique noir
+        overflow: 'hidden', // Empêche le simulateur de déborder
+        position: 'relative'
+      }}>
+        <KioskSimulator restaurantName={restaurantName} tree={tree} themePalette={themePalette} catalogData={data} />
+      </div>
+    </div>
+  );
 }

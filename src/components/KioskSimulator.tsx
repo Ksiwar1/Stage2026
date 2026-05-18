@@ -54,17 +54,17 @@ const CategoryButton = React.memo(({ cat, isActive, onClick }: { cat: ParsedCate
     <button onClick={() => onClick(cat.id)}
       style={{
         width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start',
-        padding: '1.2rem 1.5rem', border: 'none', borderBottom: '1px solid #f1f5f9',
+        padding: '1rem 0.5rem', border: 'none', borderBottom: '1px solid #f1f5f9',
         borderLeft: isActive ? '6px solid var(--color-primary)' : '6px solid transparent',
         background: isActive ? '#fffbeb' : 'white',
         color: isActive ? '#111827' : '#475569', cursor: 'pointer', transition: 'all 0.2s ease-in-out',
       }}
     >
-      <div style={{ width: '55px', height: '55px', flexShrink: 0, marginRight: '1.2rem', borderRadius: '14px', overflow: 'hidden', background: '#f8fafc', boxShadow: isActive ? '0 4px 10px rgba(230,126,34,0.2)' : 'none', border: '1px solid #e2e8f0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <div style={{ width: '40px', height: '40px', flexShrink: 0, marginRight: '0.5rem', borderRadius: '10px', overflow: 'hidden', background: '#f8fafc', boxShadow: isActive ? '0 4px 10px rgba(230,126,34,0.2)' : 'none', border: '1px solid #e2e8f0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img loading="lazy" decoding="async" src={finalImgUrl} alt={cat.title} onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://recette-setting.softavera.com/nopicture.png'; }} style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '4px' }} />
       </div>
-      <strong style={{ fontSize: '1.05rem', textTransform: 'uppercase', textAlign: 'left', lineHeight: '1.2', fontWeight: isActive ? 800 : 600 }}>
+      <strong style={{ fontSize: '0.85rem', textTransform: 'uppercase', textAlign: 'left', lineHeight: '1.2', fontWeight: isActive ? 800 : 600, overflowWrap: 'break-word', wordBreak: 'normal' }}>
         {cat.title}
       </strong>
     </button>
@@ -480,8 +480,8 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
         position: 'relative',
         overflow: 'hidden'
       }}>
-        <div style={{ position: 'absolute', top: '-10%', right: '-5%', width: '40vw', height: '40vw', background: 'white', opacity: 0.1, borderRadius: '50%', filter: 'blur(100px)' }} />
-        <div style={{ position: 'absolute', bottom: '-15%', left: '-10%', width: '50vw', height: '50vw', background: activeThemePalette.secondary, opacity: 0.4, borderRadius: '50%', filter: 'blur(120px)' }} />
+        <div style={{ position: 'absolute', top: '-10%', right: '-5%', width: '40%', height: '40%', background: 'white', opacity: 0.1, borderRadius: '50%', filter: 'blur(100px)' }} />
+        <div style={{ position: 'absolute', bottom: '-15%', left: '-10%', width: '50%', height: '50%', background: activeThemePalette.secondary, opacity: 0.4, borderRadius: '50%', filter: 'blur(120px)' }} />
 
         <div style={{ 
           width: '90%', 
@@ -559,6 +559,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
 
   return (
     <div style={{ 
+      height: '100%', width: '100%',
       '--color-primary': activeThemePalette.primary, 
       '--color-secondary': activeThemePalette.secondary, 
       '--color-background': activeThemePalette.background, 
@@ -566,12 +567,12 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
       '--color-text': activeThemePalette.text, 
       '--color-on-primary': activeThemePalette.onPrimary 
     } as React.CSSProperties}>
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw', background: 'var(--color-background)', fontFamily: catalogData?.themeMetadata?.typeLabel?.toLowerCase().includes('pizza') ? "'Playfair Display', serif" : catalogData?.themeMetadata?.typeLabel?.toLowerCase().includes('gastronomique') ? "'Cinzel', serif" : "'Inter', sans-serif", overflow: 'hidden' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%', background: 'var(--color-background)', fontFamily: catalogData?.themeMetadata?.typeLabel?.toLowerCase().includes('pizza') ? "'Playfair Display', serif" : catalogData?.themeMetadata?.typeLabel?.toLowerCase().includes('gastronomique') ? "'Cinzel', serif" : "'Inter', sans-serif", overflow: 'hidden' }}>
       
       {/* TUNNEL MODAL */}
       {selectedProduct && (
         <div style={{
-          position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.6)', 
+          position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.6)', 
           zIndex: 100, display: 'flex', justifyContent: 'center', alignItems: 'center', backdropFilter: 'blur(5px)'
         }}>
           <div style={{
@@ -787,21 +788,21 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
       {/* FIN TUNNEL */}
 
       {/* HEADER GLOBAL UNIFIÉ (Un seul rectangle sans démarcation) */}
-      <div style={{ height: '105px', display: 'flex', flexShrink: 0, background: 'var(--color-primary)', width: '100%', zIndex: 20 }}>
+      <div style={{ height: '90px', display: 'flex', flexShrink: 0, background: 'var(--color-primary)', width: '100%', zIndex: 20 }}>
         {/* Partie Gauche alignée avec la colonne Menu */}
-        <div style={{ width: '25%', minWidth: '250px', maxWidth: '300px', display: 'flex', alignItems: 'center', padding: '0 2rem' }}>
-          <h2 style={{ margin: 0, fontSize: '1.7rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', textShadow: '0 2px 8px rgba(0,0,0,0.4)', color: 'var(--color-on-primary)' }}>Menu</h2>
+        <div style={{ width: '38%', minWidth: '150px', maxWidth: '220px', display: 'flex', alignItems: 'center', padding: '0 1rem' }}>
+          <h2 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', textShadow: '0 2px 8px rgba(0,0,0,0.4)', color: 'var(--color-on-primary)' }}>Menu</h2>
         </div>
         {/* Partie Droite alignée avec les articles */}
-        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 3rem' }}>
-           <h1 style={{ color: 'white', margin: 0, fontSize: '2.2rem', fontWeight: 900, textTransform: 'uppercase', textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-start', padding: '0 1.5rem', overflow: 'hidden' }}>
+           <h1 style={{ color: 'white', margin: 0, fontSize: '1.6rem', fontWeight: 900, textTransform: 'uppercase', textShadow: '0 2px 8px rgba(0,0,0,0.4)', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
               {restaurantName}
            </h1>
         </div>
       </div>
 
       {/* RESTE DE LA PAGE KIOSK (Menu de gauche, Liste, Footer...) */}
-      <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
+      <div style={{ display: 'flex', flex: 1, overflow: 'hidden', minHeight: 0 }}>
         {tree.every(cat => !cat.products || cat.products.length === 0) ? (
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '2rem', background: '#f8fafc' }}>
             <span style={{ fontSize: '5rem', marginBottom: '1.5rem' }}>⚠️</span>
@@ -813,8 +814,8 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
         ) : (
           <>
         {/* COLONNE GAUCHE (Catégories) */}
-        <div style={{ width: '25%', minWidth: '250px', maxWidth: '300px', background: 'var(--color-surface)', boxShadow: '4px 0 15px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', zIndex: 10 }}>
-          <div style={{ flex: 1, overflowY: 'auto' }}>
+        <div style={{ width: '38%', minWidth: '150px', maxWidth: '220px', background: 'var(--color-surface)', boxShadow: '4px 0 15px rgba(0,0,0,0.03)', display: 'flex', flexDirection: 'column', zIndex: 10 }}>
+          <div style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
             {activeCategories.map(cat => {
               const isActive = activeCategory?.id === cat.id;
               
@@ -831,7 +832,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
         </div>
 
         {/* ZONE PRINCIPALE (Grid produits) */}
-        <div style={{ flex: '1', display: 'flex', flexDirection: 'column', overflowY: 'auto', position: 'relative' }}>
+        <div style={{ flex: '1', display: 'flex', flexDirection: 'column', overflowY: 'auto', position: 'relative', minHeight: 0 }}>
           
           {(!activeCategory?.products || activeCategory.products.length === 0) ? (
             <div style={{ padding: '4rem 2rem', textAlign: 'center', color: '#64748b', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', opacity: 0.8 }}>
@@ -845,7 +846,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                <p style={{ margin: 0, fontSize: '1.1rem', opacity: 0.8 }}>Cette catégorie ne contient actuellement aucun article.</p>
             </div>
           ) : (
-            <div style={{ padding: '2rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem', alignContent: 'start', marginTop: '20px' }}>
+            <div style={{ padding: '1rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem', alignContent: 'start', marginTop: '10px' }}>
               {activeCategory?.products.map((p, pIndex) => {
                 const isDataFault = !p.name || p.name.trim() === "";
                 
