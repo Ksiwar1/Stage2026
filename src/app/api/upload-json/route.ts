@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
-import fs from 'fs';
-import path from 'path';
+import { cardService } from '../../../services/cardService';
 
 export async function POST(req: Request) {
   try {
@@ -15,20 +14,27 @@ export async function POST(req: Request) {
     // Le miracle : Lecture brute en Streaming, sans passer par les parseurs capricieux de Next.js
     const contenuBrut = await req.text();
 
-    const directoryPath = path.join(process.cwd(), '.softavera', 'carte');
-    if (!fs.existsSync(directoryPath)) {
-      fs.mkdirSync(directoryPath, { recursive: true });
+    let data;
+    try {
+      data = JSON.parse(contenuBrut);
+    } catch (e) {
+      return NextResponse.json({ success: false, message: "Le fichier ne contient pas un JSON valide." }, { status: 400 });
     }
 
-    const filePath = path.join(directoryPath, nomFichier);
-    fs.writeFileSync(filePath, contenuBrut, 'utf-8');
+    const storeName = data.title || nomFichier.replace('.json', '');
+
+    // Enregistrement direct dans la base de données PostgreSQL
+    await cardService.createCard({
+      store_name: storeName,
+      content: data
+    });
 
     // On force la mise à jour des pages en cache
     revalidatePath('/importer-cartes');
     revalidatePath('/bibliotheque');
     revalidatePath('/menu');
 
-    return NextResponse.json({ success: true, message: `✅ Fichier "${nomFichier}" pulvérisé dans la mémoire avec succès !` });
+    return NextResponse.json({ success: true, message: `✅ Fichier "${nomFichier}" importé avec succès dans la base de données !` });
 
   } catch (error) {
     console.error("Crash API:", error);

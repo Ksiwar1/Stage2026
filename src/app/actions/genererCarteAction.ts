@@ -276,7 +276,7 @@ export async function enrichirCarteAction(
         try {
             let data;
             if (f === 'generique') {
-                const { GENERIC_MASTER_TEMPLATE_JSON_STR } = require('@/lib/memory');
+                const { GENERIC_MASTER_TEMPLATE_JSON_STR } = require('../../lib/memory');
                 data = JSON.parse(GENERIC_MASTER_TEMPLATE_JSON_STR);
             } else {
                 data = JSON.parse(fsLib.readFileSync(pathLib.join(process.cwd(), '.softavera', 'carte', f), 'utf-8'));

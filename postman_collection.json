@@ -1,0 +1,125 @@
+{
+  "info": {
+    "name": "ETK360 - Cards API",
+    "description": "API pour la gestion des cartes interactives des bornes.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Récupérer toutes les cartes",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3002/api/cards",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3002",
+          "path": [
+            "api",
+            "cards"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Récupérer une carte (ID)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3002/api/cards/{{card_id}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3002",
+          "path": [
+            "api",
+            "cards",
+            "{{card_id}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Créer une nouvelle carte",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"store_name\": \"Burger King\",\n  \"content\": {\n    \"title\": \"Menu Burger\",\n    \"description\": \"Menu du jour\",\n    \"items\": [\n      {\n        \"name\": \"Burger Classic\",\n        \"price\": 8.5\n      },\n      {\n        \"name\": \"Cheese Burger\",\n        \"price\": 9.5\n      }\n    ],\n    \"image\": \"url_image\"\n  }\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3002/api/cards",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3002",
+          "path": [
+            "api",
+            "cards"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Modifier une carte (ID)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"store_name\": \"Burger King Modifié\",\n  \"content\": {\n    \"title\": \"Menu Burger Modifié\",\n    \"description\": \"Nouvelle offre\",\n    \"items\": [\n      {\n        \"name\": \"Double Cheese\",\n        \"price\": 12.5\n      }\n    ]\n  }\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3002/api/cards/{{card_id}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3002",
+          "path": [
+            "api",
+            "cards",
+            "{{card_id}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Supprimer une carte (ID)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3002/api/cards/{{card_id}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3002",
+          "path": [
+            "api",
+            "cards",
+            "{{card_id}}"
+          ]
+        }
+      }
+    }
+  ]
+}

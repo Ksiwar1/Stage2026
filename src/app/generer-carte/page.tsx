@@ -34,7 +34,8 @@ export default function GenererCarte() {
   const [libraryCards, setLibraryCards] = useState<string[]>([]);
   const [submittedRestaurantName, setSubmittedRestaurantName] = useState<string>("RESTAURANT IA");
   const [isExtractingColor, setIsExtractingColor] = useState(false);
-
+  const [isSavingToDb, setIsSavingToDb] = useState(false);
+  const [savedToDbSuccess, setSavedToDbSuccess] = useState(false);
   // States Wizard Assistant
   const [activeTab, setActiveTab] = useState<"libre" | "wizard">("libre");
   const [wizardStep, setWizardStep] = useState(1);
@@ -211,6 +212,36 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+  };
+
+  const handleSaveToDb = async () => {
+    if (!resultat?.json) return;
+    setIsSavingToDb(true);
+    try {
+      const parsedContent = JSON.parse(resultat.json);
+      const storeName = submittedRestaurantName || "Restaurant IA";
+      
+      const res = await fetch('/api/cards', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          store_name: storeName,
+          content: parsedContent
+        })
+      });
+      
+      if (res.ok) {
+        setSavedToDbSuccess(true);
+        setTimeout(() => setSavedToDbSuccess(false), 5000);
+      } else {
+        alert("Erreur lors de l'enregistrement en base de données.");
+      }
+    } catch (e) {
+      alert("Erreur technique lors de la sauvegarde en DB.");
+      console.error(e);
+    } finally {
+      setIsSavingToDb(false);
+    }
   };
 
   const openVisualizer = () => {
@@ -717,6 +748,9 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                    <div style={{ display: 'flex', gap: '0.75rem' }}>
                       <button onClick={handleDownload} style={{ padding: '0.5rem 1rem', background: '#f3f4f6', color: '#374151', border: '1px solid #d1d5db', borderRadius: '6px', cursor: 'pointer', fontWeight: 600 }}>
                          ⬇️ Télécharger
+                      </button>
+                      <button onClick={handleSaveToDb} disabled={isSavingToDb || savedToDbSuccess} style={{ padding: '0.5rem 1rem', background: savedToDbSuccess ? '#059669' : '#10b981', color: 'white', border: 'none', borderRadius: '6px', cursor: (isSavingToDb || savedToDbSuccess) ? 'not-allowed' : 'pointer', fontWeight: 600, transition: 'all 0.2s' }}>
+                         {isSavingToDb ? "⏳ Enregistrement..." : savedToDbSuccess ? "✅ Enregistré en BDD !" : "💾 Enregistrer en Base"}
                       </button>
                       <button onClick={openVisualizer} style={{ padding: '0.5rem 1rem', background: '#4f46e5', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 600 }}>
                          👁️ Visualiser

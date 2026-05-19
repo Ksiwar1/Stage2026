@@ -1,8 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import fs from 'fs';
-import path from 'path';
+import { cardService } from '../../services/cardService';
 
 // Fini le FormData hasardeux ! On reçoit une simple chaîne de caractères JSON
 export async function saveJsonCarte(nomFichier: string, contenuBrut: string) {
@@ -11,22 +10,27 @@ export async function saveJsonCarte(nomFichier: string, contenuBrut: string) {
       return { success: false, message: "Le fichier doit être au format .json" };
     }
 
-    // Sécurisation du chemin (on garde le dossier caché pour éviter les crashs de redémarrage)
-    const directoryPath = path.join(process.cwd(), '.softavera', 'carte');
-    if (!fs.existsSync(directoryPath)) {
-      fs.mkdirSync(directoryPath, { recursive: true });
+    // Parsing du contenu brut
+    let data;
+    try {
+      data = JSON.parse(contenuBrut);
+    } catch (e) {
+      return { success: false, message: "❌ Le fichier ne contient pas un JSON valide." };
     }
 
-    const filePath = path.join(directoryPath, nomFichier);
+    const storeName = data.title || nomFichier.replace('.json', '');
 
-    // Écriture du contenu texte brut directement
-    fs.writeFileSync(filePath, contenuBrut, 'utf-8');
+    // Enregistrement direct dans la base de données PostgreSQL
+    await cardService.createCard({
+      store_name: storeName,
+      content: data
+    });
 
     // Rafraîchissement Next.js 
     revalidatePath('/importer-cartes');
     revalidatePath('/bibliotheque');
 
-    return { success: true, message: `✅ Le fichier "${nomFichier}" a été lu et sauvegardé avec succès !` };
+    return { success: true, message: `✅ Le fichier "${nomFichier}" a été importé et sauvegardé avec succès dans la base de données !` };
 
   } catch (error) {
     console.error("Erreur serveur pendant l'upload :", error);
