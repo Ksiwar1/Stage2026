@@ -6,24 +6,13 @@ export interface MemoryFile {
   contenu: string;
 }
 
-export function getCartesMemory(): MemoryFile[] {
-  const directoryPath = path.join(process.cwd(), '.softavera', 'carte');
+export async function getCartesMemory(): Promise<MemoryFile[]> {
+  const cards = await cardService.getAllCards();
   
-  if (!fs.existsSync(directoryPath)) {
-    return [];
-  }
-
-  // Lecture de tous les fichiers JS, TS ou JSON dans le dossier
-  const files = fs.readdirSync(directoryPath).filter(file => 
-    file.endsWith('.js') || file.endsWith('.json') || file.endsWith('.ts')
-  );
-  
-  return files.map(file => {
-    const filePath = path.join(directoryPath, file);
-    const content = fs.readFileSync(filePath, 'utf-8');
+  return (cards as any[]).map(card => {
     return {
-      nomFichier: file,
-      contenu: content
+      nomFichier: card.id,
+      contenu: JSON.stringify(card.content)
     };
   });
 }
@@ -98,13 +87,14 @@ export const GENERIC_MASTER_TEMPLATE_JSON_STR = `{
 
 // Désormais, on n'utilise PLUS le few-shot brutal avec slice() car il détruit le JSON.
 // On injecte un Master Schema parfait.
-export function getPromptSystemForAI(sourceCatalogName?: string, secondaryInspirations: string[] = [], hasImage = false, phase: 1 | 2 = 1): string {
+export async function getPromptSystemForAI(sourceCatalogId?: string, secondaryInspirations: string[] = [], hasImage = false, phase: 1 | 2 = 1): Promise<string> {
   const ocrAddon = hasImage ? `\n\n📌 MODE VISION / OCR ACTIF : L'utilisateur a fourni la photo d'un menu complet. Ton rôle prioritaire est d'agir comme un OCR intelligent:\n - Lis précisément toutes les catégories, les noms de produits, et SURTOUT LES PRIX figurant sur l'image.\n - RAPPEL STRICT: Modélise UNIQUEMENT ce que tu vois sur l'image ou en inférant logiquement le menu à partir de celle-ci, tout en respectant scrupuleusement la structure de mon exemple ETK360.\n - Ne génère pas de produits hors-sujet qui ne sont pas sur l'image.` : "";
 
   // Construction du RAG avec les modèles secondaires !
   let secondaryContext = "";
   if (secondaryInspirations.length > 0) {
-     const extractions = secondaryInspirations.map(file => extractLightStructureFromCatalogue(path.join(process.cwd(), '.softavera', 'carte', file))).filter(t => t);
+     const extractionsRaw = await Promise.all(secondaryInspirations.map(id => extractLightStructureFromCatalogue(id)));
+     const extractions = extractionsRaw.filter(t => t);
      if (extractions.length > 0) {
         secondaryContext = `\n\nPOUR TON INSPIRATION STRUCTURELLE (RAG), voici ${extractions.length} autre(s) méthode(s) validée(s) dans notre librairie. Inspires-en toi pour les patterns complexes :\n`;
         extractions.forEach((ext, i) => {
@@ -114,12 +104,12 @@ export function getPromptSystemForAI(sourceCatalogName?: string, secondaryInspir
   }
 
   let baseTemplate = "";
-  if (sourceCatalogName && sourceCatalogName !== 'generique') {
+  if (sourceCatalogId && sourceCatalogId !== 'generique') {
     if (phase === 1) {
-       const extractedTemplate = extractLightStructureFromCatalogue(path.join(process.cwd(), '.softavera', 'carte', sourceCatalogName));
+       const extractedTemplate = await extractLightStructureFromCatalogue(sourceCatalogId);
        if (extractedTemplate) baseTemplate = extractedTemplate;
     } else {
-       const extractedTemplate = extractTemplateFromCatalogue(path.join(process.cwd(), '.softavera', 'carte', sourceCatalogName));
+       const extractedTemplate = await extractTemplateFromCatalogue(sourceCatalogId);
        if (extractedTemplate) baseTemplate = extractedTemplate;
     }
   } else {
@@ -216,18 +206,15 @@ export interface VisualCardSummary {
   restaurantName?: string;
 }
 
-export function getCartesVisualSummary(): VisualCardSummary[] {
-  const directoryPath = path.join(process.cwd(), '.softavera', 'carte');
-  if (!fs.existsSync(directoryPath)) return [];
+import { cardService } from '../services/cardService';
 
-  const files = fs.readdirSync(directoryPath).filter(file => file.endsWith('.json'));
+export async function getCartesVisualSummary(): Promise<VisualCardSummary[]> {
+  const cards = await cardService.getAllCards();
   const summaries: VisualCardSummary[] = [];
 
-  for (const file of files) {
-    const filePath = path.join(directoryPath, file);
+  for (const card of cards as any[]) {
     try {
-      const content = fs.readFileSync(filePath, 'utf-8');
-      const data = JSON.parse(content);
+      const data = card.content;
 
       // Détecter ETK360 (gros JSON avec "items")
       if (data && typeof data === 'object' && data.items && typeof data.items === 'object') {
@@ -244,11 +231,11 @@ export function getCartesVisualSummary(): VisualCardSummary[] {
         }
 
         let logoUrl = null;
-        let restaurantName = null;
+        let restaurantName = card.store_name || null;
         if (data.shoplist && typeof data.shoplist === 'object') {
            const firstShop = Object.values(data.shoplist)[0] as any;
            if (firstShop) {
-              restaurantName = firstShop.Company || data.title;
+              if (!restaurantName) restaurantName = firstShop.Company || data.title;
               if (firstShop.img && firstShop.img !== 'no-pictures.svg' && firstShop.img !== 'undefined') {
                  logoUrl = firstShop.img.startsWith('http') ? firstShop.img : `https://beta-catalogue.etk360.com/${firstShop.img}`;
               }
@@ -259,7 +246,7 @@ export function getCartesVisualSummary(): VisualCardSummary[] {
         if (!restaurantName && images.length > 0) {
            const firstImage = images.find(img => img.includes('franchise_'));
            if (firstImage) {
-               const match = firstImage.match(/franchise_\d+_([a-zA-Z0-9_]+)/);
+               const match = firstImage.match(/franchise_\\d+_([a-zA-Z0-9_]+)/);
                if (match && match[1]) {
                    restaurantName = match[1].replace(/_/g, ' ').split(' ').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
                }
@@ -267,7 +254,7 @@ export function getCartesVisualSummary(): VisualCardSummary[] {
         }
 
         summaries.push({
-          nomFichier: file,
+          nomFichier: card.id,
           type: 'ETK360_CATALOG',
           itemCount: itemIds.length,
           previewImages: images,
@@ -278,17 +265,17 @@ export function getCartesVisualSummary(): VisualCardSummary[] {
       // Détecter Softavera standard
       else if (data && data.titre && data.statut) {
         summaries.push({
-          nomFichier: file,
+          nomFichier: card.id,
           type: 'SOFTAVERA_CARD',
           itemCount: 0,
           previewImages: [],
-          titre: data.titre,
+          titre: card.store_name || data.titre,
           statut: data.statut
         });
       } 
       else {
         summaries.push({
-          nomFichier: file,
+          nomFichier: card.id,
           type: 'UNKNOWN',
           itemCount: 0,
           previewImages: []
@@ -297,7 +284,7 @@ export function getCartesVisualSummary(): VisualCardSummary[] {
 
     } catch (e) {
       summaries.push({
-        nomFichier: file,
+        nomFichier: card.id,
         type: 'ERROR',
         itemCount: 0,
         previewImages: []
@@ -307,11 +294,12 @@ export function getCartesVisualSummary(): VisualCardSummary[] {
 
   return summaries;
 }
-export function extractLightStructureFromCatalogue(catalogPath: string): string | null {
+
+export async function extractLightStructureFromCatalogue(cardId: string): Promise<string | null> {
   try {
-    if (!fs.existsSync(catalogPath)) return null;
-    const content = fs.readFileSync(catalogPath, 'utf-8');
-    const data = JSON.parse(content);
+    const card = await cardService.getCardById(cardId);
+    if (!card) return null;
+    const data = card.content;
     if (!data.workflow || !data.categories) return null;
 
     // Purge the deeply nested "content" loops inside workflow to keep only structural buckets
@@ -359,11 +347,11 @@ export function extractLightStructureFromCatalogue(catalogPath: string): string 
   }
 }
 
-export function extractTemplateFromCatalogue(catalogPath: string): string | null {
+export async function extractTemplateFromCatalogue(cardId: string): Promise<string | null> {
   try {
-    if (!fs.existsSync(catalogPath)) return null;
-    const content = fs.readFileSync(catalogPath, 'utf-8');
-    const data = JSON.parse(content);
+    const card = await cardService.getCardById(cardId);
+    if (!card) return null;
+    const data = card.content;
     if (!data.workflow || !data.items) return null;
 
     // 1. Identify correct Category node in workflow
@@ -555,11 +543,11 @@ export function isValidETK360Catalogue(data: any): boolean {
   return true;
 }
 
-export function extractTrueDataFromCatalogue(catalogPath: string): string | null {
+export async function extractTrueDataFromCatalogue(cardId: string): Promise<string | null> {
   try {
-    if (!fs.existsSync(catalogPath)) return null;
-    const content = fs.readFileSync(catalogPath, 'utf-8');
-    const data = JSON.parse(content);
+    const card = await cardService.getCardById(cardId);
+    if (!card) return null;
+    const data = card.content;
     
     if (!isValidETK360Catalogue(data)) {
         throw new Error("ERR_INVALID_CATALOGUE");

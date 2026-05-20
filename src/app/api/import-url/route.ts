@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { cardService } from '../../../services/cardService';
 
 export async function POST(req: Request) {
   try {
@@ -23,11 +22,12 @@ export async function POST(req: Request) {
     
     const safeName = nomFichier.replace(/[^a-z0-9_.-]/gi, '_').toLowerCase();
 
-    const importDir = path.join(process.cwd(), '.softavera', 'carte');
-    if (!fs.existsSync(importDir)) fs.mkdirSync(importDir, { recursive: true });
+    const storeName = safeName.replace('.json', '');
 
-    const targetPath = path.join(importDir, safeName);
-    fs.writeFileSync(targetPath, JSON.stringify(jsonContent, null, 2), 'utf8');
+    await cardService.createCard({
+      store_name: storeName,
+      content: jsonContent
+    });
 
     return NextResponse.json({ success: true, message: `✅ Carte distante importée (${safeName})` });
   } catch (error: any) {

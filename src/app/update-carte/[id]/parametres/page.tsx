@@ -1,22 +1,20 @@
-import fs from 'fs';
-import path from 'path';
 import Link from 'next/link';
 import ParametresEditorClient from './ParametresEditorClient';
+import { cardService } from '../../../../services/cardService';
 
 export default async function ParametresPage(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
-  const nomFichier = `${params.id}.json`;
-  const filePath = path.join(process.cwd(), '.softavera', 'carte', nomFichier);
+  const cardId = params.id.endsWith('.json') ? params.id.replace('.json', '') : params.id;
 
   let data: any = null;
   let error = null;
 
   try {
-    if (fs.existsSync(filePath)) {
-      const content = fs.readFileSync(filePath, 'utf-8');
-      data = JSON.parse(content);
+    const card = await cardService.getCardById(cardId);
+    if (card) {
+      data = card.content;
     } else {
-      error = "Fichier introuvable.";
+      error = "Carte introuvable dans la base de données.";
     }
   } catch (err: any) {
     error = "Erreur de lecture: " + err.message;
@@ -61,7 +59,7 @@ export default async function ParametresPage(props: { params: Promise<{ id: stri
     <main style={{ padding: '4rem 2rem', background: '#f8fafc', minHeight: '100vh' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '3rem', gap: '1.5rem' }}>
-           <Link href={`/update-carte/${params.id}`} style={{ padding: '0.5rem 1rem', background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px', textDecoration: 'none', color: '#0f172a', fontWeight: 600, boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>
+           <Link href={`/update-carte/${cardId}`} style={{ padding: '0.5rem 1rem', background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px', textDecoration: 'none', color: '#0f172a', fontWeight: 600, boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>
              &larr; Retour au Dashboard
            </Link>
            <div>
@@ -71,7 +69,7 @@ export default async function ParametresPage(props: { params: Promise<{ id: stri
         </div>
 
         <ParametresEditorClient 
-          nomFichier={nomFichier}
+          nomFichier={cardId}
           initialCategories={categories}
           initialLanguages={languages}
           initialPrimaryColor={primaryColor}

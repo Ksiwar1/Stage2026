@@ -75,6 +75,7 @@ export function buildProductTree(
       };
 
       for (const [ingId, ingMeta] of ingEntries as [string, any][]) {
+        const ingRef = data.items?.[ingId];
         const ingName = ingRef?.displayName?.dflt?.nameDef || `Ingrédient ${ingId}`;
 
         let ingImage: string | null = ingRef?.img?.dflt?.img || null;

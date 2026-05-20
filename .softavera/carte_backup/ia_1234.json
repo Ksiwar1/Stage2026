@@ -1,0 +1,4710 @@
+{
+  "opt": {
+    "0831d9a4-0657-4266-ae40-0504459a7ac6": {
+      "title": "Taille _MOZZA STICKS_000031",
+      "values": {
+        "1e2c2273-f067-42c3-bf08-0f37a52ca65d": {
+          "rank": 3,
+          "items": [],
+          "title": " X8",
+          "indice": 3,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "e801a609-1020-4e01-a6d2-892db23bd717": {
+          "rank": 1,
+          "items": [],
+          "title": " X4",
+          "indice": 1,
+          "isFavorite": true,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "fa5faa89-ba7c-4ee4-b16c-ba4d154d39f6": {
+          "rank": 2,
+          "items": [],
+          "title": " X6",
+          "indice": 2,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        }
+      },
+      "archive": false,
+      "isConsumed": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Taille",
+          "salesSupport": {}
+        }
+      },
+      "defaultValue": " X4"
+    },
+    "4e1d8e50-0475-4718-a2ce-7fa273539b7f": {
+      "title": "Taille _DYNAMITE CHICKEN_000036",
+      "values": {
+        "90c7f08e-7521-42de-9f71-a97e7643c88d": {
+          "rank": 2,
+          "items": [],
+          "title": " X6",
+          "indice": 2,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "dc30bbdb-8706-42f2-b883-25c80d424628": {
+          "rank": 1,
+          "items": [],
+          "title": " X4",
+          "indice": 1,
+          "isFavorite": true,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        }
+      },
+      "archive": false,
+      "isConsumed": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Taille",
+          "salesSupport": {}
+        }
+      },
+      "defaultValue": " X4"
+    },
+    "51e3f1db-3ae0-4d58-8703-1f7c8f838447": {
+      "title": "Taille _JALAPENOS CHEDDAR_000033",
+      "values": {
+        "0b4ebbb7-781c-4d25-9c7b-2005f7fc077b": {
+          "rank": 3,
+          "items": [],
+          "title": " X8",
+          "indice": 3,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "4fa32812-66e8-4497-b204-2e144c49c666": {
+          "rank": 1,
+          "items": [],
+          "title": " X4",
+          "indice": 1,
+          "isFavorite": true,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "504a64ee-8e27-4057-8d1c-5f92d4e8249e": {
+          "rank": 2,
+          "items": [],
+          "title": " X6",
+          "indice": 2,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        }
+      },
+      "archive": false,
+      "isConsumed": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Taille",
+          "salesSupport": {}
+        }
+      },
+      "defaultValue": " X4"
+    },
+    "60c8ae78-b38d-4200-a0da-5998acc17c90": {
+      "title": "TAILLE",
+      "values": {
+        "2dfea223-3e96-4ab4-b4e3-689b7a5ddee3": {
+          "rank": 1,
+          "items": [],
+          "title": "X4",
+          "indice": 1,
+          "isFavorite": true,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "8712f8db-cbc9-4598-a77c-d2e09c9313f7": {
+          "rank": 3,
+          "items": [],
+          "title": "X8",
+          "indice": 3,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "f5241ead-40c3-4d96-833f-2b51a3a6a5a6": {
+          "rank": 2,
+          "items": [],
+          "title": "X6",
+          "indice": 2,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        }
+      },
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "TAILLE",
+          "salesSupport": {}
+        }
+      },
+      "defaultValue": "X4",
+      "isUniqueTitle": false
+    },
+    "7ab38e8a-ded9-497f-a80d-41a2d76a1bc8": {
+      "title": "Taille _NUGGETS_000030",
+      "values": {
+        "34a2ef22-b81a-46d3-84b1-430a17f03ee7": {
+          "rank": 3,
+          "items": [],
+          "title": " X8",
+          "indice": 3,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "4edda851-0095-4e37-9e27-a82b731eaf46": {
+          "rank": 2,
+          "items": [],
+          "title": " X6",
+          "indice": 2,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "59579f5e-e6f3-445e-978c-56fece432329": {
+          "rank": 1,
+          "items": [],
+          "title": " X4",
+          "indice": 1,
+          "isFavorite": true,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        }
+      },
+      "archive": false,
+      "isConsumed": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Taille",
+          "salesSupport": {}
+        }
+      },
+      "defaultValue": " X4"
+    },
+    "835cee83-f752-4ca9-b8cf-49b568c9f0ae": {
+      "title": "Taille _CHURROS_000026",
+      "values": {
+        "bc3c939e-cd80-464b-9c66-d7a0bb35220a": {
+          "rank": 1,
+          "items": [],
+          "title": " X5",
+          "indice": 1,
+          "isFavorite": true,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "e94a9e32-814c-4047-9bb5-68ecd37db77d": {
+          "rank": 2,
+          "items": [],
+          "title": " X8",
+          "indice": 2,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        }
+      },
+      "archive": false,
+      "isConsumed": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Taille",
+          "salesSupport": {}
+        }
+      },
+      "defaultValue": " X5"
+    },
+    "c96bd8f1-e7e4-4881-9ee3-981206b0f9cf": {
+      "title": "Taille _TOMATO MOZZA_000032",
+      "values": {
+        "01e2a14a-79b5-45a5-9daf-8ed66c228c5f": {
+          "rank": 2,
+          "items": [],
+          "title": " X6",
+          "indice": 2,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "6d7846b3-0066-43f4-b10d-8a397bb88d57": {
+          "rank": 1,
+          "items": [],
+          "title": " X4",
+          "indice": 1,
+          "isFavorite": true,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "d86ae9d2-a238-4d31-8dbb-9f8d00d41218": {
+          "rank": 3,
+          "items": [],
+          "title": " X8",
+          "indice": 3,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        }
+      },
+      "archive": false,
+      "isConsumed": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Taille",
+          "salesSupport": {}
+        }
+      },
+      "defaultValue": " X4"
+    },
+    "cf2296c6-f785-4eb0-90e6-c6d7a599ceae": {
+      "title": "SMASH BURGER",
+      "values": {
+        "2d3623da-65f8-4080-b63c-c98519bcded7": {
+          "rank": 3,
+          "items": [],
+          "title": "LARGE",
+          "indice": 3,
+          "isFavorite": false,
+          "advancedName": {}
+        },
+        "52d432c6-2414-424e-ad58-41907a4929a9": {
+          "rank": 1,
+          "items": [],
+          "title": "SMALL",
+          "indice": 1,
+          "isFavorite": true,
+          "advancedName": {}
+        },
+        "60426cd0-328e-475c-a90e-7076c22bbdd7": {
+          "rank": 2,
+          "items": [],
+          "title": "MEDUIM",
+          "indice": 2,
+          "isFavorite": false,
+          "advancedName": {}
+        }
+      },
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "defaultValue": "SMALL",
+      "isUniqueTitle": false
+    },
+    "d6f5d64f-6fa3-4034-b624-b89947e18be4": {
+      "title": "Taille _TENDERS MAISON_000034",
+      "values": {
+        "5e6ada5b-4b1c-427f-ac85-2365068f5bf9": {
+          "rank": 1,
+          "items": [],
+          "title": " X4",
+          "indice": 1,
+          "isFavorite": true,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "8fd98811-52cf-432b-89d4-f5449d0aaa83": {
+          "rank": 2,
+          "items": [],
+          "title": " X6",
+          "indice": 2,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        }
+      },
+      "archive": false,
+      "isConsumed": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Taille",
+          "salesSupport": {}
+        }
+      },
+      "defaultValue": " X4"
+    },
+    "fec842c3-95a9-4d1d-a65c-7d20d45e2671": {
+      "title": "NUGGETS",
+      "values": {
+        "142dcc25-b874-4a9b-9579-48e77405f2dc": {
+          "rank": 1,
+          "items": [],
+          "title": "X4",
+          "indice": 1,
+          "isFavorite": true,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "880d7de7-28d3-45be-add3-028dec86ce1f": {
+          "rank": 3,
+          "items": [],
+          "title": "X8",
+          "indice": 3,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "9a07d98f-7e1f-4c1a-9111-5d857eef23ba": {
+          "rank": 2,
+          "items": [],
+          "title": "X6",
+          "indice": 2,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        }
+      },
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "TAILLE",
+          "salesSupport": {}
+        }
+      },
+      "defaultValue": "X4",
+      "isUniqueTitle": false
+    }
+  },
+  "etat": "En attente",
+  "tags": {},
+  "color": "",
+  "items": {
+    "28b57501-4485-4e1e-801e-d584c36fbcec": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_030075_smash_up/Items/20251102_162555633.webp",
+          "salesSupport": {}
+        }
+      },
+      "opt": {},
+      "ref": "000146",
+      "rank": 3,
+      "color": "#FFFFFF",
+      "price": {
+        "ht": 0,
+        "ovr": [],
+        "tva": 0,
+        "dflt": 0,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "POULET",
+      "parent": "5e77dcfd-8276-4ad2-b657-bd03301a8206",
+      "prSize": 0,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {
+        "label": "",
+        "value": ""
+      },
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "POULET",
+          "salesSupport": {
+            "1": {
+              "en": "WITHOUT CHICKEN",
+              "fr": ""
+            },
+            "2": {
+              "en": "WITHOUT CHICKEN",
+              "fr": ""
+            },
+            "4": {
+              "en": "WITHOUT CHICKEN",
+              "fr": ""
+            }
+          }
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
+    },
+    "607e0370-91c1-436d-b256-464e8bc47994": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_030075_smash_up/Items/20251102_162555633.webp",
+          "salesSupport": {}
+        }
+      },
+      "opt": {},
+      "ref": "000146",
+      "rank": 3,
+      "color": "#FFFFFF",
+      "price": {
+        "ht": 0,
+        "ovr": [],
+        "tva": 0,
+        "dflt": 0,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "POULET",
+      "parent": "5e77dcfd-8276-4ad2-b657-bd03301a8206",
+      "prSize": 0,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {
+        "label": "",
+        "value": ""
+      },
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "POULET",
+          "salesSupport": {
+            "1": {
+              "en": "WITHOUT CHICKEN",
+              "fr": ""
+            },
+            "2": {
+              "en": "WITHOUT CHICKEN",
+              "fr": ""
+            },
+            "4": {
+              "en": "WITHOUT CHICKEN",
+              "fr": ""
+            }
+          }
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
+    },
+    "7ff0b139-604d-4d93-8dd0-ece4cf4ebd91": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_12345678",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 9.99,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 10.99,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [
+        {
+          "title": "Choix du fromage",
+          "minChoices": 1,
+          "maxChoices": 1,
+          "options": [
+            {
+              "id": "23456789-1234-1234-1234-123456789012",
+              "name": "Fromage cheddar",
+              "priceDelta": 0
+            },
+            {
+              "id": "34567890-1234-1234-1234-123456789012",
+              "name": "Fromage mozzarella",
+              "priceDelta": 0
+            }
+          ]
+        }
+      ],
+      "title": "Burger classique",
+      "parent": "476076e5-4467-4c61-b380-3c480810a8e5",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [
+        "a1000000-0000-0000-0000-000000000007"
+      ],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Un burger traditionnel avec du fromage, de la salade et de la sauce",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Burger classique",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "modifier": "1aef2f52-33c2-45b0-9a24-953cfe386695"
+    },
+    "23456789-1234-1234-1234-123456789012": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_23456789",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 0,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 0,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Fromage cheddar",
+      "parent": "",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Fromage cheddar",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "priceDelta": 0
+    },
+    "34567890-1234-1234-1234-123456789012": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_34567890",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 0,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 0,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Fromage mozzarella",
+      "parent": "",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Fromage mozzarella",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "priceDelta": 0
+    },
+    "280d2d50-c343-4ef0-9641-7a4f26fa448a": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_23456789",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 11.81,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 12.99,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [
+        {
+          "title": "Choix du bacon",
+          "minChoices": 1,
+          "maxChoices": 1,
+          "options": [
+            {
+              "id": "34567890-1234-1234-1234-123456789012",
+              "name": "Bacon classique",
+              "priceDelta": 0
+            }
+          ]
+        }
+      ],
+      "title": "Burger royal",
+      "parent": "476076e5-4467-4c61-b380-3c480810a8e5",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [
+        "a1000000-0000-0000-0000-000000000007"
+      ],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Un burger royal avec du fromage, de la salade, de la sauce et des bacon",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Burger royal",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "modifier": "8f10c167-4c06-4845-b4c1-61a8eb52d18c"
+    },
+    "169496a2-ed75-4291-aa4e-acef7be5ed51": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_45678901",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 2.72,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 2.99,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Coca-Cola",
+      "parent": "140c43e7-0f17-486b-a922-29631d2c9102",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Une boisson classique",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Coca-Cola",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "modifier": "ec500ca7-4f26-4697-a358-d400f952e5d9"
+    },
+    "390595c6-983a-48a0-acc4-b52b0f183cbb": {
+      "fid": 6,
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_030075_smash_up/Items/1737393730281CAPPUCHINOCLASSIQUE.webp",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "000019",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 3,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFCC87",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 1.82,
+        "ovr": [],
+        "tva": 1,
+        "dflt": 2,
+        "advanced": {
+          "2f1b476c-a679-5229-bf04-6ef158a2ed64": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "3a1d097d-dfe2-5918-9f9a-c22b5051bdf2": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5af245c0-a348-5ec2-9e5b-54dca28d537b": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5b9fd2d0-dd15-520e-bdd3-6a16ec12a687": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9424063b-4937-515d-8ddf-d8e1cb149b06": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9dee0ea2-fdcf-54f1-b698-62d69ee1794a": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a2bd69ab-5597-5af6-846a-3c178d3824ee": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a4591a7f-c902-53ba-bda4-a9ec1d8c04d7": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          }
+        },
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [
+        "a751e339-dc7d-4efc-923f-bb9acfa6ea5a",
+        "acd6dc52-4d8d-4eb4-bc4b-60058287089b",
+        "7bb561c8-aca9-4143-a567-b5a09bc3225c"
+      ],
+      "title": "CAPPUCCINO CLASSIQUE",
+      "parent": "140c43e7-0f17-486b-a922-29631d2c9102",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {
+        "label": "",
+        "value": ""
+      },
+      "description": {
+        "dflt": {
+          "nameDef": "",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "CAPPUCCINO CLASSIQUE",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "unity": ""
+    },
+    "5ade86ac-8885-4c0d-b37d-389e6fce0416": {
+      "fid": 6,
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_030075_smash_up/Items/1739526636184z11.webp",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "000022",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 6,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFCC87",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 1.82,
+        "ovr": [],
+        "tva": 1,
+        "dflt": 2,
+        "advanced": {
+          "2f1b476c-a679-5229-bf04-6ef158a2ed64": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "3a1d097d-dfe2-5918-9f9a-c22b5051bdf2": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5af245c0-a348-5ec2-9e5b-54dca28d537b": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5b9fd2d0-dd15-520e-bdd3-6a16ec12a687": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9424063b-4937-515d-8ddf-d8e1cb149b06": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9dee0ea2-fdcf-54f1-b698-62d69ee1794a": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a2bd69ab-5597-5af6-846a-3c178d3824ee": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a4591a7f-c902-53ba-bda4-a9ec1d8c04d7": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          }
+        },
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [
+        "a751e339-dc7d-4efc-923f-bb9acfa6ea5a",
+        "acd6dc52-4d8d-4eb4-bc4b-60058287089b",
+        "7bb561c8-aca9-4143-a567-b5a09bc3225c"
+      ],
+      "title": "CHOCOLAT CHAUD",
+      "parent": "140c43e7-0f17-486b-a922-29631d2c9102",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {
+        "label": "",
+        "value": ""
+      },
+      "description": {
+        "dflt": {
+          "nameDef": "",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "CHOCOLAT CHAUD",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "unity": ""
+    },
+    "63dfb91b-fab7-4300-93a5-6d5b338a8889": {
+      "fid": 6,
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_030075_smash_up/Items/1737393743343CAPPUCINONOISETTE.webp",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "000020",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 4,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFCC87",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 1.82,
+        "ovr": [],
+        "tva": 1,
+        "dflt": 2,
+        "advanced": {
+          "2f1b476c-a679-5229-bf04-6ef158a2ed64": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "3a1d097d-dfe2-5918-9f9a-c22b5051bdf2": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5af245c0-a348-5ec2-9e5b-54dca28d537b": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5b9fd2d0-dd15-520e-bdd3-6a16ec12a687": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9424063b-4937-515d-8ddf-d8e1cb149b06": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9dee0ea2-fdcf-54f1-b698-62d69ee1794a": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a2bd69ab-5597-5af6-846a-3c178d3824ee": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a4591a7f-c902-53ba-bda4-a9ec1d8c04d7": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          }
+        },
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [
+        "a751e339-dc7d-4efc-923f-bb9acfa6ea5a",
+        "acd6dc52-4d8d-4eb4-bc4b-60058287089b",
+        "7bb561c8-aca9-4143-a567-b5a09bc3225c"
+      ],
+      "title": "CAPPUCINO NOISETTE",
+      "parent": "140c43e7-0f17-486b-a922-29631d2c9102",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {
+        "label": "",
+        "value": ""
+      },
+      "description": {
+        "dflt": {
+          "nameDef": "",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "CAPPUCINO NOISETTE",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": true
+      },
+      "unity": ""
+    },
+    "83f6926c-2d63-4d36-a56f-b96197d44ff3": {
+      "fid": 6,
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_030075_smash_up/Items/1737393716731EXPRESSO.webp",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "000018",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 2,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFCC87",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 1.82,
+        "ovr": [],
+        "tva": 1,
+        "dflt": 2,
+        "advanced": {
+          "2f1b476c-a679-5229-bf04-6ef158a2ed64": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "3a1d097d-dfe2-5918-9f9a-c22b5051bdf2": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5af245c0-a348-5ec2-9e5b-54dca28d537b": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5b9fd2d0-dd15-520e-bdd3-6a16ec12a687": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9424063b-4937-515d-8ddf-d8e1cb149b06": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9dee0ea2-fdcf-54f1-b698-62d69ee1794a": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a2bd69ab-5597-5af6-846a-3c178d3824ee": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a4591a7f-c902-53ba-bda4-a9ec1d8c04d7": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          }
+        },
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [
+        "a751e339-dc7d-4efc-923f-bb9acfa6ea5a",
+        "acd6dc52-4d8d-4eb4-bc4b-60058287089b"
+      ],
+      "title": "L ESPRESSO",
+      "parent": "140c43e7-0f17-486b-a922-29631d2c9102",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {
+        "label": "",
+        "value": ""
+      },
+      "description": {
+        "dflt": {
+          "nameDef": "",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "L ESPRESSO",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": true
+      },
+      "unity": ""
+    },
+    "8b603a95-14d6-4974-84a6-454005ba38fa": {
+      "fid": 6,
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_030075_smash_up/Items/1737393774233THE.webp",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "000021",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 5,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFCC87",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 1.82,
+        "ovr": [],
+        "tva": 1,
+        "dflt": 2,
+        "advanced": {
+          "2f1b476c-a679-5229-bf04-6ef158a2ed64": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "3a1d097d-dfe2-5918-9f9a-c22b5051bdf2": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5af245c0-a348-5ec2-9e5b-54dca28d537b": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5b9fd2d0-dd15-520e-bdd3-6a16ec12a687": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9424063b-4937-515d-8ddf-d8e1cb149b06": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9dee0ea2-fdcf-54f1-b698-62d69ee1794a": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a2bd69ab-5597-5af6-846a-3c178d3824ee": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a4591a7f-c902-53ba-bda4-a9ec1d8c04d7": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          }
+        },
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [
+        "a751e339-dc7d-4efc-923f-bb9acfa6ea5a",
+        "acd6dc52-4d8d-4eb4-bc4b-60058287089b",
+        "7bb561c8-aca9-4143-a567-b5a09bc3225c"
+      ],
+      "title": "THE CITRON",
+      "parent": "140c43e7-0f17-486b-a922-29631d2c9102",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {
+        "label": "",
+        "value": ""
+      },
+      "description": {
+        "dflt": {
+          "nameDef": "",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "THE CITRON",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": true
+      },
+      "unity": ""
+    },
+    "9ecb7782-64d7-40fb-831f-8794f7f073eb": {
+      "fid": 6,
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_030075_smash_up/Items/1736960064568cafe.webp",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "000017",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 1,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFCC87",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 1.82,
+        "ovr": [],
+        "tva": 1,
+        "dflt": 2,
+        "advanced": {
+          "2f1b476c-a679-5229-bf04-6ef158a2ed64": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "3a1d097d-dfe2-5918-9f9a-c22b5051bdf2": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5af245c0-a348-5ec2-9e5b-54dca28d537b": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5b9fd2d0-dd15-520e-bdd3-6a16ec12a687": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9424063b-4937-515d-8ddf-d8e1cb149b06": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9dee0ea2-fdcf-54f1-b698-62d69ee1794a": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a2bd69ab-5597-5af6-846a-3c178d3824ee": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a4591a7f-c902-53ba-bda4-a9ec1d8c04d7": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          }
+        },
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [
+        "a751e339-dc7d-4efc-923f-bb9acfa6ea5a",
+        "acd6dc52-4d8d-4eb4-bc4b-60058287089b"
+      ],
+      "title": "RISTRETTO",
+      "parent": "140c43e7-0f17-486b-a922-29631d2c9102",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {
+        "label": "",
+        "value": ""
+      },
+      "description": {
+        "dflt": {
+          "nameDef": "",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "RISTRETTO",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": false,
+        "basicCompVisibility": true
+      },
+      "unity": ""
+    },
+    "c443cbf5-d3e6-47c9-ae6b-91819952c718": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_56789012",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 1.81,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 1.99,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Eau plate",
+      "parent": "140c43e7-0f17-486b-a922-29631d2c9102",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Une boisson fraîche et légère",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Eau plate",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "modifier": "4cb3683a-ba2c-477f-ba4b-05f1ff31a68e"
+    },
+    "13e137d8-7d5b-4ecc-93c3-e9ad3f63e624": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_67890123",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 2.72,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 2.99,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Coca-Cola Zéro",
+      "parent": "140c43e7-0f17-486b-a922-29631d2c9102",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Une boisson classique sans sucre",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Coca-Cola Zéro",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "modifier": "d8caedaf-0570-47f1-92e3-a1e56af235b5"
+    },
+    "905e3ac8-a846-4c49-9bba-f1e926ef65f1": {
+      "id": 178,
+      "fid": 6,
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_030075_smash_up/Items/1741264435917centrale-food-fanta-orange-can-33-200x524.webp",
+          "salesSupport": {}
+        }
+      },
+      "opt": {},
+      "qty": "0",
+      "ref": "000001",
+      "rank": 1,
+      "color": "#FDFD96",
+      "price": {
+        "ht": 1.82,
+        "ovr": [],
+        "tva": 1,
+        "dflt": 2,
+        "advanced": {
+          "2f1b476c-a679-5229-bf04-6ef158a2ed64": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "3a1d097d-dfe2-5918-9f9a-c22b5051bdf2": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5af245c0-a348-5ec2-9e5b-54dca28d537b": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5b9fd2d0-dd15-520e-bdd3-6a16ec12a687": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9424063b-4937-515d-8ddf-d8e1cb149b06": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9dee0ea2-fdcf-54f1-b698-62d69ee1794a": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a2bd69ab-5597-5af6-846a-3c178d3824ee": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a4591a7f-c902-53ba-bda4-a9ec1d8c04d7": {
+            "ht": 1.82,
+            "ttc": 2,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          }
+        },
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [
+        "6a8b3554-5eb0-4f93-b009-e0ff989c1837",
+        "fb8429b9-649c-45cf-9009-60932fc6a3be",
+        "07275b11-0fee-469d-8224-056f26bff74a",
+        "a7c4decc-5f1c-44de-b915-8a095bbde24c",
+        "171429dc-87b9-4714-867d-a0623c0c0ae3",
+        "6b39b84a-2b8b-4408-9d37-667d65ed3422",
+        "5d67d52d-ce76-48f2-acfc-ee7d29266e80",
+        "306c7bc0-92b6-4ff4-9cef-dc28d536c0bb"
+      ],
+      "title": "FANTA ORANGE",
+      "unity": "",
+      "parent": "140c43e7-0f17-486b-a922-29631d2c9102",
+      "prSize": "0",
+      "archive": false,
+      "barCode": "",
+      "liaison": [],
+      "calories": null,
+      "outStock": false,
+      "printers": [],
+      "sizeList": "0",
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {
+        "label": "",
+        "value": ""
+      },
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "FANTA ORANGE",
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "modifier": "4485130c-d2b7-480d-9fc4-4b62770c489c"
+    }
+  },
+  "steps": {
+    "d2843df2-c5de-46a3-b00e-ddcf55488cba": {
+      "id": "d2843df2-c5de-46a3-b00e-ddcf55488cba",
+      "ref": "STEP_d2843d",
+      "title": "Choix du fromage",
+      "archive": false,
+      "isBasic": false,
+      "isComment": false,
+      "stepItems": {
+        "23456789-1234-1234-1234-123456789012": {
+          "rank": 1,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": null,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": null
+        },
+        "34567890-1234-1234-1234-123456789012": {
+          "rank": 2,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": null,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": null
+        }
+      },
+      "maxChoices": 1,
+      "minChoices": 1,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Choix du fromage",
+          "salesSupport": {}
+        }
+      },
+      "isModifiable": true,
+      "img": "",
+      "msg": {
+        "dflt": {
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "req": false,
+      "nbrWithPrice": null,
+      "nbrWithspecialPrice": null,
+      "specificOpts": {
+        "isNext": true,
+        "noButton": false,
+        "zeroPrice": false,
+        "isCheapest": false,
+        "nextButton": false,
+        "isExpensive": false,
+        "withoutStep": false
+      },
+      "rank": 1
+    },
+    "e766472f-51c6-47dd-b1c7-72e5d2cb9f25": {
+      "id": "e766472f-51c6-47dd-b1c7-72e5d2cb9f25",
+      "ref": "STEP_e76647",
+      "title": "Choix du bacon",
+      "archive": false,
+      "isBasic": false,
+      "isComment": false,
+      "stepItems": {
+        "34567890-1234-1234-1234-123456789012": {
+          "rank": 1,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": null,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": null
+        }
+      },
+      "maxChoices": 1,
+      "minChoices": 1,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Choix du bacon",
+          "salesSupport": {}
+        }
+      },
+      "isModifiable": true,
+      "img": "",
+      "msg": {
+        "dflt": {
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "req": false,
+      "nbrWithPrice": null,
+      "nbrWithspecialPrice": null,
+      "specificOpts": {
+        "isNext": true,
+        "noButton": false,
+        "zeroPrice": false,
+        "isCheapest": false,
+        "nextButton": false,
+        "isExpensive": false,
+        "withoutStep": false
+      },
+      "rank": 1
+    },
+    "a3258dd6-7859-4b75-94cd-acfbe151ba66": {
+      "img": "",
+      "ref": "*00058",
+      "req": false,
+      "title": "BOISSONS C",
+      "archive": false,
+      "isBasic": false,
+      "maxChoices": 1,
+      "minChoices": 0,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "BOISSONS CHAUDES",
+          "salesSupport": {
+            "1": {
+              "en": "HOT DRINKS",
+              "fr": ""
+            },
+            "2": {
+              "en": "HOT DRINKS",
+              "fr": ""
+            },
+            "4": {
+              "en": "HOT DRINKS",
+              "fr": ""
+            }
+          }
+        }
+      },
+      "isModifiable": false,
+      "nbrWithPrice": 0,
+      "specificOpts": {
+        "isNext": false,
+        "noButton": false,
+        "zeroPrice": false,
+        "isCheapest": false,
+        "nextButton": false,
+        "isExpensive": false,
+        "withoutStep": false
+      },
+      "nbrWithspecialPrice": 0,
+      "id": "a3258dd6-7859-4b75-94cd-acfbe151ba66",
+      "isComment": false,
+      "stepItems": {
+        "390595c6-983a-48a0-acc4-b52b0f183cbb": {
+          "rank": 3,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        },
+        "5ade86ac-8885-4c0d-b37d-389e6fce0416": {
+          "rank": 6,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        },
+        "63dfb91b-fab7-4300-93a5-6d5b338a8889": {
+          "rank": 4,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        },
+        "83f6926c-2d63-4d36-a56f-b96197d44ff3": {
+          "rank": 2,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        },
+        "8b603a95-14d6-4974-84a6-454005ba38fa": {
+          "rank": 5,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        },
+        "9ecb7782-64d7-40fb-831f-8794f7f073eb": {
+          "rank": 1,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        }
+      },
+      "msg": {
+        "dflt": {
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "rank": 0
+    },
+    "6893d51a-664f-4e19-9a27-f28e6e8ea947": {
+      "img": "",
+      "ref": "*00058",
+      "req": false,
+      "title": "BOISSONS C",
+      "archive": false,
+      "isBasic": false,
+      "maxChoices": 1,
+      "minChoices": 0,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "BOISSONS CHAUDES",
+          "salesSupport": {
+            "1": {
+              "en": "HOT DRINKS",
+              "fr": ""
+            },
+            "2": {
+              "en": "HOT DRINKS",
+              "fr": ""
+            },
+            "4": {
+              "en": "HOT DRINKS",
+              "fr": ""
+            }
+          }
+        }
+      },
+      "isModifiable": false,
+      "nbrWithPrice": 0,
+      "specificOpts": {
+        "isNext": false,
+        "noButton": false,
+        "zeroPrice": false,
+        "isCheapest": false,
+        "nextButton": false,
+        "isExpensive": false,
+        "withoutStep": false
+      },
+      "nbrWithspecialPrice": 0,
+      "id": "6893d51a-664f-4e19-9a27-f28e6e8ea947",
+      "isComment": false,
+      "stepItems": {
+        "390595c6-983a-48a0-acc4-b52b0f183cbb": {
+          "rank": 3,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        },
+        "5ade86ac-8885-4c0d-b37d-389e6fce0416": {
+          "rank": 6,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        },
+        "63dfb91b-fab7-4300-93a5-6d5b338a8889": {
+          "rank": 4,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        },
+        "83f6926c-2d63-4d36-a56f-b96197d44ff3": {
+          "rank": 2,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        },
+        "8b603a95-14d6-4974-84a6-454005ba38fa": {
+          "rank": 5,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        },
+        "9ecb7782-64d7-40fb-831f-8794f7f073eb": {
+          "rank": 1,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        }
+      },
+      "msg": {
+        "dflt": {
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "rank": 0
+    },
+    "2ac30a6c-1c6e-4a98-a67c-2c90e5859df7": {
+      "img": "",
+      "ref": "*00058",
+      "req": false,
+      "title": "BOISSONS C",
+      "archive": false,
+      "isBasic": false,
+      "maxChoices": 1,
+      "minChoices": 0,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "BOISSONS CHAUDES",
+          "salesSupport": {
+            "1": {
+              "en": "HOT DRINKS",
+              "fr": ""
+            },
+            "2": {
+              "en": "HOT DRINKS",
+              "fr": ""
+            },
+            "4": {
+              "en": "HOT DRINKS",
+              "fr": ""
+            }
+          }
+        }
+      },
+      "isModifiable": false,
+      "nbrWithPrice": 0,
+      "specificOpts": {
+        "isNext": false,
+        "noButton": false,
+        "zeroPrice": false,
+        "isCheapest": false,
+        "nextButton": false,
+        "isExpensive": false,
+        "withoutStep": false
+      },
+      "nbrWithspecialPrice": 0,
+      "id": "2ac30a6c-1c6e-4a98-a67c-2c90e5859df7",
+      "isComment": false,
+      "stepItems": {
+        "390595c6-983a-48a0-acc4-b52b0f183cbb": {
+          "rank": 3,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        },
+        "5ade86ac-8885-4c0d-b37d-389e6fce0416": {
+          "rank": 6,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        },
+        "63dfb91b-fab7-4300-93a5-6d5b338a8889": {
+          "rank": 4,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        },
+        "83f6926c-2d63-4d36-a56f-b96197d44ff3": {
+          "rank": 2,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        },
+        "8b603a95-14d6-4974-84a6-454005ba38fa": {
+          "rank": 5,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        },
+        "9ecb7782-64d7-40fb-831f-8794f7f073eb": {
+          "rank": 1,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": 0,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": 0
+        }
+      },
+      "msg": {
+        "dflt": {
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "rank": 0
+    }
+  },
+  "title": "1234",
+  "remark": "",
+  "status": "En attente",
+  "Planning": "",
+  "idEntite": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "modifier": {
+    "1aef2f52-33c2-45b0-9a24-953cfe386695": {
+      "uuid-item": "7ff0b139-604d-4d93-8dd0-ece4cf4ebd91",
+      "add": {},
+      "category": {},
+      "typeAdd": false,
+      "typeCateg": false,
+      "typeSteps": true,
+      "steps": {
+        "d2843df2-c5de-46a3-b00e-ddcf55488cba": {
+          "ovr": {},
+          "rank": 1,
+          "items": {}
+        }
+      }
+    },
+    "8f10c167-4c06-4845-b4c1-61a8eb52d18c": {
+      "uuid-item": "280d2d50-c343-4ef0-9641-7a4f26fa448a",
+      "add": {},
+      "category": {},
+      "typeAdd": false,
+      "typeCateg": false,
+      "typeSteps": true,
+      "steps": {
+        "e766472f-51c6-47dd-b1c7-72e5d2cb9f25": {
+          "ovr": {},
+          "rank": 1,
+          "items": {}
+        }
+      }
+    },
+    "ec500ca7-4f26-4697-a358-d400f952e5d9": {
+      "uuid-item": "169496a2-ed75-4291-aa4e-acef7be5ed51",
+      "add": {},
+      "category": {},
+      "typeAdd": false,
+      "typeCateg": false,
+      "typeSteps": true,
+      "steps": {
+        "a3258dd6-7859-4b75-94cd-acfbe151ba66": {
+          "ovr": {},
+          "rank": 1,
+          "items": {}
+        }
+      }
+    },
+    "4cb3683a-ba2c-477f-ba4b-05f1ff31a68e": {
+      "uuid-item": "c443cbf5-d3e6-47c9-ae6b-91819952c718",
+      "add": {},
+      "category": {},
+      "typeAdd": false,
+      "typeCateg": false,
+      "typeSteps": true,
+      "steps": {
+        "6893d51a-664f-4e19-9a27-f28e6e8ea947": {
+          "ovr": {},
+          "rank": 1,
+          "items": {}
+        }
+      }
+    },
+    "d8caedaf-0570-47f1-92e3-a1e56af235b5": {
+      "uuid-item": "13e137d8-7d5b-4ecc-93c3-e9ad3f63e624",
+      "add": {},
+      "category": {},
+      "typeAdd": false,
+      "typeCateg": false,
+      "typeSteps": true,
+      "steps": {
+        "2ac30a6c-1c6e-4a98-a67c-2c90e5859df7": {
+          "ovr": {},
+          "rank": 1,
+          "items": {}
+        }
+      }
+    },
+    "4485130c-d2b7-480d-9fc4-4b62770c489c": {
+      "uuid-item": "905e3ac8-a846-4c49-9bba-f1e926ef65f1",
+      "add": {},
+      "category": {},
+      "typeAdd": false,
+      "typeCateg": false,
+      "typeSteps": true,
+      "steps": {}
+    }
+  },
+  "operator": "Administrateur",
+  "shoplist": {
+    "e6bda7fe-2879-4246-9c8c-6337de28145b": {
+      "cp": "9411A",
+      "img": "no-pictures.svg",
+      "town": "RCUEIL",
+      "Nature": "boutique",
+      "shopid": 2,
+      "Address": "PL DE LA VACHE NOIRE",
+      "Company": "1234",
+      "Country": "France",
+      "Responsible": ""
+    }
+  },
+  "workflow": {
+    "140c43e7-0f17-486b-a922-29631d2c9102": {
+      "ovr": {},
+      "rank": 3,
+      "type": "categories",
+      "content": {
+        "169496a2-ed75-4291-aa4e-acef7be5ed51": {
+          "type": "items",
+          "rank": 1,
+          "content": {
+            "ec500ca7-4f26-4697-a358-d400f952e5d9": {
+              "type": "modifier",
+              "rank": 1
+            }
+          }
+        },
+        "c443cbf5-d3e6-47c9-ae6b-91819952c718": {
+          "type": "items",
+          "rank": 2,
+          "content": {
+            "4cb3683a-ba2c-477f-ba4b-05f1ff31a68e": {
+              "type": "modifier",
+              "rank": 1
+            }
+          }
+        },
+        "13e137d8-7d5b-4ecc-93c3-e9ad3f63e624": {
+          "type": "items",
+          "rank": 3,
+          "content": {
+            "d8caedaf-0570-47f1-92e3-a1e56af235b5": {
+              "type": "modifier",
+              "rank": 1
+            }
+          }
+        },
+        "905e3ac8-a846-4c49-9bba-f1e926ef65f1": {
+          "type": "items",
+          "rank": 4,
+          "content": {
+            "4485130c-d2b7-480d-9fc4-4b62770c489c": {
+              "type": "modifier",
+              "rank": 1
+            }
+          }
+        }
+      }
+    },
+    "476076e5-4467-4c61-b380-3c480810a8e5": {
+      "ovr": {},
+      "rank": 2,
+      "type": "categories",
+      "content": {
+        "7ff0b139-604d-4d93-8dd0-ece4cf4ebd91": {
+          "type": "items",
+          "rank": 1,
+          "content": {
+            "1aef2f52-33c2-45b0-9a24-953cfe386695": {
+              "type": "modifier",
+              "rank": 1
+            }
+          }
+        },
+        "280d2d50-c343-4ef0-9641-7a4f26fa448a": {
+          "type": "items",
+          "rank": 2,
+          "content": {
+            "8f10c167-4c06-4845-b4c1-61a8eb52d18c": {
+              "type": "modifier",
+              "rank": 1
+            }
+          }
+        }
+      }
+    },
+    "5e77dcfd-8276-4ad2-b657-bd03301a8206": {
+      "type": "categories",
+      "rank": 1,
+      "content": {
+        "28b57501-4485-4e1e-801e-d584c36fbcec": {
+          "type": "items",
+          "rank": 1
+        },
+        "607e0370-91c1-436d-b256-464e8bc47994": {
+          "type": "items",
+          "rank": 2
+        }
+      }
+    }
+  },
+  "allergens": {
+    "04577396-1eab-4ac1-b51e-22b943ab1976": {
+      "id": 23,
+      "icon": "46ed8680-89f2-4253-b174-424bbae19c1f.webp",
+      "group": "7f70acf3-6ab8-419a-94f1-6fbd5882c67e",
+      "title": "Noix de Pécan",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Noix de Pécan",
+          "salesSupport": {}
+        }
+      }
+    },
+    "05d84345-c9ab-4849-8b6f-549e6c9841ad": {
+      "id": 19,
+      "icon": "afa5c101-6f4c-4114-a730-3f5c0c5a6678.webp",
+      "group": "7f70acf3-6ab8-419a-94f1-6fbd5882c67e",
+      "title": "Noisettes",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Noisettes",
+          "salesSupport": {}
+        }
+      }
+    },
+    "1acabd99-6fcc-45f0-8513-b94525ba1353": {
+      "id": 3,
+      "icon": "c02d906e-7146-42d4-b6ca-400ca6bdab5c.webp",
+      "group": "",
+      "title": "Arachides",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Arachides",
+          "salesSupport": {}
+        }
+      }
+    },
+    "1dd98c5b-ab3a-4d72-8b43-f3f6f065bb6c": {
+      "id": 16,
+      "icon": "0e39da4d-e614-4eab-bf51-093f56e77fbb.webp",
+      "group": "50c4943e-3d0c-494f-b452-52dda99af6da",
+      "title": "Epeautre",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Epeautre",
+          "salesSupport": {}
+        }
+      }
+    },
+    "1eedb305-12a3-403d-a97a-d3a2d6815b45": {
+      "id": 1,
+      "icon": "cace7a0d-82d3-457a-acc3-76aed40d37c7.webp",
+      "group": "",
+      "title": "Oeufs",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Oeufs",
+          "salesSupport": {}
+        }
+      }
+    },
+    "32be995c-1dd7-4cc2-989c-ba5427647ada": {
+      "id": 12,
+      "icon": "bd01e838-6eb4-49a1-9613-a3d6f2864cc8.webp",
+      "group": "50c4943e-3d0c-494f-b452-52dda99af6da",
+      "title": "Blé",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Blé",
+          "salesSupport": {}
+        }
+      }
+    },
+    "3a0232c2-1675-4817-8fc8-86f44a3d621b": {
+      "id": 24,
+      "icon": "bb6bb95b-15d3-4aec-9453-ee74ba2741eb.webp",
+      "group": "7f70acf3-6ab8-419a-94f1-6fbd5882c67e",
+      "title": "Pistaches",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Pistaches",
+          "salesSupport": {}
+        }
+      }
+    },
+    "3c4b75cd-3cc9-493b-9766-9002fb7f505c": {
+      "id": 18,
+      "icon": "dd7fb182-700f-4fa7-9e51-f3f7c3fa539c.webp",
+      "group": "7f70acf3-6ab8-419a-94f1-6fbd5882c67e",
+      "title": "Amandes",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Amandes",
+          "salesSupport": {}
+        }
+      }
+    },
+    "557180e7-0474-4af6-b845-011457ed484d": {
+      "id": 10,
+      "icon": "561f5aef-65e9-45ce-985a-5774e9119042.webp",
+      "group": "",
+      "title": "Mollusques",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Mollusques",
+          "salesSupport": {}
+        }
+      }
+    },
+    "6f4e1618-e113-4fb6-b6e1-4ced392e396f": {
+      "id": 15,
+      "icon": "11c35ff9-c2a5-4aca-8ce5-6478d222bb69.webp",
+      "group": "50c4943e-3d0c-494f-b452-52dda99af6da",
+      "title": "Avoine",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Avoine",
+          "salesSupport": {}
+        }
+      }
+    },
+    "790d674c-c6b5-4fc6-817a-d9da3fd63449": {
+      "id": 2,
+      "icon": "c0ec9310-57f0-4e80-acbe-647106c78835.webp",
+      "group": "",
+      "title": "Poissons",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Poissons",
+          "salesSupport": {}
+        }
+      }
+    },
+    "821a8d22-84a1-480f-a343-62d3543c5398": {
+      "id": 7,
+      "icon": "4c2afa54-8465-4ab3-ac29-d3dcdf2178b6.webp",
+      "group": "",
+      "title": "Moutarde",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Moutarde",
+          "salesSupport": {}
+        }
+      }
+    },
+    "86b1c413-dcee-45b2-9f30-d10e473314b6": {
+      "id": 8,
+      "icon": "079c17d1-c729-45d3-a781-e88d2c433ed2.webp",
+      "group": "",
+      "title": "Graines",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Graines",
+          "salesSupport": {}
+        }
+      }
+    },
+    "89df758f-9bf4-4041-811f-1dfdd87de15e": {
+      "id": 25,
+      "icon": "e428c153-a0ef-4103-999c-398bb251e052.webp",
+      "group": "7f70acf3-6ab8-419a-94f1-6fbd5882c67e",
+      "title": "Cajou",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Cajou",
+          "salesSupport": {}
+        }
+      }
+    },
+    "931cdaa1-4cb4-4654-8310-6e376df6248b": {
+      "id": 5,
+      "icon": "5bc51a72-c636-467a-b261-96dd2ab82594.webp",
+      "group": "",
+      "title": "Lait",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Lait",
+          "salesSupport": {}
+        }
+      }
+    },
+    "96ac815c-c8c9-4f74-bd23-9debf4f5a8bc": {
+      "id": 20,
+      "icon": "7c7eff69-66af-4aa0-851b-a565a0cb8ede.webp",
+      "group": "7f70acf3-6ab8-419a-94f1-6fbd5882c67e",
+      "title": "Noix du Brésil",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Noix du Brésil",
+          "salesSupport": {}
+        }
+      }
+    },
+    "9df34a0d-9b06-490e-8961-c12485406e5b": {
+      "id": 9,
+      "icon": "26a2c9ff-2077-48ee-b215-f3a8484cdbbf.webp",
+      "group": "",
+      "title": "Lupin",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Lupin",
+          "salesSupport": {}
+        }
+      }
+    },
+    "a17941b1-0009-4ebd-99df-8e2114c1275c": {
+      "id": 17,
+      "icon": "a4b644d3-99b9-4f91-b897-8bd00cda588c.webp",
+      "group": "50c4943e-3d0c-494f-b452-52dda99af6da",
+      "title": "Kamut",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Kamut",
+          "salesSupport": {}
+        }
+      }
+    },
+    "a74ef0c7-a945-4554-ad5c-fc5dd16c8c04": {
+      "id": 21,
+      "icon": "391a347b-87c4-437a-8c47-901704635d10.webp",
+      "group": "7f70acf3-6ab8-419a-94f1-6fbd5882c67e",
+      "title": "Noix",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Noix",
+          "salesSupport": {}
+        }
+      }
+    },
+    "ad34e5a4-20fe-4de9-8845-fbe91f8060e6": {
+      "id": 6,
+      "icon": "1d59bea5-474c-4ec5-ac22-e9fcf4aa14bb.webp",
+      "group": "",
+      "title": "Céleri",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Céleri",
+          "salesSupport": {}
+        }
+      }
+    },
+    "c40b704e-396f-4fc4-9f22-85f50fbbf7b9": {
+      "id": 4,
+      "icon": "0d4be479-50f1-4126-baed-ca9b9e41ce9e.webp",
+      "group": "",
+      "title": "Soja",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Soja",
+          "salesSupport": {}
+        }
+      }
+    },
+    "c7086413-1e76-450d-b710-7bf930d427a1": {
+      "id": 22,
+      "icon": "67617e8f-fef1-4a5e-b315-d6b68714c039.webp",
+      "group": "7f70acf3-6ab8-419a-94f1-6fbd5882c67e",
+      "title": "Noix de Macadamia",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Noix de Macadamia",
+          "salesSupport": {}
+        }
+      }
+    },
+    "cc0cd6a9-ea49-45b4-8ea9-47acd3203f06": {
+      "id": 14,
+      "icon": "2dd69847-9b4e-4607-a63c-96ec7670d0d6.webp",
+      "group": "50c4943e-3d0c-494f-b452-52dda99af6da",
+      "title": "Orge",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Orge",
+          "salesSupport": {}
+        }
+      }
+    },
+    "cc5dc23f-cead-4e60-ae4c-d128aef5380a": {
+      "id": 11,
+      "icon": "380e71c8-bac0-4575-a6b5-9e8126f945a4.webp",
+      "group": "",
+      "title": "Anhydride sulfureux et sulfites",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Anhydride sulfureux et sulfites",
+          "salesSupport": {}
+        }
+      }
+    },
+    "fc60414b-0f19-404a-9147-7bff709dc88c": {
+      "id": 13,
+      "icon": "c79641ca-25b4-463c-a2de-6b5635b9470f.webp",
+      "group": "50c4943e-3d0c-494f-b452-52dda99af6da",
+      "title": "Seigle",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Seigle",
+          "salesSupport": {}
+        }
+      }
+    }
+  },
+  "isAutoRef": false,
+  "categories": {
+    "140c43e7-0f17-486b-a922-29631d2c9102": {
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00058",
+      "rank": 3,
+      "child": [],
+      "color": "#FF9900",
+      "items": [
+        "169496a2-ed75-4291-aa4e-acef7be5ed51",
+        "c443cbf5-d3e6-47c9-ae6b-91819952c718",
+        "13e137d8-7d5b-4ecc-93c3-e9ad3f63e624",
+        "905e3ac8-a846-4c49-9bba-f1e926ef65f1"
+      ],
+      "title": "Boissons",
+      "video": {
+        "url": "1736959883689top10.webp",
+        "type": "image"
+      },
+      "idCard": [],
+      "parent": "",
+      "archive": false,
+      "liaison": [],
+      "isNameShow": true,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "BOISSONS CHAUDES",
+          "salesSupport": {
+            "1": {
+              "en": "HOT DRINKS",
+              "fr": ""
+            },
+            "2": {
+              "en": "HOT DRINKS",
+              "fr": ""
+            },
+            "4": {
+              "en": "HOT DRINKS",
+              "fr": ""
+            }
+          }
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [],
+          "2": [],
+          "3": [],
+          "4": []
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "isInfoModeActive": true,
+      "extrRef": ""
+    },
+    "476076e5-4467-4c61-b380-3c480810a8e5": {
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "000079",
+      "rank": 2,
+      "child": [],
+      "color": "#FFFFFF",
+      "items": [
+        "7ff0b139-604d-4d93-8dd0-ece4cf4ebd91",
+        "280d2d50-c343-4ef0-9641-7a4f26fa448a"
+      ],
+      "title": "Burgers",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": [],
+      "parent": "",
+      "archive": false,
+      "liaison": [],
+      "isNameShow": true,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "isInfoModeActive": true,
+      "extrRef": ""
+    },
+    "5e77dcfd-8276-4ad2-b657-bd03301a8206": {
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "CAT_5e77dc",
+      "rank": 1,
+      "child": [],
+      "color": "#691111",
+      "items": [
+        "28b57501-4485-4e1e-801e-d584c36fbcec",
+        "607e0370-91c1-436d-b256-464e8bc47994"
+      ],
+      "title": "Entrées",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": [],
+      "parent": "",
+      "archive": false,
+      "extrRef": "",
+      "liaison": [],
+      "isNameShow": true,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Entrées",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [],
+          "2": [],
+          "3": [],
+          "4": []
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "isInfoModeActive": true
+    }
+  },
+  "workflowList": {},
+  "isUniqueTitle": false,
+  "allergenGroups": {
+    "50c4943e-3d0c-494f-b452-52dda99af6da": {
+      "icon": "",
+      "title": "GLUTIN",
+      "allergens": [
+        "32be995c-1dd7-4cc2-989c-ba5427647ada",
+        "fc60414b-0f19-404a-9147-7bff709dc88c",
+        "cc0cd6a9-ea49-45b4-8ea9-47acd3203f06",
+        "6f4e1618-e113-4fb6-b6e1-4ced392e396f",
+        "1dd98c5b-ab3a-4d72-8b43-f3f6f065bb6c",
+        "a17941b1-0009-4ebd-99df-8e2114c1275c"
+      ]
+    },
+    "7f70acf3-6ab8-419a-94f1-6fbd5882c67e": {
+      "icon": "",
+      "title": "FRUITS A COQUES",
+      "allergens": [
+        "3c4b75cd-3cc9-493b-9766-9002fb7f505c",
+        "05d84345-c9ab-4849-8b6f-549e6c9841ad",
+        "96ac815c-c8c9-4f74-bd23-9debf4f5a8bc",
+        "a74ef0c7-a945-4554-ad5c-fc5dd16c8c04",
+        "c7086413-1e76-450d-b710-7bf930d427a1",
+        "04577396-1eab-4ac1-b51e-22b943ab1976",
+        "3a0232c2-1675-4817-8fc8-86f44a3d621b",
+        "89df758f-9bf4-4041-811f-1dfdd87de15e"
+      ]
+    }
+  },
+  "dateModification": "Le 15/01/2025 à 10:35",
+  "iuudCardReference": 0
+}

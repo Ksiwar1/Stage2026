@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
 import { parseETK360Hierarchy } from '../../../lib/softaveraParser';
+import { cardService } from '../../../services/cardService';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -14,19 +13,18 @@ export async function GET(request: Request) {
     );
   }
 
-  const fileName = id.endsWith('.json') ? id : `${id}.json`;
-  const filePath = path.join(process.cwd(), '.softavera', 'carte', fileName);
-
-  if (!fs.existsSync(filePath)) {
-    return NextResponse.json(
-      { success: false, error: `Le catalogue ${fileName} est introuvable sur le serveur.` }, 
-      { status: 404 }
-    );
-  }
+  const cardId = id.endsWith('.json') ? id.replace('.json', '') : id;
 
   try {
-    const fileContent = fs.readFileSync(filePath, 'utf-8');
-    const data = JSON.parse(fileContent);
+    const card = await cardService.getCardById(cardId);
+    if (!card) {
+      return NextResponse.json(
+        { success: false, error: `Le catalogue ${cardId} est introuvable sur le serveur.` }, 
+        { status: 404 }
+      );
+    }
+
+    const data = card.content;
 
     // Extraction 100% Séquentielle via le Parseur Arborescent
     const tree = parseETK360Hierarchy(data);

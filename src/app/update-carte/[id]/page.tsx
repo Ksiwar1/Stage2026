@@ -1,22 +1,22 @@
-import fs from 'fs';
-import path from 'path';
 import Link from 'next/link';
 import styles from "../../page.module.css";
+import { cardService } from "../../../services/cardService";
 
 export default async function CarteEditorDashboard(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
-  const nomFichier = `${params.id}.json`;
-  const filePath = path.join(process.cwd(), '.softavera', 'carte', nomFichier);
+  
+  // Clean up ID if it comes with .json from old links
+  const cardId = params.id.endsWith('.json') ? params.id.replace('.json', '') : params.id;
   
   let data: any = null;
   let error = null;
 
   try {
-    if (fs.existsSync(filePath)) {
-      const content = fs.readFileSync(filePath, 'utf-8');
-      data = JSON.parse(content);
+    const card = await cardService.getCardById(cardId);
+    if (card) {
+      data = card.content;
     } else {
-      error = "Fichier introuvable.";
+      error = "Carte introuvable dans la base de données.";
     }
   } catch (err: any) {
     error = "Erreur de lecture: " + err.message;
@@ -39,7 +39,7 @@ export default async function CarteEditorDashboard(props: { params: Promise<{ id
            </Link>
            <div>
              <h1 style={{ margin: 0, fontSize: '2rem', color: '#0f172a', letterSpacing: '-0.02em' }}>{title}</h1>
-             <div style={{ color: '#64748b', fontSize: '0.9rem', marginTop: '0.2rem' }}>{nomFichier}</div>
+             <div style={{ color: '#64748b', fontSize: '0.9rem', marginTop: '0.2rem' }}>ID: {cardId}</div>
            </div>
         </div>
 
@@ -95,12 +95,12 @@ export default async function CarteEditorDashboard(props: { params: Promise<{ id
                     <span>Éditeur de Catégories</span>
                     <span style={{ fontSize: '0.8rem', color: '#94a3b8', fontWeight: 400 }}>Ajouter, trier ou masquer (Bientôt)</span>
                   </button>
-                  <Link href={`/update-carte/${params.id}/produits`} style={{ padding: '1.5rem', background: 'white', color: '#0f172a', border: '2px solid var(--site-secondary)', borderRadius: '16px', fontWeight: 600, cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s', display: 'flex', flexDirection: 'column', gap: '0.5rem', textDecoration: 'none', boxShadow: '0 4px 12px color-mix(in srgb, var(--site-secondary) 15%, transparent)' }}>
+                  <Link href={`/update-carte/${cardId}/produits`} style={{ padding: '1.5rem', background: 'white', color: '#0f172a', border: '2px solid var(--site-secondary)', borderRadius: '16px', fontWeight: 600, cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s', display: 'flex', flexDirection: 'column', gap: '0.5rem', textDecoration: 'none', boxShadow: '0 4px 12px color-mix(in srgb, var(--site-secondary) 15%, transparent)' }}>
                     <span style={{ fontSize: '1.5rem' }}>🏷️</span>
                     <span>Catalogue Produits</span>
                     <span style={{ fontSize: '0.8rem', color: 'var(--site-secondary)', fontWeight: 500 }}>Éditer les prix, images et descriptions &rarr;</span>
                   </Link>
-                  <Link href={`/update-carte/${params.id}/parametres`} style={{ padding: '1.5rem', background: 'white', color: '#0f172a', border: '2px solid var(--site-primary)', borderRadius: '16px', fontWeight: 600, cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s', display: 'flex', flexDirection: 'column', gap: '0.5rem', textDecoration: 'none', boxShadow: '0 4px 12px color-mix(in srgb, var(--site-primary) 15%, transparent)' }}>
+                  <Link href={`/update-carte/${cardId}/parametres`} style={{ padding: '1.5rem', background: 'white', color: '#0f172a', border: '2px solid var(--site-primary)', borderRadius: '16px', fontWeight: 600, cursor: 'pointer', textAlign: 'left', transition: 'all 0.2s', display: 'flex', flexDirection: 'column', gap: '0.5rem', textDecoration: 'none', boxShadow: '0 4px 12px color-mix(in srgb, var(--site-primary) 15%, transparent)' }}>
                     <span style={{ fontSize: '1.5rem' }}>⚙️</span>
                     <span>Paramètres Globaux</span>
                     <span style={{ fontSize: '0.8rem', color: 'var(--site-primary)', fontWeight: 500 }}>Langues, Couleurs, Ordre &rarr;</span>
@@ -119,7 +119,7 @@ export default async function CarteEditorDashboard(props: { params: Promise<{ id
               <div style={{ background: 'white', padding: '2rem', borderRadius: '24px', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
                 <h3 style={{ marginTop: 0, color: '#1e293b', marginBottom: '1.5rem' }}>Test & Actions</h3>
                 
-                <Link href={`/borne/${params.id}`} target="_blank" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', width: '100%', padding: '1rem', background: '#1e293b', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 600, cursor: 'pointer', textDecoration: 'none', marginBottom: '1rem', transition: 'background 0.2s' }}>
+                <Link href={`/borne/${cardId}`} target="_blank" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', width: '100%', padding: '1rem', background: '#1e293b', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 600, cursor: 'pointer', textDecoration: 'none', marginBottom: '1rem', transition: 'background 0.2s' }}>
                   <span>📱</span> Simuler sur Borne
                 </Link>
                 

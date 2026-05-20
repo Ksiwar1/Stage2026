@@ -1,24 +1,22 @@
 'use server';
 
-import fs from 'fs';
-import path from 'path';
 import { revalidatePath } from 'next/cache';
 import { addLog } from '../../lib/logger';
+import { cardService } from '../../services/cardService';
 
-export async function updateProduitAction(fileName: string, itemId: string, updates: { name: string, price: number, img: string }) {
+export async function updateProduitAction(cardId: string, itemId: string, updates: { name: string, price: number, img: string }) {
   try {
-    if (!fileName || fileName.includes('..') || fileName.includes('/')) {
-       return { success: false, error: "Nom de fichier invalide." };
+    if (!cardId) {
+       return { success: false, error: "Identifiant invalide." };
     }
 
-    const filepath = path.join(process.cwd(), '.softavera', 'carte', fileName);
+    const card = await cardService.getCardById(cardId);
 
-    if (!fs.existsSync(filepath)) {
-      return { success: false, error: "Fichier introuvable sur le disque." };
+    if (!card) {
+      return { success: false, error: "Carte introuvable dans la base de données." };
     }
 
-    const content = fs.readFileSync(filepath, 'utf-8');
-    const data = JSON.parse(content);
+    const data = card.content;
 
     // Récupérer l'item existant pour ne pas casser sa structure (ex: modifier, options...)
     let item;
@@ -55,16 +53,16 @@ export async function updateProduitAction(fileName: string, itemId: string, upda
     if (!item.img.dflt) item.img.dflt = {};
     item.img.dflt.img = updates.img;
 
-    // Réécrire le fichier
-    fs.writeFileSync(filepath, JSON.stringify(data, null, 2));
+    // Mettre à jour la base de données
+    await cardService.updateCard(cardId, { content: data });
 
     // Revalider le cache pour que le changement soit visible sur le Dashboard et le Simulateur
-    revalidatePath(`/update-carte/${fileName.replace('.json', '')}`);
-    revalidatePath(`/update-carte/${fileName.replace('.json', '')}/produits`);
-    revalidatePath(`/borne/${fileName.replace('.json', '')}`);
+    revalidatePath(`/update-carte/${cardId}`);
+    revalidatePath(`/update-carte/${cardId}/produits`);
+    revalidatePath(`/borne/${cardId}`);
     revalidatePath(`/historique`);
 
-    addLog(fileName, 'UPDATE', `Modification du produit "${updates.name}" (Prix: ${updates.price}€)`);
+    addLog(cardId, 'UPDATE', `Modification du produit "${updates.name}" (Prix: ${updates.price}€)`);
 
     return { success: true, updatedItem: item };
 

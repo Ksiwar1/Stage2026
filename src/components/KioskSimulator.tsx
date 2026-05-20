@@ -19,7 +19,7 @@ export interface ParsedStep {
   title: string;
   minChoices: number;
   maxChoices: number;
-  semanticType: 'TAILLE' | 'FRITES' | 'SAUCES' | 'BOISSON' | 'DESSERT' | 'EXTRAS' | 'UNKNOWN';
+  semanticType: 'TAILLE' | 'FRITES' | 'SAUCES' | 'BOISSON' | 'DESSERT' | 'EXTRAS' | 'UNKNOWN' | 'OPTION_GLOBALE';
   options: ParsedModifier[];
 }
 
@@ -38,6 +38,8 @@ export interface ParsedCategory {
   title: string;
   image?: string | null;
   products: ParsedProduct[];
+  workflowRank?: number;
+  isVisible?: boolean;
 }
 
 export type AppStep = Omit<ParsedStep, 'semanticType'> & { semanticType: string };
@@ -214,7 +216,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
     }
 
     if (finalLangs.join(',') !== allowedLanguages.join(',')) {
-      setAllowedLanguages(finalLangs);
+      setAllowedLanguages(finalLangs as any);
     }
     setActiveThemePalette({
       ...themePalette,

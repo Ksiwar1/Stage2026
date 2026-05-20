@@ -26,9 +26,8 @@ export function verifySchemaIntegrity(data: any): boolean {
                 }
                 ranks.add(r);
             }
-        return true;
-    }
-    
+        }
+    }    
     // Check 3: Categories Dual Binding Check
     for (const cId of Object.keys(rootCats)) {
         const catItems = rootCats[cId].items;

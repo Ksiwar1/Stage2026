@@ -1,10 +1,9 @@
 'use server';
 
-import fs from 'fs';
-import path from 'path';
+import { cardService } from '../services/cardService';
 
 export async function updateParametresAction(
-  nomFichier: string, 
+  cardId: string, 
   updates: { 
     languages: string[], 
     primaryColor: string, 
@@ -13,13 +12,12 @@ export async function updateParametresAction(
   }
 ) {
   try {
-    const filePath = path.join(process.cwd(), '.softavera', 'carte', nomFichier);
-    if (!fs.existsSync(filePath)) {
-      return { success: false, error: "Fichier introuvable" };
+    const card = await cardService.getCardById(cardId);
+    if (!card) {
+      return { success: false, error: "Carte introuvable" };
     }
 
-    const content = fs.readFileSync(filePath, 'utf-8');
-    const data = JSON.parse(content);
+    const data = card.content;
 
     // Update Languages
     if (!data.opt) data.opt = {};
@@ -58,7 +56,7 @@ export async function updateParametresAction(
       });
     }
 
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
+    await cardService.updateCard(cardId, { content: data });
     
     return { success: true };
   } catch (error: any) {

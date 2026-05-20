@@ -42,7 +42,7 @@ export async function generateAIResponse(
       };
 
       try {
-        const completion = await groq.chat.completions.create(payload);
+        const completion = await groq.chat.completions.create(payload as any);
         return completion.choices[0]?.message?.content || "";
       } catch (error: any) {
         if (error?.status === 429 || error?.status === 413 || error?.message?.includes("429") || error?.message?.includes("413") || error?.message?.includes("Connection error") || error?.code === 'ECONNRESET') {
@@ -50,12 +50,12 @@ export async function generateAIResponse(
           await new Promise(resolve => setTimeout(resolve, 20000));
           console.log(`[RATE LIMIT] Reprise Groq...`);
           try {
-             const retryCompletion = await groq.chat.completions.create(payload);
+             const retryCompletion = await groq.chat.completions.create(payload as any);
              return retryCompletion.choices[0]?.message?.content || "";
           } catch (retryError: any) {
              console.warn(`[RATE LIMIT SECOND ÉCHEC] Toujours saturé. Pause ultime de 25s...`);
              await new Promise(resolve => setTimeout(resolve, 25000));
-             const finalCompletion = await groq.chat.completions.create(payload);
+             const finalCompletion = await groq.chat.completions.create(payload as any);
              return finalCompletion.choices[0]?.message?.content || "";
           }
         }

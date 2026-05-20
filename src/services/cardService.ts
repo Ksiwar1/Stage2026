@@ -5,7 +5,7 @@ export const cardService = {
    * Récupérer toutes les cartes
    */
   async getAllCards() {
-    return await prisma.$queryRaw`SELECT * FROM "PFE"."carte" ORDER BY created_at DESC`;
+    return await prisma.$queryRaw<any[]>`SELECT * FROM "PFE"."carte" ORDER BY created_at DESC`;
   },
 
   /**

@@ -81,7 +81,7 @@ export default function GenererCarte() {
     img.src = URL.createObjectURL(file);
     img.onload = async () => {
       try {
-        const ColorThief = (await import('colorthief')).default;
+        const ColorThief = ((await import('colorthief')) as any).default || (await import('colorthief') as any);
         const colorThief = new ColorThief();
         const dominantRgb = colorThief.getColor(img);
         const paletteRgb = colorThief.getPalette(img, 3);

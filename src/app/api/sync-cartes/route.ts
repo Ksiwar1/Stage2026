@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { cardService } from '../../../services/cardService';
 
 // Les URLs officielles par défaut de Softavera
 const defaultSources = [
@@ -53,9 +54,26 @@ export async function POST() {
         
         // Nom propre et sauvegarde brute
         const safeName = source.name.replace(/[^a-z0-9_\-]/gi, '_').toLowerCase();
-        const destPath = path.join(importDir, `${safeName}.json`);
         
-        fs.writeFileSync(destPath, JSON.stringify(data, null, 2), 'utf8');
+        // Use the safeName as the card ID (since the import/sync uses fixed names)
+        // If the card exists, it will just replace the content if we handle it properly, 
+        // or we can use getCardById, if exists update, else create. But for simplicity let's try to fetch it first.
+        const existingCard = await cardService.getCardById(safeName);
+        if (existingCard) {
+            await cardService.updateCard(safeName, { content: data });
+        } else {
+            // Because cardService.createCard generates a UUID, we won't preserve the 'carte1_smash_up' as ID natively unless we modify it.
+            // But we can store the name in store_name and let it generate a UUID. This breaks the sync slightly if we run it multiple times (duplicates).
+            // Let's check if there's a card with that store_name, if so update it, else create.
+            const allCards = await cardService.getAllCards();
+            const matchingCard = (allCards as any[]).find(c => c.store_name === safeName);
+            if (matchingCard) {
+                await cardService.updateCard(matchingCard.id, { content: data });
+            } else {
+                await cardService.createCard({ store_name: safeName, content: data });
+            }
+        }
+        
         results.push({ name: source.name, success: true });
 
       } catch (err: any) {

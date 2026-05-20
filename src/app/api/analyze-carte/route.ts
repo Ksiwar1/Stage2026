@@ -1,45 +1,38 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
 import { generateAIResponse, getAILabel } from "../../../lib/aiClient";
+import { cardService } from "../../../services/cardService";
 
 const SYSTEM_PROMPT = "Tu es l'Intelligence Artificielle de Softavera. Ton rôle est d'analyser techniquement et sémantiquement des fichiers de cartes JSON. Rédige un rapport concis en français (2 petits paragraphes maximum + quelques bullet points si besoin) qui synthétise ce que sont ces cartes, leurs caractéristiques communes, leur utilité, et l'état général de la donnée. Ne propose pas de code. Adopte un ton professionnel et direct SaaS B2B.";
 
 export async function POST(req: Request) {
   try {
-    const cartesDir = path.join(process.cwd(), '.softavera', 'carte');
+    const cards = await cardService.getAllCards();
 
-    let files: string[] = [];
-    if (fs.existsSync(cartesDir)) {
-      files = fs.readdirSync(cartesDir).filter(f => f.endsWith('.json'));
-    }
-
-    if (files.length === 0) {
+    if (!cards || cards.length === 0) {
       return NextResponse.json(
-        { message: "Aucun fichier JSON trouvé dans le système pour lancer l'analyse." },
+        { message: "Aucune carte trouvée dans la base de données pour lancer l'analyse." },
         { status: 404 }
       );
     }
 
     let contenuGlobal = "";
-    for (const file of files) {
+    for (const card of cards as any[]) {
       try {
-        const filePath = path.join(cartesDir, file);
-        const data = fs.readFileSync(filePath, 'utf-8');
-        contenuGlobal += `\n--- Fichier : ${file} ---\n${data}\n`;
+        const data = JSON.stringify(card.content);
+        contenuGlobal += `\n--- ID Carte : ${card.id} ---\n${data}\n`;
       } catch (err) {
-        console.warn("Impossible de lire le fichier", file);
+        console.warn("Impossible de lire la carte", card.id);
       }
     }
 
-    const prompt = `Voici une extraction brute des cartes actuellement sauvegardées dans notre base de données locale (.softavera/carte/*.json) :\n\n${contenuGlobal}\n\nAgis en tant qu'Analyste Data chez Softavera et dresse un court bilan de ce contenu.`;
+    const prompt = `Voici une extraction brute des cartes actuellement sauvegardées dans notre base de données PostgreSQL :\n\n${contenuGlobal}\n\nAgis en tant qu'Analyste Data chez Softavera et dresse un court bilan de ce contenu.`;
 
     const responseText = await generateAIResponse(SYSTEM_PROMPT, prompt, 0.5);
 
     return NextResponse.json({
       success: true,
       report: responseText,
-      filesCount: files.length
+      filesCount: (cards as any[]).length
     });
 
   } catch (error: any) {

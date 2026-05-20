@@ -81,7 +81,8 @@ export async function genererArchitectureAction(data: FormData) {
   try {
     let trueDataStr = null;
     try {
-        trueDataStr = extractTrueDataFromCatalogue(pathLib.join(process.cwd(), '.softavera', 'carte', activeSourceInspiration));
+        const { extractTrueDataFromCatalogue } = require('../../lib/memory');
+        trueDataStr = await extractTrueDataFromCatalogue(activeSourceInspiration);
     } catch (err: any) {
         if (err.message === "ERR_INVALID_CATALOGUE") {
             return { success: false, error: "La base locale sélectionnée est corrompue ou ne contient aucun produit valide. Impossible de lancer la génération RAG." };
@@ -206,12 +207,13 @@ export async function enrichirCarteAction(
     let originalTheme: any = { palette: ["#4F46E5", "#10B981", "#F59E0B"] };
     if (activeSourceInspiration && activeSourceInspiration !== 'generique') {
         try {
-            const fsLib = require('fs');
-            const pathLib = require('path');
-            const refPath = pathLib.join(process.cwd(), '.softavera', 'carte', activeSourceInspiration);
-            const refData = JSON.parse(fsLib.readFileSync(refPath, 'utf-8'));
-            if (refData.theme && refData.theme.palette) {
-                originalTheme = refData.theme;
+            const cardService = require('../../services/cardService').cardService;
+            const refCard = await cardService.getCardById(activeSourceInspiration);
+            if (refCard) {
+                const refData = refCard.content;
+                if (refData.theme && refData.theme.palette) {
+                    originalTheme = refData.theme;
+                }
             }
         } catch(e) {
             console.error("Erreur récupération thème", e);
@@ -223,7 +225,7 @@ export async function enrichirCarteAction(
     if (primaryColor) originalTheme.palette[2] = primaryColor;
     
     // Initialisation exacte du format ETK360
-    const finalData = {
+    const finalData: any = {
         title: restaurantName || "Nouveau Restaurant",
         theme: originalTheme,
         workflow: {} as any,
@@ -272,14 +274,17 @@ export async function enrichirCarteAction(
     // RÈGLE MÉTIER STRICTE : Aucune contamination (Fallback inter-cartes) autorisée
     // On ne charge plus les activeSecondaryInspirations.
 
-    allInspirations.forEach((f, index) => {
+    for (let index = 0; index < allInspirations.length; index++) {
+        const f = allInspirations[index];
         try {
             let data;
             if (f === 'generique') {
                 const { GENERIC_MASTER_TEMPLATE_JSON_STR } = require('../../lib/memory');
                 data = JSON.parse(GENERIC_MASTER_TEMPLATE_JSON_STR);
             } else {
-                data = JSON.parse(fsLib.readFileSync(pathLib.join(process.cwd(), '.softavera', 'carte', f), 'utf-8'));
+                const cardService = require('../../services/cardService').cardService;
+                const card = await cardService.getCardById(f);
+                data = card ? card.content : {};
             }
             if (index === 0) { // BaseMap
                memoryWorkflow = data.workflow || {};
@@ -342,7 +347,7 @@ export async function enrichirCarteAction(
                 });
             }
         } catch(e) {}
-    });
+    }
 
     const ALLERGENS_REGISTRY: Record<string, string> = {
         'gluten': 'a1000000-0000-0000-0000-000000000001',
@@ -1157,24 +1162,18 @@ export async function enrichirCarteAction(
       
       // Cleanup de la chaine (on retire le "Je veux un vrai restaurant de : ") pour le filename
       safeNameRaw = safeNameRaw.replace("Je veux un vrai restaurant de : ", "");
-      const safeName = safeNameRaw.slice(0, 30).replace(/[^a-z0-9A-Z]/gi, '_').toLowerCase();
+      const storeName = safeNameRaw.slice(0, 30);
       
-      let filename = `ia_${safeName}.json`;
-      let filepath = path.join(process.cwd(), '.softavera', 'carte', filename);
-      let counter = 1;
-      
-      while (fs.existsSync(filepath)) {
-          counter++;
-          filename = `ia_${safeName}_${counter}.json`;
-          filepath = path.join(process.cwd(), '.softavera', 'carte', filename);
-      }
-      
-      fs.writeFileSync(filepath, jsonResponse, 'utf-8');
+      const cardService = require('../../services/cardService').cardService;
+      const newCard = await cardService.createCard({
+          store_name: storeName,
+          content: orderedFinalData
+      });
 
       // Ajouter le log de création
-      addLog(filename, 'CREATE', 'Carte générée avec succès par l\'IA.');
+      addLog(newCard.id, 'CREATE', 'Carte générée avec succès par l\'IA.');
 
-      return JSON.stringify({ success: true, json: jsonResponse, savedPath: filename });
+      return JSON.stringify({ success: true, json: jsonResponse, savedPath: newCard.id });
     }
 
     return JSON.stringify({ success: true, json: jsonResponse, savedPath: null });
@@ -1187,11 +1186,9 @@ export async function enrichirCarteAction(
 
 export async function getAvailableLibraryCards() {
   try {
-    const directoryPath = path.join(process.cwd(), '.softavera', 'carte');
-    if (!fs.existsSync(directoryPath)) return [];
-
-    const files = fs.readdirSync(directoryPath);
-    return files.filter(f => f.endsWith('.json') && f !== 'last_architecture.json' && f !== 'system_config.json');
+    const cardService = require('../../services/cardService').cardService;
+    const cards = await cardService.getAllCards();
+    return cards.map((c: any) => c.id);
   } catch (e) {
     console.error("Erreur read library:", e);
     return [];

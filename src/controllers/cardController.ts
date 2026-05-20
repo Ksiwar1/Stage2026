@@ -18,9 +18,10 @@ export const cardController = {
   /**
    * GET /api/cards/:id
    */
-  async getOne(req: NextRequest, { params }: { params: { id: string } }) {
+  async getOne(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
-      const card = await cardService.getCardById(params.id);
+      const { id } = await params;
+      const card = await cardService.getCardById(id);
       if (!card) {
         return NextResponse.json({ error: 'Carte non trouvée' }, { status: 404 });
       }
@@ -57,17 +58,18 @@ export const cardController = {
   /**
    * PUT /api/cards/:id
    */
-  async update(req: NextRequest, { params }: { params: { id: string } }) {
+  async update(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
+      const { id } = await params;
       const body = await req.json();
 
       // Vérifier si la carte existe avant de l'update
-      const existing = await cardService.getCardById(params.id);
+      const existing = await cardService.getCardById(id);
       if (!existing) {
         return NextResponse.json({ error: 'Carte non trouvée' }, { status: 404 });
       }
 
-      const updatedCard = await cardService.updateCard(params.id, {
+      const updatedCard = await cardService.updateCard(id, {
         store_name: body.store_name,
         content: body.content,
       });
@@ -82,14 +84,15 @@ export const cardController = {
   /**
    * DELETE /api/cards/:id
    */
-  async delete(req: NextRequest, { params }: { params: { id: string } }) {
+  async delete(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     try {
-      const existing = await cardService.getCardById(params.id);
+      const { id } = await params;
+      const existing = await cardService.getCardById(id);
       if (!existing) {
         return NextResponse.json({ error: 'Carte non trouvée' }, { status: 404 });
       }
 
-      await cardService.deleteCard(params.id);
+      await cardService.deleteCard(id);
       return NextResponse.json({ message: 'Carte supprimée avec succès' }, { status: 200 });
     } catch (error) {
       console.error('Erreur deleteCard:', error);

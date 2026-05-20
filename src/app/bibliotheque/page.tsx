@@ -6,7 +6,7 @@ import CarteGrid from "../../components/CarteGrid";
 
 // Ceci est un Server Component. Il peut lire le dossier sans aucun problème !
 export default async function Bibliotheque() {
-  const cartesMemoire = getCartesVisualSummary();
+  const cartesMemoire = await getCartesVisualSummary();
 
   return (
     <main className={`${styles.main} ${styles.heroImageBg}`}>
