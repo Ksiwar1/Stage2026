@@ -20,25 +20,25 @@ export default function ProductEditorClient({ items, nomFichier }: ProductEditor
   const [message, setMessage] = useState<{ text: string, type: 'success' | 'error' } | null>(null);
 
   // Convert items object to array for easier mapping
-  const itemsArray = Object.keys(items).map(id => ({
-    id,
-    ...items[id]
+  const itemsArray = Object.keys(items).map(key => ({
+    _key: key,
+    ...items[key]
   }));
 
   const filteredItems = itemsArray.filter(item => {
-    const name = item.displayName?.dflt?.nameDef || item.title || item.t || item.id;
+    const name = item.displayName?.dflt?.nameDef || item.title || item.t || item._key;
     return name.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
-  const handleSelectProduct = (itemId: string) => {
-    const item = itemsArray.find(i => i.id === itemId) || items[itemId];
+  const handleSelectProduct = (itemKey: string) => {
+    const item = itemsArray.find(i => i._key === itemKey) || items[itemKey];
     if (!item) return;
     
-    setSelectedItemId(itemId);
+    setSelectedItemId(itemKey);
     setMessage(null);
     
     // Extract name
-    setEditName(item.displayName?.dflt?.nameDef || item.title || item.t || itemId);
+    setEditName(item.displayName?.dflt?.nameDef || item.title || item.t || itemKey);
     
     // Extract price
     let p = 0;
@@ -96,12 +96,12 @@ export default function ProductEditorClient({ items, nomFichier }: ProductEditor
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               {filteredItems.map((item, index) => {
-                const name = item.displayName?.dflt?.nameDef || item.title || item.t || item.id;
-                const isSelected = item.id === selectedItemId;
+                const name = item.displayName?.dflt?.nameDef || item.title || item.t || item._key;
+                const isSelected = item._key === selectedItemId;
                 return (
                   <button 
-                    key={`${item.id}-${index}`}
-                    onClick={() => handleSelectProduct(item.id)}
+                    key={`${item._key}-${index}`}
+                    onClick={() => handleSelectProduct(item._key)}
                     style={{ 
                       padding: '1rem', 
                       textAlign: 'left', 

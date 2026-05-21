@@ -22,7 +22,7 @@ export default async function ParametresPage(props: { params: Promise<{ id: stri
 
   if (error || !data) {
     return (
-      <main style={{ padding: '4rem 2rem', background: '#f8fafc', minHeight: '100vh' }}>
+      <main style={{ padding: '10rem 2rem 4rem 2rem', background: '#f8fafc', minHeight: '100vh' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <div style={{ background: '#fee2e2', color: '#991b1b', padding: '1.5rem', borderRadius: '12px' }}>
             {error || "Données introuvables."}
@@ -56,7 +56,7 @@ export default async function ParametresPage(props: { params: Promise<{ id: stri
   const title = data.title || params.id.replace(/_/g, ' ');
 
   return (
-    <main style={{ padding: '4rem 2rem', background: '#f8fafc', minHeight: '100vh' }}>
+    <main style={{ padding: '10rem 2rem 4rem 2rem', background: '#f8fafc', minHeight: '100vh' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '3rem', gap: '1.5rem' }}>
            <Link href={`/update-carte/${cardId}`} style={{ padding: '0.5rem 1rem', background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px', textDecoration: 'none', color: '#0f172a', fontWeight: 600, boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>

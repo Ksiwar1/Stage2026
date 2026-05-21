@@ -3,6 +3,8 @@ import Link from "next/link";
 import { getCartesVisualSummary } from "../../lib/memory"; 
 import SyncButton from "../../components/SyncButton";
 import CarteGrid from "../../components/CarteGrid";
+import LogoMarquee from '../../components/LogoMarquee';
+
 
 // Ceci est un Server Component. Il peut lire le dossier sans aucun problème !
 export default async function Bibliotheque() {
@@ -31,6 +33,7 @@ export default async function Bibliotheque() {
       ) : (
         <CarteGrid cartes={cartesMemoire} />
       )}
+      <LogoMarquee />
     </main>
   );
 }

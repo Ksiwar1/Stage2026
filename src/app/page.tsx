@@ -4,20 +4,7 @@ import styles from "./page.module.css";
 import Link from 'next/link';
 import { useLanguage } from '../lib/LanguageContext';
 
-const PARTNER_LOGOS = [
-  "https://softavera.com/assets/logos/partners/black/five.png",
-  "https://softavera.com/assets/logos/partners/black/burger.png",
-  "https://softavera.com/assets/logos/partners/black/burg-add.png",
-  "https://softavera.com/assets/logos/partners/black/contine.png",
-  "https://softavera.com/assets/logos/partners/black/gur.png",
-  "https://softavera.com/assets/logos/partners/black/hot.png",
-  "https://softavera.com/assets/logos/partners/black/IT.png",
-  "https://softavera.com/assets/logos/partners/black/quic.png",
-  "https://softavera.com/assets/logos/partners/black/spot.png",
-  "https://softavera.com/assets/logos/partners/black/steak.png",
-  "https://softavera.com/assets/logos/partners/black/tacos.png",
-  "https://softavera.com/assets/logos/partners/black/time.png",
-];
+import LogoMarquee from '../components/LogoMarquee';
 
 export default function Home() {
   const { t } = useLanguage();
@@ -62,18 +49,7 @@ export default function Home() {
         </div>
 
         {/* Partner Logos Marquee (Pleine Largeur) */}
-        <div className={styles.marqueeContainer}>
-          <div className={styles.marqueeContent}>
-            {/* Premier set */}
-            {PARTNER_LOGOS.map((logo, index) => (
-              <img key={`logo-1-${index}`} src={logo} alt={`Partenaire Softavera ${index + 1}`} className={styles.marqueeLogo} />
-            ))}
-            {/* Deuxième set (dupliqué pour scroll infini) */}
-            {PARTNER_LOGOS.map((logo, index) => (
-              <img key={`logo-2-${index}`} src={logo} alt={`Partenaire Softavera duplicate ${index + 1}`} className={styles.marqueeLogo} />
-            ))}
-          </div>
-        </div>
+        <LogoMarquee />
       </div>
     </main>
   );

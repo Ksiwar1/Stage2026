@@ -30,7 +30,7 @@ export default async function CarteEditorDashboard(props: { params: Promise<{ id
   const title = data?.title || params.id.replace(/_/g, ' ');
 
   return (
-    <main className={`${styles.main}`} style={{ padding: '4rem 2rem', background: '#f8fafc', minHeight: '100vh' }}>
+    <main className={`${styles.main}`} style={{ padding: '10rem 2rem 4rem 2rem', background: '#f8fafc', minHeight: '100vh' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
         
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '3rem', gap: '1.5rem' }}>

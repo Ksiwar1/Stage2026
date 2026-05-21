@@ -7,6 +7,8 @@ import { genererArchitectureAction, enrichirCarteAction, getAvailableLibraryCard
 import KioskSimulator from "../../components/KioskSimulator";
 import { parseETK360Hierarchy } from "../../lib/softaveraParser";
 import { useLanguage } from '../../lib/LanguageContext';
+import LogoMarquee from '../../components/LogoMarquee';
+
 
 const AI_PROVIDERS = [
   { value: "groq", label: "Groq (Llama 3.1 8B)", icon: "🟢", tag: "Gratuit" },
@@ -253,7 +255,7 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
   };
 
   return (
-    <main className={`${styles.main} ${styles.heroImageBg}`}>
+    <main className={`${styles.main} ${styles.heroImageBg}`} style={{ padding: '10rem 1.5rem 4rem 1.5rem' }}>
       <div className={styles.hero}>
         <h1 className={styles.title}>{t('gen_title')}</h1>
         <p className={styles.description}>
@@ -271,12 +273,12 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                 padding: '0.6rem 1.2rem',
                 borderRadius: '999px',
                 border: selectedAI === ai.value ? '2px solid #4f46e5' : '2px solid #e5e7eb',
-                background: selectedAI === ai.value ? '#eef2ff' : '#ffffff',
+                background: selectedAI === ai.value ? 'rgba(99, 102, 241, 0.15)' : 'var(--input-bg)',
                 color: selectedAI === ai.value ? '#4f46e5' : '#6b7280',
                 fontWeight: selectedAI === ai.value ? 700 : 500,
                 cursor: 'pointer',
                 fontSize: '0.9rem',
-                transition: 'all 0.2s ease',
+                transition: 'all 0.2s ease', backdropFilter: 'blur(10px)',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.4rem',
@@ -288,8 +290,8 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                 fontSize: '0.7rem',
                 padding: '0.15rem 0.4rem',
                 borderRadius: '999px',
-                background: ai.tag === "Gratuit" ? '#dcfce7' : '#fef3c7',
-                color: ai.tag === "Gratuit" ? '#166534' : '#92400e',
+                background: ai.tag === "Gratuit" ? 'rgba(34, 197, 94, 0.2)' : 'rgba(245, 158, 11, 0.2)',
+                color: ai.tag === "Gratuit" ? '#86efac' : '#fcd34d',
                 fontWeight: 600,
               }}>
                 {ai.tag}
@@ -306,18 +308,18 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
 
           {/* --- PROGRESS BAR 5 STEPS --- */}
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '3rem', position: 'relative', padding: '0 1rem' }}>
-            <div style={{ position: 'absolute', top: '50%', left: '1rem', right: '1rem', height: '6px', background: '#e2e8f0', borderRadius: '3px', zIndex: 0, transform: 'translateY(-50%)' }}></div>
+            <div style={{ position: 'absolute', top: '50%', left: '1rem', right: '1rem', height: '6px', background: 'var(--button-secondary-bg)', borderRadius: '3px', zIndex: 0, transform: 'translateY(-50%)' }}></div>
             <div style={{ position: 'absolute', top: '50%', left: '1rem', width: `calc(${((wizardStep - 1) / 4) * 100}% - 2rem)`, height: '6px', background: 'linear-gradient(90deg, #4f46e5, #0ea5e9)', borderRadius: '3px', zIndex: 0, transform: 'translateY(-50%)', transition: 'width 0.4s ease' }}></div>
             
             {[{ n: 1, label: t('gen_step1') }, { n: 2, label: t('gen_step2') }, { n: 3, label: t('gen_step3') }, { n: 4, label: t('gen_step4') }, { n: 5, label: t('gen_step5') }].map(step => (
               <div key={step.n} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', zIndex: 1 }}>
                 <div 
                   onClick={() => step.n <= wizardStep && setWizardStep(step.n)} 
-                  style={{ width: '45px', height: '45px', borderRadius: '50%', background: wizardStep >= step.n ? 'linear-gradient(135deg, #4f46e5, #0ea5e9)' : '#f1f5f9', color: wizardStep >= step.n ? 'white' : '#94a3b8', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', cursor: step.n <= wizardStep ? 'pointer' : 'default', transition: 'all 0.3s', boxShadow: wizardStep === step.n ? '0 0 0 5px rgba(79, 70, 229, 0.2)' : 'none', border: wizardStep >= step.n ? 'none' : '2px solid #e2e8f0' }}
+                  style={{ width: '45px', height: '45px', borderRadius: '50%', background: wizardStep >= step.n ? 'linear-gradient(135deg, #4f46e5, #0ea5e9)' : 'var(--step-bg-inactive)', color: wizardStep >= step.n ? 'white' : 'rgba(255,255,255,0.4)', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 'bold', cursor: step.n <= wizardStep ? 'pointer' : 'default', transition: 'all 0.3s', boxShadow: wizardStep === step.n ? '0 0 0 5px rgba(79, 70, 229, 0.2)' : 'none', border: wizardStep >= step.n ? 'none' : '2px solid #e2e8f0' }}
                 >
                   {wizardStep > step.n ? <span style={{fontSize:'1.2rem'}}>✓</span> : step.n}
                 </div>
-                <span style={{ position: 'absolute', top: '55px', fontSize: '0.8rem', fontWeight: wizardStep === step.n ? 700 : 500, color: wizardStep === step.n ? '#1e293b' : '#64748b', whiteSpace: 'nowrap' }}>{step.label}</span>
+                <span style={{ position: 'absolute', top: '55px', fontSize: '0.8rem', fontWeight: wizardStep === step.n ? 700 : 500, color: wizardStep === step.n ? 'var(--foreground)' : 'var(--step-text-inactive)', whiteSpace: 'nowrap' }}>{step.label}</span>
               </div>
             ))}
           </div>
@@ -327,12 +329,12 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
             
             {/* ETAPE 1 : CONCEPT DU RESTAURANT */}
             <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 1 ? 1 : 0.4, transition: 'opacity 0.5s' }}>
-               <div style={{ background: '#ffffff', borderRadius: '16px', padding: '2rem', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)', border: '1px solid #f1f5f9' }}>
-                   <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: '#1e293b', fontSize: '1.2rem' }}>Nom de l'enseigne <span style={{color: '#ef4444'}}>*</span></label>
-                   <input type="text" name="restaurantName" required={true} value={wizardData.restaurantName} onChange={(e) => setWizardData({...wizardData, restaurantName: e.target.value})} placeholder="Ex: L'Atelier du Burger..." style={{ width: '100%', padding: '1.2rem', borderRadius: '12px', border: '2px solid #cbd5e1', fontSize: '1.2rem', fontWeight: 600, color: '#0f172a', outline: 'none', transition: 'border 0.2s', marginBottom: '1.5rem' }} />
+               <div style={{ background: 'var(--panel-bg)', backdropFilter: 'blur(20px)', borderRadius: '24px', padding: '2.5rem', boxShadow: 'var(--panel-shadow)', border: '1px solid var(--panel-border)' }}>
+                   <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--foreground)', fontSize: '1.2rem' }}>Nom de l'enseigne <span style={{color: '#fb7185'}}>*</span></label>
+                   <input type="text" name="restaurantName" required={true} value={wizardData.restaurantName} onChange={(e) => setWizardData({...wizardData, restaurantName: e.target.value})} placeholder="Ex: L'Atelier du Burger..." style={{ width: '100%', padding: '1.2rem', borderRadius: '12px', border: '2px solid #cbd5e1', fontSize: '1.2rem', fontWeight: 600, color: 'var(--foreground)', background: 'var(--input-bg)', outline: 'none', transition: 'border 0.2s', marginBottom: '1.5rem' }} />
                    
-                   <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: '#1e293b', fontSize: '1.2rem' }}>Langue(s) du catalogue</label>
-                   <select value={wizardData.language} onChange={(e) => setWizardData({...wizardData, language: e.target.value})} style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '1rem', marginBottom: '1.5rem', color: '#334155', background: '#f8fafc' }}>
+                   <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--foreground)', fontSize: '1.2rem' }}>Langue(s) du catalogue</label>
+                   <select value={wizardData.language} onChange={(e) => setWizardData({...wizardData, language: e.target.value})} style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '1rem', marginBottom: '1.5rem', color: 'var(--foreground)', background: 'rgba(15, 23, 42, 0.9)' }}>
                        <option>Français</option>
                        <option>English</option>
                        <option>Español</option>
@@ -340,7 +342,7 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                        <option>Bilingue FR/EN</option>
                    </select>
 
-                   <label style={{ display: 'block', fontWeight: 800, margin: '0 0 1rem 0', color: '#1e293b', fontSize: '1.2rem' }}>Concept du Restaurant <span style={{color: '#ef4444'}}>*</span></label>
+                   <label style={{ display: 'block', fontWeight: 800, margin: '0 0 1rem 0', color: 'var(--foreground)', fontSize: '1.2rem' }}>Concept du Restaurant <span style={{color: '#fb7185'}}>*</span></label>
                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1rem', marginBottom: wizardData.theme === 'custom' ? '1rem' : '0' }}>
                       {[
                         { label: 'Fast-Food / Burger', icon: '🍔', c: 'fastfood', gradient: 'linear-gradient(135deg, #f59e0b, #ef4444)' },
@@ -359,7 +361,7 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                           style={{ 
                              position: 'relative',
                              padding: '1.2rem 1rem', 
-                             background: isSelected ? t.gradient : '#f8fafc', 
+                             background: isSelected ? t.gradient : 'rgba(255,255,255,0.05)', 
                              border: isSelected ? 'none' : '1px solid #e2e8f0', 
                              borderRadius: '16px', 
                              cursor: 'pointer', 
@@ -367,7 +369,7 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', 
                              transform: isSelected ? 'translateY(-4px)' : 'none', 
                              boxShadow: isSelected ? '0 10px 20px -5px rgba(0,0,0,0.2)' : '0 2px 4px rgba(0,0,0,0.02)',
-                             color: isSelected ? 'white' : '#475569',
+                             color: isSelected ? 'white' : 'var(--text-muted)',
                              overflow: 'hidden'
                           }}
                         >
@@ -390,8 +392,8 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                         overflow: 'hidden', 
                         transition: 'all 0.3s ease' 
                    }}>
-                        <div style={{ background: '#f8fafc', padding: '1.2rem', borderRadius: '12px', border: '1px solid #cbd5e1', borderLeft: '4px solid #1e293b' }}>
-                            <label style={{ display: 'block', fontWeight: 600, color: '#334155', fontSize: '0.95rem', marginBottom: '0.5rem' }}>Quel est votre concept ? (L'IA s'en inspirera pour les noms et descriptions)</label>
+                        <div style={{ background: 'var(--input-bg)', padding: '1.2rem', borderRadius: '12px', border: '1px solid #cbd5e1', borderLeft: '4px solid #1e293b' }}>
+                            <label style={{ display: 'block', fontWeight: 600, color: 'var(--foreground)', fontSize: '0.95rem', marginBottom: '0.5rem' }}>Quel est votre concept ? (L'IA s'en inspirera pour les noms et descriptions)</label>
                             <input 
                                 type="text" 
                                 value={wizardData.typeLabel} 
@@ -402,18 +404,18 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                         </div>
                    </div>
                    
-                   <div style={{ display: 'flex', alignItems: 'center', margin: '2rem 0', color: '#94a3b8' }}>
-                     <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }}></div>
-                     <span style={{ padding: '0 1rem', fontWeight: 800, fontSize: '0.9rem', color: '#64748b' }}>OU</span>
-                     <div style={{ flex: 1, height: '1px', background: '#e2e8f0' }}></div>
+                   <div style={{ display: 'flex', alignItems: 'center', margin: '2rem 0', color: 'rgba(255,255,255,0.4)' }}>
+                     <div style={{ flex: 1, height: '1px', background: 'var(--button-secondary-bg)' }}></div>
+                     <span style={{ padding: '0 1rem', fontWeight: 800, fontSize: '0.9rem', color: 'var(--button-secondary-text)' }}>OU</span>
+                     <div style={{ flex: 1, height: '1px', background: 'var(--button-secondary-bg)' }}></div>
                    </div>
 
                    {/* SECTION OCR RESTAUREE */}
-                   <div style={{ padding: '1.5rem', border: '2px dashed #cbd5e1', borderRadius: '12px', textAlign: 'center', background: '#f8fafc', cursor: 'pointer', position: 'relative' }}>
-                     <label style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', color: '#475569' }}>
+                   <div style={{ padding: '1.5rem', border: '2px dashed #cbd5e1', borderRadius: '12px', textAlign: 'center', background: 'var(--input-bg)', cursor: 'pointer', position: 'relative' }}>
+                     <label style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', color: 'var(--button-secondary-text)' }}>
                        <span style={{ fontSize: '2rem' }}>📸</span>
-                       <span style={{ fontWeight: 800, fontSize: '1.1rem', color: '#1e293b' }}>Importer une photo de menu</span>
-                       <span style={{ fontSize: '0.85rem', color: '#64748b' }}>Optionnel : L'IA lira l'image (OCR) pour générer votre catalogue.</span>
+                       <span style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--foreground)' }}>Importer une photo de menu</span>
+                       <span style={{ fontSize: '0.85rem', color: 'var(--button-secondary-text)' }}>Optionnel : L'IA lira l'image (OCR) pour générer votre catalogue.</span>
                        <input 
                          type="file" 
                          name="menuImage" 
@@ -440,29 +442,29 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
 
             {/* ETAPE 2 : LOGIQUE DE VENTE */}
             <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 2 ? 1 : 0.4, transition: 'opacity 0.5s' }}>
-                <div style={{ background: '#ffffff', borderRadius: '16px', padding: '2rem', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)', border: '1px solid #f1f5f9' }}>
-                   <label style={{ display: 'block', fontWeight: 800, marginBottom: '1rem', color: '#1e293b', fontSize: '1.2rem' }}>Formules Automatiques</label>
+                <div style={{ background: 'var(--panel-bg)', backdropFilter: 'blur(20px)', borderRadius: '24px', padding: '2.5rem', boxShadow: 'var(--panel-shadow)', border: '1px solid var(--panel-border)' }}>
+                   <label style={{ display: 'block', fontWeight: 800, marginBottom: '1rem', color: 'var(--foreground)', fontSize: '1.2rem' }}>Formules Automatiques</label>
                    <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
-                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#f8fafc', padding: '0.8rem 1.2rem', borderRadius: '8px', border: '1px solid #e2e8f0', cursor: 'pointer', flex: 1 }}>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'var(--input-bg)', padding: '0.8rem 1.2rem', borderRadius: '8px', border: '1px solid #e2e8f0', cursor: 'pointer', flex: 1 }}>
                           <input type="checkbox" checked={wizardData.formulas.isMenu} onChange={e => setWizardData({...wizardData, formulas: {...wizardData.formulas, isMenu: e.target.checked}})} style={{ width: '20px', height: '20px', accentColor: '#4f46e5' }} />
                           <span style={{ fontWeight: 600 }}>Taille Standard (+ <input type="number" step="0.1" value={wizardData.formulas.menuPrice} onChange={e => setWizardData({...wizardData, formulas: {...wizardData.formulas, menuPrice: parseFloat(e.target.value)||0}})} style={{ width: '50px', padding: '0.2rem', borderRadius: '4px', border: '1px solid #cbd5e1' }} /> €)</span>
                       </label>
-                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#f8fafc', padding: '0.8rem 1.2rem', borderRadius: '8px', border: '1px solid #e2e8f0', cursor: 'pointer', flex: 1 }}>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'var(--input-bg)', padding: '0.8rem 1.2rem', borderRadius: '8px', border: '1px solid #e2e8f0', cursor: 'pointer', flex: 1 }}>
                           <input type="checkbox" checked={wizardData.formulas.isMaxi} onChange={e => setWizardData({...wizardData, formulas: {...wizardData.formulas, isMaxi: e.target.checked}})} style={{ width: '20px', height: '20px', accentColor: '#4f46e5' }} />
                           <span style={{ fontWeight: 600 }}>Taille Maxi (+ <input type="number" step="0.1" value={wizardData.formulas.maxiPrice} onChange={e => setWizardData({...wizardData, formulas: {...wizardData.formulas, maxiPrice: parseFloat(e.target.value)||0}})} style={{ width: '50px', padding: '0.2rem', borderRadius: '4px', border: '1px solid #cbd5e1' }} /> €)</span>
                       </label>
                    </div>
 
-                   <label style={{ display: 'block', fontWeight: 800, margin: '2rem 0 1rem 0', color: '#1e293b', fontSize: '1.2rem' }}>Accompagnements (Pour les formules)</label>
+                   <label style={{ display: 'block', fontWeight: 800, margin: '2rem 0 1rem 0', color: 'var(--foreground)', fontSize: '1.2rem' }}>Accompagnements (Pour les formules)</label>
                    <input type="text" value={wizardData.accompaniments.list} onChange={e => setWizardData({...wizardData, accompaniments: {...wizardData.accompaniments, list: e.target.value}})} placeholder="Ex: Frites, Potatoes, Salade (séparés par virgule)" style={{ width: '100%', padding: '1rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '1rem' }} />
                    
-                   <label style={{ display: 'block', fontWeight: 800, margin: '2rem 0 1rem 0', color: '#1e293b', fontSize: '1.2rem' }}>Boissons</label>
+                   <label style={{ display: 'block', fontWeight: 800, margin: '2rem 0 1rem 0', color: 'var(--foreground)', fontSize: '1.2rem' }}>Boissons</label>
                    
                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '0.8rem', marginBottom: '1.5rem' }}>
                       {GLOBAL_DRINKS_LIST.map(boisson => {
                          const isSelected = wizardData.drinks.selectedGlobal?.includes(boisson);
                          return (
-                            <label key={boisson} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: isSelected ? '#eef2ff' : '#f8fafc', padding: '0.8rem 1rem', borderRadius: '8px', border: isSelected ? '1px solid #4f46e5' : '1px solid #e2e8f0', cursor: 'pointer', transition: 'all 0.2s' }}>
+                            <label key={boisson} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: isSelected ? '#eef2ff' : 'rgba(255,255,255,0.05)', padding: '0.8rem 1rem', borderRadius: '8px', border: isSelected ? '1px solid #4f46e5' : '1px solid #e2e8f0', cursor: 'pointer', transition: 'all 0.2s' }}>
                                 <input type="checkbox" checked={isSelected || false} onChange={e => {
                                     const checked = e.target.checked;
                                     let newSelected = [...(wizardData.drinks.selectedGlobal || [])];
@@ -474,13 +476,13 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                                     
                                     setWizardData({...wizardData, drinks: {...wizardData.drinks, selectedGlobal: newSelected, list: newList}});
                                 }} style={{ width: '18px', height: '18px', accentColor: '#4f46e5' }} />
-                                <span style={{ fontWeight: 600, fontSize: '0.9rem', color: isSelected ? '#4f46e5' : '#334155' }}>{boisson}</span>
+                                <span style={{ fontWeight: 600, fontSize: '0.9rem', color: isSelected ? '#4f46e5' : 'var(--foreground)' }}>{boisson}</span>
                             </label>
                          );
                       })}
                    </div>
                    
-                   <label style={{ display: 'block', fontWeight: 600, margin: '0 0 0.5rem 0', color: '#475569', fontSize: '0.95rem' }}>Boissons supplémentaires (séparées par une virgule)</label>
+                   <label style={{ display: 'block', fontWeight: 600, margin: '0 0 0.5rem 0', color: 'var(--button-secondary-text)', fontSize: '0.95rem' }}>Boissons supplémentaires (séparées par une virgule)</label>
                    <input type="text" value={wizardData.drinks.customList || ""} onChange={e => {
                        const customList = e.target.value;
                        const newSelected = wizardData.drinks.selectedGlobal || [];
@@ -488,21 +490,21 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                        setWizardData({...wizardData, drinks: {...wizardData.drinks, customList, list: newList}});
                    }} placeholder="Ex: Bière Pression, Limonade Maison..." style={{ width: '100%', padding: '1rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '1rem' }} />
 
-                   <label style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', marginTop: '2rem', background: '#f8fafc', padding: '1.2rem', borderRadius: '12px', border: '1px solid #e2e8f0', cursor: 'pointer' }}>
+                   <label style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', marginTop: '2rem', background: 'var(--input-bg)', padding: '1.2rem', borderRadius: '12px', border: '1px solid #e2e8f0', cursor: 'pointer' }}>
                         <input type="checkbox" checked={wizardData.compositions.cookingOptions} onChange={e => setWizardData({...wizardData, compositions: {...wizardData.compositions, cookingOptions: e.target.checked}})} style={{ width: '20px', height: '20px', accentColor: '#4f46e5' }} />
-                        <span style={{ fontWeight: 600, color: '#334155' }}>Forcer les choix de cuisson si applicable</span>
+                        <span style={{ fontWeight: 600, color: 'var(--foreground)' }}>Forcer les choix de cuisson si applicable</span>
                    </label>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem' }}>
-                   <button type="button" onClick={() => setWizardStep(1)} style={{ padding: '1rem 2rem', background: '#e2e8f0', color: '#475569', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}>{t('gen_back')}</button>
+                   <button type="button" onClick={() => setWizardStep(1)} style={{ padding: '1rem 2rem', background: 'var(--button-secondary-bg)', color: 'var(--button-secondary-text)', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}>{t('gen_back')}</button>
                    <button type="button" onClick={() => setWizardStep(3)} style={{ padding: '1rem 2rem', background: '#4f46e5', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 15px rgba(79, 70, 229, 0.3)' }}>{t('gen_continue')}</button>
                </div>
             </div>
 
             {/* ETAPE 3 : STRUCTURE */}
             <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 3 ? 1 : 0.4, transition: 'opacity 0.5s' }}>
-                <div style={{ background: '#ffffff', borderRadius: '16px', padding: '2rem', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)', border: '1px solid #f1f5f9' }}>
-                   <label style={{ display: 'block', fontWeight: 800, marginBottom: '1rem', color: '#1e293b', fontSize: '1.2rem' }}>Que vendez-vous ? <span style={{color: '#ef4444'}}>*</span></label>
+                <div style={{ background: 'var(--panel-bg)', backdropFilter: 'blur(20px)', borderRadius: '24px', padding: '2.5rem', boxShadow: 'var(--panel-shadow)', border: '1px solid var(--panel-border)' }}>
+                   <label style={{ display: 'block', fontWeight: 800, marginBottom: '1rem', color: 'var(--foreground)', fontSize: '1.2rem' }}>Que vendez-vous ? <span style={{color: '#fb7185'}}>*</span></label>
                    
                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', marginBottom: '1.5rem' }}>
                       {['Entrées', 'Burgers', 'Pizzas', 'Tacos', 'Kebabs', 'Sandwichs', 'Salades', 'Boissons', 'Desserts', 'Extras', 'Menus Enfants'].map(c => {
@@ -513,23 +515,23 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                                  if (isSelected) newCats = newCats.filter(x => x !== c);
                                  else newCats.push(c);
                                  setWizardData({...wizardData, categories: newCats});
-                             }} style={{ padding: '0.6rem 1.2rem', borderRadius: '12px', border: isSelected ? '2px solid #4f46e5' : '1px solid #cbd5e1', background: isSelected ? '#4f46e5' : '#f8fafc', color: isSelected ? 'white' : '#475569', cursor: 'pointer', fontWeight: 600, transition: 'all 0.2s' }}>
+                             }} style={{ padding: '0.6rem 1.2rem', borderRadius: '12px', border: isSelected ? '2px solid #4f46e5' : '1px solid #cbd5e1', background: isSelected ? '#4f46e5' : 'rgba(255,255,255,0.05)', color: isSelected ? 'white' : 'var(--text-muted)', cursor: 'pointer', fontWeight: 600, transition: 'all 0.2s' }}>
                                 {c}
                              </button>
                           );
                       })}
                    </div>
 
-                   <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: '#1e293b', fontSize: '1.2rem' }}>Taille (par catégorie)</label>
-                   <select value={wizardData.productCountLimit} onChange={(e) => setWizardData({...wizardData, productCountLimit: e.target.value})} style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '1rem', marginBottom: '1.5rem', color: '#334155' }}>
+                   <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--foreground)', fontSize: '1.2rem' }}>Taille (par catégorie)</label>
+                   <select value={wizardData.productCountLimit} onChange={(e) => setWizardData({...wizardData, productCountLimit: e.target.value})} style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '1rem', marginBottom: '1.5rem', color: 'var(--foreground)' }}>
                        <option>3-5 produits</option>
                        <option>6-10 produits</option>
                        <option>10+ produits (Long format)</option>
                    </select>
 
-                   <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: '#1e293b', fontSize: '1.2rem' }}>Règles strictes (Optionnel)</label>
-                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', background: '#f8fafc', padding: '1rem', borderRadius: '8px', maxHeight: '150px', overflowY: 'auto' }}>
-                      {wizardData.categories.length === 0 ? <div style={{ color: '#94a3b8', fontSize: '0.9rem', fontStyle: 'italic' }}>Sélectionnez des catégories d'abord.</div> : wizardData.categories.map((c) => (
+                   <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--foreground)', fontSize: '1.2rem' }}>Règles strictes (Optionnel)</label>
+                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', background: 'var(--input-bg)', padding: '1rem', borderRadius: '8px', maxHeight: '150px', overflowY: 'auto' }}>
+                      {wizardData.categories.length === 0 ? <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.9rem', fontStyle: 'italic' }}>Sélectionnez des catégories d'abord.</div> : wizardData.categories.map((c) => (
                           <div key={c} style={{ display: 'flex', flexDirection: 'column', background: 'white', padding: '0.6rem 1rem', borderRadius: '6px', border: '1px solid #e2e8f0' }}>
                                 <span style={{ fontWeight: 600, fontSize: '0.85rem' }}>{c} :</span>
                                 <input type="text" placeholder="Produits exacts imposés..." value={wizardData.forcedItems[c] || ""} onChange={e => setWizardData({...wizardData, forcedItems: {...wizardData.forcedItems, [c]: e.target.value}})} style={{ width: '100%', padding: '0.4rem', borderRadius: '4px', border: 'none', borderBottom: '1px solid #cbd5e1', fontSize: '0.85rem', outline: 'none' }} />
@@ -538,7 +540,7 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                    </div>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem' }}>
-                   <button type="button" onClick={() => setWizardStep(2)} style={{ padding: '1rem 2rem', background: '#e2e8f0', color: '#475569', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}>{t('gen_back')}</button>
+                   <button type="button" onClick={() => setWizardStep(2)} style={{ padding: '1rem 2rem', background: 'var(--button-secondary-bg)', color: 'var(--button-secondary-text)', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}>{t('gen_back')}</button>
                    <button type="button" onClick={() => setWizardStep(4)} disabled={wizardData.categories.length === 0} style={{ padding: '1rem 2rem', background: '#4f46e5', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', opacity: wizardData.categories.length === 0 ? 0.5 : 1 }}>{t('gen_continue')}</button>
                </div>
             </div>
@@ -547,17 +549,17 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
             <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 4 ? 1 : 0.4, transition: 'opacity 0.5s' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1.5rem' }}>
                    {/* Col Gauche : FormControls */}
-                   <div style={{ background: '#ffffff', borderRadius: '16px', padding: '2rem', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)', border: '1px solid #f1f5f9' }}>
-                      <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: '#1e293b', fontSize: '1.2rem' }}>Format d'affichage cible</label>
+                   <div style={{ background: 'var(--panel-bg)', backdropFilter: 'blur(20px)', borderRadius: '24px', padding: '2.5rem', boxShadow: 'var(--panel-shadow)', border: '1px solid var(--panel-border)' }}>
+                      <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--foreground)', fontSize: '1.2rem' }}>Format d'affichage cible</label>
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginBottom: '1.5rem' }}>
                          {['Écran kiosque', 'Tablette', 'Impression A4', 'QR Code menu'].map(f => (
-                           <button type="button" key={f} onClick={() => setWizardData({...wizardData, outputFormat: f})} style={{ padding: '0.8rem', borderRadius: '8px', border: wizardData.outputFormat === f ? '2px solid #4f46e5' : '1px solid #cbd5e1', background: wizardData.outputFormat === f ? '#eef2ff' : '#f8fafc', cursor: 'pointer', fontWeight: 600, color: wizardData.outputFormat === f ? '#4f46e5' : '#334155' }}>
+                           <button type="button" key={f} onClick={() => setWizardData({...wizardData, outputFormat: f})} style={{ padding: '0.8rem', borderRadius: '8px', border: wizardData.outputFormat === f ? '2px solid #4f46e5' : '1px solid #cbd5e1', background: wizardData.outputFormat === f ? '#eef2ff' : 'rgba(255,255,255,0.05)', cursor: 'pointer', fontWeight: 600, color: wizardData.outputFormat === f ? '#4f46e5' : 'var(--foreground)' }}>
                              {f}
                            </button>
                          ))}
                       </div>
 
-                      <label style={{ display: 'block', fontWeight: 800, marginBottom: '1rem', color: '#1e293b', fontSize: '1.2rem' }}>Ambiance Visuelle (Couleurs)</label>
+                      <label style={{ display: 'block', fontWeight: 800, marginBottom: '1rem', color: 'var(--foreground)', fontSize: '1.2rem' }}>Ambiance Visuelle (Couleurs)</label>
 
                       <div style={{ marginBottom: '1.5rem' }}>
                         <label style={{
@@ -584,10 +586,10 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                             { name: 'Moderne', p: '#4f46e5', s: '#10b981' },
                             { name: 'Gourmand', p: '#dc2626', s: '#ea580c' },
                             { name: 'Healthy', p: '#16a34a', s: '#84cc16' },
-                            { name: 'Élégant', p: '#1e293b', s: '#94a3b8' },
+                            { name: 'Élégant', p: 'var(--foreground)', s: 'rgba(255,255,255,0.4)' },
                             { name: 'Océan', p: '#0284c7', s: '#38bdf8' },
                             { name: 'Pastel', p: '#f43f5e', s: '#fb7185' },
-                            { name: 'Luxury', p: '#0f172a', s: '#d4af37' },
+                            { name: 'Luxury', p: 'var(--foreground)', s: '#d4af37' },
                             { name: 'Sunset', p: '#ea580c', s: '#fcd34d' },
                           ].map(th => {
                               const isSelected = wizardData.primaryColor === th.p && wizardData.secondaryColor === th.s;
@@ -619,7 +621,7 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                                         borderRadius: '6px',
                                         width: '100%',
                                         textAlign: 'center',
-                                        border: '1px solid rgba(255, 255, 255, 0.3)'
+                                        border: '1px solid var(--step-text-inactive)'
                                     }}>
                                         <span style={{ fontWeight: 700, color: 'white', fontSize: '0.8rem', textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>{th.name}</span>
                                     </div>
@@ -634,34 +636,34 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                           })}
                       </div>
 
-                      <div style={{ display: 'flex', gap: '1rem', padding: '1rem', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0', marginBottom: '1.5rem' }}>
+                      <div style={{ display: 'flex', gap: '1rem', padding: '1rem', background: 'var(--input-bg)', borderRadius: '12px', border: '1px solid #e2e8f0', marginBottom: '1.5rem' }}>
                           <div style={{ flex: 1 }}>
-                              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#64748b', marginBottom: '0.3rem' }}>Primaire</label>
+                              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--button-secondary-text)', marginBottom: '0.3rem' }}>Primaire</label>
                               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                   <input type="color" value={wizardData.primaryColor} onChange={(e) => setWizardData({...wizardData, primaryColor: e.target.value})} style={{ width: '35px', height: '35px', padding: 0, border: 'none', borderRadius: '8px', cursor: 'pointer', background: 'transparent' }} />
-                                  <code style={{ fontSize: '0.85rem', color: '#334155', fontWeight: 600 }}>{wizardData.primaryColor}</code>
+                                  <code style={{ fontSize: '0.85rem', color: 'var(--foreground)', fontWeight: 600 }}>{wizardData.primaryColor}</code>
                               </div>
                           </div>
                           <div style={{ flex: 1 }}>
-                              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: '#64748b', marginBottom: '0.3rem' }}>Secondaire</label>
+                              <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--button-secondary-text)', marginBottom: '0.3rem' }}>Secondaire</label>
                               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                   <input type="color" value={wizardData.secondaryColor} onChange={(e) => setWizardData({...wizardData, secondaryColor: e.target.value})} style={{ width: '35px', height: '35px', padding: 0, border: 'none', borderRadius: '8px', cursor: 'pointer', background: 'transparent' }} />
-                                  <code style={{ fontSize: '0.85rem', color: '#334155', fontWeight: 600 }}>{wizardData.secondaryColor}</code>
+                                  <code style={{ fontSize: '0.85rem', color: 'var(--foreground)', fontWeight: 600 }}>{wizardData.secondaryColor}</code>
                               </div>
                           </div>
                       </div>
 
-                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', background: '#f8fafc', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0', cursor: 'pointer', marginBottom: '0.5rem' }}>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', background: 'var(--input-bg)', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0', cursor: 'pointer', marginBottom: '0.5rem' }}>
                            <input type="checkbox" checked={wizardData.showAllergens} onChange={e => setWizardData({...wizardData, showAllergens: e.target.checked})} style={{ width: '20px', height: '20px', accentColor: '#4f46e5' }} />
-                           <span style={{ fontWeight: 600, color: '#334155' }}>Placer des pastilles allergènes automatiquement</span>
+                           <span style={{ fontWeight: 600, color: 'var(--foreground)' }}>Placer des pastilles allergènes automatiquement</span>
                       </label>
                       
-                      <label style={{ display: 'block', fontWeight: 800, margin: '1rem 0 0.5rem 0', color: '#1e293b', fontSize: '1rem' }}>Sémantique Promotionnelle (Badges)</label>
+                      <label style={{ display: 'block', fontWeight: 800, margin: '1rem 0 0.5rem 0', color: 'var(--foreground)', fontSize: '1rem' }}>Sémantique Promotionnelle (Badges)</label>
                       <input type="text" value={wizardData.productBadges.join(', ')} onChange={e => setWizardData({...wizardData, productBadges: e.target.value.split(',').map(s=>s.trim())})} placeholder="Ex: NOUVEAU, OFFRE SPECIALE, BEST-SELLER" style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.9rem' }} />
                    </div>
 
                    {/* Col Droite : Live Preview */}
-                   <div style={{ background: wizardData.primaryColor, borderRadius: '16px', padding: '1.5rem', color: '#ffffff', display: 'flex', flexDirection: 'column', gap: '1rem', boxShadow: `0 10px 25px -5px ${wizardData.primaryColor}80`, transition: 'background 0.3s ease', position: 'relative', overflow: 'hidden' }}>
+                   <div style={{ background: wizardData.primaryColor, borderRadius: '16px', padding: '1.5rem', color: 'var(--card-bg)', display: 'flex', flexDirection: 'column', gap: '1rem', boxShadow: `0 10px 25px -5px ${wizardData.primaryColor}80`, transition: 'background 0.3s ease', position: 'relative', overflow: 'hidden' }}>
                       <div style={{ position: 'absolute', top: '-20px', right: '-20px', width: '100px', height: '100px', background: wizardData.secondaryColor, borderRadius: '50%', opacity: 0.8, filter: 'blur(30px)' }}></div>
                       
                       <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 800, opacity: 0.9 }}>Aperçu Dynamique</div>
@@ -682,32 +684,32 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem' }}>
-                   <button type="button" onClick={() => setWizardStep(hasImage ? 1 : 3)} style={{ padding: '1rem 2rem', background: '#e2e8f0', color: '#475569', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}>{t('gen_back')}</button>
+                   <button type="button" onClick={() => setWizardStep(hasImage ? 1 : 3)} style={{ padding: '1rem 2rem', background: 'var(--button-secondary-bg)', color: 'var(--button-secondary-text)', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}>{t('gen_back')}</button>
                    <button type="button" onClick={() => setWizardStep(5)} style={{ padding: '1rem 2rem', background: '#4f46e5', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 15px rgba(79, 70, 229, 0.3)' }}>{t('gen_continue')}</button>
                </div>
             </div>
 
 {/* ETAPE 5 : GENERATION (Recap) */}
             <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 5 ? 1 : 0.4, transition: 'opacity 0.5s' }}>
-               <div style={{ background: '#ffffff', borderRadius: '16px', padding: '2rem', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.05)', border: '1px solid #f1f5f9', textAlign: 'center' }}>
+               <div style={{ background: 'var(--panel-bg)', backdropFilter: 'blur(20px)', borderRadius: '24px', padding: '2.5rem', boxShadow: 'var(--panel-shadow)', border: '1px solid var(--panel-border)', textAlign: 'center' }}>
                    <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🚀</div>
-                   <h2 style={{ margin: '0 0 1rem 0', color: '#1e293b', fontSize: '1.8rem' }}>{t('gen_ready')}</h2>
-                   <p style={{ color: '#64748b', fontSize: '1.1rem', marginBottom: '2rem' }}>{t('gen_ready_desc')}</p>
+                   <h2 style={{ margin: '0 0 1rem 0', color: 'var(--foreground)', fontSize: '1.8rem' }}>{t('gen_ready')}</h2>
+                   <p style={{ color: 'var(--button-secondary-text)', fontSize: '1.1rem', marginBottom: '2rem' }}>{t('gen_ready_desc')}</p>
                    
-                   <div style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '12px', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '0.8rem', marginBottom: '2rem' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{color:'#64748b'}}>Restaurant :</span> <span style={{fontWeight:800}}>{wizardData.restaurantName} ({wizardData.language})</span></div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{color:'#64748b'}}>Concept :</span> <span style={{fontWeight:800}}>{wizardData.typeLabel}</span></div>
+                   <div style={{ background: 'var(--input-bg)', padding: '1.5rem', borderRadius: '12px', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '0.8rem', marginBottom: '2rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{color:'var(--text-muted)'}}>Restaurant :</span> <span style={{fontWeight:800}}>{wizardData.restaurantName} ({wizardData.language})</span></div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{color:'var(--text-muted)'}}>Concept :</span> <span style={{fontWeight:800}}>{wizardData.typeLabel}</span></div>
                       {hasImage ? (
                          <div style={{ display: 'flex', justifyContent: 'space-between', color: '#059669', fontWeight: 'bold' }}><span>Mode :</span> <span>Extraction Optique (OCR) 📸</span></div>
                       ) : (
                          <>
-                           <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{color:'#64748b'}}>Catégories :</span> <span style={{fontWeight:800}}>{wizardData.categories.length}</span></div>
-                           <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{color:'#64748b'}}>Formules :</span> <span style={{fontWeight:800}}>{wizardData.formulas.isMenu ? "Menu/Maxi actifs" : "Seul"}</span></div>
+                           <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{color:'var(--text-muted)'}}>Catégories :</span> <span style={{fontWeight:800}}>{wizardData.categories.length}</span></div>
+                           <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{color:'var(--text-muted)'}}>Formules :</span> <span style={{fontWeight:800}}>{wizardData.formulas.isMenu ? "Menu/Maxi actifs" : "Seul"}</span></div>
                          </>
                       )}
                    </div>
 
-                   <button disabled={isGenerating} type="submit" style={{ width: '100%', padding: '1.2rem', background: isGenerating ? '#94a3b8' : 'linear-gradient(135deg, #4f46e5, #0ea5e9)', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.3rem', fontWeight: 900, cursor: isGenerating ? 'not-allowed' : 'pointer', transition: 'all 0.3s', boxShadow: isGenerating ? 'none' : '0 10px 25px -5px rgba(79, 70, 229, 0.4)', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem' }}>
+                   <button disabled={isGenerating} type="submit" style={{ width: '100%', padding: '1.2rem', background: isGenerating ? 'rgba(255,255,255,0.4)' : 'linear-gradient(135deg, #4f46e5, #0ea5e9)', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.3rem', fontWeight: 900, cursor: isGenerating ? 'not-allowed' : 'pointer', transition: 'all 0.3s', boxShadow: isGenerating ? 'none' : '0 10px 25px -5px rgba(79, 70, 229, 0.4)', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem' }}>
                       {isGenerating ? (
                         <><span>⏳</span> {generationStepText || t('gen_generating')}</>
                       ) : (
@@ -717,7 +719,7 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                </div>
                
                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem' }}>
-                   <button type="button" disabled={isGenerating} onClick={() => setWizardStep(4)} style={{ padding: '1rem 2rem', background: '#e2e8f0', color: '#475569', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', opacity: isGenerating ? 0.5 : 1 }}>{t('gen_back')}</button>
+                   <button type="button" disabled={isGenerating} onClick={() => setWizardStep(4)} style={{ padding: '1rem 2rem', background: 'var(--button-secondary-bg)', color: 'var(--button-secondary-text)', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', opacity: isGenerating ? 0.5 : 1 }}>{t('gen_back')}</button>
                </div>
             </div>
 
@@ -744,7 +746,7 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                 )}
                 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem', marginTop: '2rem' }}>
-                   <h3 style={{ fontSize: '1rem', color: '#64748b', margin: 0, textTransform: 'uppercase', letterSpacing: '1px' }}>Code Brut (JSON)</h3>
+                   <h3 style={{ fontSize: '1rem', color: 'var(--button-secondary-text)', margin: 0, textTransform: 'uppercase', letterSpacing: '1px' }}>Code Brut (JSON)</h3>
                    <div style={{ display: 'flex', gap: '0.75rem' }}>
                       <button onClick={handleDownload} style={{ padding: '0.5rem 1rem', background: '#f3f4f6', color: '#374151', border: '1px solid #d1d5db', borderRadius: '6px', cursor: 'pointer', fontWeight: 600 }}>
                          ⬇️ Télécharger
@@ -821,6 +823,7 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
         </div>
       )}
 
+      <LogoMarquee />
     </main>
   );
 }

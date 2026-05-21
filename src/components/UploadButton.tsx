@@ -134,9 +134,9 @@ export default function UploadButton() {
 
         {/* Import par URL */}
         <form onSubmit={handleUrlImport} style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-          <label style={{ fontSize: '0.85rem', fontWeight: 600, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Lien HTTPS distant</label>
+          <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Lien HTTPS distant</label>
           <div style={{ display: 'flex', gap: '0.5rem', position: 'relative' }}>
-            <div style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8', display: 'flex' }}>
+            <div style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)', display: 'flex' }}>
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
             </div>
             <input 
@@ -153,7 +153,7 @@ export default function UploadButton() {
                 border: '1px solid var(--card-border)',
                 fontSize: '0.95rem',
                 outline: 'none',
-                background: 'rgba(255, 255, 255, 0.5)',
+                background: 'rgba(255, 255, 255, 0.05)',
                 transition: 'var(--transition-smooth)',
                 color: 'var(--foreground)'
               }}
@@ -164,8 +164,8 @@ export default function UploadButton() {
               type="submit"
               disabled={isUploading}
               style={{
-                background: isUploading ? '#cbd5e1' : 'var(--foreground)',
-                color: 'white',
+                background: isUploading ? 'rgba(255, 255, 255, 0.1)' : 'var(--foreground)',
+                color: 'var(--background)',
                 border: 'none',
                 padding: '0 1.5rem',
                 borderRadius: '12px',
@@ -186,7 +186,7 @@ export default function UploadButton() {
 
         <div style={{ display: 'flex', alignItems: 'center', width: '100%', gap: '1rem', margin: '0.5rem 0' }}>
           <div style={{ flexGrow: 1, height: '1px', background: 'var(--card-border)' }}></div>
-          <span style={{ color: '#94a3b8', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.05em' }}>OU UPLOAD LOCAL</span>
+          <span style={{ color: 'var(--text-muted)', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.05em' }}>OU UPLOAD LOCAL</span>
           <div style={{ flexGrow: 1, height: '1px', background: 'var(--card-border)' }}></div>
         </div>
         

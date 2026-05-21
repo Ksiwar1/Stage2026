@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import styles from "../page.module.css";
 import Link from 'next/link';
 import { useLanguage } from '../../lib/LanguageContext';
+import LogoMarquee from '../../components/LogoMarquee';
 
 export default function MenuPage() {
   const { t } = useLanguage();
@@ -12,17 +13,14 @@ export default function MenuPage() {
 
   useEffect(() => {
     setIsClient(true);
-    const saved = localStorage.getItem("softavera_support_settings");
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
+    fetch('/api/settings')
+      .then(res => res.json())
+      .then(parsed => {
         if (parsed.siteMenuOrder && Array.isArray(parsed.siteMenuOrder)) {
           setOrder(parsed.siteMenuOrder);
         }
-      } catch (e) {
-        console.error("Failed to parse settings", e);
-      }
-    }
+      })
+      .catch(e => console.error("Failed to load settings from DB", e));
   }, []);
 
   const cards = {
@@ -82,6 +80,7 @@ export default function MenuPage() {
           {['generer', 'bibliotheque', 'importer', 'update', 'historique', 'parametres'].map((key) => cards[key as keyof typeof cards])}
         </div>
       )}
+      <LogoMarquee />
     </main>
   );
 }

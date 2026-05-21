@@ -2,6 +2,8 @@ import styles from "../page.module.css";
 import Link from "next/link";
 import { getCartesVisualSummary } from "../../lib/memory";
 import CarteGrid from "../../components/CarteGrid";
+import LogoMarquee from '../../components/LogoMarquee';
+
 
 export default async function UpdateCarte() {
   const cartes = await getCartesVisualSummary();
@@ -22,6 +24,7 @@ export default async function UpdateCarte() {
           <Link href="/menu" className={styles.backButton}><span>&lt;-</span> Retour au tableau de bord</Link>
         </div>
       </div>
+      <LogoMarquee />
     </main>
   );
 }

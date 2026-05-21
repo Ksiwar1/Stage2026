@@ -178,11 +178,10 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
       finalLangs = catalogData.opt.languages;
     }
 
-    // Read from Local Support Overrides
-    try {
-      const saved = localStorage.getItem("softavera_support_settings");
-      if (saved) {
-        const parsed = JSON.parse(saved);
+    // Read from Global Settings API
+    fetch('/api/settings')
+      .then(res => res.json())
+      .then(parsed => {
         if (parsed.overrideLanguages && parsed.overrideLanguages.length > 0) {
           finalLangs = parsed.overrideLanguages;
         }
@@ -201,30 +200,37 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
             const aIndex = priorities.findIndex(p => aTitle.includes(p));
             const bIndex = priorities.findIndex(p => bTitle.includes(p));
             
-            // If both are found in the priority list, sort by their position
             if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
-            // If only one is found, it comes first
             if (aIndex !== -1) return -1;
             if (bIndex !== -1) return 1;
-            // Otherwise, keep the original workflow rank
             return (a.workflowRank || 0) - (b.workflowRank || 0);
           });
         }
-      }
-    } catch (e) {
-      console.error("Failed to apply overrides", e);
-    }
 
-    if (finalLangs.join(',') !== allowedLanguages.join(',')) {
-      setAllowedLanguages(finalLangs as any);
-    }
-    setActiveThemePalette({
-      ...themePalette,
-      primary: finalPrimary,
-      secondary: finalSecondary,
-      text: finalPrimary // Auto-adapting text color to primary for visibility
-    });
-    setActiveCategoriesTree(finalCategories);
+        if (finalLangs.join(',') !== allowedLanguages.join(',')) {
+          setAllowedLanguages(finalLangs as any);
+        }
+        setActiveThemePalette({
+          ...themePalette,
+          primary: finalPrimary,
+          secondary: finalSecondary,
+          text: finalPrimary
+        });
+        setActiveCategoriesTree(finalCategories);
+      })
+      .catch(e => {
+        console.error("Failed to load settings from DB", e);
+        if (finalLangs.join(',') !== allowedLanguages.join(',')) {
+          setAllowedLanguages(finalLangs as any);
+        }
+        setActiveThemePalette({
+          ...themePalette,
+          primary: finalPrimary,
+          secondary: finalSecondary,
+          text: finalPrimary
+        });
+        setActiveCategoriesTree(finalCategories);
+      });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     catalogData?.opt?.languages?.join(','), 

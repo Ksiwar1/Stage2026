@@ -1,0 +1,53 @@
+/* --- Logo Marquee --- */
+.marqueeContainer {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  overflow: hidden;
+  padding: 3rem 0;
+  margin-top: 5rem;
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+  /* Masque les débordements gauche/droite pour un scroll propre */
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+.marqueeContent {
+  display: flex;
+  gap: 5rem;
+  align-items: center;
+  width: max-content;
+  animation: scrollMarquee 35s linear infinite;
+  padding: 0 2.5rem;
+}
+
+.marqueeContent:hover {
+  animation-play-state: paused;
+}
+
+.marqueeLogo {
+  height: 65px; 
+  object-fit: contain;
+  transition: all 0.4s ease;
+  user-select: none;
+  /* Simple inversion makes black logos white. Opacity makes them fit the theme. */
+  filter: invert(1) opacity(0.6);
+}
+
+.marqueeLogo:hover {
+  transform: scale(1.1);
+  filter: invert(1) opacity(1) drop-shadow(0 0 8px rgba(255,255,255,0.4));
+}
+
+@keyframes scrollMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 2.5rem)); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}

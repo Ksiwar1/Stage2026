@@ -124,5 +124,82 @@
     "nomFichier": "ia_11111.json",
     "actionType": "CREATE",
     "details": "Carte générée avec succès par l'IA."
+  },
+  {
+    "id": "0d44c687-1730-493a-b33b-a25eda41f99f",
+    "timestamp": "2026-05-20T08:35:54.324Z",
+    "nomFichier": "98acd276-9546-4804-8f4f-bd34eef9474d",
+    "actionType": "UPDATE",
+    "details": "Modification du produit \"7 UP MOJITO 33CL\" (Prix: 1€)"
+  },
+  {
+    "id": "ebba3962-784d-45bd-a324-1e4bdc05331e",
+    "timestamp": "2026-05-20T08:36:12.086Z",
+    "nomFichier": "98acd276-9546-4804-8f4f-bd34eef9474d",
+    "actionType": "UPDATE",
+    "details": "Modification du produit \"MENU TACOS MONTAGNARD L\" (Prix: 8€)"
+  },
+  {
+    "id": "4f75064d-1938-4fc7-a37e-fdd6877e5895",
+    "timestamp": "2026-05-20T08:37:01.382Z",
+    "nomFichier": "8f2ad152-2437-4929-a0fc-ef9753c1418f",
+    "actionType": "UPDATE",
+    "details": "Modification du produit \"GLACE CHOCOLAT\" (Prix: 3€)"
+  },
+  {
+    "id": "42d9003e-3be7-493a-a286-859b6b6a0c4f",
+    "timestamp": "2026-05-20T08:37:14.862Z",
+    "nomFichier": "99773850-1456-4bf6-af1f-69231487d3e3",
+    "actionType": "UPDATE",
+    "details": "Modification du produit \"MENU SMOKE UP SMALL\" (Prix: 7€)"
+  },
+  {
+    "id": "2e410eae-bea5-4053-a7ff-ee4acae7f9df",
+    "timestamp": "2026-05-20T08:48:23.624Z",
+    "nomFichier": "c38c7fea-072a-4030-8338-6d36685af11c",
+    "actionType": "UPDATE",
+    "details": "Modification du produit \"SANDWICH MENU\" (Prix: 8€)"
+  },
+  {
+    "id": "a739ea19-bf9b-4516-b621-1e86b0651971",
+    "timestamp": "2026-05-20T08:48:31.852Z",
+    "nomFichier": "c38c7fea-072a-4030-8338-6d36685af11c",
+    "actionType": "UPDATE",
+    "details": "Modification du produit \"PETITE FRITES SAUCE CHEDDAR\" (Prix: 2€)"
+  },
+  {
+    "id": "eaa2e25d-af6d-46a1-86a3-24bc796667a4",
+    "timestamp": "2026-05-20T08:48:42.099Z",
+    "nomFichier": "c38c7fea-072a-4030-8338-6d36685af11c",
+    "actionType": "UPDATE",
+    "details": "Modification du produit \"FRITES CHEDDAR OIGNONS CRISPY_27/11/2024_13:25:31\" (Prix: 3€)"
+  },
+  {
+    "id": "012ee0c3-08b1-44fb-b764-843cb6ec5cf6",
+    "timestamp": "2026-05-20T08:48:49.612Z",
+    "nomFichier": "c38c7fea-072a-4030-8338-6d36685af11c",
+    "actionType": "UPDATE",
+    "details": "Modification du produit \"KETCHUP\" (Prix: 0.2€)"
+  },
+  {
+    "id": "ec4b1730-d516-4544-a5cf-78c8b3975732",
+    "timestamp": "2026-05-20T08:49:06.878Z",
+    "nomFichier": "3c21ebb8-68d8-4b04-a112-1a01c1510653",
+    "actionType": "UPDATE",
+    "details": "Modification du produit \"EAU CRISTALINE 33CL\" (Prix: 1€)"
+  },
+  {
+    "id": "9046c0bb-17ca-4231-bf01-ee29cf3d2581",
+    "timestamp": "2026-05-20T08:49:18.284Z",
+    "nomFichier": "3c21ebb8-68d8-4b04-a112-1a01c1510653",
+    "actionType": "UPDATE",
+    "details": "Modification du produit \"CRISTALINE PECHE\" (Prix: 2€)"
+  },
+  {
+    "id": "deb0c413-ddc7-40ff-a1cc-4852a8313db3",
+    "timestamp": "2026-05-20T08:49:48.267Z",
+    "nomFichier": "99773850-1456-4bf6-af1f-69231487d3e3",
+    "actionType": "UPDATE",
+    "details": "Modification du produit \"MENU SMOKE UP SMALL\" (Prix: 7€)"
   }
 ]

@@ -9,6 +9,23 @@ import styles from './Menu.module.css';
 export default function Menu() {
   const pathname = usePathname();
   const { lang, setLang, t, allowedLanguages, setAllowedLanguages } = useLanguage();
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+
+  // Load theme on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('site-theme') as 'dark' | 'light';
+    if (savedTheme) {
+      setTheme(savedTheme);
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    localStorage.setItem('site-theme', newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+  };
 
   const navLinks = [
     { title: t('nav_home'), path: '/' },
@@ -16,12 +33,10 @@ export default function Menu() {
   ];
 
   useEffect(() => {
-    // Read global site settings
-    const saved = localStorage.getItem("softavera_support_settings");
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        
+    // Read global site settings from API
+    fetch('/api/settings')
+      .then(res => res.json())
+      .then(parsed => {
         // Handle Languages
         if (parsed.overrideLanguages && parsed.overrideLanguages.length > 0) {
           setAllowedLanguages(parsed.overrideLanguages);
@@ -39,10 +54,8 @@ export default function Menu() {
         } else {
           document.documentElement.style.removeProperty('--site-secondary');
         }
-      } catch (e) {
-        console.error("Failed to load site settings", e);
-      }
-    }
+      })
+      .catch(e => console.error("Failed to load site settings from DB", e));
   }, [setAllowedLanguages]);
 
   return (
@@ -55,7 +68,8 @@ export default function Menu() {
             src="https://softavera.com/assets/logos/softavera/logo-softavera1.png" 
             alt="Logo Softavera" 
             height="55" 
-            style={{ objectFit: 'contain' }} 
+            className={styles.logoImg}
+            suppressHydrationWarning
           />
         </Link>
 
@@ -71,6 +85,24 @@ export default function Menu() {
                 {link.title}
               </Link>
             ))}
+          </div>
+
+          {/* Theme Selector */}
+          <div className={styles.langSelector} style={{ marginRight: '0.5rem' }}>
+            <button 
+              className={`${styles.langBtn} ${theme === 'dark' ? styles.activeLang : ''}`} 
+              onClick={() => theme === 'light' && toggleTheme()}
+              title="Mode Sombre"
+            >
+              🌙 Noir
+            </button>
+            <button 
+              className={`${styles.langBtn} ${theme === 'light' ? styles.activeLang : ''}`} 
+              onClick={() => theme === 'dark' && toggleTheme()}
+              title="Mode Clair"
+            >
+              ☀️ Blanc
+            </button>
           </div>
 
           {/* Lang Selector */}
@@ -100,3 +132,5 @@ export default function Menu() {
     </nav>
   );
 }
+
+// trigger rebuild

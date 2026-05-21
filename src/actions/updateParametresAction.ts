@@ -56,7 +56,12 @@ export async function updateParametresAction(
       });
     }
 
-    await cardService.updateCard(cardId, { content: data });
+    await cardService.updateCard(
+      cardId, 
+      { content: data },
+      'UPDATE_PARAMETRES',
+      `Modification des paramètres (Langues: ${updates.languages.join(', ')})`
+    );
     
     return { success: true };
   } catch (error: any) {

@@ -1,24 +1,56 @@
 :root {
-  --background: #fdfdfd; /* Blanc très pur avec une infime pointe de gris */
-  --foreground: #0f172a; /* Slate 900 profond pour un contraste élégant */
-  --primary: #2563eb; /* Bleu Royal Softavera */
-  --primary-hover: #1d4ed8; /* Bleu Foncé au survol */
-  --secondary: #f1f5f9; /* Slate 100 pour les fonds secondaires */
-  --card-bg: #ffffff;
-  --card-border: rgba(15, 23, 42, 0.08); /* Bordure un peu plus froide et premium */
-  --gradient-text: linear-gradient(135deg, #0f172a 0%, #334155 100%);
-  --site-primary: #2563eb; /* Default Softavera blue */
-  --site-secondary: #0ea5e9; /* Light blue accent */
+  /* ==============================================================
+     CYBER MINIMAL DESIGN SYSTEM (Apple Vision Pro / Tesla UI Vibe)
+     ============================================================== */
   
-  /* Ombres Premium Modernes */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.025);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.025);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.025);
-  --shadow-primary: 0 10px 25px -5px rgba(37, 99, 235, 0.35);
+  /* --- Colors --- */
+  --background: #02040a; /* Ultra deep space black */
+  --foreground: #f8fafc; /* Crisp off-white */
+  --text-muted: #94a3b8; /* Slate 400 for secondary text */
   
-  /* Transitions */
-  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* --- Brand Accents (Only Blues) --- */
+  --primary: #3b82f6; /* Electric Blue */
+  --primary-hover: #60a5fa; /* Lighter blue for hover */
+  --primary-glow: rgba(59, 130, 246, 0.4);
+  --secondary: #0ea5e9; /* Cyan accent */
+  --site-primary: #3b82f6;
+  --site-secondary: #0ea5e9;
+  
+  /* --- Glassmorphism Tokens --- */
+  --glass-bg: rgba(255, 255, 255, 0.03); /* Extremely subtle white tint */
+  --glass-bg-hover: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.08); /* Barely visible edge */
+  --glass-border-highlight: rgba(255, 255, 255, 0.15);
+  
+  /* --- Component Specific --- */
+  --card-bg: var(--glass-bg);
+  --card-border: var(--glass-border);
+  --panel-bg: rgba(15, 23, 42, 0.5);
+  --nav-bg: #080a11;
+  --nav-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(59, 130, 246, 0.05);
+  --nav-logo-filter: brightness(4) drop-shadow(0px 0px 4px rgba(255, 255, 255, 0.1));
+  --lang-btn-bg: rgba(0, 0, 0, 0.3);
+  --lang-btn-active: rgba(255, 255, 255, 0.15);
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --panel-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-border: rgba(255, 255, 255, 0.1);
+  --step-bg-inactive: rgba(15, 23, 42, 0.6);
+  --step-text-inactive: rgba(255, 255, 255, 0.3);
+  --button-secondary-bg: rgba(255, 255, 255, 0.1);
+  --button-secondary-text: rgba(255, 255, 255, 0.7);
+  --gradient-text: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+  
+  /* --- Cyber Shadows (Deep with slight glows) --- */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--glass-border);
+  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--glass-border);
+  --shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.8), 0 0 0 1px var(--glass-border);
+  --shadow-primary: 0 0 20px var(--primary-glow);
+  
+  /* --- Smooth Transitions --- */
+  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: all 0.2s ease-out;
 }
 
 html,
@@ -32,10 +64,10 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), "Inter", -apple-system, system-ui, sans-serif;
   
-  /* Arrière-plan subtil premium */
+  /* Immersive Neo-Futuristic Background */
   background-image:
-    radial-gradient(circle at 15% 50%, rgba(37, 99, 235, 0.04), transparent 30%),
-    radial-gradient(circle at 85% 30%, rgba(14, 165, 233, 0.03), transparent 30%);
+    radial-gradient(circle at 15% 30%, rgba(59, 130, 246, 0.05), transparent 40%),
+    radial-gradient(circle at 85% 70%, rgba(14, 165, 233, 0.04), transparent 40%);
   background-attachment: fixed;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
@@ -55,4 +87,86 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
   color: var(--foreground);
   letter-spacing: -0.02em;
+}
+/* ==============================================================
+   LIGHT THEME OVERRIDES (Previous Design)
+   ============================================================== */
+[data-theme="light"] {
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --text-muted: #64748b;
+  
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --primary-glow: rgba(59, 130, 246, 0.2);
+  --secondary: #0ea5e9;
+  
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-bg-hover: rgba(255, 255, 255, 0.95);
+  --glass-border: rgba(0, 0, 0, 0.1);
+  --glass-border-highlight: rgba(0, 0, 0, 0.2);
+  
+  --panel-bg: #ffffff;
+  --nav-bg: rgba(255, 255, 255, 0.85);
+  --nav-active-bg: rgba(0, 0, 0, 0.05);
+  --nav-active-border: rgba(0, 0, 0, 0.1);
+  --nav-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  --nav-logo-filter: none;
+  --lang-btn-bg: rgba(0, 0, 0, 0.05);
+  --lang-btn-active: rgba(0, 0, 0, 0.1);
+  --panel-border: #f1f5f9;
+  --panel-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  --input-bg: #f8fafc;
+  --input-border: #cbd5e1;
+  --step-bg-inactive: #f1f5f9;
+  --step-text-inactive: #94a3b8;
+  --button-secondary-bg: #e2e8f0;
+  --button-secondary-text: #475569;
+  
+  --gradient-text: linear-gradient(135deg, #0f172a 0%, #475569 100%);
+  
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.08), 0 0 0 1px var(--glass-border);
+  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.1), 0 0 0 1px var(--glass-border);
+  --shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.12), 0 0 0 1px var(--glass-border);
+}
+
+[data-theme="light"] body {
+  background-image: none;
+  background-color: var(--background);
+}
+
+
+/* Hide ONLY the dark gradient overlays in light mode */
+[data-theme="light"] [class*="heroImageBg"]::after,
+[data-theme="light"] [class*="heroBackground"]::after {
+  display: none !important;
+}
+
+/* Make the photo extremely light and subtle in light mode */
+[data-theme="light"] [class*="heroImageBg"]::before,
+[data-theme="light"] [class*="heroBackground"]::before {
+  opacity: 0.15 !important;
+  filter: grayscale(100%) !important;
+}
+
+/* LIGHT THEME HOME PAGE OVERRIDES */
+[data-theme="light"] [class*="title"] {
+  text-shadow: none !important;
+  color: var(--foreground) !important;
+}
+[data-theme="light"] [class*="marqueeLogo"] {
+  filter: opacity(0.6) !important;
+}
+[data-theme="light"] [class*="marqueeLogo"]:hover {
+  filter: opacity(1) !important;
+}
+[data-theme="light"] [class*="btnSecondary"] {
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+  color: #0f172a !important;
+}
+[data-theme="light"] [class*="statNumber"] {
+  text-shadow: none !important;
 }

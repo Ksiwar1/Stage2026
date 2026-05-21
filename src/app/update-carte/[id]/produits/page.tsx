@@ -22,7 +22,7 @@ export default async function ProduitsEditorPage(props: { params: Promise<{ id: 
   }
 
   return (
-    <main className={`${styles.main}`} style={{ padding: '2rem', background: '#f8fafc', minHeight: '100vh' }}>
+    <main className={`${styles.main}`} style={{ padding: '10rem 2rem 4rem 2rem', background: '#f8fafc', minHeight: '100vh' }}>
       <div style={{ maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
         
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '2rem', gap: '1.5rem' }}>
