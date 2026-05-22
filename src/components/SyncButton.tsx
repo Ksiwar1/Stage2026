@@ -13,7 +13,13 @@ export default function SyncButton() {
     setStatus(null);
     try {
       const res = await fetch('/api/sync-cartes', { method: 'POST' });
-      const data = await res.json();
+      const contentType = res.headers.get('content-type');
+      let data;
+      if (contentType && contentType.includes('application/json')) {
+        data = await res.json();
+      } else {
+        throw new TypeError('Oops, we haven\'t got JSON!');
+      }
       setStatus({ 
         message: data.message, 
         success: data.success,

@@ -22,7 +22,13 @@ export default function UploadButton() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: urlInput })
       });
-      const data = await res.json();
+      const contentType = res.headers.get('content-type');
+      let data;
+      if (contentType && contentType.includes('application/json')) {
+        data = await res.json();
+      } else {
+        throw new TypeError('Oops, we haven\'t got JSON!');
+      }
       setStatus({ message: data.message, success: data.success });
       if (data.success) {
         setUrlInput('');
@@ -41,7 +47,13 @@ export default function UploadButton() {
     setAnalysisReport(null);
     try {
       const res = await fetch('/api/analyze-carte', { method: 'POST' });
-      const data = await res.json();
+      const contentType = res.headers.get('content-type');
+      let data;
+      if (contentType && contentType.includes('application/json')) {
+        data = await res.json();
+      } else {
+        throw new TypeError('Oops, we haven\'t got JSON!');
+      }
       if (data.success) {
         setAnalysisReport(data.report);
       } else {
@@ -83,7 +95,13 @@ export default function UploadButton() {
             headers: { 'Content-Type': 'text/plain' } // C'est juste du gros texte innocent
         });
 
-        const result = await res.json();
+        const contentType = res.headers.get('content-type');
+        let result;
+        if (contentType && contentType.includes('application/json')) {
+          result = await res.json();
+        } else {
+          throw new TypeError('Oops, we haven\'t got JSON!');
+        }
         setStatus({ message: result.message, success: result.success });
 
       } catch (err) {

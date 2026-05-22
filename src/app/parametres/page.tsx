@@ -23,7 +23,13 @@ export default function Parametres() {
   useEffect(() => {
     setIsClient(true);
     fetch('/api/settings')
-      .then(res => res.json())
+      .then(res => {
+        const contentType = res.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          return res.json();
+        }
+        throw new TypeError('Oops, we haven\'t got JSON!');
+      })
       .then(parsed => {
         if (parsed.overrideLanguages) setOverrideLanguages(parsed.overrideLanguages);
         if (parsed.overridePrimaryColor) setOverridePrimaryColor(parsed.overridePrimaryColor);

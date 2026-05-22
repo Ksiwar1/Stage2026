@@ -35,7 +35,13 @@ export default function Menu() {
   useEffect(() => {
     // Read global site settings from API
     fetch('/api/settings')
-      .then(res => res.json())
+      .then(res => {
+        const contentType = res.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          return res.json();
+        }
+        throw new TypeError('Oops, we haven\'t got JSON!');
+      })
       .then(parsed => {
         // Handle Languages
         if (parsed.overrideLanguages && parsed.overrideLanguages.length > 0) {

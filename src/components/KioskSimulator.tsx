@@ -180,7 +180,13 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
 
     // Read from Global Settings API
     fetch('/api/settings')
-      .then(res => res.json())
+      .then(res => {
+        const contentType = res.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          return res.json();
+        }
+        throw new TypeError('Oops, we haven\'t got JSON!');
+      })
       .then(parsed => {
         if (parsed.overrideLanguages && parsed.overrideLanguages.length > 0) {
           finalLangs = parsed.overrideLanguages;

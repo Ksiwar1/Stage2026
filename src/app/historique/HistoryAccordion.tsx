@@ -25,7 +25,13 @@ export default function HistoryAccordion({ card }: { card: any }) {
       setLoading(true);
       try {
         const res = await fetch(`/api/cards/${card.id}/history`);
-        const data = await res.json();
+        const contentType = res.headers.get('content-type');
+        let data;
+        if (contentType && contentType.includes('application/json')) {
+          data = await res.json();
+        } else {
+          throw new TypeError('Oops, we haven\'t got JSON!');
+        }
         setHistory(data);
       } catch (error) {
         console.error('Erreur lors du chargement de l\'historique', error);

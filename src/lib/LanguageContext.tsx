@@ -34,7 +34,7 @@ const dictionary: Record<string, Record<SupportedLang, string>> = {
   // Home Page
   "home_welcome": { FR: "Bienvenue", EN: "Welcome" },
   "home_desc": { FR: "Cartes Softavera", EN: "Softavera Menus" },
-  "home_title": { FR: "ETK360 softavera", EN: "ETK360 softavera" },
+  "home_title": { FR: "Softavera ETK360", EN: "Softavera ETK360" },
   "home_subtitle": { FR: "Espace réservé à l'équipe Support & Prod Softavera. Gérez les catalogues, générez des cartes par IA et supervisez le parc d'applications Kiosk.", EN: "Workspace for Softavera Support & Prod team. Manage catalogs, generate AI menus, and supervise the Kiosk application fleet." },
   "home_cta_primary": { FR: "Ouvrir l'Espace de Travail", EN: "Open Workspace" },
   "home_cta_secondary": { FR: "Consulter l'Historique", EN: "View Logs & History" },
