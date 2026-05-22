@@ -201,5 +201,12 @@
     "nomFichier": "99773850-1456-4bf6-af1f-69231487d3e3",
     "actionType": "UPDATE",
     "details": "Modification du produit \"MENU SMOKE UP SMALL\" (Prix: 7€)"
+  },
+  {
+    "id": "e3c13f6e-d171-47dd-a309-c7ccb5f00ae4",
+    "timestamp": "2026-05-22T10:07:19.282Z",
+    "nomFichier": "26ff5944-380d-441d-a1a4-5eac15d72035",
+    "actionType": "CREATE",
+    "details": "Carte générée avec succès par l'IA."
   }
 ]

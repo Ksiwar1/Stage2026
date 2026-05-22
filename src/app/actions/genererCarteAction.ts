@@ -7,6 +7,7 @@ import { patchETK360Structure } from "../../lib/autoHealer";
 import fs from "fs";
 import path from "path";
 import { addLog } from "../../lib/logger";
+import { cardService } from "../../services/cardService";
 
 export async function genererArchitectureAction(data: FormData) {
   let sujetDemande = (data.get("sujet") as string) || "Générer une carte à partir de l'image";
@@ -207,7 +208,7 @@ export async function enrichirCarteAction(
     let originalTheme: any = { palette: ["#4F46E5", "#10B981", "#F59E0B"] };
     if (activeSourceInspiration && activeSourceInspiration !== 'generique') {
         try {
-            const cardService = require('../../services/cardService').cardService;
+            // import moved to top
             const refCard = await cardService.getCardById(activeSourceInspiration);
             if (refCard) {
                 const refData = refCard.content;
@@ -282,7 +283,7 @@ export async function enrichirCarteAction(
                 const { GENERIC_MASTER_TEMPLATE_JSON_STR } = require('../../lib/memory');
                 data = JSON.parse(GENERIC_MASTER_TEMPLATE_JSON_STR);
             } else {
-                const cardService = require('../../services/cardService').cardService;
+                // import moved to top
                 const card = await cardService.getCardById(f);
                 data = card ? card.content : {};
             }
@@ -1164,7 +1165,7 @@ export async function enrichirCarteAction(
       safeNameRaw = safeNameRaw.replace("Je veux un vrai restaurant de : ", "");
       const storeName = safeNameRaw.slice(0, 30);
       
-      const cardService = require('../../services/cardService').cardService;
+      // import moved to top
       const newCard = await cardService.createCard({
           store_name: storeName,
           content: orderedFinalData
@@ -1186,7 +1187,7 @@ export async function enrichirCarteAction(
 
 export async function getAvailableLibraryCards() {
   try {
-    const cardService = require('../../services/cardService').cardService;
+    // import moved to top
     const cards = await cardService.getAllCards();
     return cards.map((c: any) => c.id);
   } catch (e) {
