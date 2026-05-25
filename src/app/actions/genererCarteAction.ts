@@ -80,26 +80,26 @@ export async function genererArchitectureAction(data: FormData) {
   }
 
   try {
-    let trueDataStr = null;
+    let lightDataStr = null;
     try {
-        const { extractTrueDataFromCatalogue } = require('../../lib/memory');
-        trueDataStr = await extractTrueDataFromCatalogue(activeSourceInspiration);
+        const { extractLightStructureFromCatalogue } = require('../../lib/memory');
+        lightDataStr = await extractLightStructureFromCatalogue(activeSourceInspiration);
     } catch (err: any) {
         if (err.message === "ERR_INVALID_CATALOGUE") {
             return { success: false, error: "La base locale sélectionnée est corrompue ou ne contient aucun produit valide. Impossible de lancer la génération RAG." };
         }
     }
-    let trueDataSection = "";
-    if (trueDataStr) {
+    let lightDataSection = "";
+    if (lightDataStr) {
         if (hasImage) {
-            trueDataSection = `\nVOICI LA BASE DE DONNÉES LOCALE (Source d'Inspiration) :\n\`\`\`json\n${trueDataStr}\n\`\`\`\n\nRÈGLES OCR DYNAMIQUES :\n1. Tu DOIS générer des produits basés EXCLUSIVEMENT sur l'image.\n2. L'image est la vérité absolue. Tu dois inventer de nouveaux identifiants ('itemIds') pour tout produit détecté sur l'image, n'essaie pas de te limiter strictement à la base locale si l'image réclame plus.\n`;
+            lightDataSection = `\nVOICI LA BASE DE DONNÉES LOCALE (Source d'Inspiration) :\n\`\`\`json\n${lightDataStr}\n\`\`\`\n\nRÈGLES OCR DYNAMIQUES :\n1. Tu DOIS générer des produits basés EXCLUSIVEMENT sur l'image.\n2. L'image est la vérité absolue. Tu dois inventer de nouveaux identifiants ('itemIds') pour tout produit détecté sur l'image, n'essaie pas de te limiter strictement à la base locale si l'image réclame plus.\n`;
         } else {
-            trueDataSection = `\nVOICI LA SEULE BASE DE DONNÉES DE PRODUITS AUTORISÉE (La Source de Vérité) :\n\`\`\`json\n${trueDataStr}\n\`\`\`\n\nRÈGLES ABSOLUES :\n1. Tu DOIS prioriser les identifiants présents dans 'AVAILABLE_ITEMS'.\n2. Si le client a EXPLICITEMENT demandé une catégorie (ex: Tacos, Pizzas) qui est TOTALEMENT ABSENTE de la base locale, tu AS L'OBLIGATION d'inventer au moins 5 produits avec de nouveaux IDs (UUID), noms et prix pour la peupler. NE RENVOIE JAMAIS UNE CATÉGORIE VIDE si elle a été demandée.\n3. Pour le reste, l'invention de prix, de noms ou d'IDs hors-sujet est strictement interdite.\n`;
+            lightDataSection = `\nVOICI LA SEULE BASE DE DONNÉES DE PRODUITS AUTORISÉE (La Source de Vérité) :\n\`\`\`json\n${lightDataStr}\n\`\`\`\n\nRÈGLES ABSOLUES :\n1. Tu DOIS prioriser les identifiants présents dans 'AVAILABLE_ITEMS'.\n2. Si le client a EXPLICITEMENT demandé une catégorie (ex: Tacos, Pizzas) qui est TOTALEMENT ABSENTE de la base locale, tu AS L'OBLIGATION d'inventer au moins 5 produits avec de nouveaux IDs (UUID), noms et prix pour la peupler. NE RENVOIE JAMAIS UNE CATÉGORIE VIDE si elle a été demandée.\n3. Pour le reste, l'invention de prix, de noms ou d'IDs hors-sujet est strictement interdite.\n`;
         }
     }
 
     console.log("[PHASE 1] Génération de la Trame Intermédiaire...");
-    const promptSysteme1 = `Tu es un assistant restaurateur. Tu dois répondre STRICTEMENT en format JSON pur, sans aucune balise ni texte MD. Tu vas créer un mappage de menu.${trueDataSection}
+    const promptSysteme1 = `Tu es un assistant restaurateur. Tu dois répondre STRICTEMENT en format JSON pur, sans aucune balise ni texte MD. Tu vas créer un mappage de menu.${lightDataSection}
 
 RÈGLES D'AUTOMATISATION ABSOLUES :
 1. Cohérence stricte : Une catégorie 'PIZZAS' ne doit contenir QUE des pizzas. Si le client réclame un thème absent, INVENTE LES PRODUITS, ne renvoie jamais la catégorie vide ("items": []).

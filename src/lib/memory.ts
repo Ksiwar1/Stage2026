@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { cardService } from '../services/cardService';
 
 export interface MemoryFile {
   nomFichier: string;
@@ -205,8 +206,6 @@ export interface VisualCardSummary {
   logoUrl?: string;
   restaurantName?: string;
 }
-
-import { cardService } from '../services/cardService';
 
 export async function getCartesVisualSummary(): Promise<VisualCardSummary[]> {
   const cards = await cardService.getAllCards();
