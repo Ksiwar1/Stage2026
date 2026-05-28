@@ -1,0 +1,76 @@
+{
+  "opt": {},
+  "etat": "En attente",
+  "tags": {},
+  "color": "",
+  "items": {
+    "item_menu_burger": { "t": "Menu Classic", "m": "mod_menu_burger_steps" },
+    "item_coca": { "t": "Coca Cola", "p": { "dflt": { "ttc": 2.50 } }, "m": "mod_boisson_taille" },
+    "item_sauce_mayo": { "t": "Mayonnaise", "p": { "dflt": { "ttc": 0 } } },
+    "item_sauce_ket": { "t": "Ketchup", "p": { "dflt": { "ttc": 0 } } },
+    "item_coca_33cl": { "t": "Coca 33cl", "p": { "dflt": { "ttc": 0 } } },
+    "item_coca_50cl": { "t": "Coca 50cl", "p": { "dflt": { "ttc": 1.50 } } }
+  },
+  "steps": {
+    "step_choix_sauce": {
+      "t": "Choisir vos sauces", "min": 0, "max": 2,
+      "stepItems": { "item_sauce_mayo": { "rank": 1 }, "item_sauce_ket": { "rank": 2 } }
+    },
+    "step_taille_boisson": {
+      "t": "Taille de votre boisson", "min": 1, "max": 1,
+      "stepItems": { "item_coca_33cl": { "rank": 1 }, "item_coca_50cl": { "rank": 2 } }
+    }
+  },
+  "title": "Nouveau Restaurant",
+  "remark": "",
+  "status": "En attente",
+  "Planning": "",
+  "idEntite": [],
+  "modifier": {
+    "mod_menu_burger_steps": {
+      "t": "Personnalisez votre menu",
+      "steps": {
+        "step_choix_sauce": { "rank": 1 },
+        "step_taille_boisson": { "rank": 2 }
+      }
+    },
+    "mod_boisson_taille": {
+      "t": "Taille",
+      "steps": {
+        "step_taille_boisson": { "rank": 1 }
+      }
+    }
+  },
+  "operator": "Administrateur",
+  "shoplist": {},
+  "workflow": {
+    "cat_menus": {
+      "type": "categories",
+      "rank": 1,
+      "content": {
+        "item_menu_burger": { "type": "items", "rank": 1, "modifier": "mod_menu_burger_steps" }
+      }
+    },
+    "cat_boissons": {
+      "type": "categories",
+      "rank": 2,
+      "content": {
+        "item_coca": { "type": "items", "rank": 1 }
+      }
+    }
+  },
+  "allergens": {},
+  "isAutoRef": false,
+  "categories": {
+    "cat_menus": { "title": "Nos Menus", "isVisible": true },
+    "cat_boissons": { "title": "Boissons", "isVisible": true }
+  },
+  "workflowList": {},
+  "isUniqueTitle": false,
+  "allergenGroups": {},
+  "dateModification": "Le 01/01/2026 à 12:00",
+  "iuudCardReference": 0,
+  "theme": {
+    "palette": ["#4F46E5", "#10B981", "#F59E0B", "#F3F4F6", "#111827"]
+  }
+}

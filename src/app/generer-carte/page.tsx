@@ -1,5 +1,6 @@
 'use client';
 
+// Force chunk invalidation - Action ID reset
 import styles from "../page.module.css";
 import Link from "next/link";
 import { useState, useEffect } from "react";

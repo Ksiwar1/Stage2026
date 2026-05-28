@@ -1,0 +1,2013 @@
+
+> stage-2026@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.10.109:3000
+- Environments: .env.local, .env
+✓ Ready in 971ms
+⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/kout/package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * /Users/kout/Desktop/Stage2026/package-lock.json
+
+- Experiments (use with caution):
+  · serverActions
+
+ GET / 200 in 1507ms (next.js: 1340ms, application-code: 167ms)
+ GET /api/settings 200 in 481ms (next.js: 201ms, application-code: 280ms)
+ GET /menu 200 in 312ms (next.js: 292ms, application-code: 20ms)
+ GET /api/settings 200 in 68ms (next.js: 5ms, application-code: 63ms)
+ GET /api/settings 200 in 7ms (next.js: 2ms, application-code: 5ms)
+ GET /generer-carte 200 in 459ms (next.js: 431ms, application-code: 28ms)
+ POST /generer-carte 200 in 241ms (next.js: 3ms, application-code: 238ms)
+  └─ ƒ getAvailableLibraryCards() in 222ms src/app/actions/genererCarteAction.ts
+ POST /generer-carte 200 in 133ms (next.js: 1982µs, application-code: 131ms)
+  └─ ƒ getAvailableLibraryCards() in 111ms src/app/actions/genererCarteAction.ts
+[ROUTAGE] Mode RAG Strict activé sur base: carte3_grill_station.json
+[PHASE 1] Génération de la Trame Intermédiaire...
+=== RAW TRAME INTERMÉDIAIRE ===
+{
+  "categories": [
+      {
+         "name": "Pizzas",
+         "items": [
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440000",
+               "name": "Pizza Margherita",
+               "price": 9.99,
+               "description": "Pizza italienne classique avec sauce tomate, fromage de mozzarella et feuilles de basilic. (A)",
+               "steps": []
+            },
+            {
+               "id": "123e4567-e89b-12d3-a456-426614174000",
+               "name": "Pizza Provençale",
+               "price": 10.99,
+               "description": "Pizza avec sauce tomate, fromage de mozzarella, olives noires, anchois et feuilles de basilic. (A)",
+               "steps": []
+            },
+            {
+               "id": "89f0d5b0-6f5a-4a5b-8b5f-8f0d5b06f5a0",
+               "name": "Pizza Capricciosa",
+               "price": 12.99,
+               "description": "Pizza avec sauce tomate, fromage de mozzarella, jambon, anchois et olives noires. (A)",
+               "steps": []
+            }
+         ]
+      },
+      {
+         "name": "Boissons",
+         "items": [
+            {
+               "id": "123e4567-e89b-12d3-a456-426614174001",
+               "name": "Coca-Cola",
+               "price": 2.99,
+               "description": "Boisson gazeuse classique.",
+               "steps": []
+            },
+            {
+               "id": "89f0d5b0-6f5a-4a5b-8b5f-8f0d5b06f5a1",
+               "name": "Eau Plate",
+               "price": 1.99,
+               "description": "Eau pure et filtrée.",
+               "steps": []
+            },
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440001",
+               "name": "Coca-Cola Zéro",
+               "price": 2.99,
+               "description": "Boisson gazeuse sans sucre ajouté.",
+               "steps": []
+            },
+            {
+               "id": "4567e89b-12d3-a456-426614174002",
+               "name": "Oasis",
+               "price": 3.99,
+               "description": "Boisson gazeuse naturelle.",
+               "steps": []
+            },
+            {
+               "id": "a456-426614174003",
+               "name": "Ice Tea",
+               "price": 2.99,
+               "description": "Thé glacé sucré.",
+               "steps": []
+            },
+            {
+               "id": "89f0d5b0-6f5a-4a5b-8b5f-8f0d5b06f5a2",
+               "name": "Fanta",
+               "price": 2.99,
+               "description": "Boisson gazeuse colorée.",
+               "steps": []
+            }
+         ]
+      },
+      {
+         "name": "Desserts",
+         "items": [
+            {
+               "id": "123e4567-e89b-12d3-a456-426614174004",
+               "name": "Tarte Tatin",
+               "price": 5.99,
+               "description": "Tarte caramelisée à la pomme. (A)",
+               "steps": []
+            },
+            {
+               "id": "89f0d5b0-6f5a-4a5b-8b5f-8f0d5b06f5a3",
+               "name": "Crème Brûlée",
+               "price": 6.99,
+               "description": "Crème à la vanille cuite au four et caramelisée. (A)",
+               "steps": []
+            },
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440002",
+               "name": "Glace vanille",
+               "price": 4.99,
+               "description": "Glace naturelle à la vanille. (A)",
+               "steps": []
+            }
+         ]
+      }
+   ]
+}
+ POST /generer-carte 200 in 1726ms (next.js: 18ms, application-code: 1709ms)
+  └─ ƒ genererArchitectureAction({}) in 1679ms src/app/actions/genererCarteAction.ts
+[PHASE 2] Conversion UUID Backend (Zero LLM Hallucination)...
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "desserts" (Classifiée: dessert). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "desserts" (Classifiée: dessert). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "desserts" (Classifiée: dessert). L'item sera injecté pur (sans modifier).
+ POST /generer-carte 200 in 69ms (next.js: 4ms, application-code: 65ms)
+  └─ ƒ enrichirCarteAction({}, "{\n  \"categories\": [\n      {\n         \"name\": \"Pizzas\",\n         \"items\": [\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n               \"name\": \"Pizza Margherita\",\n               \"price\": 9.99,\n               \"description\": \"Pizza italienne classique avec sauce tomate, fromage de mozzarella et feuilles de basilic. (A)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n               \"name\": \"Pizza Provençale\",\n               \"price\": 10.99,\n               \"description\": \"Pizza avec sauce tomate, fromage de mozzarella, olives noires, anchois et feuilles de basilic. (A)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"89f0d5b0-6f5a-4a5b-8b5f-8f0d5b06f5a0\",\n               \"name\": \"Pizza Capricciosa\",\n               \"price\": 12.99,\n               \"description\": \"Pizza avec sauce tomate, fromage de mozzarella, jambon, anchois et olives noires. (A)\",\n               \"steps\": []\n            }\n         ]\n      },\n      {\n         \"name\": \"Boissons\",\n         \"items\": [\n            {\n               \"id\": \"123e4567-e89b-12d3-a456-426614174001\",\n               \"name\": \"Coca-Cola\",\n               \"price\": 2.99,\n               \"description\": \"Boisson gazeuse classique.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"89f0d5b0-6f5a-4a5b-8b5f-8f0d5b06f5a1\",\n               \"name\": \"Eau Plate\",\n               \"price\": 1.99,\n               \"description\": \"Eau pure et filtrée.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440001\",\n               \"name\": \"Coca-Cola Zéro\",\n               \"price\": 2.99,\n               \"description\": \"Boisson gazeuse sans sucre ajouté.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"4567e89b-12d3-a456-426614174002\",\n               \"name\": \"Oasis\",\n               \"price\": 3.99,\n               \"description\": \"Boisson gazeuse naturelle.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"a456-426614174003\",\n               \"name\": \"Ice Tea\",\n               \"price\": 2.99,\n               \"description\": \"Thé glacé sucré.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"89f0d5b0-6f5a-4a5b-8b5f-8f0d5b06f5a2\",\n               \"name\": \"Fanta\",\n               \"price\": 2.99,\n               \"description\": \"Boisson gazeuse colorée.\",\n               \"steps\": []\n            }\n         ]\n      },\n      {\n         \"name\": \"Desserts\",\n         \"items\": [\n            {\n               \"id\": \"123e4567-e89b-12d3-a456-426614174004\",\n               \"name\": \"Tarte Tatin\",\n               \"price\": 5.99,\n               \"description\": \"Tarte caramelisée à la pomme. (A)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"89f0d5b0-6f5a-4a5b-8b5f-8f0d5b06f5a3\",\n               \"name\": \"Crème Brûlée\",\n               \"price\": 6.99,\n               \"description\": \"Crème à la vanille cuite au four et caramelisée. (A)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440002\",\n               \"name\": \"Glace vanille\",\n               \"price\": 4.99,\n               \"description\": \"Glace naturelle à la vanille. (A)\",\n               \"steps\": []\n            }\n         ]\n      }\n   ]\n}", "carte3_grill_station.json", []) in 58ms src/app/actions/genererCarteAction.ts
+ GET /api/settings 200 in 23ms (next.js: 4ms, application-code: 19ms)
+ GET /api/settings 200 in 5ms (next.js: 1126µs, application-code: 4ms)
+ GET /null 404 in 354ms (next.js: 308ms, application-code: 46ms)
+ POST /api/cards 201 in 199ms (next.js: 132ms, application-code: 67ms)
+ GET / 200 in 68ms (next.js: 36ms, application-code: 32ms)
+ GET /menu 200 in 43ms (next.js: 10ms, application-code: 33ms)
+ GET /api/settings 200 in 34ms (next.js: 2ms, application-code: 32ms)
+ GET /api/settings 200 in 7ms (next.js: 3ms, application-code: 3ms)
+ GET /generer-carte 200 in 28ms (next.js: 5ms, application-code: 23ms)
+ POST /generer-carte 200 in 171ms (next.js: 1474µs, application-code: 170ms)
+  └─ ƒ getAvailableLibraryCards() in 164ms src/app/actions/genererCarteAction.ts
+ POST /generer-carte 200 in 102ms (next.js: 1420µs, application-code: 101ms)
+  └─ ƒ getAvailableLibraryCards() in 97ms src/app/actions/genererCarteAction.ts
+ GET /menu 200 in 29ms (next.js: 6ms, application-code: 24ms)
+ GET /api/settings 200 in 8ms (next.js: 3ms, application-code: 5ms)
+ GET /api/settings 200 in 52ms (next.js: 4ms, application-code: 48ms)
+ GET /bibliotheque 200 in 754ms (next.js: 600ms, application-code: 154ms)
+ GET /borne/9410023d-77d6-456f-9177-e782ef91d264 200 in 680ms (next.js: 647ms, application-code: 34ms)
+ GET /api/settings 200 in 9ms (next.js: 3ms, application-code: 5ms)
+ GET /api/settings 200 in 17ms (next.js: 1700µs, application-code: 15ms)
+ POST /bibliotheque 200 in 212ms (next.js: 7ms, application-code: 205ms)
+  └─ ƒ deleteCarteAction("9410023d-77d6-456f-9177-e782ef91d264") in 12ms src/app/actions/deleteCarteAction.ts
+ GET /borne/1f8c1a58-8df4-4b37-97e9-c46e20f8e7f6 200 in 41ms (next.js: 8ms, application-code: 33ms)
+ GET /api/settings 200 in 20ms (next.js: 2ms, application-code: 18ms)
+ GET /api/settings 200 in 4ms (next.js: 1479µs, application-code: 2ms)
+ POST /bibliotheque 200 in 176ms (next.js: 5ms, application-code: 171ms)
+  └─ ƒ deleteCarteAction("1f8c1a58-8df4-4b37-97e9-c46e20f8e7f6") in 3ms src/app/actions/deleteCarteAction.ts
+ POST /bibliotheque 200 in 178ms (next.js: 4ms, application-code: 174ms)
+  └─ ƒ deleteCarteAction("61c1e702-4e4a-4a22-b2d9-5ee30c89dae3") in 4ms src/app/actions/deleteCarteAction.ts
+ GET /menu 200 in 31ms (next.js: 6ms, application-code: 25ms)
+ GET /api/settings 200 in 34ms (next.js: 3ms, application-code: 31ms)
+ GET /api/settings 200 in 7ms (next.js: 1867µs, application-code: 5ms)
+ GET /generer-carte 200 in 34ms (next.js: 5ms, application-code: 29ms)
+ POST /generer-carte 200 in 206ms (next.js: 1887µs, application-code: 204ms)
+  └─ ƒ getAvailableLibraryCards() in 199ms src/app/actions/genererCarteAction.ts
+ POST /generer-carte 200 in 96ms (next.js: 979µs, application-code: 95ms)
+  └─ ƒ getAvailableLibraryCards() in 91ms src/app/actions/genererCarteAction.ts
+[ROUTAGE] Mode RAG Strict activé sur base: carte3_grill_station.json
+[PHASE 1] Génération de la Trame Intermédiaire...
+=== RAW TRAME INTERMÉDIAIRE ===
+{
+  "categories": [
+      {
+         "name": "Pizzas",
+         "items": [
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440000",
+               "name": "Pizza Margherita",
+               "price": 12.50,
+               "description": "Pizza authentique italienne avec tomates fraîches, mozzarella et basilic.",
+               "allergenes": "Lactose, Glutén"
+            },
+            {
+               "id": "123e4567-e89b-12d3-a456-426614174000",
+               "name": "Pizza Capricciosa",
+               "price": 14.50,
+               "description": "Pizza italienne avec jambon, champignons, olives, anchois et fromage de mozzarella.",
+               "allergenes": "Lactose, Glutén, Pôisson"
+            },
+            {
+               "id": "98765432-1234-5678-9012-345678901234",
+               "name": "Pizza Quattro Formaggi",
+               "price": 15.50,
+               "description": "Pizza italienne avec quatre types de fromage : mozzarella, parmesan, gorgonzola et ricotta.",
+               "allergenes": "Lactose"
+            },
+            {
+               "id": "4567a89b-1234-5678-9012-345678901234",
+               "name": "Pizza Vegetarienne",
+               "price": 13.50,
+               "description": "Pizza italienne avec des légumes variés : poivrons, aubergines, courgettes et fromage de mozzarella.",
+               "allergenes": "Lactose, Glutén"
+            },
+            {
+               "id": "2345c67b-8901-2345-6789-012345678901",
+               "name": "Pizza Provençale",
+               "price": 14.50,
+               "description": "Pizza italienne avec des légumes du sud de la France : tomates, olives, anchois et fromage de mozzarella.",
+               "allergenes": "Lactose, Glutén, Pôisson"
+            },
+            {
+               "id": "9012a67b-4567-8901-2345-678901234567",
+               "name": "Pizza au Poulet",
+               "price": 13.50,
+               "description": "Pizza italienne avec du poulet grillé, champignons et fromage de mozzarella.",
+               "allergenes": "Lactose, Poultry"
+            },
+            {
+               "id": "6789b456-9012-3456-7890-123456789012",
+               "name": "Pizza au Saumon",
+               "price": 15.50,
+               "description": "Pizza italienne avec du saumon grillé, crème fraîche et fromage de mozzarella.",
+               "allergenes": "Lactose, Pôisson"
+            },
+            {
+               "id": "4567a89b-2345-6789-0123-456789012345",
+               "name": "Pizza au Jambon",
+               "price": 13.50,
+               "description": "Pizza italienne avec du jambon grillé et fromage de mozzarella.",
+               "allergenes": "Lactose, Glutén"
+            },
+            {
+               "id": "2345c67b-0123-4567-8901-234567890123",
+               "name": "Pizza aux Fruits de Mer",
+               "price": 16.50,
+               "description": "Pizza italienne avec des fruits de mer variés : crevettes, huîtres, calmar et fromage de mozzarella.",
+               "allergenes": "Lactose, Pôisson"
+            },
+            {
+               "id": "9012a67b-3456-7890-1234-567890123456",
+               "name": "Pizza aux Champignons",
+               "price": 14.50,
+               "description": "Pizza italienne avec des champignons grillés et fromage de mozzarella.",
+               "allergenes": "Lactose, Glutén"
+            }
+         ]
+      }]}
+ POST /generer-carte 200 in 2.4s (next.js: 9ms, application-code: 2.4s)
+  └─ ƒ genererArchitectureAction({}) in 2333ms src/app/actions/genererCarteAction.ts
+[PHASE 2] Conversion UUID Backend (Zero LLM Hallucination)...
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+ POST /generer-carte 200 in 43ms (next.js: 2ms, application-code: 41ms)
+  └─ ƒ enrichirCarteAction({}, "{\n  \"categories\": [\n      {\n         \"name\": \"Pizzas\",\n         \"items\": [\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n               \"name\": \"Pizza Margherita\",\n               \"price\": 12.50,\n               \"description\": \"Pizza authentique italienne avec tomates fraîches, mozzarella et basilic.\",\n               \"allergenes\": \"Lactose, Glutén\"\n            },\n            {\n               \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n               \"name\": \"Pizza Capricciosa\",\n               \"price\": 14.50,\n               \"description\": \"Pizza italienne avec jambon, champignons, olives, anchois et fromage de mozzarella.\",\n               \"allergenes\": \"Lactose, Glutén, Pôisson\"\n            },\n            {\n               \"id\": \"98765432-1234-5678-9012-345678901234\",\n               \"name\": \"Pizza Quattro Formaggi\",\n               \"price\": 15.50,\n               \"description\": \"Pizza italienne avec quatre types de fromage : mozzarella, parmesan, gorgonzola et ricotta.\",\n               \"allergenes\": \"Lactose\"\n            },\n            {\n               \"id\": \"4567a89b-1234-5678-9012-345678901234\",\n               \"name\": \"Pizza Vegetarienne\",\n               \"price\": 13.50,\n               \"description\": \"Pizza italienne avec des légumes variés : poivrons, aubergines, courgettes et fromage de mozzarella.\",\n               \"allergenes\": \"Lactose, Glutén\"\n            },\n            {\n               \"id\": \"2345c67b-8901-2345-6789-012345678901\",\n               \"name\": \"Pizza Provençale\",\n               \"price\": 14.50,\n               \"description\": \"Pizza italienne avec des légumes du sud de la France : tomates, olives, anchois et fromage de mozzarella.\",\n               \"allergenes\": \"Lactose, Glutén, Pôisson\"\n            },\n            {\n               \"id\": \"9012a67b-4567-8901-2345-678901234567\",\n               \"name\": \"Pizza au Poulet\",\n               \"price\": 13.50,\n               \"description\": \"Pizza italienne avec du poulet grillé, champignons et fromage de mozzarella.\",\n               \"allergenes\": \"Lactose, Poultry\"\n            },\n            {\n               \"id\": \"6789b456-9012-3456-7890-123456789012\",\n               \"name\": \"Pizza au Saumon\",\n               \"price\": 15.50,\n               \"description\": \"Pizza italienne avec du saumon grillé, crème fraîche et fromage de mozzarella.\",\n               \"allergenes\": \"Lactose, Pôisson\"\n            },\n            {\n               \"id\": \"4567a89b-2345-6789-0123-456789012345\",\n               \"name\": \"Pizza au Jambon\",\n               \"price\": 13.50,\n               \"description\": \"Pizza italienne avec du jambon grillé et fromage de mozzarella.\",\n               \"allergenes\": \"Lactose, Glutén\"\n            },\n            {\n               \"id\": \"2345c67b-0123-4567-8901-234567890123\",\n               \"name\": \"Pizza aux Fruits de Mer\",\n               \"price\": 16.50,\n               \"description\": \"Pizza italienne avec des fruits de mer variés : crevettes, huîtres, calmar et fromage de mozzarella.\",\n               \"allergenes\": \"Lactose, Pôisson\"\n            },\n            {\n               \"id\": \"9012a67b-3456-7890-1234-567890123456\",\n               \"name\": \"Pizza aux Champignons\",\n               \"price\": 14.50,\n               \"description\": \"Pizza italienne avec des champignons grillés et fromage de mozzarella.\",\n               \"allergenes\": \"Lactose, Glutén\"\n            }\n         ]\n      }]}", "carte3_grill_station.json", []) in 32ms src/app/actions/genererCarteAction.ts
+ GET /api/settings 200 in 11ms (next.js: 3ms, application-code: 8ms)
+ GET /api/settings 200 in 6ms (next.js: 1461µs, application-code: 5ms)
+ POST /api/cards 201 in 29ms (next.js: 3ms, application-code: 26ms)
+ GET / 200 in 818ms (next.js: 155ms, application-code: 663ms)
+ GET /api/settings 200 in 64ms (next.js: 11ms, application-code: 53ms)
+ GET /menu 200 in 53ms (next.js: 23ms, application-code: 30ms)
+ GET /api/settings 200 in 6ms (next.js: 1830µs, application-code: 4ms)
+ GET /api/settings 200 in 51ms (next.js: 1707µs, application-code: 49ms)
+ GET / 200 in 26ms (next.js: 4ms, application-code: 22ms)
+ GET /historique 200 in 2.6s (next.js: 1766ms, application-code: 806ms)
+ GET /api/cards/df88081f-21e7-4eec-ba44-3dc545929642/history 200 in 1200ms (next.js: 1178ms, application-code: 21ms)
+ GET /api/cards/c38c7fea-072a-4030-8338-6d36685af11c/history 200 in 723ms (next.js: 27ms, application-code: 695ms)
+ GET /api/cards/98acd276-9546-4804-8f4f-bd34eef9474d/history 200 in 292ms (next.js: 22ms, application-code: 270ms)
+ GET /menu 200 in 44ms (next.js: 15ms, application-code: 28ms)
+ GET /api/settings 200 in 24ms (next.js: 3ms, application-code: 20ms)
+ GET /api/settings 200 in 23ms (next.js: 5ms, application-code: 18ms)
+ GET /generer-carte 200 in 433ms (next.js: 164ms, application-code: 269ms)
+ POST /generer-carte 200 in 432ms (next.js: 5ms, application-code: 427ms)
+  └─ ƒ getAvailableLibraryCards() in 405ms src/app/actions/genererCarteAction.ts
+ POST /generer-carte 200 in 166ms (next.js: 2ms, application-code: 164ms)
+  └─ ƒ getAvailableLibraryCards() in 153ms src/app/actions/genererCarteAction.ts
+[ROUTAGE] Mode RAG Strict activé sur base: carte3_grill_station.json
+[PHASE 1] Génération de la Trame Intermédiaire...
+=== RAW TRAME INTERMÉDIAIRE ===
+{
+  "categories": [
+      {
+         "name": "Pizzas",
+         "items": [
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440000",
+               "name": "Pizza Noisy",
+               "price": 12.50,
+               "description": "Une pizza traditionnelle avec tomate, fromage et jambon, allergènes : gluten (blé), lait.",
+               "steps": []
+            },
+            {
+               "id": "123e4567-e89b-12d3-a456-426614174000",
+               "name": "Pizza Veggie",
+               "price": 11.50,
+               "description": "Une pizza avec des légumes sauvages et des herbes, allergènes : gluten (blé).",
+               "steps": []
+            },
+            {
+               "id": "4567e890-e23d-12f4-a567-426614174000",
+               "name": "Pizza Chorizo",
+               "price": 13.50,
+               "description": "Une pizza avec du chorizo et des champignons, allergènes : gluten (blé), lait.",
+               "steps": []
+            },
+            {
+               "id": "2345e678-e89b-12d3-a456-426614174000",
+               "name": "Pizza Provençale",
+               "price": 14.50,
+               "description": "Une pizza avec des tomates cerises, des olives et du fromage, allergènes : gluten (blé), lait.",
+               "steps": []
+            },
+            {
+               "id": "5678e901-e23d-12f4-a567-426614174000",
+               "name": "Pizza Margherita",
+               "price": 10.50,
+               "description": "Une pizza avec des tomates, du fromage et de l'origan, allergènes : gluten (blé), lait.",
+               "steps": []
+            },
+            {
+               "id": "8901e234-e89b-12d3-a456-426614174000",
+               "name": "Pizza Noisy Spicy",
+               "price": 15.50,
+               "description": "Une pizza avec du chorizo et des piments, allergènes : gluten (blé), lait.",
+               "steps": []
+            }
+         ]
+      },
+      {
+         "name": "Boissons",
+         "items": [
+            {
+               "id": "123e4567-e89b-12d3-a456-426614174000",
+               "name": "Coca-Cola",
+               "price": 2.50,
+               "description": "Une boisson gazeuse avec du sucre et de l'acide citrique, allergènes : sucre.",
+               "steps": []
+            },
+            {
+               "id": "4567e890-e23d-12f4-a567-426614174000",
+               "name": "Eau Plate",
+               "price": 1.50,
+               "description": "Une eau plate, allergènes : aucune.",
+               "steps": []
+            },
+            {
+               "id": "2345e678-e89b-12d3-a456-426614174000",
+               "name": "Coca-Cola Zéro",
+               "price": 2.50,
+               "description": "Une boisson gazeuse sans sucre, allergènes : aucune.",
+               "steps": []
+            },
+            {
+               "id": "5678e901-e23d-12f4-a567-426614174000",
+               "name": "Oasis",
+               "price": 2.50,
+               "description": "Une boisson gazeuse avec du sucre et de l'acide citrique, allergènes : sucre.",
+               "steps": []
+            },
+            {
+               "id": "8901e234-e89b-12d3-a456-426614174000",
+               "name": "Ice Tea",
+               "price": 2.50,
+               "description": "Une boisson chaude avec du thé et du sucre, allergènes : sucre.",
+               "steps": []
+            },
+            {
+               "id": "101e5678-e89b-12d3-a456-426614174000",
+               "name": "Perrier",
+               "price": 3.50,
+               "description": "Une eau plate minérale, allergènes : aucune.",
+               "steps": []
+            }
+         ]
+      }
+   ]
+}
+ POST /generer-carte 200 in 1796ms (next.js: 26ms, application-code: 1770ms)
+  └─ ƒ genererArchitectureAction({}) in 1749ms src/app/actions/genererCarteAction.ts
+[PHASE 2] Conversion UUID Backend (Zero LLM Hallucination)...
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+ POST /generer-carte 200 in 61ms (next.js: 4ms, application-code: 58ms)
+  └─ ƒ enrichirCarteAction({}, "{\n  \"categories\": [\n      {\n         \"name\": \"Pizzas\",\n         \"items\": [\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n               \"name\": \"Pizza Noisy\",\n               \"price\": 12.50,\n               \"description\": \"Une pizza traditionnelle avec tomate, fromage et jambon, allergènes : gluten (blé), lait.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n               \"name\": \"Pizza Veggie\",\n               \"price\": 11.50,\n               \"description\": \"Une pizza avec des légumes sauvages et des herbes, allergènes : gluten (blé).\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"4567e890-e23d-12f4-a567-426614174000\",\n               \"name\": \"Pizza Chorizo\",\n               \"price\": 13.50,\n               \"description\": \"Une pizza avec du chorizo et des champignons, allergènes : gluten (blé), lait.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"2345e678-e89b-12d3-a456-426614174000\",\n               \"name\": \"Pizza Provençale\",\n               \"price\": 14.50,\n               \"description\": \"Une pizza avec des tomates cerises, des olives et du fromage, allergènes : gluten (blé), lait.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"5678e901-e23d-12f4-a567-426614174000\",\n               \"name\": \"Pizza Margherita\",\n               \"price\": 10.50,\n               \"description\": \"Une pizza avec des tomates, du fromage et de l'origan, allergènes : gluten (blé), lait.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"8901e234-e89b-12d3-a456-426614174000\",\n               \"name\": \"Pizza Noisy Spicy\",\n               \"price\": 15.50,\n               \"description\": \"Une pizza avec du chorizo et des piments, allergènes : gluten (blé), lait.\",\n               \"steps\": []\n            }\n         ]\n      },\n      {\n         \"name\": \"Boissons\",\n         \"items\": [\n            {\n               \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n               \"name\": \"Coca-Cola\",\n               \"price\": 2.50,\n               \"description\": \"Une boisson gazeuse avec du sucre et de l'acide citrique, allergènes : sucre.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"4567e890-e23d-12f4-a567-426614174000\",\n               \"name\": \"Eau Plate\",\n               \"price\": 1.50,\n               \"description\": \"Une eau plate, allergènes : aucune.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"2345e678-e89b-12d3-a456-426614174000\",\n               \"name\": \"Coca-Cola Zéro\",\n               \"price\": 2.50,\n               \"description\": \"Une boisson gazeuse sans sucre, allergènes : aucune.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"5678e901-e23d-12f4-a567-426614174000\",\n               \"name\": \"Oasis\",\n               \"price\": 2.50,\n               \"description\": \"Une boisson gazeuse avec du sucre et de l'acide citrique, allergènes : sucre.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"8901e234-e89b-12d3-a456-426614174000\",\n               \"name\": \"Ice Tea\",\n               \"price\": 2.50,\n               \"description\": \"Une boisson chaude avec du thé et du sucre, allergènes : sucre.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"101e5678-e89b-12d3-a456-426614174000\",\n               \"name\": \"Perrier\",\n               \"price\": 3.50,\n               \"description\": \"Une eau plate minérale, allergènes : aucune.\",\n               \"steps\": []\n            }\n         ]\n      }\n   ]\n}", "carte3_grill_station.json", []) in 48ms src/app/actions/genererCarteAction.ts
+ GET /api/settings 200 in 18ms (next.js: 6ms, application-code: 12ms)
+ GET /api/settings 200 in 16ms (next.js: 1542µs, application-code: 15ms)
+ GET /null 404 in 116ms (next.js: 33ms, application-code: 83ms)
+✓ Compiled in 1551ms
+ GET /generer-carte 200 in 453ms (next.js: 318ms, application-code: 135ms)
+ GET /generer-carte 200 in 100ms (next.js: 2ms, application-code: 98ms)
+ GET /generer-carte 200 in 99ms (next.js: 5ms, application-code: 94ms)
+ GET /generer-carte 200 in 58ms (next.js: 1943µs, application-code: 56ms)
+ GET /generer-carte 200 in 31ms (next.js: 1742µs, application-code: 30ms)
+ GET / 200 in 283ms (next.js: 149ms, application-code: 134ms)
+ GET /menu 200 in 132ms (next.js: 44ms, application-code: 89ms)
+ GET /api/settings 200 in 148ms (next.js: 108ms, application-code: 40ms)
+ GET /api/settings 200 in 10ms (next.js: 3ms, application-code: 7ms)
+ GET /generer-carte 200 in 42ms (next.js: 19ms, application-code: 23ms)
+ POST /generer-carte 200 in 245ms (next.js: 1955µs, application-code: 243ms)
+  └─ ƒ getAvailableLibraryCards() in 205ms src/app/actions/genererCarteAction.ts
+ POST /generer-carte 200 in 176ms (next.js: 10ms, application-code: 166ms)
+  └─ ƒ getAvailableLibraryCards() in 160ms src/app/actions/genererCarteAction.ts
+[ROUTAGE] Mode RAG Strict activé sur base: carte3_grill_station.json
+[PHASE 1] Génération de la Trame Intermédiaire...
+=== RAW TRAME INTERMÉDIAIRE ===
+{
+  "categories": [
+      {
+         "name": "Pizzas",
+         "items": [
+            {
+               "id": "f2c8a1f7-3f5c-4f9f-a8b2-1a5a6b7c8d00",
+               "name": "Pizza Margherita",
+               "price": 12.50,
+               "description": "Pâte fine, sauce tomate, mozzarella et basilic.",
+               "allergenes": "A"
+            },
+            {
+               "id": "9a7c8b6d-2e5f-4a3b-9c8d-7a6b5c4d3e00",
+               "name": "Pizza Quattro Formaggi",
+               "price": 15.50,
+               "description": "Pâte fine, sauce tomate, mozzarella, parmesan, gorgonzola et ricotta.",
+               "allergenes": "A"
+            },
+            {
+               "id": "a1c2b3d4e5f6-7g8h9i0j-k1l2m3n4o5p",
+               "name": "Pizza Provençale",
+               "price": 14.50,
+               "description": "Pâte fine, sauce tomate, mozzarella, olives noires, champignons et anchois.",
+               "allergenes": "A"
+            },
+            {
+               "id": "1a2b3c4d5e6f7g8h9i0j-k1l2m3n4o5p",
+               "name": "Pizza Spicy Chorizo",
+               "price": 13.50,
+               "description": "Pâte fine, sauce tomate, mozzarella, chorizo et poivrons rouges.",
+               "allergenes": "A"
+            },
+            {
+               "id": "6b7c8d9e0a1b2c3d4e5f6g7h8i9j",
+               "name": "Pizza Vegetarienne",
+               "price": 13.00,
+               "description": "Pâte fine, sauce tomate, mozzarella, aubergines, poivrons et oignons.",
+               "allergenes": "A"
+            },
+            {
+               "id": "4d5e6f7g8h9i0j-k1l2m3n4o5p",
+               "name": "Pizza Capricciosa",
+               "price": 15.00,
+               "description": "Pâte fine, sauce tomate, mozzarella, anchois, olives noires et champignons.",
+               "allergenes": "A"
+            },
+            {
+               "id": "2e3f4g5h6i7j8k9l0m1n2o3p",
+               "name": "Pizza Diavolo",
+               "price": 14.00,
+               "description": "Pâte fine, sauce tomate, mozzarella, chorizo et poivrons rouges.",
+               "allergenes": "A"
+            },
+            {
+               "id": "8c9d0a1b2c3d4e5f6g7h8i9j",
+               "name": "Pizza Marinara",
+               "price": 11.50,
+               "description": "Pâte fine, sauce tomate, oignons et poivrons.",
+               "allergenes": "A"
+            },
+            {
+               "id": "3a4b5c6d7e8f9g0h1i2j3k",
+               "name": "Pizza Quattro Stagioni",
+               "price": 16.00,
+               "description": "Pâte fine, sauce tomate, mozzarella, champignons, anchois et olives noires.",
+               "allergenes": "A"
+            },
+            {
+               "id": "5f6e7d8c9b4a3c2b1a0g1f2e3d",
+               "name": "Pizza Romana",
+               "price": 14.00,
+               "description": "Pâte fine, sauce tomate, mozzarella, anchois et olives noires.",
+               "allergenes": "A"
+            }]}]}
+ POST /generer-carte 200 in 2.3s (next.js: 46ms, application-code: 2.2s)
+  └─ ƒ genererArchitectureAction({}) in 2222ms src/app/actions/genererCarteAction.ts
+[PHASE 2] Conversion UUID Backend (Zero LLM Hallucination)...
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+ POST /generer-carte 200 in 37ms (next.js: 3ms, application-code: 35ms)
+  └─ ƒ enrichirCarteAction({}, "{\n  \"categories\": [\n      {\n         \"name\": \"Pizzas\",\n         \"items\": [\n            {\n               \"id\": \"f2c8a1f7-3f5c-4f9f-a8b2-1a5a6b7c8d00\",\n               \"name\": \"Pizza Margherita\",\n               \"price\": 12.50,\n               \"description\": \"Pâte fine, sauce tomate, mozzarella et basilic.\",\n               \"allergenes\": \"A\"\n            },\n            {\n               \"id\": \"9a7c8b6d-2e5f-4a3b-9c8d-7a6b5c4d3e00\",\n               \"name\": \"Pizza Quattro Formaggi\",\n               \"price\": 15.50,\n               \"description\": \"Pâte fine, sauce tomate, mozzarella, parmesan, gorgonzola et ricotta.\",\n               \"allergenes\": \"A\"\n            },\n            {\n               \"id\": \"a1c2b3d4e5f6-7g8h9i0j-k1l2m3n4o5p\",\n               \"name\": \"Pizza Provençale\",\n               \"price\": 14.50,\n               \"description\": \"Pâte fine, sauce tomate, mozzarella, olives noires, champignons et anchois.\",\n               \"allergenes\": \"A\"\n            },\n            {\n               \"id\": \"1a2b3c4d5e6f7g8h9i0j-k1l2m3n4o5p\",\n               \"name\": \"Pizza Spicy Chorizo\",\n               \"price\": 13.50,\n               \"description\": \"Pâte fine, sauce tomate, mozzarella, chorizo et poivrons rouges.\",\n               \"allergenes\": \"A\"\n            },\n            {\n               \"id\": \"6b7c8d9e0a1b2c3d4e5f6g7h8i9j\",\n               \"name\": \"Pizza Vegetarienne\",\n               \"price\": 13.00,\n               \"description\": \"Pâte fine, sauce tomate, mozzarella, aubergines, poivrons et oignons.\",\n               \"allergenes\": \"A\"\n            },\n            {\n               \"id\": \"4d5e6f7g8h9i0j-k1l2m3n4o5p\",\n               \"name\": \"Pizza Capricciosa\",\n               \"price\": 15.00,\n               \"description\": \"Pâte fine, sauce tomate, mozzarella, anchois, olives noires et champignons.\",\n               \"allergenes\": \"A\"\n            },\n            {\n               \"id\": \"2e3f4g5h6i7j8k9l0m1n2o3p\",\n               \"name\": \"Pizza Diavolo\",\n               \"price\": 14.00,\n               \"description\": \"Pâte fine, sauce tomate, mozzarella, chorizo et poivrons rouges.\",\n               \"allergenes\": \"A\"\n            },\n            {\n               \"id\": \"8c9d0a1b2c3d4e5f6g7h8i9j\",\n               \"name\": \"Pizza Marinara\",\n               \"price\": 11.50,\n               \"description\": \"Pâte fine, sauce tomate, oignons et poivrons.\",\n               \"allergenes\": \"A\"\n            },\n            {\n               \"id\": \"3a4b5c6d7e8f9g0h1i2j3k\",\n               \"name\": \"Pizza Quattro Stagioni\",\n               \"price\": 16.00,\n               \"description\": \"Pâte fine, sauce tomate, mozzarella, champignons, anchois et olives noires.\",\n               \"allergenes\": \"A\"\n            },\n            {\n               \"id\": \"5f6e7d8c9b4a3c2b1a0g1f2e3d\",\n               \"name\": \"Pizza Romana\",\n               \"price\": 14.00,\n               \"description\": \"Pâte fine, sauce tomate, mozzarella, anchois et olives noires.\",\n               \"allergenes\": \"A\"\n            }]}]}", "carte3_grill_station.json", []) in 27ms src/app/actions/genererCarteAction.ts
+ GET /api/settings 200 in 11ms (next.js: 4ms, application-code: 7ms)
+ GET /api/settings 200 in 7ms (next.js: 4ms, application-code: 3ms)
+ GET /null 404 in 189ms (next.js: 42ms, application-code: 147ms)
+ GET /menu 200 in 186ms (next.js: 63ms, application-code: 123ms)
+ GET /api/settings 200 in 78ms (next.js: 21ms, application-code: 58ms)
+ GET /api/settings 200 in 8ms (next.js: 3ms, application-code: 5ms)
+ GET /generer-carte 200 in 34ms (next.js: 11ms, application-code: 23ms)
+ POST /generer-carte 200 in 340ms (next.js: 5ms, application-code: 335ms)
+  └─ ƒ getAvailableLibraryCards() in 326ms src/app/actions/genererCarteAction.ts
+ POST /generer-carte 200 in 158ms (next.js: 7ms, application-code: 150ms)
+  └─ ƒ getAvailableLibraryCards() in 144ms src/app/actions/genererCarteAction.ts
+[ROUTAGE] Mode RAG Strict activé sur base: undefined
+[PHASE 1] Génération de la Trame Intermédiaire...
+=== RAW TRAME INTERMÉDIAIRE ===
+{
+  "categories":[
+      {
+         "name":"Appétit Russe",
+         "description":"",
+         "allergènes":"(A) : gluten, noix",
+         "items":[
+            {
+               "id":"550e8400-e29b-41d4-a716-446655440000",
+               "name":"Pirozhki de Viande",
+               "price":7.50,
+               "description":"Petits pâtés d'origine russe.\n(A) : gluten, noix",
+               "steps":[
+                  {
+                     "title":"Choix de la Garniture",
+                     "minChoices":1,
+                     "maxChoices":1,
+                     "options":[
+                        {
+                           "id":"123e4567-e89b-12d3-a456-426614174000",
+                           "name":"Viande Hachée",
+                           "priceDelta":0
+                        },
+                        {
+                           "id":"98765432-0e90-12e3-a456-426614174001",
+                           "name":"Poitrine de Porc",
+                           "priceDelta":0
+                        }
+                     ]
+                  }
+               ]
+            }
+         ]
+      },
+      {
+         "name":"Boissons",
+         "description":"",
+         "allergènes":"",
+         "items":[
+            {
+               "id":"550e8400-e29b-41d4-a716-446655440001",
+               "name":"Coca-Cola",
+               "price":2.50,
+               "description":"Soda américaine.\n",
+               "steps":[]
+            },
+            {
+               "id":"550e8400-e29b-41d4-a716-446655440002",
+               "name":"Eau Plate",
+               "price":0.00,
+               "description":"Eau pure filtrée.\n",
+               "steps":[]
+            }
+         ]
+      },
+      {
+         "name":"Desserts",
+         "description":"",
+         "allergènes":"(A) : gluten, noix, lactose",
+         "items":[
+            {
+               "id":"550e8400-e29b-41d4-a716-446655440003",
+               "name":"Pouding Chocolat",
+               "price":5.00,
+               "description":"Dessert russe traditionnel.\n(A) : gluten, noix, lactose",
+               "steps":[
+                  {
+                     "title":"Choix de la Garniture",
+                     "minChoices":1,
+                     "maxChoices":1,
+                     "options":[
+                        {
+                           "id":"123e4567-e89b-12d3-a456-426614174001",
+                           "name":"Chocolat Noir",
+                           "priceDelta":0
+                        },
+                        {
+                           "id":"98765432-0e90-12e3-a456-426614174002",
+                           "name":"Chocolat Blanc",
+                           "priceDelta":0
+                        }
+                     ]
+                  }
+               ]
+            }
+         ]
+      }
+   ]
+}
+ POST /generer-carte 200 in 1284ms (next.js: 9ms, application-code: 1275ms)
+  └─ ƒ genererArchitectureAction({}) in 1229ms src/app/actions/genererCarteAction.ts
+[PHASE 2] Conversion UUID Backend (Zero LLM Hallucination)...
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+ POST /generer-carte 200 in 34ms (next.js: 5ms, application-code: 29ms)
+  └─ ƒ enrichirCarteAction({}, "{\n  \"categories\":[\n      {\n         \"name\":\"Appétit Russe\",\n         \"description\":\"\",\n         \"allergènes\":\"(A) : gluten, noix\",\n         \"items\":[\n            {\n               \"id\":\"550e8400-e29b-41d4-a716-446655440000\",\n               \"name\":\"Pirozhki de Viande\",\n               \"price\":7.50,\n               \"description\":\"Petits pâtés d'origine russe.\\n(A) : gluten, noix\",\n               \"steps\":[\n                  {\n                     \"title\":\"Choix de la Garniture\",\n                     \"minChoices\":1,\n                     \"maxChoices\":1,\n                     \"options\":[\n                        {\n                           \"id\":\"123e4567-e89b-12d3-a456-426614174000\",\n                           \"name\":\"Viande Hachée\",\n                           \"priceDelta\":0\n                        },\n                        {\n                           \"id\":\"98765432-0e90-12e3-a456-426614174001\",\n                           \"name\":\"Poitrine de Porc\",\n                           \"priceDelta\":0\n                        }\n                     ]\n                  }\n               ]\n            }\n         ]\n      },\n      {\n         \"name\":\"Boissons\",\n         \"description\":\"\",\n         \"allergènes\":\"\",\n         \"items\":[\n            {\n               \"id\":\"550e8400-e29b-41d4-a716-446655440001\",\n               \"name\":\"Coca-Cola\",\n               \"price\":2.50,\n               \"description\":\"Soda américaine.\\n\",\n               \"steps\":[]\n            },\n            {\n               \"id\":\"550e8400-e29b-41d4-a716-446655440002\",\n               \"name\":\"Eau Plate\",\n               \"price\":0.00,\n               \"description\":\"Eau pure filtrée.\\n\",\n               \"steps\":[]\n            }\n         ]\n      },\n      {\n         \"name\":\"Desserts\",\n         \"description\":\"\",\n         \"allergènes\":\"(A) : gluten, noix, lactose\",\n         \"items\":[\n            {\n               \"id\":\"550e8400-e29b-41d4-a716-446655440003\",\n               \"name\":\"Pouding Chocolat\",\n               \"price\":5.00,\n               \"description\":\"Dessert russe traditionnel.\\n(A) : gluten, noix, lactose\",\n               \"steps\":[\n                  {\n                     \"title\":\"Choix de la Garniture\",\n                     \"minChoices\":1,\n                     \"maxChoices\":1,\n                     \"options\":[\n                        {\n                           \"id\":\"123e4567-e89b-12d3-a456-426614174001\",\n                           \"name\":\"Chocolat Noir\",\n                           \"priceDelta\":0\n                        },\n                        {\n                           \"id\":\"98765432-0e90-12e3-a456-426614174002\",\n                           \"name\":\"Chocolat Blanc\",\n                           \"priceDelta\":0\n                        }\n                     ]\n                  }\n               ]\n            }\n         ]\n      }\n   ]\n}", "", []) in 22ms src/app/actions/genererCarteAction.ts
+ GET /api/settings 200 in 30ms (next.js: 16ms, application-code: 13ms)
+ GET /api/settings 200 in 6ms (next.js: 2ms, application-code: 4ms)
+ GET /generer-carte 200 in 32ms (next.js: 4ms, application-code: 28ms)
+ POST /generer-carte 200 in 173ms (next.js: 4ms, application-code: 170ms)
+  └─ ƒ getAvailableLibraryCards() in 155ms src/app/actions/genererCarteAction.ts
+ POST /generer-carte 200 in 156ms (next.js: 4ms, application-code: 153ms)
+  └─ ƒ getAvailableLibraryCards() in 143ms src/app/actions/genererCarteAction.ts
+[ROUTAGE] Mode RAG Strict activé sur base: carte3_grill_station.json
+[PHASE 1] Génération de la Trame Intermédiaire...
+=== RAW TRAME INTERMÉDIAIRE ===
+{
+  "name": "kremlin",
+   "categories": [
+      {
+         "name": "Pizzas",
+         "items": [
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440001",
+               "name": "Pizza Royale",
+               "price": 14.99,
+               "description": "Pizza aux fromages, jambon et anchois. A",
+               "steps": []
+            },
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440002",
+               "name": "Pizza Toscane",
+               "price": 12.99,
+               "description": "Pizza aux tomates, basilic et mozzarella. A",
+               "steps": []
+            },
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440003",
+               "name": "Pizza Provençale",
+               "price": 13.99,
+               "description": "Pizza aux fromages, jambon et olives. A",
+               "steps": []
+            },
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440004",
+               "name": "Pizza Capricciosa",
+               "price": 14.99,
+               "description": "Pizza aux fromages, jambon, anchois et olives. A",
+               "steps": []
+            },
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440005",
+               "name": "Pizza Margherita",
+               "price": 10.99,
+               "description": "Pizza aux tomates, basilic et mozzarella. A",
+               "steps": []
+            },
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440006",
+               "name": "Pizza Quattro Formaggi",
+               "price": 15.99,
+               "description": "Pizza aux fromages. A",
+               "steps": []
+            },
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440007",
+               "name": "Pizza Hawaiian",
+               "price": 12.99,
+               "description": "Pizza aux fromages, jambon et ananas. A",
+               "steps": []
+            },
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440008",
+               "name": "Pizza Vegetarienne",
+               "price": 12.99,
+               "description": "Pizza aux fromages, tomates, basilic et olives. A",
+               "steps": []
+            },
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440009",
+               "name": "Pizza Americaine",
+               "price": 14.99,
+               "description": "Pizza aux fromages, jambon, anchois et olives. A",
+               "steps": []
+            },
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440010",
+               "name": "Pizza Pesto",
+               "price": 13.99,
+               "description": "Pizza au pesto, tomates et mozzarella. A",
+               "steps": []
+            }
+         ]
+      },
+      {
+         "name": "Boissons",
+         "items": [
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440011",
+               "name": "Coca-Cola",
+               "price": 2.50,
+               "description": "Boisson gazeuse au goût de cola. A",
+               "steps": []
+            },
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440012",
+               "name": "Eau Plate",
+               "price": 1.50,
+               "description": "Eau potable. A",
+               "steps": []
+            },
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440013",
+               "name": "Coca-Cola Zéro",
+               "price": 2.50,
+               "description": "Boisson gazeuse au goût de cola sans sucre ajouté. A",
+               "steps": []
+            }]}]}
+ POST /generer-carte 200 in 1632ms (next.js: 9ms, application-code: 1624ms)
+  └─ ƒ genererArchitectureAction({}) in 1603ms src/app/actions/genererCarteAction.ts
+[PHASE 2] Conversion UUID Backend (Zero LLM Hallucination)...
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+ POST /generer-carte 200 in 42ms (next.js: 4ms, application-code: 39ms)
+  └─ ƒ enrichirCarteAction({}, "{\n  \"name\": \"kremlin\",\n   \"categories\": [\n      {\n         \"name\": \"Pizzas\",\n         \"items\": [\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440001\",\n               \"name\": \"Pizza Royale\",\n               \"price\": 14.99,\n               \"description\": \"Pizza aux fromages, jambon et anchois. A\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440002\",\n               \"name\": \"Pizza Toscane\",\n               \"price\": 12.99,\n               \"description\": \"Pizza aux tomates, basilic et mozzarella. A\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440003\",\n               \"name\": \"Pizza Provençale\",\n               \"price\": 13.99,\n               \"description\": \"Pizza aux fromages, jambon et olives. A\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440004\",\n               \"name\": \"Pizza Capricciosa\",\n               \"price\": 14.99,\n               \"description\": \"Pizza aux fromages, jambon, anchois et olives. A\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440005\",\n               \"name\": \"Pizza Margherita\",\n               \"price\": 10.99,\n               \"description\": \"Pizza aux tomates, basilic et mozzarella. A\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440006\",\n               \"name\": \"Pizza Quattro Formaggi\",\n               \"price\": 15.99,\n               \"description\": \"Pizza aux fromages. A\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440007\",\n               \"name\": \"Pizza Hawaiian\",\n               \"price\": 12.99,\n               \"description\": \"Pizza aux fromages, jambon et ananas. A\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440008\",\n               \"name\": \"Pizza Vegetarienne\",\n               \"price\": 12.99,\n               \"description\": \"Pizza aux fromages, tomates, basilic et olives. A\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440009\",\n               \"name\": \"Pizza Americaine\",\n               \"price\": 14.99,\n               \"description\": \"Pizza aux fromages, jambon, anchois et olives. A\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440010\",\n               \"name\": \"Pizza Pesto\",\n               \"price\": 13.99,\n               \"description\": \"Pizza au pesto, tomates et mozzarella. A\",\n               \"steps\": []\n            }\n         ]\n      },\n      {\n         \"name\": \"Boissons\",\n         \"items\": [\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440011\",\n               \"name\": \"Coca-Cola\",\n               \"price\": 2.50,\n               \"description\": \"Boisson gazeuse au goût de cola. A\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440012\",\n               \"name\": \"Eau Plate\",\n               \"price\": 1.50,\n               \"description\": \"Eau potable. A\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440013\",\n               \"name\": \"Coca-Cola Zéro\",\n               \"price\": 2.50,\n               \"description\": \"Boisson gazeuse au goût de cola sans sucre ajouté. A\",\n               \"steps\": []\n            }]}]}", "carte3_grill_station.json", []) in 30ms src/app/actions/genererCarteAction.ts
+[ROUTAGE] Mode RAG Strict activé sur base: carte3_grill_station.json
+[PHASE 1] Génération de la Trame Intermédiaire...
+=== RAW TRAME INTERMÉDIAIRE ===
+{
+  "categories": [
+      {
+         "name": "Pizzas",
+         "items": [
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440000",
+               "name": "Pizza Margherita",
+               "price": 12.50,
+               "description": "Tomates fraîches, mozzarella et basilic, un classique italien.\nA: tomate, lait, gluten.",
+               "steps": []
+            },
+            {
+               "id": "123e4567-e89b-12d3-a456-426614174000",
+               "name": "Pizza Capricciosa",
+               "price": 15.50,
+               "description": "Jambon, champignons, anchois et olives, une pizza italienne classique.\nA: porc, champignon, lait, gluten.",
+               "steps": []
+            },
+            {
+               "id": "98765432-0f98-1234-5678-90123456789a",
+               "name": "Pizza Quattro Formaggi",
+               "price": 14.50,
+               "description": "Un mélange de quatre fromages italiens, une expérience gourmande.\nA: lait, gluten.",
+               "steps": []
+            },
+            {
+               "id": "456e1234-5678-9012-3456-789012345678",
+               "name": "Pizza Provençale",
+               "price": 13.50,
+               "description": "Tomates, olives et anchois, une pizza méditerranéenne.\nA: tomate, lait, gluten.",
+               "steps": []
+            },
+            {
+               "id": "23456789-0f98-1234-5678-90123456789b",
+               "name": "Pizza aux Fruits de Mer",
+               "price": 18.50,
+               "description": "Shrimps, crevettes et huile d'olive, une pizza délicieuse.\nA: poisson, gluten.",
+               "steps": []
+            },
+            {
+               "id": "90123456-0f98-1234-5678-90123456789a",
+               "name": "Pizza au Jambon",
+               "price": 11.50,
+               "description": "Jambon et fromage, une classique.\nA: porc, lait, gluten.",
+               "steps": []
+            },
+            {
+               "id": "67890123-0f98-1234-5678-90123456789b",
+               "name": "Pizza aux Champignons",
+               "price": 12.50,
+               "description": "Champignons et fromage, une belle paire.\nA: champignon, lait, gluten.",
+               "steps": []
+            },
+            {
+               "id": "34567890-0f98-1234-5678-90123456789a",
+               "name": "Pizza aux Olives",
+               "price": 13.50,
+               "description": "Olives noires et fromage, une expérience gourmande.\nA: lait, gluten.",
+               "steps": []
+            },
+            {
+               "id": "78901234-0f98-1234-5678-90123456789b",
+               "name": "Pizza aux Anchois",
+               "price": 14.50,
+               "description": "Anchois et fromage, une belle paire.\nA: lait, gluten.",
+               "steps": []
+            },
+            {
+               "id": "01234567-0f98-1234-5678-90123456789a",
+               "name": "Pizza aux Shrimps",
+               "price": 16.50,
+               "description": "Shrimps et fromage, une expérience gourmande.\nA: poisson, gluten.",
+               "steps": []
+            }
+         ]
+      },
+      {
+         "name": "Boissons",
+         "items": [
+            {
+               "id": "00000000-0000-0000-0000-000000000012",
+               "name": "Coca-Cola",
+               "price": 2.50,
+               "description": "Boisson gazeuse classique.\nA: sucre, colorant.",
+               "steps": []
+            }]}]}
+ POST /generer-carte 200 in 1763ms (next.js: 8ms, application-code: 1756ms)
+  └─ ƒ genererArchitectureAction({}) in 1739ms src/app/actions/genererCarteAction.ts
+[PHASE 2] Conversion UUID Backend (Zero LLM Hallucination)...
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+ POST /generer-carte 200 in 31ms (next.js: 6ms, application-code: 25ms)
+  └─ ƒ enrichirCarteAction({}, "{\n  \"categories\": [\n      {\n         \"name\": \"Pizzas\",\n         \"items\": [\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n               \"name\": \"Pizza Margherita\",\n               \"price\": 12.50,\n               \"description\": \"Tomates fraîches, mozzarella et basilic, un classique italien.\\nA: tomate, lait, gluten.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n               \"name\": \"Pizza Capricciosa\",\n               \"price\": 15.50,\n               \"description\": \"Jambon, champignons, anchois et olives, une pizza italienne classique.\\nA: porc, champignon, lait, gluten.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"98765432-0f98-1234-5678-90123456789a\",\n               \"name\": \"Pizza Quattro Formaggi\",\n               \"price\": 14.50,\n               \"description\": \"Un mélange de quatre fromages italiens, une expérience gourmande.\\nA: lait, gluten.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"456e1234-5678-9012-3456-789012345678\",\n               \"name\": \"Pizza Provençale\",\n               \"price\": 13.50,\n               \"description\": \"Tomates, olives et anchois, une pizza méditerranéenne.\\nA: tomate, lait, gluten.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"23456789-0f98-1234-5678-90123456789b\",\n               \"name\": \"Pizza aux Fruits de Mer\",\n               \"price\": 18.50,\n               \"description\": \"Shrimps, crevettes et huile d'olive, une pizza délicieuse.\\nA: poisson, gluten.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"90123456-0f98-1234-5678-90123456789a\",\n               \"name\": \"Pizza au Jambon\",\n               \"price\": 11.50,\n               \"description\": \"Jambon et fromage, une classique.\\nA: porc, lait, gluten.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"67890123-0f98-1234-5678-90123456789b\",\n               \"name\": \"Pizza aux Champignons\",\n               \"price\": 12.50,\n               \"description\": \"Champignons et fromage, une belle paire.\\nA: champignon, lait, gluten.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"34567890-0f98-1234-5678-90123456789a\",\n               \"name\": \"Pizza aux Olives\",\n               \"price\": 13.50,\n               \"description\": \"Olives noires et fromage, une expérience gourmande.\\nA: lait, gluten.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"78901234-0f98-1234-5678-90123456789b\",\n               \"name\": \"Pizza aux Anchois\",\n               \"price\": 14.50,\n               \"description\": \"Anchois et fromage, une belle paire.\\nA: lait, gluten.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"01234567-0f98-1234-5678-90123456789a\",\n               \"name\": \"Pizza aux Shrimps\",\n               \"price\": 16.50,\n               \"description\": \"Shrimps et fromage, une expérience gourmande.\\nA: poisson, gluten.\",\n               \"steps\": []\n            }\n         ]\n      },\n      {\n         \"name\": \"Boissons\",\n         \"items\": [\n            {\n               \"id\": \"00000000-0000-0000-0000-000000000012\",\n               \"name\": \"Coca-Cola\",\n               \"price\": 2.50,\n               \"description\": \"Boisson gazeuse classique.\\nA: sucre, colorant.\",\n               \"steps\": []\n            }]}]}", "carte3_grill_station.json", []) in 16ms src/app/actions/genererCarteAction.ts
+ GET /api/settings 200 in 11ms (next.js: 4ms, application-code: 7ms)
+ GET /api/settings 200 in 7ms (next.js: 1465µs, application-code: 5ms)
+ GET /null 404 in 84ms (next.js: 15ms, application-code: 70ms)
+✓ Compiled in 1018ms
+ GET /generer-carte 200 in 564ms (next.js: 326ms, application-code: 238ms)
+ GET /generer-carte 200 in 259ms (next.js: 6ms, application-code: 253ms)
+ GET /generer-carte 200 in 220ms (next.js: 11ms, application-code: 209ms)
+ GET /generer-carte 200 in 142ms (next.js: 4ms, application-code: 138ms)
+ GET /generer-carte 200 in 65ms (next.js: 9ms, application-code: 56ms)
+ GET /generer-carte 200 in 401ms (next.js: 89ms, application-code: 312ms)
+ GET /api/settings 200 in 176ms (next.js: 129ms, application-code: 48ms)
+ POST /generer-carte 200 in 370ms (next.js: 4ms, application-code: 366ms)
+  └─ ƒ getAvailableLibraryCards() in 334ms src/app/actions/genererCarteAction.ts
+[ROUTAGE] Mode RAG Strict activé sur base: carte3_grill_station.json
+[PHASE 1] Génération de la Trame Intermédiaire...
+=== RAW TRAME INTERMÉDIAIRE ===
+{
+  "workflow": {
+      "name": "Parcours guidé",
+      "description": "Découvrez notre carte de produits"
+   },
+   "categories": [
+      {
+         "name": "Pizzas",
+         "description": "Nos pizzas faites maison pour vous",
+         "items": [
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440000",
+               "name": "Pizza Margherita",
+               "price": 9.50,
+               "description": "Tomate, mozzarella et basilic sur une base de pain italien. (A)",
+               "steps": []
+            },
+            {
+               "id": "123e4567-e89b-12d3-a456-426614174000",
+               "name": "Pizza Capricciosa",
+               "price": 11.50,
+               "description": "Tomate, mozzarella, jambon, champignons, olives sur une base de pain italien. (A)",
+               "steps": []
+            },
+            {
+               "id": "456e7890-e89b-12d3-a456-426614174001",
+               "name": "Pizza Quattro Formaggi",
+               "price": 12.50,
+               "description": "Mozzarella, parmesan, ricotta, gorgonzola sur une base de pain italien. (A)",
+               "steps": []
+            },
+            {
+               "id": "789e0123-e89b-12d3-a456-426614174002",
+               "name": "Pizza Prosciutto et Figues",
+               "price": 13.50,
+               "description": "Jambon cru, figues, mozzarella sur une base de pain italien. (A)",
+               "steps": []
+            },
+            {
+               "id": "000e1234-e89b-12d3-a456-426614174003",
+               "name": "Pizza Vegetarienne",
+               "price": 10.50,
+               "description": "Tomate, mozzarella, champignons, olives, poivrons sur une base de pain italien. (A)",
+               "steps": []
+            },
+            {
+               "id": "456e7890-e89b-12d3-a456-426614174004",
+               "name": "Pizza Diavola",
+               "price": 12.50,
+               "description": "Tomate, mozzarella, jambon cru, pepperoni sur une base de pain italien. (A)",
+               "steps": []
+            },
+            {
+               "id": "987e6543-e89b-12d3-a456-426614174005",
+               "name": "Pizza Toscane",
+               "price": 13.50,
+               "description": "Tomate, mozzarella, jambon cru, champignons sur une base de pain italien. (A)",
+               "steps": []
+            },
+            {
+               "id": "321e0987-e89b-12d3-a456-426614174006",
+               "name": "Pizza Quattro Stagioni",
+               "price": 14.50,
+               "description": "Tomate, mozzarella, jambon cru, champignons, olives sur une base de pain italien. (A)",
+               "steps": []
+            },
+            {
+               "id": "654e3210-e89b-12d3-a456-426614174007",
+               "name": "Pizza Napolitaine",
+               "price": 15.50,
+               "description": "Tomate, mozzarella, champignons, olives sur une base de pain italien. (A)",
+               "steps": []
+            },
+            {
+               "id": "987e6543-e89b-12d3-a456-426614174008",
+               "name": "Pizza Hawaiian",
+               "price": 16.50,
+               "description": "Tomate, mozzarella, thon sur une base de pain italien. (A)",
+               "steps": []
+            },
+            {
+               "id": "321e0987-e89b-12d3-a456-426614174009",
+               "name": "Pizza Provençale",
+               "price": 17.50,
+               "description": "Tomate, mozzarella, jambon cru, champignons, olives sur une base de pain italien. (A)",
+               "steps": []
+            }
+         ]
+      }]}
+ POST /generer-carte 200 in 2.0s (next.js: 21ms, application-code: 1997ms)
+  └─ ƒ genererArchitectureAction({}) in 1980ms src/app/actions/genererCarteAction.ts
+[PHASE 2] Conversion UUID Backend (Zero LLM Hallucination)...
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+ POST /generer-carte 200 in 52ms (next.js: 3ms, application-code: 49ms)
+  └─ ƒ enrichirCarteAction({}, "{\n  \"workflow\": {\n      \"name\": \"Parcours guidé\",\n      \"description\": \"Découvrez notre carte de produits\"\n   },\n   \"categories\": [\n      {\n         \"name\": \"Pizzas\",\n         \"description\": \"Nos pizzas faites maison pour vous\",\n         \"items\": [\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n               \"name\": \"Pizza Margherita\",\n               \"price\": 9.50,\n               \"description\": \"Tomate, mozzarella et basilic sur une base de pain italien. (A)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n               \"name\": \"Pizza Capricciosa\",\n               \"price\": 11.50,\n               \"description\": \"Tomate, mozzarella, jambon, champignons, olives sur une base de pain italien. (A)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"456e7890-e89b-12d3-a456-426614174001\",\n               \"name\": \"Pizza Quattro Formaggi\",\n               \"price\": 12.50,\n               \"description\": \"Mozzarella, parmesan, ricotta, gorgonzola sur une base de pain italien. (A)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"789e0123-e89b-12d3-a456-426614174002\",\n               \"name\": \"Pizza Prosciutto et Figues\",\n               \"price\": 13.50,\n               \"description\": \"Jambon cru, figues, mozzarella sur une base de pain italien. (A)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"000e1234-e89b-12d3-a456-426614174003\",\n               \"name\": \"Pizza Vegetarienne\",\n               \"price\": 10.50,\n               \"description\": \"Tomate, mozzarella, champignons, olives, poivrons sur une base de pain italien. (A)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"456e7890-e89b-12d3-a456-426614174004\",\n               \"name\": \"Pizza Diavola\",\n               \"price\": 12.50,\n               \"description\": \"Tomate, mozzarella, jambon cru, pepperoni sur une base de pain italien. (A)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"987e6543-e89b-12d3-a456-426614174005\",\n               \"name\": \"Pizza Toscane\",\n               \"price\": 13.50,\n               \"description\": \"Tomate, mozzarella, jambon cru, champignons sur une base de pain italien. (A)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"321e0987-e89b-12d3-a456-426614174006\",\n               \"name\": \"Pizza Quattro Stagioni\",\n               \"price\": 14.50,\n               \"description\": \"Tomate, mozzarella, jambon cru, champignons, olives sur une base de pain italien. (A)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"654e3210-e89b-12d3-a456-426614174007\",\n               \"name\": \"Pizza Napolitaine\",\n               \"price\": 15.50,\n               \"description\": \"Tomate, mozzarella, champignons, olives sur une base de pain italien. (A)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"987e6543-e89b-12d3-a456-426614174008\",\n               \"name\": \"Pizza Hawaiian\",\n               \"price\": 16.50,\n               \"description\": \"Tomate, mozzarella, thon sur une base de pain italien. (A)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"321e0987-e89b-12d3-a456-426614174009\",\n               \"name\": \"Pizza Provençale\",\n               \"price\": 17.50,\n               \"description\": \"Tomate, mozzarella, jambon cru, champignons, olives sur une base de pain italien. (A)\",\n               \"steps\": []\n            }\n         ]\n      }]}", "carte3_grill_station.json", []) in 38ms src/app/actions/genererCarteAction.ts
+ GET /api/settings 200 in 46ms (next.js: 25ms, application-code: 21ms)
+ GET /api/settings 200 in 7ms (next.js: 1727µs, application-code: 5ms)
+ GET /null 404 in 104ms (next.js: 41ms, application-code: 63ms)
+ GET /null 404 in 64ms (next.js: 10ms, application-code: 54ms)
+ GET /generer-carte 200 in 1714ms (next.js: 523ms, application-code: 1191ms)
+ GET /generer-carte 200 in 1171ms (next.js: 315ms, application-code: 856ms)
+ GET /generer-carte 200 in 249ms (next.js: 40ms, application-code: 209ms)
+ GET /generer-carte 200 in 158ms (next.js: 8ms, application-code: 150ms)
+ GET /generer-carte 200 in 72ms (next.js: 6ms, application-code: 66ms)
+ GET /generer-carte 200 in 296ms (next.js: 55ms, application-code: 241ms)
+ GET /api/settings 200 in 312ms (next.js: 127ms, application-code: 184ms)
+ POST /generer-carte 200 in 424ms (next.js: 21ms, application-code: 402ms)
+  └─ ƒ getAvailableLibraryCards() in 354ms src/app/actions/genererCarteAction.ts
+[ROUTAGE] Mode RAG Strict activé sur base: carte3_grill_station.json
+[PHASE 1] Génération de la Trame Intermédiaire...
+=== RAW TRAME INTERMÉDIAIRE ===
+{
+  "name": "tttttest",
+   "type": "Pizzeria/Grill",
+   "langue": "fr",
+   "categories": [
+      {
+         "name": "Pizzas",
+         "items": [
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440000",
+               "name": "Pizza Margherita",
+               "price": 10.50,
+               "description": "La classique italienne avec tomate, mozzarella et basilic. A (gluten)",
+               "steps": []
+            },
+            {
+               "id": "123e4567-e89b-12d3-a456-426614174000",
+               "name": "Pizza Quattro Formaggi",
+               "price": 12.50,
+               "description": "Une explosion de fromage avec quatre saveurs italiennes. A (gluten)",
+               "steps": []
+            },
+            {
+               "id": "9876f432-hgj9-12d3-a456-426614174000",
+               "name": "Pizza Provençale",
+               "price": 11.50,
+               "description": "Une palette de saveurs méditerranéennes avec anchois, olives et tomate. A (gluten, poissons)",
+               "steps": []
+            },
+            {
+               "id": "abcde1234-ghij-12d3-a456-426614174000",
+               "name": "Pizza Chorizo et Chèvre",
+               "price": 12.00,
+               "description": "Un mélange de saveurs ibériques avec chorizo et chèvre. A (gluten)",
+               "steps": []
+            },
+            {
+               "id": "fghij4567-klmn-12d3-a456-426614174000",
+               "name": "Pizza Vegetarienne",
+               "price": 10.00,
+               "description": "Une palette de légumes de saison. A (gluten)",
+               "steps": []
+            },
+            {
+               "id": "opqrstu1-vwxyz-12d3-a456-426614174000",
+               "name": "Pizza Shrimps",
+               "price": 13.50,
+               "description": "Des crevettes grillées à la pêche. A (gluten, poissons)",
+               "steps": []
+            },
+            {
+               "id": "xyzabc123-12345-12d3-a456-426614174000",
+               "name": "Pizza BBQ Pulled Pork",
+               "price": 12.00,
+               "description": "Un mélange de saveurs BBQ et de porc. A (gluten)",
+               "steps": []
+            },
+            {
+               "id": "vbnm1234-asdf-12d3-a456-426614174000",
+               "name": "Pizza Quattro Stagioni",
+               "price": 13.00,
+               "description": "Une palette de saveurs avec quatre saisons. A (gluten)",
+               "steps": []
+            },
+            {
+               "id": "qazws1234-edcf-12d3-a456-426614174000",
+               "name": "Pizza Chicken Tikka",
+               "price": 12.50,
+               "description": "Des cubes de poulet grillés à l'indienne. A (gluten)",
+               "steps": []
+            },
+            {
+               "id": "rstu1234-yuiop-12d3-a456-426614174000",
+               "name": "Pizza Hawaiian",
+               "price": 11.00,
+               "description": "Une palette de saveurs avec ananas et jambon. A (gluten)",
+               "steps": []
+            }
+         ]
+      },
+      {
+         "name": "Desserts",
+         "items": [
+            {
+               "id": "defgh1234-jklmn-12d3-a456-426614174000",
+               "name": "Tarte Tatin",
+               "price": 6.50,
+               "description": "Une tarte classique avec pommes et cannelle. A (gluten)",
+               "steps": []
+            },
+            {
+               "id": "mnbvc1234-xzcvb-12d3-a456-426614174000",
+               "name": "Crème Brûlée",
+               "price": 7.00,
+               "description": "Un mélange de crème et de sucre grillé. A (lactose)",
+               "steps": []
+            }]}]}
+ POST /generer-carte 200 in 2.1s (next.js: 17ms, application-code: 2.1s)
+  └─ ƒ genererArchitectureAction({}) in 2075ms src/app/actions/genererCarteAction.ts
+[PHASE 2] Conversion UUID Backend (Zero LLM Hallucination)...
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "desserts" (Classifiée: dessert). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "desserts" (Classifiée: dessert). L'item sera injecté pur (sans modifier).
+ POST /generer-carte 200 in 43ms (next.js: 3ms, application-code: 41ms)
+  └─ ƒ enrichirCarteAction({}, "{\n  \"name\": \"tttttest\",\n   \"type\": \"Pizzeria/Grill\",\n   \"langue\": \"fr\",\n   \"categories\": [\n      {\n         \"name\": \"Pizzas\",\n         \"items\": [\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n               \"name\": \"Pizza Margherita\",\n               \"price\": 10.50,\n               \"description\": \"La classique italienne avec tomate, mozzarella et basilic. A (gluten)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n               \"name\": \"Pizza Quattro Formaggi\",\n               \"price\": 12.50,\n               \"description\": \"Une explosion de fromage avec quatre saveurs italiennes. A (gluten)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"9876f432-hgj9-12d3-a456-426614174000\",\n               \"name\": \"Pizza Provençale\",\n               \"price\": 11.50,\n               \"description\": \"Une palette de saveurs méditerranéennes avec anchois, olives et tomate. A (gluten, poissons)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"abcde1234-ghij-12d3-a456-426614174000\",\n               \"name\": \"Pizza Chorizo et Chèvre\",\n               \"price\": 12.00,\n               \"description\": \"Un mélange de saveurs ibériques avec chorizo et chèvre. A (gluten)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"fghij4567-klmn-12d3-a456-426614174000\",\n               \"name\": \"Pizza Vegetarienne\",\n               \"price\": 10.00,\n               \"description\": \"Une palette de légumes de saison. A (gluten)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"opqrstu1-vwxyz-12d3-a456-426614174000\",\n               \"name\": \"Pizza Shrimps\",\n               \"price\": 13.50,\n               \"description\": \"Des crevettes grillées à la pêche. A (gluten, poissons)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"xyzabc123-12345-12d3-a456-426614174000\",\n               \"name\": \"Pizza BBQ Pulled Pork\",\n               \"price\": 12.00,\n               \"description\": \"Un mélange de saveurs BBQ et de porc. A (gluten)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"vbnm1234-asdf-12d3-a456-426614174000\",\n               \"name\": \"Pizza Quattro Stagioni\",\n               \"price\": 13.00,\n               \"description\": \"Une palette de saveurs avec quatre saisons. A (gluten)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"qazws1234-edcf-12d3-a456-426614174000\",\n               \"name\": \"Pizza Chicken Tikka\",\n               \"price\": 12.50,\n               \"description\": \"Des cubes de poulet grillés à l'indienne. A (gluten)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"rstu1234-yuiop-12d3-a456-426614174000\",\n               \"name\": \"Pizza Hawaiian\",\n               \"price\": 11.00,\n               \"description\": \"Une palette de saveurs avec ananas et jambon. A (gluten)\",\n               \"steps\": []\n            }\n         ]\n      },\n      {\n         \"name\": \"Desserts\",\n         \"items\": [\n            {\n               \"id\": \"defgh1234-jklmn-12d3-a456-426614174000\",\n               \"name\": \"Tarte Tatin\",\n               \"price\": 6.50,\n               \"description\": \"Une tarte classique avec pommes et cannelle. A (gluten)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"mnbvc1234-xzcvb-12d3-a456-426614174000\",\n               \"name\": \"Crème Brûlée\",\n               \"price\": 7.00,\n               \"description\": \"Un mélange de crème et de sucre grillé. A (lactose)\",\n               \"steps\": []\n            }]}]}", "carte3_grill_station.json", []) in 33ms src/app/actions/genererCarteAction.ts
+ GET /api/settings 200 in 11ms (next.js: 3ms, application-code: 8ms)
+ GET /api/settings 200 in 5ms (next.js: 1970µs, application-code: 3ms)
+ GET /null 404 in 73ms (next.js: 33ms, application-code: 40ms)
+✓ Compiled in 835ms
+ GET /generer-carte 200 in 458ms (next.js: 265ms, application-code: 192ms)
+ GET /generer-carte 200 in 81ms (next.js: 4ms, application-code: 77ms)
+ GET /generer-carte 200 in 94ms (next.js: 4ms, application-code: 90ms)
+ GET /generer-carte 200 in 58ms (next.js: 3ms, application-code: 56ms)
+ GET /generer-carte 200 in 32ms (next.js: 3ms, application-code: 29ms)
+ GET /generer-carte 200 in 396ms (next.js: 59ms, application-code: 336ms)
+ GET /api/settings 200 in 154ms (next.js: 91ms, application-code: 62ms)
+ POST /generer-carte 200 in 248ms (next.js: 5ms, application-code: 244ms)
+  └─ ƒ getAvailableLibraryCards() in 218ms src/app/actions/genererCarteAction.ts
+[ROUTAGE] Mode RAG Strict activé sur base: carte3_grill_station.json
+[PHASE 1] Génération de la Trame Intermédiaire...
+=== RAW TRAME INTERMÉDIAIRE ===
+{
+  "categories": [
+      {
+         "name": "Pizzas",
+         "items": [
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440001",
+               "name": "Pizza Margherita",
+               "price": 12.00,
+               "description": "Tomates fraîches, mozzarella, basilic, huile d'olive. (A: tomates, lait)"
+            },
+            {
+               "id": "123e4567-e89b-12d3-a456-426614174002",
+               "name": "Pizza Quattro Formaggi",
+               "price": 15.00,
+               "description": "Quatre fromages italiens : mozzarella, parmesan, gorgonzola, ricotta. (A: lait, fromage)"
+            },
+            {
+               "id": "f7d8c4a8-5a6b-4d3c-8f7d-9c4b6a5d3e4b",
+               "name": "Pizza Prosciutto et Figue",
+               "price": 14.50,
+               "description": "Jambon cuit, figues, mozzarella, huile d'olive. (A: porc)"
+            },
+            {
+               "id": "a1b2c3d4-e5f6-g7h8-i9j0-a1b2c3d4e5f6",
+               "name": "Pizza Vegetarienne",
+               "price": 13.00,
+               "description": "Pommes de terre, poivrons, aubergines, mozzarella, huile d'olive. (A: lait)"
+            },
+            {
+               "id": "9a8b7c6d5e4f3g2h1i0j9k8l7m6n5o4",
+               "name": "Pizza Capricciosa",
+               "price": 16.00,
+               "description": "Jambon, anchois, olive, artichaut, mozzarella, huile d'olive. (A: porc, poissons)"
+            },
+            {
+               "id": "3e2f1d0c8b7a6c5d4e3f2g1h0i9j8k7l6m5n4o3",
+               "name": "Pizza Meat Lover",
+               "price": 17.00,
+               "description": "Jambon, saucisses, bacon, mozzarella, huile d'olive. (A: porc)"
+            },
+            {
+               "id": "8f7d6c5b4a3b2c1d0e9f8g7h6i5j4k3l2m1",
+               "name": "Pizza Shrimps",
+               "price": 18.00,
+               "description": "Crevettes, poivrons, mozzarella, huile d'olive. (A: crustacés)"
+            },
+            {
+               "id": "6d5c4b3a2b1c0d9e8f7g6h5i4j3k2l1m",
+               "name": "Pizza Hawaii",
+               "price": 15.50,
+               "description": "Ananas, jambon, mozzarella, huile d'olive. (A: porc)"
+            },
+            {
+               "id": "4e3d2c1b0a9f8e7d6c5b4a3b2c1",
+               "name": "Pizza BBQ Chicken",
+               "price": 16.50,
+               "description": "Poulet BBQ, poivrons, mozzarella, huile d'olive. (A: poulet)"
+            },
+            {
+               "id": "2f1e0d9c8b7a6c5d4e3f2g1h0i9j8k7l6m5n4",
+               "name": "Pizza Quattro Stagioni",
+               "price": 17.50,
+               "description": "Tomates, aubergines, poivrons, mozzarella, huile d'olive. (A: lait)"
+            }
+         ]
+      }]}
+ POST /generer-carte 200 in 1986ms (next.js: 14ms, application-code: 1973ms)
+  └─ ƒ genererArchitectureAction({}) in 1954ms src/app/actions/genererCarteAction.ts
+[PHASE 2] Conversion UUID Backend (Zero LLM Hallucination)...
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+ POST /generer-carte 200 in 41ms (next.js: 2ms, application-code: 39ms)
+  └─ ƒ enrichirCarteAction({}, "{\n  \"categories\": [\n      {\n         \"name\": \"Pizzas\",\n         \"items\": [\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440001\",\n               \"name\": \"Pizza Margherita\",\n               \"price\": 12.00,\n               \"description\": \"Tomates fraîches, mozzarella, basilic, huile d'olive. (A: tomates, lait)\"\n            },\n            {\n               \"id\": \"123e4567-e89b-12d3-a456-426614174002\",\n               \"name\": \"Pizza Quattro Formaggi\",\n               \"price\": 15.00,\n               \"description\": \"Quatre fromages italiens : mozzarella, parmesan, gorgonzola, ricotta. (A: lait, fromage)\"\n            },\n            {\n               \"id\": \"f7d8c4a8-5a6b-4d3c-8f7d-9c4b6a5d3e4b\",\n               \"name\": \"Pizza Prosciutto et Figue\",\n               \"price\": 14.50,\n               \"description\": \"Jambon cuit, figues, mozzarella, huile d'olive. (A: porc)\"\n            },\n            {\n               \"id\": \"a1b2c3d4-e5f6-g7h8-i9j0-a1b2c3d4e5f6\",\n               \"name\": \"Pizza Vegetarienne\",\n               \"price\": 13.00,\n               \"description\": \"Pommes de terre, poivrons, aubergines, mozzarella, huile d'olive. (A: lait)\"\n            },\n            {\n               \"id\": \"9a8b7c6d5e4f3g2h1i0j9k8l7m6n5o4\",\n               \"name\": \"Pizza Capricciosa\",\n               \"price\": 16.00,\n               \"description\": \"Jambon, anchois, olive, artichaut, mozzarella, huile d'olive. (A: porc, poissons)\"\n            },\n            {\n               \"id\": \"3e2f1d0c8b7a6c5d4e3f2g1h0i9j8k7l6m5n4o3\",\n               \"name\": \"Pizza Meat Lover\",\n               \"price\": 17.00,\n               \"description\": \"Jambon, saucisses, bacon, mozzarella, huile d'olive. (A: porc)\"\n            },\n            {\n               \"id\": \"8f7d6c5b4a3b2c1d0e9f8g7h6i5j4k3l2m1\",\n               \"name\": \"Pizza Shrimps\",\n               \"price\": 18.00,\n               \"description\": \"Crevettes, poivrons, mozzarella, huile d'olive. (A: crustacés)\"\n            },\n            {\n               \"id\": \"6d5c4b3a2b1c0d9e8f7g6h5i4j3k2l1m\",\n               \"name\": \"Pizza Hawaii\",\n               \"price\": 15.50,\n               \"description\": \"Ananas, jambon, mozzarella, huile d'olive. (A: porc)\"\n            },\n            {\n               \"id\": \"4e3d2c1b0a9f8e7d6c5b4a3b2c1\",\n               \"name\": \"Pizza BBQ Chicken\",\n               \"price\": 16.50,\n               \"description\": \"Poulet BBQ, poivrons, mozzarella, huile d'olive. (A: poulet)\"\n            },\n            {\n               \"id\": \"2f1e0d9c8b7a6c5d4e3f2g1h0i9j8k7l6m5n4\",\n               \"name\": \"Pizza Quattro Stagioni\",\n               \"price\": 17.50,\n               \"description\": \"Tomates, aubergines, poivrons, mozzarella, huile d'olive. (A: lait)\"\n            }\n         ]\n      }]}", "carte3_grill_station.json", []) in 30ms src/app/actions/genererCarteAction.ts
+ GET /api/settings 200 in 15ms (next.js: 5ms, application-code: 10ms)
+ GET /api/settings 200 in 12ms (next.js: 5ms, application-code: 7ms)
+ GET /null 404 in 100ms (next.js: 35ms, application-code: 65ms)
+ GET / 200 in 316ms (next.js: 184ms, application-code: 132ms)
+ GET /menu 200 in 147ms (next.js: 91ms, application-code: 56ms)
+ GET /api/settings 200 in 264ms (next.js: 6ms, application-code: 259ms)
+ GET /api/settings 200 in 7ms (next.js: 1838µs, application-code: 5ms)
+ GET /menu 200 in 47ms (next.js: 13ms, application-code: 34ms)
+ GET /api/settings 200 in 31ms (next.js: 5ms, application-code: 26ms)
+ GET /api/settings 200 in 7ms (next.js: 1617µs, application-code: 5ms)
+ GET / 200 in 26ms (next.js: 5ms, application-code: 21ms)
+ GET /menu 200 in 69ms (next.js: 10ms, application-code: 59ms)
+ GET /api/settings 200 in 27ms (next.js: 6ms, application-code: 21ms)
+ GET /api/settings 200 in 8ms (next.js: 2ms, application-code: 6ms)
+ GET /bibliotheque 200 in 397ms (next.js: 69ms, application-code: 328ms)
+ POST /bibliotheque 200 in 225ms (next.js: 9ms, application-code: 216ms)
+  └─ ƒ deleteCarteAction("9ab0d38c-9652-41cf-9825-77d4cc10b180") in 9ms src/app/actions/deleteCarteAction.ts
+ GET /menu 200 in 26ms (next.js: 4ms, application-code: 22ms)
+ GET /api/settings 200 in 5ms (next.js: 1427µs, application-code: 3ms)
+ GET /api/settings 200 in 4ms (next.js: 982µs, application-code: 3ms)
+ GET /importer-cartes 200 in 1807ms (next.js: 1771ms, application-code: 36ms)
+ GET /menu 200 in 47ms (next.js: 23ms, application-code: 24ms)
+ GET /api/settings 200 in 64ms (next.js: 6ms, application-code: 58ms)
+ GET /api/settings 200 in 6ms (next.js: 2ms, application-code: 4ms)
+ GET /generer-carte 200 in 34ms (next.js: 6ms, application-code: 28ms)
+ POST /generer-carte 200 in 205ms (next.js: 1685µs, application-code: 204ms)
+  └─ ƒ getAvailableLibraryCards() in 193ms src/app/actions/genererCarteAction.ts
+ POST /generer-carte 200 in 141ms (next.js: 1769µs, application-code: 139ms)
+  └─ ƒ getAvailableLibraryCards() in 133ms src/app/actions/genererCarteAction.ts
+[ROUTAGE] Mode RAG Strict activé sur base: carte3_grill_station.json
+[PHASE 1] Génération de la Trame Intermédiaire...
+=== RAW TRAME INTERMÉDIAIRE ===
+{
+  "categories": [
+      {
+         "name": "Pizzas",
+         "items": [
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440000",
+               "name": "Pizza Margherita",
+               "price": 8.90,
+               "description": "Une classique pizza italienne au fromage de mozzarella et à la sauce tomate. (A) Allergènes: Fromage, Lait, Oeufs.",
+               "steps": []
+            },
+            {
+               "id": "12345678-1234-1234-1234-123456789012",
+               "name": "Pizza Provençale",
+               "price": 10.50,
+               "description": "Une pizza méditerranéenne avec des tomates, des olives et des anchois. (A) Allergènes: Poisson, Fromage, Lait.",
+               "steps": []
+            },
+            {
+               "id": "98765432-9876-9876-9876-987654321098",
+               "name": "Pizza Capricciosa",
+               "price": 11.90,
+               "description": "Une pizza italienne avec des champignons, de la saucisse et des olives. (A) Allergènes: Fromage, Lait, Oeufs.",
+               "steps": []
+            },
+            {
+               "id": "23456789-2345-2345-2345-234567890123",
+               "name": "Pizza Quattro Formaggi",
+               "price": 12.90,
+               "description": "Une pizza italienne aux quatre fromages. (A) Allergènes: Fromage, Lait.",
+               "steps": []
+            },
+            {
+               "id": "34567890-3456-3456-3456-345678901234",
+               "name": "Pizza di Pollo",
+               "price": 10.90,
+               "description": "Une pizza italienne avec du poulet et du fromage. (A) Allergènes: Fromage, Lait, Poulet.",
+               "steps": []
+            },
+            {
+               "id": "45678901-4567-4567-4567-456789012345",
+               "name": "Pizza Vegetarienne",
+               "price": 9.90,
+               "description": "Une pizza italienne végétarienne avec des champignons et des olives. (A) Allergènes: Fromage, Lait, Oeufs.",
+               "steps": []
+            }
+         ]
+      },
+      {
+         "name": "Boissons",
+         "items": [
+            {
+               "id": "90123456-9012-9012-9012-901234567890",
+               "name": "Coca-Cola",
+               "price": 2.50,
+               "description": "Une boisson gazeuse au goût de cola. (A) Allergènes: Sucres.",
+               "steps": []
+            },
+            {
+               "id": "78901234-7890-7890-7890-789012345678",
+               "name": "Eau Plate",
+               "price": 1.50,
+               "description": "Une eau plate. (A) Allergènes: Nulle.",
+               "steps": []
+            },
+            {
+               "id": "67890123-6789-6789-6789-678901234567",
+               "name": "Coca-Cola Zéro",
+               "price": 2.50,
+               "description": "Une boisson gazeuse au goût de cola sans sucre. (A) Allergènes: Sucres.",
+               "steps": []
+            },
+            {
+               "id": "56789012-5678-5678-5678-567890123456",
+               "name": "Oasis",
+               "price": 2.90,
+               "description": "Une boisson gazeuse au goût de fruits. (A) Allergènes: Sucres.",
+               "steps": []
+            },
+            {
+               "id": "45678901-4567-4567-4567-456789012345",
+               "name": "Fanta",
+               "price": 2.90,
+               "description": "Une boisson gazeuse au goût de fruits. (A) Allergènes: Sucres.",
+               "steps": []
+            }
+         ]
+      }]}
+ POST /generer-carte 200 in 2.8s (next.js: 11ms, application-code: 2.8s)
+  └─ ƒ genererArchitectureAction({}) in 2790ms src/app/actions/genererCarteAction.ts
+[PHASE 2] Conversion UUID Backend (Zero LLM Hallucination)...
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+ POST /generer-carte 200 in 39ms (next.js: 2ms, application-code: 37ms)
+  └─ ƒ enrichirCarteAction({}, "{\n  \"categories\": [\n      {\n         \"name\": \"Pizzas\",\n         \"items\": [\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n               \"name\": \"Pizza Margherita\",\n               \"price\": 8.90,\n               \"description\": \"Une classique pizza italienne au fromage de mozzarella et à la sauce tomate. (A) Allergènes: Fromage, Lait, Oeufs.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"12345678-1234-1234-1234-123456789012\",\n               \"name\": \"Pizza Provençale\",\n               \"price\": 10.50,\n               \"description\": \"Une pizza méditerranéenne avec des tomates, des olives et des anchois. (A) Allergènes: Poisson, Fromage, Lait.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"98765432-9876-9876-9876-987654321098\",\n               \"name\": \"Pizza Capricciosa\",\n               \"price\": 11.90,\n               \"description\": \"Une pizza italienne avec des champignons, de la saucisse et des olives. (A) Allergènes: Fromage, Lait, Oeufs.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"23456789-2345-2345-2345-234567890123\",\n               \"name\": \"Pizza Quattro Formaggi\",\n               \"price\": 12.90,\n               \"description\": \"Une pizza italienne aux quatre fromages. (A) Allergènes: Fromage, Lait.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"34567890-3456-3456-3456-345678901234\",\n               \"name\": \"Pizza di Pollo\",\n               \"price\": 10.90,\n               \"description\": \"Une pizza italienne avec du poulet et du fromage. (A) Allergènes: Fromage, Lait, Poulet.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"45678901-4567-4567-4567-456789012345\",\n               \"name\": \"Pizza Vegetarienne\",\n               \"price\": 9.90,\n               \"description\": \"Une pizza italienne végétarienne avec des champignons et des olives. (A) Allergènes: Fromage, Lait, Oeufs.\",\n               \"steps\": []\n            }\n         ]\n      },\n      {\n         \"name\": \"Boissons\",\n         \"items\": [\n            {\n               \"id\": \"90123456-9012-9012-9012-901234567890\",\n               \"name\": \"Coca-Cola\",\n               \"price\": 2.50,\n               \"description\": \"Une boisson gazeuse au goût de cola. (A) Allergènes: Sucres.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"78901234-7890-7890-7890-789012345678\",\n               \"name\": \"Eau Plate\",\n               \"price\": 1.50,\n               \"description\": \"Une eau plate. (A) Allergènes: Nulle.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"67890123-6789-6789-6789-678901234567\",\n               \"name\": \"Coca-Cola Zéro\",\n               \"price\": 2.50,\n               \"description\": \"Une boisson gazeuse au goût de cola sans sucre. (A) Allergènes: Sucres.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"56789012-5678-5678-5678-567890123456\",\n               \"name\": \"Oasis\",\n               \"price\": 2.90,\n               \"description\": \"Une boisson gazeuse au goût de fruits. (A) Allergènes: Sucres.\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"45678901-4567-4567-4567-456789012345\",\n               \"name\": \"Fanta\",\n               \"price\": 2.90,\n               \"description\": \"Une boisson gazeuse au goût de fruits. (A) Allergènes: Sucres.\",\n               \"steps\": []\n            }\n         ]\n      }]}", "carte3_grill_station.json", []) in 29ms src/app/actions/genererCarteAction.ts
+ GET /api/settings 200 in 50ms (next.js: 7ms, application-code: 43ms)
+ GET /api/settings 200 in 5ms (next.js: 1379µs, application-code: 3ms)
+ GET /menu 200 in 34ms (next.js: 6ms, application-code: 28ms)
+ GET /api/settings 200 in 9ms (next.js: 2ms, application-code: 7ms)
+ GET /api/settings 200 in 5ms (next.js: 1546µs, application-code: 3ms)
+ GET /historique 200 in 648ms (next.js: 37ms, application-code: 611ms)
+ GET /api/cards/c38c7fea-072a-4030-8338-6d36685af11c/history 200 in 887ms (next.js: 66ms, application-code: 821ms)
+ GET /api/cards/98acd276-9546-4804-8f4f-bd34eef9474d/history 200 in 222ms (next.js: 16ms, application-code: 206ms)
+ GET /api/cards/df88081f-21e7-4eec-ba44-3dc545929642/history 200 in 23ms (next.js: 14ms, application-code: 9ms)
+ GET /api/settings 200 in 46ms (next.js: 15ms, application-code: 31ms)
+ GET /api/settings 200 in 7ms (next.js: 3ms, application-code: 4ms)
+ GET /update-carte 200 in 716ms (next.js: 527ms, application-code: 190ms)
+ GET /update-carte/c38c7fea-072a-4030-8338-6d36685af11c 200 in 1854ms (next.js: 1752ms, application-code: 102ms)
+ GET /update-carte/c38c7fea-072a-4030-8338-6d36685af11c/produits 200 in 1191ms (next.js: 996ms, application-code: 196ms)
+ POST /update-carte/c38c7fea-072a-4030-8338-6d36685af11c/produits 200 in 742ms (next.js: 10ms, application-code: 732ms)
+  └─ ƒ updateProduitAction("c38c7fea-072a-4030-8338-6d36685af11c", "03517781-48b2-40c1-9aa8-c1e2a6c62be5", {"img":"https://beta-catalogue-api.etk360.com/franchise_019795_l_etoile_orientale/Items/151fa22e-d4f7-4669-935c-d80a9c561b05.webp","name":"TACOS 3 VIANDES","price":6}) in 521ms src/app/actions/updateProduitAction.ts
+ GET /update-carte/c38c7fea-072a-4030-8338-6d36685af11c 200 in 84ms (next.js: 8ms, application-code: 76ms)
+ GET /update-carte/c38c7fea-072a-4030-8338-6d36685af11c/parametres 200 in 1038ms (next.js: 948ms, application-code: 91ms)
+ POST /update-carte/c38c7fea-072a-4030-8338-6d36685af11c/parametres 200 in 559ms (next.js: 15ms, application-code: 545ms)
+  └─ ƒ updateParametresAction("c38c7fea-072a-4030-8338-6d36685af11c", {"categoryOrder":["04db6e3c-b1aa-444b-9a9c-6ad2111339c9","d89cd578-5f89-4c86-8b61-388889edfc04","68cb9119-945a-4641-936d-bc284bd2dc9d","... 27 items not stringified"],"languages":["FR","EN"],"primaryColor":"#000000","...":"1 item not stringified"}) in 535ms src/actions/updateParametresAction.ts
+ GET /update-carte 200 in 195ms (next.js: 6ms, application-code: 189ms)
+ GET /menu 200 in 29ms (next.js: 8ms, application-code: 21ms)
+ GET /api/settings 200 in 9ms (next.js: 1925µs, application-code: 7ms)
+ GET /api/settings 200 in 4ms (next.js: 1272µs, application-code: 3ms)
+ GET /parametres 200 in 515ms (next.js: 482ms, application-code: 34ms)
+ GET /api/settings 200 in 14ms (next.js: 6ms, application-code: 8ms)
+ GET /api/settings 200 in 10ms (next.js: 2ms, application-code: 8ms)
+ POST /api/settings 200 in 173ms (next.js: 5ms, application-code: 167ms)
+ GET /parametres 200 in 119ms (next.js: 9ms, application-code: 110ms)
+ GET /api/settings 200 in 17ms (next.js: 1873µs, application-code: 15ms)
+ GET /api/settings 200 in 7ms (next.js: 1415µs, application-code: 5ms)
+ GET /menu 200 in 45ms (next.js: 5ms, application-code: 40ms)
+ GET /api/settings 200 in 37ms (next.js: 2ms, application-code: 35ms)
+ GET /api/settings 200 in 6ms (next.js: 2ms, application-code: 4ms)
+ GET / 200 in 38ms (next.js: 8ms, application-code: 30ms)
+ GET /api/settings 200 in 663ms (next.js: 108ms, application-code: 555ms)
+ GET /api/settings 200 in 56ms (next.js: 6ms, application-code: 49ms)
+ GET / 200 in 76ms (next.js: 26ms, application-code: 50ms)
+ GET / 200 in 351ms (next.js: 152ms, application-code: 199ms)
+ GET / 200 in 87ms (next.js: 14ms, application-code: 73ms)
+ GET / 200 in 38ms (next.js: 13ms, application-code: 25ms)
+ GET / 200 in 27ms (next.js: 3ms, application-code: 25ms)
+ GET /menu 200 in 237ms (next.js: 82ms, application-code: 154ms)
+ GET /api/settings 200 in 321ms (next.js: 32ms, application-code: 289ms)
+ GET /api/settings 200 in 9ms (next.js: 2ms, application-code: 7ms)
+ GET / 200 in 40ms (next.js: 11ms, application-code: 30ms)
+ GET / 200 in 399ms (next.js: 88ms, application-code: 311ms)
+ GET /api/settings 200 in 147ms (next.js: 11ms, application-code: 135ms)
+ GET /menu 200 in 33ms (next.js: 10ms, application-code: 23ms)
+ GET /api/settings 200 in 26ms (next.js: 1719µs, application-code: 24ms)
+ GET /api/settings 200 in 10ms (next.js: 4ms, application-code: 6ms)
+ GET / 200 in 18ms (next.js: 6ms, application-code: 12ms)
+ GET /menu 200 in 87ms (next.js: 29ms, application-code: 59ms)
+ GET /api/settings 200 in 35ms (next.js: 11ms, application-code: 24ms)
+ GET /api/settings 200 in 5ms (next.js: 4ms, application-code: 1990µs)
+ GET / 200 in 26ms (next.js: 8ms, application-code: 19ms)
+ GET /historique 200 in 666ms (next.js: 17ms, application-code: 649ms)
+ GET /api/cards/2b018cc3-78b9-438c-bc3a-e2b01bb8bc0b/history 200 in 205ms (next.js: 13ms, application-code: 192ms)
+ GET /menu 200 in 23ms (next.js: 8ms, application-code: 15ms)
+ GET /api/settings 200 in 25ms (next.js: 1450µs, application-code: 24ms)
+ GET /api/settings 200 in 3ms (next.js: 1161µs, application-code: 2ms)
+ GET /generer-carte 200 in 30ms (next.js: 17ms, application-code: 13ms)
+ POST /generer-carte 200 in 184ms (next.js: 3ms, application-code: 181ms)
+  └─ ƒ getAvailableLibraryCards() in 144ms src/app/actions/genererCarteAction.ts
+ POST /generer-carte 200 in 88ms (next.js: 1439µs, application-code: 87ms)
+  └─ ƒ getAvailableLibraryCards() in 83ms src/app/actions/genererCarteAction.ts
+[ROUTAGE] Mode RAG Strict activé sur base: carte3_grill_station.json
+[PHASE 1] Génération de la Trame Intermédiaire...
+=== RAW TRAME INTERMÉDIAIRE ===
+{
+  "nom": "i",
+   "categories": [
+      {
+         "name": "Pizzas",
+         "items": [
+            {
+               "id": "7f8c9b2b-1a9e-49a9-a14a-8c6d5fba9b9d",
+               "name": "Pizza Margherita",
+               "price": 12.50,
+               "description": "Pizza classique italienne avec sauce tomate, mozzarella et basilic. (A)"
+            },
+            {
+               "id": "a2e6b8c7-8c4f-4a6c-8f6a-4b8c6d5fba9d",
+               "name": "Pizza Capricciosa",
+               "price": 15.00,
+               "description": "Pizza italienne avec sauce tomate, mozzarella, jambon, champignons et olives. (A)"
+            },
+            {
+               "id": "e7c7b6c5-d4e3-c4f2-8f6a-4b8c6d5fba9d",
+               "name": "Pizza Provençale",
+               "price": 14.00,
+               "description": "Pizza méditerranéenne avec sauce tomate, mozzarella, olives, artichauts et anchois. (A)"
+            },
+            {
+               "id": "b8f7c6d5-e3c4-d2f1-8f6a-4b8c6d5fba9d",
+               "name": "Pizza Quattro Formaggi",
+               "price": 13.50,
+               "description": "Pizza italienne avec sauce tomate, mozzarella, parmesan, gorgonzola et ricotta. (A)"
+            },
+            {
+               "id": "f6c7b6c5-d4e3-c4f2-8f6a-4b8c6d5fba9d",
+               "name": "Pizza Vegetarienne",
+               "price": 12.00,
+               "description": "Pizza végétarienne avec sauce tomate, mozzarella, champignons, olives et poivrons. (A)"
+            },
+            {
+               "id": "c7b6c5-d4e3-c4f2-8f6a-4b8c6d5fba9d",
+               "name": "Pizza Chorizo",
+               "price": 14.50,
+               "description": "Pizza ibérique avec sauce tomate, mozzarella, chorizo et poivrons. (A)"
+            },
+            {
+               "id": "d4e3-c4f2-8f6a-4b8c6d5fba9d",
+               "name": "Pizza Funghi",
+               "price": 13.00,
+               "description": "Pizza italienne avec sauce tomate, mozzarella et champignons. (A)"
+            },
+            {
+               "id": "e3-c4f2-8f6a-4b8c6d5fba9d",
+               "name": "Pizza Pollo",
+               "price": 14.00,
+               "description": "Pizza italienne avec sauce tomate, mozzarella, poulet et champignons. (A)"
+            },
+            {
+               "id": "c4f2-8f6a-4b8c6d5fba9d",
+               "name": "Pizza Quattro Stagioni",
+               "price": 15.50,
+               "description": "Pizza italienne avec sauce tomate, mozzarella, champignons, olives, poivrons et anchois. (A)"
+            },
+            {
+               "id": "f2-8f6a-4b8c6d5fba9d",
+               "name": "Pizza Toscana",
+               "price": 13.50,
+               "description": "Pizza italienne avec sauce tomate, mozzarella, champignons, olives et artichauts. (A)"
+            }
+         ]
+      },
+      {
+         "name": "Boissons",
+         "items": [
+            {
+               "id": "8a6d5fba-9c7f-4a6c-8f6a-4b8c6d5fba9d",
+               "name": "Coca-Cola",
+               "price": 2.00,
+               "description": ""
+            }]}]}
+ POST /generer-carte 200 in 2.9s (next.js: 25ms, application-code: 2.9s)
+  └─ ƒ genererArchitectureAction({}) in 2894ms src/app/actions/genererCarteAction.ts
+[PHASE 2] Conversion UUID Backend (Zero LLM Hallucination)...
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+ POST /generer-carte 200 in 53ms (next.js: 1462µs, application-code: 52ms)
+  └─ ƒ enrichirCarteAction({}, "{\n  \"nom\": \"i\",\n   \"categories\": [\n      {\n         \"name\": \"Pizzas\",\n         \"items\": [\n            {\n               \"id\": \"7f8c9b2b-1a9e-49a9-a14a-8c6d5fba9b9d\",\n               \"name\": \"Pizza Margherita\",\n               \"price\": 12.50,\n               \"description\": \"Pizza classique italienne avec sauce tomate, mozzarella et basilic. (A)\"\n            },\n            {\n               \"id\": \"a2e6b8c7-8c4f-4a6c-8f6a-4b8c6d5fba9d\",\n               \"name\": \"Pizza Capricciosa\",\n               \"price\": 15.00,\n               \"description\": \"Pizza italienne avec sauce tomate, mozzarella, jambon, champignons et olives. (A)\"\n            },\n            {\n               \"id\": \"e7c7b6c5-d4e3-c4f2-8f6a-4b8c6d5fba9d\",\n               \"name\": \"Pizza Provençale\",\n               \"price\": 14.00,\n               \"description\": \"Pizza méditerranéenne avec sauce tomate, mozzarella, olives, artichauts et anchois. (A)\"\n            },\n            {\n               \"id\": \"b8f7c6d5-e3c4-d2f1-8f6a-4b8c6d5fba9d\",\n               \"name\": \"Pizza Quattro Formaggi\",\n               \"price\": 13.50,\n               \"description\": \"Pizza italienne avec sauce tomate, mozzarella, parmesan, gorgonzola et ricotta. (A)\"\n            },\n            {\n               \"id\": \"f6c7b6c5-d4e3-c4f2-8f6a-4b8c6d5fba9d\",\n               \"name\": \"Pizza Vegetarienne\",\n               \"price\": 12.00,\n               \"description\": \"Pizza végétarienne avec sauce tomate, mozzarella, champignons, olives et poivrons. (A)\"\n            },\n            {\n               \"id\": \"c7b6c5-d4e3-c4f2-8f6a-4b8c6d5fba9d\",\n               \"name\": \"Pizza Chorizo\",\n               \"price\": 14.50,\n               \"description\": \"Pizza ibérique avec sauce tomate, mozzarella, chorizo et poivrons. (A)\"\n            },\n            {\n               \"id\": \"d4e3-c4f2-8f6a-4b8c6d5fba9d\",\n               \"name\": \"Pizza Funghi\",\n               \"price\": 13.00,\n               \"description\": \"Pizza italienne avec sauce tomate, mozzarella et champignons. (A)\"\n            },\n            {\n               \"id\": \"e3-c4f2-8f6a-4b8c6d5fba9d\",\n               \"name\": \"Pizza Pollo\",\n               \"price\": 14.00,\n               \"description\": \"Pizza italienne avec sauce tomate, mozzarella, poulet et champignons. (A)\"\n            },\n            {\n               \"id\": \"c4f2-8f6a-4b8c6d5fba9d\",\n               \"name\": \"Pizza Quattro Stagioni\",\n               \"price\": 15.50,\n               \"description\": \"Pizza italienne avec sauce tomate, mozzarella, champignons, olives, poivrons et anchois. (A)\"\n            },\n            {\n               \"id\": \"f2-8f6a-4b8c6d5fba9d\",\n               \"name\": \"Pizza Toscana\",\n               \"price\": 13.50,\n               \"description\": \"Pizza italienne avec sauce tomate, mozzarella, champignons, olives et artichauts. (A)\"\n            }\n         ]\n      },\n      {\n         \"name\": \"Boissons\",\n         \"items\": [\n            {\n               \"id\": \"8a6d5fba-9c7f-4a6c-8f6a-4b8c6d5fba9d\",\n               \"name\": \"Coca-Cola\",\n               \"price\": 2.00,\n               \"description\": \"\"\n            }]}]}", "carte3_grill_station.json", []) in 47ms src/app/actions/genererCarteAction.ts
+ GET /api/settings 200 in 34ms (next.js: 3ms, application-code: 31ms)
+ GET /api/settings 200 in 4ms (next.js: 831µs, application-code: 4ms)
+ GET /null 404 in 63ms (next.js: 21ms, application-code: 42ms)
+ GET / 200 in 194ms (next.js: 67ms, application-code: 127ms)
+ GET / 200 in 104ms (next.js: 53ms, application-code: 51ms)
+ GET / 200 in 83ms (next.js: 8ms, application-code: 75ms)
+ GET /menu 200 in 162ms (next.js: 42ms, application-code: 120ms)
+ GET /api/settings 200 in 160ms (next.js: 23ms, application-code: 136ms)
+ GET /api/settings 200 in 4ms (next.js: 1149µs, application-code: 3ms)
+✓ Compiled in 1673ms
+✓ Compiled in 17ms
+ GET / 200 in 939ms (next.js: 86ms, application-code: 853ms)
+ GET / 200 in 818ms (next.js: 272ms, application-code: 546ms)
+ GET / 200 in 373ms (next.js: 27ms, application-code: 347ms)
+ GET / 200 in 157ms (next.js: 14ms, application-code: 143ms)
+ GET / 200 in 90ms (next.js: 5ms, application-code: 85ms)
+✓ Compiled in 132ms
+ GET / 200 in 70ms (next.js: 14ms, application-code: 56ms)
+ GET / 200 in 38ms (next.js: 2ms, application-code: 36ms)
+ GET / 200 in 15ms (next.js: 1201µs, application-code: 14ms)
+✓ Compiled in 421ms
+ GET / 200 in 180ms (next.js: 56ms, application-code: 124ms)
+ GET / 200 in 513ms (next.js: 327ms, application-code: 186ms)
+ GET / 200 in 66ms (next.js: 6ms, application-code: 61ms)
+ GET / 200 in 58ms (next.js: 5ms, application-code: 53ms)
+ GET / 200 in 35ms (next.js: 5ms, application-code: 30ms)
+ GET / 200 in 216ms (next.js: 30ms, application-code: 186ms)
+ GET /api/settings 200 in 143ms (next.js: 95ms, application-code: 48ms)
+ GET /menu 200 in 71ms (next.js: 30ms, application-code: 41ms)
+ GET /api/settings 200 in 21ms (next.js: 4ms, application-code: 16ms)
+ GET /api/settings 200 in 8ms (next.js: 1341µs, application-code: 7ms)
+ GET /generer-carte 200 in 121ms (next.js: 92ms, application-code: 29ms)
+ POST /generer-carte 200 in 202ms (next.js: 12ms, application-code: 190ms)
+  └─ ƒ getAvailableLibraryCards() in 149ms src/app/actions/genererCarteAction.ts
+ POST /generer-carte 200 in 101ms (next.js: 1124µs, application-code: 100ms)
+  └─ ƒ getAvailableLibraryCards() in 96ms src/app/actions/genererCarteAction.ts
+[ROUTAGE] Mode RAG Strict activé sur base: carte3_grill_station.json
+[PHASE 1] Génération de la Trame Intermédiaire...
+=== RAW TRAME INTERMÉDIAIRE ===
+{
+  "categories": [
+      {
+         "name": "Pizzas",
+         "items": [
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440000",
+               "name": "Pizza Provençale",
+               "price": 12.50,
+               "description": "Fromage de chèvre, tomates cerises, olives noires, thym séché. (A: fromage de chèvre, tomates cerises, olives noires)",
+               "steps": []
+            },
+            {
+               "id": "123e4567-e89b-12d3-a456-426614174000",
+               "name": "Pizza Margherita",
+               "price": 10.00,
+               "description": "Fromage de mozzarella, tomate, basilic. (A: fromage de mozzarella, tomate)",
+               "steps": []
+            },
+            {
+               "id": "98765432-0e29-41d4-a716-446655440001",
+               "name": "Pizza Quattro Formaggi",
+               "price": 14.50,
+               "description": "Fromage de mozzarella, fromage de chèvre, fromage de gouda, parmesan. (A: fromage de mozzarella, fromage de chèvre, fromage de gouda, parmesan)",
+               "steps": []
+            },
+            {
+               "id": "45678910-0e29-41d4-a716-446655450001",
+               "name": "Pizza Pepperoni",
+               "price": 12.00,
+               "description": "Pepperoni, tomate, fromage de mozzarella. (A: pepperoni, tomate)",
+               "steps": []
+            },
+            {
+               "id": "32109876-0e29-41d4-a716-446655460001",
+               "name": "Pizza Hawaiian",
+               "price": 13.00,
+               "description": "Jambon, ananas, fromage de mozzarella. (A: jambon, ananas)",
+               "steps": []
+            },
+            {
+               "id": "65432109-0e29-41d4-a716-446655470001",
+               "name": "Pizza Capricciosa",
+               "price": 14.00,
+               "description": "Jambon, champignons, olives noires, tomate, fromage de mozzarella. (A: jambon, champignons, olives noires, tomate)",
+               "steps": []
+            }
+         ]
+      },
+      {
+         "name": "Boissons",
+         "items": [
+            {
+               "id": "23456789-0e29-41d4-a716-446655480001",
+               "name": "Coca-Cola",
+               "price": 2.50,
+               "description": "Boisson gazeuse. (A: sulfites)",
+               "steps": []
+            },
+            {
+               "id": "34567890-0e29-41d4-a716-446655490001",
+               "name": "Eau Plate",
+               "price": 1.00,
+               "description": "Eau potable. (A: aucun)",
+               "steps": []
+            },
+            {
+               "id": "45678901-0e29-41d4-a716-446655500001",
+               "name": "Coca-Cola Zéro",
+               "price": 2.50,
+               "description": "Boisson gazeuse sans sucres ajoutés. (A: sulfites)",
+               "steps": []
+            },
+            {
+               "id": "56789012-0e29-41d4-a716-446655510001",
+               "name": "Oasis",
+               "price": 2.50,
+               "description": "Boisson gazeuse. (A: sulfites)",
+               "steps": []
+            }
+         ]
+      },
+      {
+         "name": "Desserts",
+         "items": [
+            {
+               "id": "67890123-0e29-41d4-a716-446655520001",
+               "name": "Crème Brûlée",
+               "price": 5.00,
+               "description": "Crème légère, caramel brûlé. (A: aucun)",
+               "steps": []
+            }]}]}
+ POST /generer-carte 200 in 1715ms (next.js: 39ms, application-code: 1675ms)
+  └─ ƒ genererArchitectureAction({}) in 1646ms src/app/actions/genererCarteAction.ts
+[PHASE 2] Conversion UUID Backend (Zero LLM Hallucination)...
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "desserts" (Classifiée: dessert). L'item sera injecté pur (sans modifier).
+FATAL ETK360 GENERATION PARSE: Item 'db1c632a-5f01-48d3-9f87-28ac756a3767' is referenced in workflow 'db1c632a-5f01-48d3-9f87-28ac756a3767' but is totally absent from global database.
+ POST /generer-carte 200 in 18ms (next.js: 2ms, application-code: 16ms)
+  └─ ƒ enrichirCarteAction({}, "{\n  \"categories\": [\n      {\n         \"name\": \"Pizzas\",\n         \"items\": [\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n               \"name\": \"Pizza Provençale\",\n               \"price\": 12.50,\n               \"description\": \"Fromage de chèvre, tomates cerises, olives noires, thym séché. (A: fromage de chèvre, tomates cerises, olives noires)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n               \"name\": \"Pizza Margherita\",\n               \"price\": 10.00,\n               \"description\": \"Fromage de mozzarella, tomate, basilic. (A: fromage de mozzarella, tomate)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"98765432-0e29-41d4-a716-446655440001\",\n               \"name\": \"Pizza Quattro Formaggi\",\n               \"price\": 14.50,\n               \"description\": \"Fromage de mozzarella, fromage de chèvre, fromage de gouda, parmesan. (A: fromage de mozzarella, fromage de chèvre, fromage de gouda, parmesan)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"45678910-0e29-41d4-a716-446655450001\",\n               \"name\": \"Pizza Pepperoni\",\n               \"price\": 12.00,\n               \"description\": \"Pepperoni, tomate, fromage de mozzarella. (A: pepperoni, tomate)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"32109876-0e29-41d4-a716-446655460001\",\n               \"name\": \"Pizza Hawaiian\",\n               \"price\": 13.00,\n               \"description\": \"Jambon, ananas, fromage de mozzarella. (A: jambon, ananas)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"65432109-0e29-41d4-a716-446655470001\",\n               \"name\": \"Pizza Capricciosa\",\n               \"price\": 14.00,\n               \"description\": \"Jambon, champignons, olives noires, tomate, fromage de mozzarella. (A: jambon, champignons, olives noires, tomate)\",\n               \"steps\": []\n            }\n         ]\n      },\n      {\n         \"name\": \"Boissons\",\n         \"items\": [\n            {\n               \"id\": \"23456789-0e29-41d4-a716-446655480001\",\n               \"name\": \"Coca-Cola\",\n               \"price\": 2.50,\n               \"description\": \"Boisson gazeuse. (A: sulfites)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"34567890-0e29-41d4-a716-446655490001\",\n               \"name\": \"Eau Plate\",\n               \"price\": 1.00,\n               \"description\": \"Eau potable. (A: aucun)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"45678901-0e29-41d4-a716-446655500001\",\n               \"name\": \"Coca-Cola Zéro\",\n               \"price\": 2.50,\n               \"description\": \"Boisson gazeuse sans sucres ajoutés. (A: sulfites)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"56789012-0e29-41d4-a716-446655510001\",\n               \"name\": \"Oasis\",\n               \"price\": 2.50,\n               \"description\": \"Boisson gazeuse. (A: sulfites)\",\n               \"steps\": []\n            }\n         ]\n      },\n      {\n         \"name\": \"Desserts\",\n         \"items\": [\n            {\n               \"id\": \"67890123-0e29-41d4-a716-446655520001\",\n               \"name\": \"Crème Brûlée\",\n               \"price\": 5.00,\n               \"description\": \"Crème légère, caramel brûlé. (A: aucun)\",\n               \"steps\": []\n            }]}]}", "carte3_grill_station.json", []) in 11ms src/app/actions/genererCarteAction.ts
+⨯ ./Desktop/Stage2026/src/app/actions/genererCarteAction.ts:1025:21
+Expected ',', got '}'
+  [90m1023 |[0m                             };
+  [90m1024 |[0m                         }
+[31m[1m>[0m [90m1025 |[0m                     });
+  [90m     |[0m                     [31m[1m^[0m
+  [90m1026 |[0m                     itemRankCounter++;
+  [90m1027 |[0m                     
+  [90m1028 |[0m                     [90m// Dual Binding for ETK360 parser consistency (Restored per exact JS...[0m
+
+Parsing ecmascript source code failed
+
+
+
+./Desktop/Stage2026/src/app/actions/genererCarteAction.ts
+Code generation for chunk item errored
+An error occurred while generating the chunk item [project]/Desktop/Stage2026/src/app/actions/genererCarteAction.ts [app-rsc] (ecmascript)
+
+Caused by:
+- CJS module can't be async.
+
+Debug info:
+- An error occurred while generating the chunk item [project]/Desktop/Stage2026/src/app/actions/genererCarteAction.ts [app-rsc] (ecmascript)
+- Execution of <EcmascriptModuleAsset as EcmascriptChunkPlaceable>::chunk_item_content failed
+- Execution of EcmascriptChunkItemContent::new failed
+- CJS module can't be async.
+
+
+ GET /generer-carte 500 in 1273ms (next.js: 1143ms, application-code: 130ms)
+⨯ ./Desktop/Stage2026/src/app/actions/genererCarteAction.ts:1025:21
+Expected ',', got '}'
+  [90m1023 |[0m                             };
+  [90m1024 |[0m                         }
+[31m[1m>[0m [90m1025 |[0m                     });
+  [90m     |[0m                     [31m[1m^[0m
+  [90m1026 |[0m                     itemRankCounter++;
+  [90m1027 |[0m                     
+  [90m1028 |[0m                     [90m// Dual Binding for ETK360 parser consistency (Restored per exact JS...[0m
+
+Parsing ecmascript source code failed
+
+
+
+./Desktop/Stage2026/src/app/actions/genererCarteAction.ts
+Code generation for chunk item errored
+An error occurred while generating the chunk item [project]/Desktop/Stage2026/src/app/actions/genererCarteAction.ts [app-rsc] (ecmascript)
+
+Caused by:
+- CJS module can't be async.
+
+Debug info:
+- An error occurred while generating the chunk item [project]/Desktop/Stage2026/src/app/actions/genererCarteAction.ts [app-rsc] (ecmascript)
+- Execution of <EcmascriptModuleAsset as EcmascriptChunkPlaceable>::chunk_item_content failed
+- Execution of EcmascriptChunkItemContent::new failed
+- CJS module can't be async.
+
+
+ GET /generer-carte 500 in 39ms (next.js: 31ms, application-code: 8ms)
+[browser] Uncaught Error: ./Desktop/Stage2026/src/app/actions/genererCarteAction.ts:1025:21
+Expected ',', got '}'
+  1023 |                             };
+  1024 |                         }
+> 1025 |                     });
+       |                     ^
+  1026 |                     itemRankCounter++;
+  1027 |                     
+  1028 |                     // Dual Binding for ETK360 parser consistency (Restored per exact JS...
+
+Parsing ecmascript source code failed
+
+
+    at <unknown> (Error: ./Desktop/Stage2026/src/app/actions/genererCarteAction.ts:1025:21)
+    at <unknown> (Error: (./Desktop/Stage2026/src/app/actions/genererCarteAction.ts:1025:21)
+ GET /generer-carte 200 in 420ms (next.js: 173ms, application-code: 248ms)
+ GET /generer-carte 200 in 150ms (next.js: 63ms, application-code: 87ms)
+ GET /api/settings 200 in 278ms (next.js: 46ms, application-code: 233ms)
+ POST /generer-carte 200 in 398ms (next.js: 56ms, application-code: 342ms)
+  └─ ƒ getAvailableLibraryCards() in 319ms src/app/actions/genererCarteAction.ts
+ GET /generer-carte 200 in 90ms (next.js: 12ms, application-code: 78ms)
+ GET /api/settings 200 in 16ms (next.js: 1630µs, application-code: 14ms)
+ POST /generer-carte 200 in 129ms (next.js: 1347µs, application-code: 128ms)
+  └─ ƒ getAvailableLibraryCards() in 117ms src/app/actions/genererCarteAction.ts
+[ROUTAGE] Mode RAG Strict activé sur base: carte3_grill_station.json
+[PHASE 1] Génération de la Trame Intermédiaire...
+=== RAW TRAME INTERMÉDIAIRE ===
+{
+  "name": "b",
+   "categories": [
+      {
+         "name": "Pizzas",
+         "items": [
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440000",
+               "name": "Pizza Margherita",
+               "price": 12.50,
+               "description": "Tomates fraîches, mozzarella, basilic. (A : tomates)",
+               "steps": []
+            },
+            {
+               "id": "123e4567-e89b-12d3-a456-426614174000",
+               "name": "Pizza Capricciosa",
+               "price": 14.50,
+               "description": "Tomates, jambon, champignons, olives. (A : tomates, jambon)",
+               "steps": []
+            },
+            {
+               "id": "90123456-7890-1234-5678-901234567890",
+               "name": "Pizza Quattro Formaggi",
+               "price": 15.50,
+               "description": "Mozzarella, parmesan, gorgonzola, feta. (A : fromage)",
+               "steps": []
+            },
+            {
+               "id": "23456789-9012-3456-7890-123456789012",
+               "name": "Pizza Provençale",
+               "price": 13.50,
+               "description": "Tomates, olives, anchois. (A : tomates, anchois)",
+               "steps": []
+            },
+            {
+               "id": "45678901-2345-6789-0123-456789012345",
+               "name": "Pizza di Funghi",
+               "price": 13.50,
+               "description": "Champignons, mozzarella. (A : champignons)",
+               "steps": []
+            },
+            {
+               "id": "67890123-4567-8901-2345-678901234567",
+               "name": "Pizza di Pollo",
+               "price": 14.50,
+               "description": "Poulet, tomates, mozzarella. (A : poulet)",
+               "steps": []
+            },
+            {
+               "id": "89012345-6789-0123-4567-890123456789",
+               "name": "Pizza Napolitaine",
+               "price": 12.50,
+               "description": "Tomates, mozzarella, basilic. (A : tomates)",
+               "steps": []
+            },
+            {
+               "id": "34567890-1234-5678-9012-345678901234",
+               "name": "Pizza Quattro Stagioni",
+               "price": 15.50,
+               "description": "Tomates, champignons, olives, anchois. (A : tomates, anchois)",
+               "steps": []
+            },
+            {
+               "id": "56789012-3456-7890-1234-567890123456",
+               "name": "Pizza di Mare",
+               "price": 15.50,
+               "description": "Tomates, anchois, olives. (A : tomates, anchois)",
+               "steps": []
+            },
+            {
+               "id": "78901234-5678-9012-3456-789012345678",
+               "name": "Pizza di Carne",
+               "price": 14.50,
+               "description": "Jambon, poulet, tomates. (A : jambon, poulet)",
+               "steps": []
+            },
+            {
+               "id": "01234567-8901-2345-6789-012345678901",
+               "name": "Pizza di Verdure",
+               "price": 13.50,
+               "description": "Champignons, olives, anchois. (A : champignons, anchois)",
+               "steps": []
+            }
+         ]
+      },
+      {
+         "name": "Boissons",
+         "items": [
+            {
+               "id": "fedc1234-ba98-7654-3210-fedc12345678",
+               "name": "Coca-Cola",
+               "price": 3.50,
+               "description": "Boisson sucrée. (A : gluten)",
+               "steps": []
+            }]}]}
+ POST /generer-carte 200 in 1909ms (next.js: 8ms, application-code: 1901ms)
+  └─ ƒ genererArchitectureAction({}) in 1857ms src/app/actions/genererCarteAction.ts
+[PHASE 2] Conversion UUID Backend (Zero LLM Hallucination)...
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+ POST /generer-carte 200 in 37ms (next.js: 1954µs, application-code: 35ms)
+  └─ ƒ enrichirCarteAction({}, "{\n  \"name\": \"b\",\n   \"categories\": [\n      {\n         \"name\": \"Pizzas\",\n         \"items\": [\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n               \"name\": \"Pizza Margherita\",\n               \"price\": 12.50,\n               \"description\": \"Tomates fraîches, mozzarella, basilic. (A : tomates)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n               \"name\": \"Pizza Capricciosa\",\n               \"price\": 14.50,\n               \"description\": \"Tomates, jambon, champignons, olives. (A : tomates, jambon)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"90123456-7890-1234-5678-901234567890\",\n               \"name\": \"Pizza Quattro Formaggi\",\n               \"price\": 15.50,\n               \"description\": \"Mozzarella, parmesan, gorgonzola, feta. (A : fromage)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"23456789-9012-3456-7890-123456789012\",\n               \"name\": \"Pizza Provençale\",\n               \"price\": 13.50,\n               \"description\": \"Tomates, olives, anchois. (A : tomates, anchois)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"45678901-2345-6789-0123-456789012345\",\n               \"name\": \"Pizza di Funghi\",\n               \"price\": 13.50,\n               \"description\": \"Champignons, mozzarella. (A : champignons)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"67890123-4567-8901-2345-678901234567\",\n               \"name\": \"Pizza di Pollo\",\n               \"price\": 14.50,\n               \"description\": \"Poulet, tomates, mozzarella. (A : poulet)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"89012345-6789-0123-4567-890123456789\",\n               \"name\": \"Pizza Napolitaine\",\n               \"price\": 12.50,\n               \"description\": \"Tomates, mozzarella, basilic. (A : tomates)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"34567890-1234-5678-9012-345678901234\",\n               \"name\": \"Pizza Quattro Stagioni\",\n               \"price\": 15.50,\n               \"description\": \"Tomates, champignons, olives, anchois. (A : tomates, anchois)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"56789012-3456-7890-1234-567890123456\",\n               \"name\": \"Pizza di Mare\",\n               \"price\": 15.50,\n               \"description\": \"Tomates, anchois, olives. (A : tomates, anchois)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"78901234-5678-9012-3456-789012345678\",\n               \"name\": \"Pizza di Carne\",\n               \"price\": 14.50,\n               \"description\": \"Jambon, poulet, tomates. (A : jambon, poulet)\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"01234567-8901-2345-6789-012345678901\",\n               \"name\": \"Pizza di Verdure\",\n               \"price\": 13.50,\n               \"description\": \"Champignons, olives, anchois. (A : champignons, anchois)\",\n               \"steps\": []\n            }\n         ]\n      },\n      {\n         \"name\": \"Boissons\",\n         \"items\": [\n            {\n               \"id\": \"fedc1234-ba98-7654-3210-fedc12345678\",\n               \"name\": \"Coca-Cola\",\n               \"price\": 3.50,\n               \"description\": \"Boisson sucrée. (A : gluten)\",\n               \"steps\": []\n            }]}]}", "carte3_grill_station.json", []) in 30ms src/app/actions/genererCarteAction.ts
+ GET /api/settings 200 in 9ms (next.js: 3ms, application-code: 6ms)
+ GET /api/settings 200 in 19ms (next.js: 2ms, application-code: 17ms)
+ GET /null 404 in 77ms (next.js: 31ms, application-code: 47ms)
+ GET /generer-carte 200 in 1550ms (next.js: 744ms, application-code: 806ms)
+ GET /generer-carte 200 in 650ms (next.js: 401ms, application-code: 250ms)
+ GET /generer-carte 200 in 136ms (next.js: 18ms, application-code: 118ms)
+ GET /generer-carte 200 in 75ms (next.js: 3ms, application-code: 71ms)
+ GET /generer-carte 200 in 42ms (next.js: 3ms, application-code: 39ms)
+ GET /generer-carte 200 in 1166ms (next.js: 312ms, application-code: 855ms)
+ GET /generer-carte 200 in 257ms (next.js: 23ms, application-code: 234ms)
+ GET /generer-carte 200 in 195ms (next.js: 5ms, application-code: 190ms)
+ GET /generer-carte 200 in 151ms (next.js: 4ms, application-code: 147ms)
+ GET /generer-carte 200 in 59ms (next.js: 4ms, application-code: 55ms)
+ GET /generer-carte 200 in 837ms (next.js: 371ms, application-code: 465ms)
+ GET /generer-carte 200 in 455ms (next.js: 194ms, application-code: 261ms)
+ GET /generer-carte 200 in 211ms (next.js: 4ms, application-code: 207ms)
+ GET /generer-carte 200 in 174ms (next.js: 3ms, application-code: 171ms)
+ GET /generer-carte 200 in 76ms (next.js: 5ms, application-code: 71ms)
+ GET /generer-carte 200 in 1260ms (next.js: 157ms, application-code: 1103ms)
+ GET /api/settings 200 in 133ms (next.js: 85ms, application-code: 48ms)
+ POST /generer-carte 200 in 299ms (next.js: 3ms, application-code: 297ms)
+  └─ ƒ getAvailableLibraryCards() in 273ms src/app/actions/genererCarteAction.ts
+[ROUTAGE] Mode RAG Strict activé sur base: carte3_grill_station.json
+[PHASE 1] Génération de la Trame Intermédiaire...
+=== RAW TRAME INTERMÉDIAIRE ===
+{
+  "name": "Pizza",
+   "categories": [
+      {
+         "name": "Pizzas",
+         "items": [
+            {
+               "id": "550e8400-e29b-41d4-a716-446655440000",
+               "name": "Pizza Margherita",
+               "price": 10.50,
+               "description": "Pizza classique italienne avec sauce tomate, mozzarella et basilic. A",
+               "steps": []
+            },
+            {
+               "id": "123e4567-e89b-12d3-a456-426614174000",
+               "name": "Pizza Capricciosa",
+               "price": 12.00,
+               "description": "Pizza italienne avec sauce tomate, mozzarella, jambon, champignons et olives. A",
+               "steps": []
+            },
+            {
+               "id": "9876fedc-1234-5678-9012-345678901234",
+               "name": "Pizza Quattro Formaggi",
+               "price": 14.50,
+               "description": "Pizza italienne avec sauce tomate, mozzarella, parmesan, gorgonzola et ricotta. A",
+               "steps": []
+            },
+            {
+               "id": "fedcba98-7654-3210-1234-567890123456",
+               "name": "Pizza Provençale",
+               "price": 13.00,
+               "description": "Pizza italienne avec sauce tomate, mozzarella, anchois et olives. A",
+               "steps": []
+            },
+            {
+               "id": "34567890-1234-5678-9012-345678901234",
+               "name": "Pizza Toscane",
+               "price": 12.50,
+               "description": "Pizza italienne avec sauce tomate, mozzarella, jambon et champignons. A",
+               "steps": []
+            },
+            {
+               "id": "23456789-1234-5678-9012-345678901234",
+               "name": "Pizza Végétarienne",
+               "price": 11.50,
+               "description": "Pizza italienne avec sauce tomate, mozzarella, champignons et olives. A",
+               "steps": []
+            },
+            {
+               "id": "90123456-1234-5678-9012-345678901234",
+               "name": "Pizza Chorizo",
+               "price": 13.50,
+               "description": "Pizza italienne avec sauce tomate, mozzarella, chorizo et oignons. A",
+               "steps": []
+            },
+            {
+               "id": "67890123-1234-5678-9012-345678901234",
+               "name": "Pizza Shrimp",
+               "price": 15.00,
+               "description": "Pizza italienne avec sauce tomate, mozzarella, crevettes et citron. A",
+               "steps": []
+            },
+            {
+               "id": "45678901-1234-5678-9012-345678901234",
+               "name": "Pizza Fungi",
+               "price": 12.00,
+               "description": "Pizza italienne avec sauce tomate, mozzarella, champignons et fromage. A",
+               "steps": []
+            },
+            {
+               "id": "34567890-1234-5678-9012-345678901234",
+               "name": "Pizza Italiano",
+               "price": 14.00,
+               "description": "Pizza italienne avec sauce tomate, mozzarella, jambon et champignons. A",
+               "steps": []
+            }
+         ]
+      },
+      {
+         "name": "Boissons",
+         "items": [
+            {
+               "id": "a8d6c5b4-2345-6789-0123-456789012345",
+               "name": "Coca-Cola",
+               "price": 2.00,
+               "description": "Boisson gazeuse classique. A",
+               "steps": []
+            },
+            {
+               "id": "c5b4a8d6-2345-6789-0123-456789012345",
+               "name": "Eau Plate",
+               "price": 1.00,
+               "description": "Eau pure et fraîche. A",
+               "steps": []
+            }]}]}
+ POST /generer-carte 200 in 1622ms (next.js: 12ms, application-code: 1611ms)
+  └─ ƒ genererArchitectureAction({}) in 1593ms src/app/actions/genererCarteAction.ts
+[PHASE 2] Conversion UUID Backend (Zero LLM Hallucination)...
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "pizzas" (Classifiée: pizza). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+[AUDIT RAG] Aucun modifier métier trouvé pour la catégorie : "boissons" (Classifiée: boisson). L'item sera injecté pur (sans modifier).
+ POST /generer-carte 200 in 42ms (next.js: 3ms, application-code: 39ms)
+  └─ ƒ enrichirCarteAction({}, "{\n  \"name\": \"Pizza\",\n   \"categories\": [\n      {\n         \"name\": \"Pizzas\",\n         \"items\": [\n            {\n               \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n               \"name\": \"Pizza Margherita\",\n               \"price\": 10.50,\n               \"description\": \"Pizza classique italienne avec sauce tomate, mozzarella et basilic. A\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n               \"name\": \"Pizza Capricciosa\",\n               \"price\": 12.00,\n               \"description\": \"Pizza italienne avec sauce tomate, mozzarella, jambon, champignons et olives. A\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"9876fedc-1234-5678-9012-345678901234\",\n               \"name\": \"Pizza Quattro Formaggi\",\n               \"price\": 14.50,\n               \"description\": \"Pizza italienne avec sauce tomate, mozzarella, parmesan, gorgonzola et ricotta. A\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"fedcba98-7654-3210-1234-567890123456\",\n               \"name\": \"Pizza Provençale\",\n               \"price\": 13.00,\n               \"description\": \"Pizza italienne avec sauce tomate, mozzarella, anchois et olives. A\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"34567890-1234-5678-9012-345678901234\",\n               \"name\": \"Pizza Toscane\",\n               \"price\": 12.50,\n               \"description\": \"Pizza italienne avec sauce tomate, mozzarella, jambon et champignons. A\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"23456789-1234-5678-9012-345678901234\",\n               \"name\": \"Pizza Végétarienne\",\n               \"price\": 11.50,\n               \"description\": \"Pizza italienne avec sauce tomate, mozzarella, champignons et olives. A\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"90123456-1234-5678-9012-345678901234\",\n               \"name\": \"Pizza Chorizo\",\n               \"price\": 13.50,\n               \"description\": \"Pizza italienne avec sauce tomate, mozzarella, chorizo et oignons. A\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"67890123-1234-5678-9012-345678901234\",\n               \"name\": \"Pizza Shrimp\",\n               \"price\": 15.00,\n               \"description\": \"Pizza italienne avec sauce tomate, mozzarella, crevettes et citron. A\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"45678901-1234-5678-9012-345678901234\",\n               \"name\": \"Pizza Fungi\",\n               \"price\": 12.00,\n               \"description\": \"Pizza italienne avec sauce tomate, mozzarella, champignons et fromage. A\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"34567890-1234-5678-9012-345678901234\",\n               \"name\": \"Pizza Italiano\",\n               \"price\": 14.00,\n               \"description\": \"Pizza italienne avec sauce tomate, mozzarella, jambon et champignons. A\",\n               \"steps\": []\n            }\n         ]\n      },\n      {\n         \"name\": \"Boissons\",\n         \"items\": [\n            {\n               \"id\": \"a8d6c5b4-2345-6789-0123-456789012345\",\n               \"name\": \"Coca-Cola\",\n               \"price\": 2.00,\n               \"description\": \"Boisson gazeuse classique. A\",\n               \"steps\": []\n            },\n            {\n               \"id\": \"c5b4a8d6-2345-6789-0123-456789012345\",\n               \"name\": \"Eau Plate\",\n               \"price\": 1.00,\n               \"description\": \"Eau pure et fraîche. A\",\n               \"steps\": []\n            }]}]}", "carte3_grill_station.json", []) in 32ms src/app/actions/genererCarteAction.ts
+ GET /api/settings 200 in 12ms (next.js: 4ms, application-code: 8ms)
+ GET /api/settings 200 in 5ms (next.js: 1841µs, application-code: 4ms)
+ GET /null 404 in 66ms (next.js: 27ms, application-code: 39ms)

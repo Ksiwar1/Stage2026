@@ -34,7 +34,7 @@ export interface ETK360Category {
     url: string;
     type: string;
   };
-  idCard?: number | any[];
+  idCard?: string;
   parent?: string;
   archive?: boolean;
   liaison?: any[];
@@ -55,8 +55,8 @@ export interface ETK360Category {
       [key: string]: any; // Pour les canaux multilingues FR/EN
     };
   };
-  linkedChild?: any[];
-  linkedItems?: any[];
+  linkedChild?: Record<string, any>;
+  linkedItems?: Record<string, any>;
   visibilityInfo?: {
     dflt?: {
       [key: string]: number[]; // Canaux numérotés
@@ -124,6 +124,8 @@ export interface ETK360Item {
   basicComp?: Record<string, any>;
   isComment?: boolean;
   active_qty?: boolean;
+  qty?: string;
+  unity?: string;
   isRedirect?: boolean;
   linkedTags?: any[];
   nutriScore?: Record<string, any>;
@@ -166,11 +168,14 @@ export interface ETK360Item {
 
 export interface ETK360StepItemOverride {
   rank?: number;
+  price?: number;
   itemPrice?: {
     price?: Record<string, any>;
     isVisible?: boolean;
   };
   priceStep?: number;
+  minChoices?: number;
+  maxChoices?: number | null;
   nbrWithPrice?: number | null;
   specialPrice?: number;
   basicCompVisibility?: boolean;
@@ -218,6 +223,12 @@ export interface ETK360Step {
 
 export interface ETK360ModifierStepMeta {
   rank?: number;
+  ovr?: Record<string, { price: number; priceStep: number }>;
+  items?: Record<string, any>;
+  msg?: {
+    "0"?: { fr?: string; en?: string };
+    "1"?: { fr?: string };
+  };
 }
 
 export interface ETK360Modifier {
@@ -226,16 +237,29 @@ export interface ETK360Modifier {
   steps?: Record<string, ETK360ModifierStepMeta>;
 }
 
-export interface ETK360Catalogue {
-  title?: string;
-  theme?: ETK360Theme;
+export interface CarteETK360 {
   opt?: Record<string, any>;
-  etat?: string; // ex: "En attente"
+  etat?: string;
   tags?: Record<string, any>;
   color?: string;
-  workflow: Record<string, ETK360WorkflowNode>;
-  categories: Record<string, ETK360Category>;
-  items: Record<string, ETK360Item>;
-  modifier?: Record<string, ETK360Modifier>;
+  items?: Record<string, ETK360Item>;
   steps?: Record<string, ETK360Step>;
+  title?: string;
+  remark?: string;
+  status?: string;
+  Planning?: string;
+  idEntite?: any[];
+  modifier?: Record<string, ETK360Modifier>;
+  operator?: string;
+  shoplist?: Record<string, any>;
+  workflow?: Record<string, ETK360WorkflowNode>;
+  allergens?: Record<string, any>;
+  isAutoRef?: boolean;
+  categories?: Record<string, ETK360Category>;
+  workflowList?: Record<string, any>;
+  isUniqueTitle?: boolean;
+  allergenGroups?: Record<string, any>;
+  dateModification?: string;
+  iuudCardReference?: number;
+  theme?: ETK360Theme;
 }

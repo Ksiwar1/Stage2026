@@ -52,11 +52,11 @@ export async function genererArchitectureAction(data: FormData) {
   }
 
   const themeMap: Record<string, string> = {
-      'fastfood': 'carte1_smash_up.json',
-      'pizzeria': 'carte3_grill_station.json',
-      'tacos': 'carte4_bsb_franchise.json',
-      'gastronomique': 'carte5_etoile_orientale.json',
-      'standard': 'carte2_o3k.json'
+      'fastfood': '99773850-1456-4bf6-af1f-69231487d3e3',
+      'pizzeria': '2b018cc3-78b9-438c-bc3a-e2b01bb8bc0b',
+      'tacos': '98acd276-9546-4804-8f4f-bd34eef9474d',
+      'gastronomique': 'c38c7fea-072a-4030-8338-6d36685af11c',
+      'standard': '3c21ebb8-68d8-4b04-a112-1a01c1510653'
   };
   let activeSourceInspiration = sourceInspiration;
   if (activeSourceInspiration && themeMap[activeSourceInspiration]) {
@@ -205,16 +205,34 @@ export async function enrichirCarteAction(
     const { randomUUID } = require("crypto");
     
     // Récupération de la vraie palette du thème d'inspiration
-    let originalTheme: any = { palette: ["#4F46E5", "#10B981", "#F59E0B"] };
-    if (activeSourceInspiration && activeSourceInspiration !== 'generique') {
-        try {
-            // import moved to top
-            const refCard = await cardService.getCardById(activeSourceInspiration);
+  const sourceInspirationRaw = (data.get("sourceInspiration") as string) || undefined;
+  
+  const themeMap: Record<string, string> = {
+      'fastfood': '99773850-1456-4bf6-af1f-69231487d3e3', // carte1_smash_up
+      'pizzeria': '2b018cc3-78b9-438c-bc3a-e2b01bb8bc0b', // Pizza (from DB)
+      'tacos': '98acd276-9546-4804-8f4f-bd34eef9474d', // carte4_bsb_franchise
+      'gastronomique': 'c38c7fea-072a-4030-8338-6d36685af11c', // carte5_etoile_orientale
+      'standard': '3c21ebb8-68d8-4b04-a112-1a01c1510653' // carte2_o3k
+  };
+  let sourceInspiration = sourceInspirationRaw;
+  if (sourceInspiration && themeMap[sourceInspiration]) {
+      sourceInspiration = themeMap[sourceInspiration];
+  }
+
+  let originalTheme: any = { palette: ["#4F46E5", "#10B981", "#F59E0B"] };
+  let originalMetadata: any = {};
+  if (sourceInspiration && sourceInspiration !== 'generique') {
+      try {
+            const refCard = await cardService.getCardById(sourceInspiration);
             if (refCard) {
                 const refData = refCard.content;
                 if (refData.theme && refData.theme.palette) {
                     originalTheme = refData.theme;
                 }
+                if (refData.allergens) originalMetadata.allergens = refData.allergens;
+                if (refData.allergenGroups) originalMetadata.allergenGroups = refData.allergenGroups;
+                if (refData.shoplist) originalMetadata.shoplist = refData.shoplist;
+                if (refData.idEntite) originalMetadata.idEntite = refData.idEntite;
             }
         } catch(e) {
             console.error("Erreur récupération thème", e);
@@ -233,7 +251,11 @@ export async function enrichirCarteAction(
         categories: {} as any,
         items: {} as any,
         modifier: {} as any,
-        steps: {} as any
+        steps: {} as any,
+        allergens: originalMetadata.allergens || {},
+        allergenGroups: originalMetadata.allergenGroups || {},
+        shoplist: originalMetadata.shoplist || {},
+        idEntite: originalMetadata.idEntite || []
     };
 
     let sourceCategories = [];
@@ -280,8 +302,8 @@ export async function enrichirCarteAction(
         try {
             let data;
             if (f === 'generique') {
-                const { GENERIC_MASTER_TEMPLATE_JSON_STR } = require('../../lib/memory');
-                data = JSON.parse(GENERIC_MASTER_TEMPLATE_JSON_STR);
+                const { getGenericMasterTemplate } = require('../../lib/memory');
+                data = JSON.parse(getGenericMasterTemplate());
             } else {
                 // import moved to top
                 const card = await cardService.getCardById(f);
@@ -292,7 +314,7 @@ export async function enrichirCarteAction(
                
                // Clonage de TOUTES les propriétés natives racines
                Object.keys(data).forEach(key => {
-                   if (!['workflow', 'categories', 'items', 'modifier', 'steps', 'theme', 'title'].includes(key)) {
+                   if (!['workflow', 'categories', 'items', 'modifier', 'steps', 'theme', 'title', 'allergens', 'allergenGroups', 'shoplist', 'idEntite'].includes(key)) {
                        // Clone profond pour éviter les références
                        (finalData as any)[key] = JSON.parse(JSON.stringify(data[key]));
                    }
@@ -338,9 +360,13 @@ export async function enrichirCarteAction(
                                }
                            }
                            
+                           if (!foundModId && firstItem.modifier) {
+                               foundModId = firstItem.modifier;
+                           }
+                           
                            if (!foundModId) {
                                const itmObj = data.items?.[itmObjId];
-                               if (itmObj && itmObj.modifier) foundModId = itmObj.modifier;
+                               if (itmObj && (itmObj.modifier || itmObj.m)) foundModId = itmObj.modifier || itmObj.m;
                            }
                        }
                    }
@@ -458,6 +484,8 @@ export async function enrichirCarteAction(
             P: "", 
             isActive: false 
         };
+        orderedItem.unity = found.unity || "";
+        orderedItem.qty = found.qty || "0";
         orderedItem.color = found.color || "#FFFFFF";
         orderedItem.offer = baseClone.offer !== undefined ? baseClone.offer : { 
             x: 0, 
@@ -467,13 +495,24 @@ export async function enrichirCarteAction(
             isEnabled: false, 
             serviceType: 1 
         };
+        let masterSaleModeVAT: any[] = [];
+        for (const k in memoryItems) {
+            if (memoryItems[k]?.price?.saleModeVAT && Array.isArray(memoryItems[k].price.saleModeVAT)) {
+                masterSaleModeVAT = memoryItems[k].price.saleModeVAT;
+                break;
+            }
+        }
+        if (masterSaleModeVAT.length === 0) {
+            masterSaleModeVAT = [ { uuid: "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7", value: 10 } ];
+        }
+
         orderedItem.price = ((baseClone.price || baseClone.p) !== undefined && typeof (baseClone.price || baseClone.p) === 'object' && !Array.isArray(baseClone.price || baseClone.p)) ? (baseClone.price || baseClone.p) : { 
             ht: rawTtc ? Number((rawTtc / 1.1).toFixed(2)) : 0, 
             ovr: [], 
             tva: 10, 
             dflt: rawTtc || 0, 
             advanced: {}, 
-            saleModeVAT: [ { uuid: "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7", value: 10 } ] 
+            saleModeVAT: masterSaleModeVAT 
         };
         orderedItem.steps = baseClone.steps !== undefined ? baseClone.steps : [];
         if (found.modifier || found.m) orderedItem.modifier = found.modifier || found.m;
@@ -653,7 +692,6 @@ export async function enrichirCarteAction(
                 aiStepRegistry.set(stepHash, newStepId);
                 
                 fData.steps[newStepId] = {
-                    id: newStepId,
                     ref: `STEP_${newStepId.substring(0,6)}`,
                     title: aiStep.title || "Choix",
                     archive: false,
@@ -665,20 +703,17 @@ export async function enrichirCarteAction(
                     displayName: { dflt: { imp: [], nameDef: aiStep.title || "Choix", salesSupport: {} } },
                     isModifiable: true,
                     img: "",
-                    msg: { dflt: { imp: [], salesSupport: {} } },
                     req: false,
-                    nbrWithPrice: null,
-                    nbrWithspecialPrice: null,
+                    nbrWithPrice: 0,
+                    nbrWithspecialPrice: 0,
                     specificOpts: {
                         isNext: true,
                         noButton: false,
+                        nextButton: false,
                         zeroPrice: false,
                         isCheapest: false,
-                        nextButton: false,
-                        isExpensive: false,
-                        withoutStep: false
-                    },
-                    rank: sIndex + 1
+                        isExpensive: false
+                    }
                 };
                 
                 const aiOptions = aiStep.options || aiStep.items || [];
@@ -698,10 +733,13 @@ export async function enrichirCarteAction(
                     
                     fData.steps[newStepId].stepItems[optId] = {
                         rank: oIndex + 1,
+                        price: 0,
                         itemPrice: { price: {}, isVisible: false },
                         priceStep: opt.priceDelta || opt.price || 0,
                         nbrWithPrice: null,
                         specialPrice: 0,
+                        minChoices: 0,
+                        maxChoices: null,
                         basicCompVisibility: true,
                         nbrWithspecialPrice: null
                     };
@@ -724,7 +762,11 @@ export async function enrichirCarteAction(
             fData.modifier[newModId].steps[newStepId] = {
                 ovr: {},
                 rank: sIndex + 1,
-                items: {}
+                items: {},
+                msg: { 
+                    "0": { fr: aiStep.title || "Choix", en: "" }, 
+                    "1": { fr: "" } 
+                }
             };
         });
         
@@ -858,7 +900,7 @@ export async function enrichirCarteAction(
                     items: [],
                     title: aiCatName,
                     video: { url: "", type: "" },
-                    idCard: [],
+                    idCard: "",
                     parent: "",
                     archive: false,
                     extrRef: "",
@@ -867,8 +909,8 @@ export async function enrichirCarteAction(
                     linkedTags: [],
                     description: { dflt: { imp: [], nameDef: "", salesSupport: {} } },
                     displayName: { dflt: { imp: [], nameDef: aiCatName, salesSupport: {} } },
-                    linkedChild: [],
-                    linkedItems: [],
+                    linkedChild: {},
+                    linkedItems: {},
                     visibilityInfo: { dflt: { 1: [], 2: [], 3: [], 4: [] }, isVisible: true, basicCompVisibility: true },
                     isInfoModeActive: true
                 };
@@ -963,20 +1005,38 @@ export async function enrichirCarteAction(
                         }
                     }
 
-                    // Attach to workflow AND categories (Dual-Binding Single Source of Truth)
-                    if (!finalData.workflow[targetCatId].content) finalData.workflow[targetCatId].content = {};
-                    finalData.workflow[targetCatId].content[newItemId] = { 
-                        type: "items", 
-                        rank: itemRankCounter++ 
-                    };
-                    
-                    if (finalData.items[newItemId].modifier) {
-                        const mId = finalData.items[newItemId].modifier;
-                        // Injection Native ETK360 : le modifier vit dans le content du workflow de l'item !
-                        finalData.workflow[targetCatId].content[newItemId].content = {
-                            [mId]: { type: "modifier", rank: 1 }
-                        };
-                    }
+                    // Multi-Channel Binding for ETK360 parser consistency
+                    // The workflow is an array of channels (POS, KIOSK, WEB...)
+                    Object.keys(finalData.workflow).forEach(channelKey => {
+                        const channel = finalData.workflow[channelKey];
+                        
+                        // If the channel IS the category directly (flat architecture)
+                        if (channelKey === targetCatId) {
+                            if (!channel.content) channel.content = {};
+                            channel.content[newItemId] = { 
+                                type: "items", 
+                                rank: itemRankCounter,
+                                ovr: {},
+                                content: {}
+                            };
+                        } 
+                        // If it's a wrapper level (e.g. work_base -> category)
+                        else if (channel.type !== "categories" && channel.content) {
+                            if (!channel.content[targetCatId]) {
+                                channel.content[targetCatId] = { type: "categories", rank: currentCatRank, content: {} };
+                            }
+                            if (!channel.content[targetCatId].content) {
+                                channel.content[targetCatId].content = {};
+                            }
+                            channel.content[targetCatId].content[newItemId] = { 
+                                type: "items", 
+                                rank: itemRankCounter,
+                                ovr: {},
+                                content: {}
+                            };
+                        }
+                    });
+                    itemRankCounter++;
                     
                     // Dual Binding for ETK360 parser consistency (Restored per exact JSON specs)
                     if (!finalData.categories[targetCatId].items) finalData.categories[targetCatId].items = [];
@@ -1065,26 +1125,47 @@ export async function enrichirCarteAction(
         
         // Check 1: Workflow roots must exist in Categories
         for (const wCatId of Object.keys(rootWf)) {
-            if (!rootCats[wCatId]) {
+            if (rootWf[wCatId].type === "categories" && !rootCats[wCatId]) {
                 throw new Error(`Workflow root category '${wCatId}' is missing from final categories.`);
             }
         }
         
         // Check 2: All items referenced in workflow MUST exist in global items, and rank collisions
-        for (const wCatId of Object.keys(rootWf)) {
-            const content = rootWf[wCatId].content || {};
-            const ranks = new Set();
-            
-            for (const itemId of Object.keys(content)) {
-                if (!rootItems[itemId]) {
-                    throw new Error(`Item '${itemId}' is referenced in workflow '${wCatId}' but is totally absent from global database.`);
-                }
-                const r = content[itemId].rank;
-                if (r !== undefined && r !== null) {
-                    if (ranks.has(r)) {
-                        console.warn(`[INTEGRITY] Rank Collision in '${wCatId}': rank ${r}. ETK360 might sort them alphabetically.`); 
+        for (const rootKey of Object.keys(rootWf)) {
+            const rootNode = rootWf[rootKey];
+            if (rootNode.type === "categories") {
+                const content = rootNode.content || {};
+                const ranks = new Set();
+                
+                for (const itemId of Object.keys(content)) {
+                    if (!rootItems[itemId]) {
+                        throw new Error(`Item '${itemId}' is referenced in workflow '${rootKey}' but is totally absent from global database.`);
                     }
-                    ranks.add(r);
+                    const r = content[itemId].rank;
+                    if (r !== undefined && r !== null) {
+                        if (ranks.has(r)) {
+                            console.warn(`[INTEGRITY] Rank Collision in '${rootKey}': rank ${r}. ETK360 might sort them alphabetically.`); 
+                        }
+                        ranks.add(r);
+                    }
+                }
+            } else if (rootNode.content) {
+                // Wrapper level (e.g. POS, APP, KIOSK)
+                for (const catKey of Object.keys(rootNode.content)) {
+                    const catNode = rootNode.content[catKey];
+                    if (catNode.type === "categories" && catNode.content) {
+                        const ranks = new Set();
+                        for (const itemId of Object.keys(catNode.content)) {
+                            if (!rootItems[itemId]) {
+                                throw new Error(`Item '${itemId}' is referenced in workflow '${catKey}' but is totally absent from global database.`);
+                            }
+                            const r = catNode.content[itemId].rank;
+                            if (r !== undefined && r !== null) {
+                                if (ranks.has(r)) console.warn(`[INTEGRITY] Rank Collision in '${catKey}': rank ${r}.`);
+                                ranks.add(r);
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -1135,25 +1216,32 @@ export async function enrichirCarteAction(
 
     const orderedFinalData: any = {};
     
-    // 1. Force the strict order for recognized fields
+    // 1. Force the strict order for recognized fields and inject defaults for perfect isomorphism
     for (const key of orderedRootFields) {
         if (finalData[key] !== undefined) {
             orderedFinalData[key] = finalData[key];
         } else {
-            // Optional: you can choose to initialize missing fields if required by ETK360, 
-            // but the user said "sans toucher à ce qu'ils contiennent", so we only reorder existing ones.
+            // Force injection of ETK360 mandatory empty fields if missing
+            if (["opt", "tags", "shoplist", "allergens", "workflowList", "allergenGroups"].includes(key)) {
+                orderedFinalData[key] = {};
+            } else if (key === "idEntite") {
+                orderedFinalData[key] = [];
+            } else if (key === "isAutoRef" || key === "isUniqueTitle") {
+                orderedFinalData[key] = false;
+            } else if (key === "iuudCardReference") {
+                orderedFinalData[key] = 0;
+            } else if (key === "theme") {
+                orderedFinalData[key] = { palette: ["#4F46E5", "#10B981", "#F59E0B"] };
+            } else if (key === "etat" || key === "status") {
+                orderedFinalData[key] = "En attente";
+            } else if (key === "operator") {
+                orderedFinalData[key] = "Administrateur";
+            } else {
+                orderedFinalData[key] = "";
+            }
         }
     }
-    
-    // 2. STRICT ETK360 ISOMORPHISM: Do NOT append any extra fields (like themeMetadata, theme) 
-    // to the final JSON to respect exactly the original data model.
-    /*
-    for (const key of Object.keys(finalData)) {
-        if (!orderedRootFields.includes(key)) {
-            orderedFinalData[key] = finalData[key];
-        }
-    }
-    */
+
 
     let jsonResponse = JSON.stringify(orderedFinalData, null, 2);
 

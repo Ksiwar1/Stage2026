@@ -18,73 +18,17 @@ export async function getCartesMemory(): Promise<MemoryFile[]> {
   });
 }
 
-export const GENERIC_MASTER_TEMPLATE_JSON_STR = `{
-  "theme": {
-    "palette": ["#4F46E5", "#10B981", "#F59E0B", "#F3F4F6", "#111827"]
-  },
-  "workflow": {
-    "cat_menus": {
-      "type": "categories",
-      "rank": 1,
-      "content": {
-        "item_menu_burger": { "type": "items", "rank": 1, "modifier": "mod_menu_burger_steps" }
-      }
-    },
-    "cat_boissons": {
-      "type": "categories",
-      "rank": 2,
-      "content": {
-        "item_coca": { "type": "items", "rank": 1 }
-      }
-    }
-  },
-  "categories": {
-    "cat_menus": { "title": "Nos Menus", "isVisible": true },
-    "cat_boissons": { "title": "Boissons", "isVisible": true }
-  },
-  "items": {
-    "item_menu_burger": { "t": "Menu Classic", "m": "mod_menu_burger_steps" },
-    "item_coca": { "t": "Coca Cola", "p": 2.50, "m": "mod_boisson_taille" },
-    "item_coca_33cl": { "t": "Normale 33cl", "p": 0 },
-    "item_coca_50cl": { "t": "Maxi 50cl", "p": 0.50 },
-    "item_frites": { "t": "Frites Classiques" },
-    "item_potatoes": { "t": "Potatoes Croustillantes" },
-    "item_sauce_mayo": { "t": "Mayonnaise" },
-    "item_sauce_ket": { "t": "Ketchup" }
-  },
-  "modifier": {
-    "mod_menu_burger_steps": {
-      "steps": {
-        "step_choix_boisson": { "rank": 1 },
-        "step_choix_accompagnement": { "rank": 2 },
-        "step_choix_sauce": { "rank": 3 }
-      }
-    },
-    "mod_boisson_taille": {
-      "steps": {
-        "step_taille_boisson": { "rank": 1 }
-      }
-    }
-  },
-  "steps": {
-    "step_choix_boisson": {
-      "t": "Choisissez votre boisson", "min": 1, "max": 1,
-      "stepItems": { "item_coca": { "rank": 1 } }
-    },
-    "step_choix_accompagnement": {
-      "t": "Votre accompagnement", "min": 1, "max": 1,
-      "stepItems": { "item_frites": { "rank": 1 }, "item_potatoes": { "rank": 2 } }
-    },
-    "step_choix_sauce": {
-      "t": "Choisir vos sauces", "min": 0, "max": 2,
-      "stepItems": { "item_sauce_mayo": { "rank": 1 }, "item_sauce_ket": { "rank": 2 } }
-    },
-    "step_taille_boisson": {
-      "t": "Taille de votre boisson", "min": 1, "max": 1,
-      "stepItems": { "item_coca_33cl": { "rank": 1 }, "item_coca_50cl": { "rank": 2 } }
-    }
+export function getGenericMasterTemplate() {
+  const filePath = path.join(process.cwd(), 'src/lib/template_reference_ia.json');
+  console.log("[DEBUG] Loading template_reference_ia.json from:", filePath);
+  if (fs.existsSync(filePath)) {
+    const content = fs.readFileSync(filePath, 'utf-8');
+    console.log("[DEBUG] Template contains 'steps' key inside modifiers:", content.includes('"steps": {'));
+    return content;
   }
-}`;
+  console.warn("[DEBUG] WARNING: template_reference_ia.json NOT FOUND at:", filePath);
+  return "{}";
+}
 
 // Désormais, on n'utilise PLUS le few-shot brutal avec slice() car il détruit le JSON.
 // On injecte un Master Schema parfait.
@@ -115,7 +59,7 @@ export async function getPromptSystemForAI(sourceCatalogId?: string, secondaryIn
     }
   } else {
     // Le Generique master template
-    baseTemplate = GENERIC_MASTER_TEMPLATE_JSON_STR;
+    baseTemplate = getGenericMasterTemplate();
   }
 
   if (phase === 1) {
