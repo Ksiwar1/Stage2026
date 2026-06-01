@@ -162,7 +162,7 @@ export interface ETK360Item {
     isVisible?: boolean;
     basicCompVisibility?: boolean;
   };
-  type?: 'item' | 'modifier' | string;
+  type?: 'item' | 'modifier' | 'step' | 'produit composé' | string;
   modifier?: string; // Gardé pour la liaison workflow
 }
 
@@ -237,29 +237,66 @@ export interface ETK360Modifier {
   steps?: Record<string, ETK360ModifierStepMeta>;
 }
 
-export interface CarteETK360 {
-  opt?: Record<string, any>;
-  etat?: string;
-  tags?: Record<string, any>;
-  color?: string;
-  items?: Record<string, ETK360Item>;
-  steps?: Record<string, ETK360Step>;
+export interface ETK360Shop {
+  cp?: string;
+  img?: string;
+  town?: string;
+  Nature?: string;
+  shopid?: number;
+  Address?: string;
+  Company?: string;
+  Country?: string;
+  Responsible?: string;
+  [key: string]: any;
+}
+
+export interface ETK360Allergen {
+  id?: number;
+  icon?: string;
+  group?: string;
   title?: string;
-  remark?: string;
-  status?: string;
-  Planning?: string;
-  idEntite?: any[];
-  modifier?: Record<string, ETK360Modifier>;
-  operator?: string;
-  shoplist?: Record<string, any>;
-  workflow?: Record<string, ETK360WorkflowNode>;
-  allergens?: Record<string, any>;
-  isAutoRef?: boolean;
-  categories?: Record<string, ETK360Category>;
-  workflowList?: Record<string, any>;
-  isUniqueTitle?: boolean;
-  allergenGroups?: Record<string, any>;
-  dateModification?: string;
-  iuudCardReference?: number;
-  theme?: ETK360Theme;
+  archive?: boolean;
+  displayName?: {
+    dflt?: {
+      imp?: any[];
+      nameDef?: string;
+      salesSupport?: Record<string, any>;
+    };
+  };
+  [key: string]: any;
+}
+
+export interface ETK360AllergenGroup {
+  icon?: string;
+  title?: string;
+  allergens?: string[];
+  [key: string]: any;
+}
+
+
+export interface CarteETK360 {
+  opt: Record<string, any>;
+  etat: string;
+  tags: Record<string, any>;
+  color: string;
+  items: Record<string, ETK360Item>;
+  steps: Record<string, ETK360Step>;
+  title: string;
+  remark: string;
+  status: string;
+  Planning: string;
+  idEntite: number[];
+  modifier: Record<string, ETK360Modifier>;
+  operator: string;
+  shoplist: Record<string, ETK360Shop>;
+  workflow: Record<string, ETK360WorkflowNode>;
+  allergens: Record<string, ETK360Allergen>;
+  isAutoRef: boolean;
+  categories: Record<string, ETK360Category>;
+  workflowList: Record<string, any>;
+  isUniqueTitle: boolean;
+  allergenGroups: Record<string, ETK360AllergenGroup>;
+  dateModification: string;
+  iuudCardReference: number;
+  theme: ETK360Theme;
 }
