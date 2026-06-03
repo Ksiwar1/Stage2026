@@ -34,6 +34,8 @@ export interface ParsedCategory {
   image?: string | null;
   products: ParsedProduct[];
   workflowRank?: number;
+  /** Titre de la famille parente, présent uniquement pour une sous-famille partagée (marqueur « # »). */
+  parentTitle?: string;
 }
 
 /**
@@ -438,7 +440,10 @@ function getDeepItemNodes(contentObj: any): { id: string; rank: number; type?: s
     if (node.type === 'items' || !node.type) {
       itemNodes.push({ id: key, rank: node.rank || 0, type: node.type, content: node.content });
     } else if (node.type === 'categories') {
-      if (node.content) {
+      // Une sous-catégorie dont la CLÉ workflow contient « # » est un contenu
+      // « partagé avec la famille » : on ne l'aplatit PAS ici, elle est exposée
+      // comme sous-famille navigable (cf. extractSharedSubFamilies).
+      if (node.content && !key.includes('#')) {
         itemNodes = itemNodes.concat(getDeepItemNodes(node.content));
       }
     }
@@ -492,6 +497,151 @@ export function extractRestaurantName(data: any, cardId: string): string {
     .join(' ');
 }
 
+/** Construit un ParsedProduct complet (prix, image, étapes) depuis un nœud d'article du workflow. */
+function buildProductFromNode(iNode: { id: string; content?: any }, data: any): ParsedProduct | null {
+  const itemObj = data.items?.[iNode.id];
+  if (!itemObj) return null;
+  if (itemObj.archive === true || itemObj.isVisible === false) return null;
+
+  let desc = typeof itemObj.description === 'string' ? itemObj.description : (itemObj.description?.dflt?.nameDef || itemObj.desc || "");
+  if (desc === "[object Object]") desc = "";
+
+  let imgUrl = itemObj.img?.dflt?.img;
+  if (imgUrl === "https://dev-catalogue.softavera.com/no-pictures.svg" || imgUrl === "no-pictures.svg") imgUrl = null;
+
+  const itemContentKeys = Object.keys(iNode.content || {});
+  const modNodes = itemContentKeys.map(k => ({ id: k, ...iNode.content[k] })).filter(n => n.type === 'modifier');
+  const startModifierId = modNodes.length > 0 ? modNodes[0].id : itemObj.modifier;
+
+  const productNode: ParsedProduct = {
+    id: iNode.id,
+    name: extractBestName(itemObj, "Produit").trim(),
+    priceTTC: extractBestPrice(itemObj),
+    image: imgUrl,
+    description: desc,
+    steps: [],
+    modifierId: startModifierId || null,
+  };
+
+  if (startModifierId) {
+    productNode.steps = buildRecursiveSteps(startModifierId, data);
+  } else if (itemObj.steps && Array.isArray(itemObj.steps) && itemObj.steps.length > 0) {
+    productNode.steps = parseLegacySteps(itemObj, data);
+  }
+
+  const compStep = extractBasicCompStep(iNode.id, itemObj, data);
+  if (compStep) productNode.steps.unshift(compStep);
+
+  const globalOptSteps = extractGlobalOptionsStep(iNode.id, itemObj, data);
+  if (globalOptSteps.length > 0) productNode.steps.unshift(...globalOptSteps);
+
+  // Produit « Composition seule » : on ne garde que la Composition et les options globales.
+  if (productNode.steps.some(isCompositionStep)) {
+    productNode.steps = productNode.steps.filter(s => isCompositionStep(s) || s.semanticType === 'OPTION_GLOBALE');
+  }
+
+  return productNode;
+}
+
+/**
+ * Sous-familles « partagées » : un nœud de catégorie dont la CLÉ workflow contient
+ * « # » représente un contenu partagé avec la famille parente (ex. « NOS BEST
+ * SELLER » sous « MEILLEURES VENTES »). On l'expose comme une famille navigable
+ * distincte (au lieu d'aplatir ses produits dans le parent). Gardé inactif tant
+ * qu'aucune clé ne contient « # » → aucune incidence sur les cartes existantes.
+ */
+function extractSharedSubFamilies(contentObj: any, data: any, parentTitle: string, parentRank: number): ParsedCategory[] {
+  if (!contentObj || typeof contentObj !== 'object') return [];
+  const families: ParsedCategory[] = [];
+
+  for (const [key, node] of Object.entries<any>(contentObj)) {
+    if (node?.type !== 'categories') continue;
+
+    if (!key.includes('#')) {
+      // Sous-catégorie normale : on continue à descendre pour trouver d'éventuelles sous-familles partagées.
+      families.push(...extractSharedSubFamilies(node.content, data, parentTitle, parentRank));
+      continue;
+    }
+
+    // Catégorie partagée (« # ») → sous-famille navigable.
+    const realId = key.split('#')[0];
+    const catObj = data.categories?.[realId] || data.categories?.[key] || {};
+    if (catObj.archive === true || catObj.isVisible === false) continue;
+
+    let img = catObj.img?.dflt?.img;
+    if (img === 'no-pictures.svg' || img === 'https://dev-catalogue.softavera.com/no-pictures.svg') img = null;
+
+    const subFamily: ParsedCategory = {
+      id: key,
+      title: extractBestName(catObj, catObj.title || 'Sélection'),
+      image: img || null,
+      products: [],
+      workflowRank: (node.rank !== undefined ? node.rank : (catObj.rank || 0)) + parentRank + 0.001,
+      parentTitle,
+    };
+
+    for (const iNode of getDeepItemNodes(node.content)) {
+      const p = buildProductFromNode(iNode, data);
+      if (p) subFamily.products.push(p);
+    }
+    if (!subFamily.image && subFamily.products.length > 0) {
+      const f = subFamily.products.find(p => p.image);
+      if (f) subFamily.image = f.image;
+    }
+
+    families.push(subFamily);
+  }
+  return families;
+}
+
+/**
+ * Détecte un « contenu partagé avec la famille » : un modifier qui ne contient
+ * qu'UNE seule étape dont la RÉFÉRENCE contient « # ». Le « # » marque une étape
+ * de référence partagée (réutilisée par la famille) → ses articles doivent
+ * s'afficher comme une sous-famille navigable, pas comme un tunnel.
+ * Retourne l'étape partagée, ou null. Gardé inactif tant qu'aucune réf n'a « # ».
+ */
+function getSharedFamilyStep(modifierId: string, data: any): { stepId: string; stepNode: any; stepDef: any } | null {
+  const mod = data.modifier?.[modifierId];
+  if (!mod || !mod.steps) return null;
+  const stepKeys = Object.keys(mod.steps);
+  if (stepKeys.length !== 1) return null; // une seule étape exigée
+  const stepId = stepKeys[0];
+  const stepDef = data.opt?.[stepId] || data.steps?.[stepId] || {};
+  const reference = `${stepId}|${stepDef.ref || ''}|${stepDef.codeEcran || ''}`;
+  if (!reference.includes('#')) return null;
+  return { stepId, stepNode: mod.steps[stepId], stepDef };
+}
+
+/** Construit une sous-famille à partir d'une étape partagée (ses articles deviennent des produits). */
+function buildSharedSubFamilyFromStep(
+  shared: { stepId: string; stepNode: any; stepDef: any },
+  data: any,
+  parentTitle: string,
+  rank: number
+): ParsedCategory {
+  const { stepId, stepNode, stepDef } = shared;
+  const family: ParsedCategory = {
+    id: `shared_${stepId}`,
+    title: extractBestName(stepDef, stepDef.title || 'Sélection'),
+    image: null,
+    products: [],
+    workflowRank: rank,
+    parentTitle,
+  };
+  const itemsMap = (stepNode.items && Object.keys(stepNode.items).length > 0) ? stepNode.items : (stepDef.stepItems || {});
+  for (const [itemId, modVal] of Object.entries<any>(itemsMap)) {
+    const content = typeof modVal === 'string' ? { [modVal]: { type: 'modifier' } } : {};
+    const p = buildProductFromNode({ id: itemId, content }, data);
+    if (p) family.products.push(p);
+  }
+  if (family.products.length > 0) {
+    const withImg = family.products.find(p => p.image);
+    if (withImg) family.image = withImg.image;
+  }
+  return family;
+}
+
 export function parseETK360Hierarchy(data: any): ParsedCategory[] {
   if (!data || !data.categories || !data.items || typeof data.items !== 'object') return [];
 
@@ -533,66 +683,26 @@ export function parseETK360Hierarchy(data: any): ParsedCategory[] {
       // Tri par le rank du workflow AST
       itemNodes.sort((a, b) => (a.rank || 0) - (b.rank || 0));
 
+      // Sous-familles « partagées » détectées via un modifier à 1 étape dont la
+      // référence contient « # » (collectées puis ajoutées après la famille parente).
+      const sharedSubFamilies: ParsedCategory[] = [];
+
       for (const iNode of itemNodes) {
-          const itemObj = data.items[iNode.id];
+          const itemObj = data.items?.[iNode.id];
           if (!itemObj) continue;
-          if (itemObj.archive === true || itemObj.isVisible === false) continue;
 
-          let desc = typeof itemObj.description === 'string' ? itemObj.description : (itemObj.description?.dflt?.nameDef || itemObj.desc || "");
-          if (desc === "[object Object]") desc = "";
-
-          let imgUrl = itemObj.img?.dflt?.img;
-          if (imgUrl === "https://dev-catalogue.softavera.com/no-pictures.svg" || imgUrl === "no-pictures.svg") imgUrl = null;
-
-          // Étape 3 : S'enfoncer dans le content de l'Article pour extraire le sous-parcours (Le Modifier) !
-          const itemContentKeys = Object.keys(iNode.content || {});
-          const modNodes = itemContentKeys.map(k => ({ id: k, ...iNode.content[k] })).filter(n => n.type === 'modifier');
-          
-          let startModifierId = modNodes.length > 0 ? modNodes[0].id : itemObj.modifier;
-
-          const productNode: ParsedProduct = {
-              id: iNode.id,
-              name: extractBestName(itemObj, "Produit").trim(),
-              priceTTC: extractBestPrice(itemObj),
-              image: imgUrl,
-              description: desc,
-              steps: [],
-              modifierId: startModifierId || null,
-          };
-
-          // Lancement récursif pour les options 
-          if (startModifierId) {
-             productNode.steps = buildRecursiveSteps(startModifierId, data);
-          } else if (itemObj.steps && Array.isArray(itemObj.steps) && itemObj.steps.length > 0) {
-             productNode.steps = parseLegacySteps(itemObj, data);
+          const modId = Object.keys(iNode.content || {}).find(k => iNode.content[k]?.type === 'modifier') || itemObj.modifier;
+          const shared = modId ? getSharedFamilyStep(modId, data) : null;
+          if (shared) {
+             // Contenu partagé avec la famille → sous-famille navigable, pas un tunnel.
+             sharedSubFamilies.push(
+               buildSharedSubFamilyFromStep(shared, data, title, (categoryNode.workflowRank || 0) + 0.001 + (iNode.rank || 0) / 1000)
+             );
+             continue;
           }
 
-          const compStep = extractBasicCompStep(iNode.id, itemObj, data);
-          if (compStep) {
-             productNode.steps.unshift(compStep);
-          }
-
-          // Options globales isolées AVANT tout (Taille de la pizza, etc.)
-          const globalOptSteps = extractGlobalOptionsStep(iNode.id, itemObj, data);
-          if (globalOptSteps.length > 0) {
-             productNode.steps.unshift(...globalOptSteps);
-          }
-
-          // Produit « Composition seule » : un article doté d'une Composition de
-          // base (ingrédients retirables, ex. HOT DOGS) n'est PAS un menu à étapes.
-          // On retire les étapes héritées d'un modifier partagé (ex. l'upsell
-          // « PETIT FAIM ? » dont les options sont d'autres produits vendables),
-          // pour ne conserver que la Composition (et les éventuelles options
-          // globales obligatoires comme la Taille). Le tunnel se résume alors au
-          // retrait d'ingrédients puis à l'ajout au panier.
-          if (productNode.steps.some(isCompositionStep)) {
-             productNode.steps = productNode.steps.filter(s => isCompositionStep(s) || s.semanticType === 'OPTION_GLOBALE');
-          }
-
-          // Strict Read-Only: Aucun raccommodage de prix par le front-end
-          // Si le prix est à 0€ sur le backend, il reste à 0€ visuellement.
-
-          categoryNode.products.push(productNode);
+          const productNode = buildProductFromNode(iNode, data);
+          if (productNode) categoryNode.products.push(productNode);
       }
 
       if (!categoryNode.image && categoryNode.products.length > 0) {
@@ -603,6 +713,13 @@ export function parseETK360Hierarchy(data: any): ParsedCategory[] {
       // On autorise désormais les catégories vides à exister dans l'arbre final
       // pour que l'interface (KioskSimulator) puisse afficher le Empty State "Aucun produit disponible".
       tree.push(categoryNode);
+
+      // Sous-familles « partagées » via modifier à 1 étape (référence « # »).
+      for (const sf of sharedSubFamilies) tree.push(sf);
+
+      // Sous-familles « partagées » via une clé workflow contenant « # ».
+      const subFamilies = extractSharedSubFamilies(wNode.content, data, title, categoryNode.workflowRank || 0);
+      for (const sf of subFamilies) tree.push(sf);
   }
 
   // Tri final des catégories par leur rang workflow

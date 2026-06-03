@@ -40,6 +40,8 @@ export interface ParsedCategory {
   products: ParsedProduct[];
   workflowRank?: number;
   isVisible?: boolean;
+  /** Titre de la famille parente, présent uniquement pour une sous-famille partagée (« # »). */
+  parentTitle?: string;
 }
 
 export type AppStep = Omit<ParsedStep, 'semanticType'> & { semanticType: string };
@@ -61,6 +63,11 @@ const CategoryButton = React.memo(({ cat, isActive, onClick }: { cat: ParsedCate
         cursor: 'pointer', transition: 'all 0.2s ease-in-out', gap: '0.5rem',
       }}
     >
+      {cat.parentTitle && (
+        <span style={{ fontSize: '0.6rem', fontWeight: 700, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.3px', textAlign: 'center', lineHeight: 1.1 }}>
+          {cat.parentTitle} ›
+        </span>
+      )}
       <strong style={{ fontSize: '0.8rem', textTransform: 'uppercase', textAlign: 'center', lineHeight: '1.15', fontWeight: 900, color: 'var(--color-primary)', overflowWrap: 'break-word', wordBreak: 'normal' }}>
         {cat.title}
       </strong>
@@ -349,6 +356,23 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
     && funnelSteps.length > 0
     && funnelSteps.every(s => s.title.trim().toLowerCase() === 'composition');
   const showAddToCartAction = isCompositionOnlyRoot && currentStepIndex === funnelSteps.length - 1;
+
+  // Vignette représentative d'une étape pour le stepper : l'option déjà choisie,
+  // sinon la première option disponible.
+  const stepThumb = (step: StepTreeNode): string | null => {
+    const selectedId = (stepSelections[step.stepId] || [])[0];
+    const selectedOpt = selectedId ? step.children.find(c => c.productId === selectedId) : null;
+    return selectedOpt?.image || step.image || step.children?.[0]?.image || null;
+  };
+
+  // Retour à l'étape précédente (ou remontée d'un cran dans le parcours imbriqué).
+  const goPrevStep = () => {
+    if (currentStepIndex > 0) {
+      setCurrentStepIndex(c => (c as number) - 1);
+    } else if (workflowStack.length > 1) {
+      setWorkflowStack(prev => prev.slice(0, -1));
+    }
+  };
 
   // Derive breadcrumb array from workflowStack
   const breadcrumb = workflowStack.flatMap((level, index) => {
@@ -688,7 +712,91 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                </div>
             </div>
             
-            {/* Breadcrumb Section */}
+            {/* Stepper visuel : liste des étapes du parcours courant (icône + nom)
+                + progression numérotée et flèches de navigation. */}
+            {!isGlobalOptionPhase && currentStepIndex < funnelSteps.length && funnelSteps.length > 1 && (
+              <div style={{ flexShrink: 0, background: 'linear-gradient(180deg, color-mix(in srgb, var(--color-primary) 10%, white), white)', borderBottom: '1px solid #f3f4f6', paddingTop: '0.75rem' }}>
+                {/* Rangée des étapes (vignette + label) */}
+                <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'flex-start', gap: '0.4rem', padding: '0 1.5rem' }}>
+                  {funnelSteps.map((step, i) => {
+                    const isActive = i === currentStepIndex;
+                    const isDone = i < currentStepIndex;
+                    const isReachable = i <= currentStepIndex;
+                    const thumb = stepThumb(step);
+                    return (
+                      <div
+                        key={step.stepId}
+                        onClick={() => { if (isReachable) setCurrentStepIndex(i); }}
+                        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', flex: 1, minWidth: 0, cursor: isReachable ? 'pointer' : 'default' }}
+                      >
+                        <div style={{
+                          width: '72px', height: '72px', borderRadius: '50%', flexShrink: 0,
+                          border: `3px solid ${isActive || isDone ? 'var(--color-primary)' : '#e5e7eb'}`,
+                          background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          overflow: 'hidden', opacity: (isActive || isDone) ? 1 : 0.5,
+                          boxShadow: isActive ? '0 6px 16px color-mix(in srgb, var(--color-primary) 35%, transparent)' : 'none',
+                          transform: isActive ? 'scale(1.06)' : 'scale(1)', transition: 'all 0.2s'
+                        }}>
+                          {thumb ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img loading="lazy" decoding="async" src={thumb} alt={step.title}
+                              onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://recette-setting.softavera.com/nopicture.png'; }}
+                              style={{ width: '100%', height: '100%', objectFit: 'contain', filter: (isActive || isDone) ? 'none' : 'grayscale(1)' }} />
+                          ) : (
+                            <span style={{ fontSize: '1.6rem' }}>🍴</span>
+                          )}
+                        </div>
+                        <span style={{ fontSize: '0.62rem', fontWeight: 800, textTransform: 'uppercase', textAlign: 'center', lineHeight: 1.1, color: isActive ? 'var(--color-primary)' : '#6b7280', overflowWrap: 'break-word', wordBreak: 'normal', maxWidth: '90px' }}>
+                          {step.title}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Progression numérotée 1—N avec flèches */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.5rem 1.25rem 0.75rem' }}>
+                  <button
+                    onClick={goPrevStep}
+                    disabled={currentStepIndex === 0 && workflowStack.length <= 1}
+                    aria-label="Étape précédente"
+                    style={{ width: '34px', height: '34px', borderRadius: '50%', border: 'none', flexShrink: 0, background: 'rgba(0,0,0,0.04)', color: '#6b7280', fontSize: '1.3rem', fontWeight: 'bold', cursor: (currentStepIndex === 0 && workflowStack.length <= 1) ? 'not-allowed' : 'pointer', opacity: (currentStepIndex === 0 && workflowStack.length <= 1) ? 0.35 : 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  >‹</button>
+
+                  <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+                    {funnelSteps.map((step, i) => {
+                      const isActive = i === currentStepIndex;
+                      const isDone = i < currentStepIndex;
+                      const isReachable = i <= currentStepIndex;
+                      return (
+                        <React.Fragment key={step.stepId}>
+                          {i > 0 && <div style={{ flex: 1, height: '3px', borderRadius: '3px', background: isDone || isActive ? 'var(--color-primary)' : '#e5e7eb', transition: 'all 0.2s' }} />}
+                          <div
+                            onClick={() => { if (isReachable) setCurrentStepIndex(i); }}
+                            style={{
+                              width: '30px', height: '30px', borderRadius: '50%', flexShrink: 0,
+                              display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '0.85rem',
+                              cursor: isReachable ? 'pointer' : 'default', transition: 'all 0.2s',
+                              background: isDone ? 'var(--color-primary)' : '#fff',
+                              color: isDone ? 'var(--color-on-primary)' : isActive ? 'var(--color-primary)' : '#9ca3af',
+                              border: isActive ? '3px solid var(--color-primary)' : isDone ? 'none' : '2px solid #e5e7eb'
+                            }}
+                          >{i + 1}</div>
+                        </React.Fragment>
+                      );
+                    })}
+                  </div>
+
+                  <button
+                    onClick={goNextStep}
+                    aria-label="Étape suivante"
+                    style={{ width: '34px', height: '34px', borderRadius: '50%', border: 'none', flexShrink: 0, background: 'rgba(0,0,0,0.04)', color: '#6b7280', fontSize: '1.3rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  >›</button>
+                </div>
+              </div>
+            )}
+
+            {/* Fil d'Ariane (déplacé sous le stepper, juste avant la question) */}
             {!isGlobalOptionPhase && currentStepIndex < funnelSteps.length && (
               <div style={{ padding: '0.5rem 2rem', background: 'white', display: 'flex', gap: '0.5rem', alignItems: 'center', fontSize: '0.75rem', fontWeight: 700, color: '#6b7280', flexWrap: 'wrap', borderBottom: '1px solid #f3f4f6' }}>
                  {breadcrumb.map((bcItem, idx) => {
@@ -711,12 +819,12 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
             )}
 
             <div style={{ flex: 1, overflowY: 'auto', padding: '1rem 2rem', background: '#fff', position: 'relative' }}>
-              
+
 
               {currentStepIndex < funnelSteps.length ? (
-                <div style={{ animation: 'fadeIn 0.3s', marginTop: '2.5rem' }}>
-                  
-                  <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+                <div style={{ animation: 'fadeIn 0.3s' }}>
+
+                  <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
                      <h3 style={{ fontSize: '1.4rem', color: '#111827', margin: '0 0 0.5rem 0' }}>
                         {currentStep.title.toLowerCase().includes('composition') ? t('modal_composition_remove') : `${t('modal_composition_choose')} ${currentStep.title}`}
                      </h3>
