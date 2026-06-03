@@ -5,11 +5,24 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useLanguage } from '../lib/LanguageContext';
 import styles from './Menu.module.css';
+import { logoutAction } from '../app/actions/auth';
 
 export default function Menu() {
   const pathname = usePathname();
   const { lang, setLang, t, allowedLanguages, setAllowedLanguages } = useLanguage();
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [session, setSession] = useState<{ loggedIn: boolean; role?: string; cardId?: string } | null>(null);
+
+  // Load session on pathname changes
+  useEffect(() => {
+    fetch('/api/auth/me')
+      .then(res => {
+        if (res.ok) return res.json();
+        return { loggedIn: false };
+      })
+      .then(data => setSession(data))
+      .catch(() => setSession({ loggedIn: false }));
+  }, [pathname]);
 
   // Load theme on mount
   useEffect(() => {
@@ -27,10 +40,12 @@ export default function Menu() {
     document.documentElement.setAttribute('data-theme', newTheme);
   };
 
-  const navLinks = [
-    { title: t('nav_home'), path: '/' },
-    { title: t('nav_dashboard'), path: '/menu' }
-  ];
+  const navLinks = session?.loggedIn && session?.role === 'CLIENT' 
+    ? [] 
+    : [
+        { title: t('nav_home'), path: '/' },
+        { title: t('nav_dashboard'), path: '/menu' }
+      ];
 
   useEffect(() => {
     // Read global site settings from API
@@ -131,6 +146,27 @@ export default function Menu() {
                 </button>
               )}
             </div>
+          )}
+
+          {/* Logout Button if logged in */}
+          {session?.loggedIn && (
+            <button 
+              onClick={async () => {
+                await logoutAction();
+                window.location.href = '/login';
+              }}
+              className={styles.langBtn}
+              style={{ 
+                marginLeft: '1rem', 
+                background: 'rgba(239, 68, 68, 0.1)', 
+                color: '#fca5a5', 
+                border: '1px solid rgba(239, 68, 68, 0.2)',
+                cursor: 'pointer'
+              }}
+              title="Déconnexion"
+            >
+              🚪 Déconnexion
+            </button>
           )}
         </div>
 
