@@ -79,3 +79,13 @@ L'application s'adresse à différents profils au sein de Softavera :
 * **Réduction drastique des coûts opérationnels** : Moins de temps passé sur la saisie manuelle libère du temps pour des tâches à plus forte valeur ajoutée.
 * **Amélioration de la satisfaction client** : Les modifications de menus demandées par les restaurateurs sont appliquées et testées beaucoup plus rapidement.
 * **Qualité et Stabilité** : Moins de réclamations liées à des dysfonctionnements de bornes en restaurant grâce aux tests instantanés sur la borne virtuelle.
+
+---
+
+## Évolutions Futures (Hors Périmètre Initial)
+
+### Portail d'Édition Client (Espace Restaurateur)
+Bien que le projet se concentre en priorité sur l'outil interne pour les équipes de Softavera, une évolution ultérieure consistera à offrir un accès sécurisé aux clients :
+* **Autonomie du Restaurateur** : Un espace dédié permettra à chaque client de se connecter pour modifier lui-même les prix, descriptions ou la disponibilité des produits de sa carte.
+* **Sécurité et Isolation** : Le client aura visibilité et accès uniquement sur les cartes de ses propres établissements.
+* **Validation intégrée** : Le client pourra utiliser le simulateur de borne virtuelle pour prévisualiser ses modifications avant publication.
