@@ -230,13 +230,14 @@ export default async function BornePage({ params }: { params: Promise<{ id: stri
       flexDirection: 'column',
       justifyContent: 'flex-start',
       alignItems: 'center', 
-      minHeight: '100vh', 
+      height: '100vh', 
+      overflow: 'hidden',
       background: '#f1f5f9', // Fond gris clair derrière la borne
-      padding: '7.5rem 2rem 4rem 2rem' 
+      padding: '6.5rem 2rem 3rem 2rem' 
     }}>
       <div style={{ 
-        width: '420px', // Taille proportionnelle pour s'adapter à tous les écrans
-        height: '740px', // Hauteur optimale 9:16 pour éviter le défilement vertical
+        width: 'min(420px, calc((100vh - 11rem) * 0.5625))', 
+        height: 'min(740px, calc(100vh - 11rem))',
         background: 'white',
         borderRadius: '24px',
         boxShadow: '0 30px 60px -12px rgba(0, 0, 0, 0.4), 0 0 0 16px #0f172a', // Gros cadre plastique noir
