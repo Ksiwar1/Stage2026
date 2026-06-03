@@ -9,6 +9,11 @@ import styles from './Menu.module.css';
 export default function Menu() {
   const pathname = usePathname();
   const { lang, setLang, t, allowedLanguages, setAllowedLanguages } = useLanguage();
+
+  // La borne (`/borne/<id>`) est un affichage plein écran (kiosk) : on masque la
+  // barre de navigation globale qui se superposait au cadre. Le listing
+  // `/borne` (sans id) conserve la barre.
+  const isKioskFullscreen = pathname?.startsWith('/borne/');
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
   // Load theme on mount
@@ -63,6 +68,9 @@ export default function Menu() {
       })
       .catch(e => console.error("Failed to load site settings from DB", e));
   }, [setAllowedLanguages]);
+
+  // Masquage sur la borne plein écran (après les hooks pour respecter les règles React).
+  if (isKioskFullscreen) return null;
 
   return (
     <nav className={styles.nav}>
