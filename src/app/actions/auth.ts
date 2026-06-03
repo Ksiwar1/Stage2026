@@ -4,6 +4,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { userService } from '../../services/userService';
 import { encrypt } from '../../lib/session';
+import prisma from '../../lib/db';
 
 export type ActionResponse = {
   success: boolean;
@@ -21,8 +22,39 @@ export async function loginAction(formData: FormData): Promise<ActionResponse> {
     return { success: false, error: 'Veuillez saisir votre e-mail et votre mot de passe.' };
   }
 
-  // 1. Rechercher l'utilisateur
-  const user = await userService.getUserByEmail(email);
+  // 1. Rechercher l'utilisateur par e-mail
+  let user = await userService.getUserByEmail(email);
+  
+  if (!user) {
+    // Si l'utilisateur n'est pas trouvé, vérifier si l'identifiant est un nom de restaurant
+    const storeNameQuery = email.includes('@') ? email.split('@')[0] : email;
+    try {
+      const cards = await prisma.$queryRaw<any[]>`
+        SELECT id, store_name FROM "PFE"."carte" WHERE store_name = ${storeNameQuery} LIMIT 1
+      `;
+      if (cards && cards.length > 0) {
+        const card = cards[0];
+        // Vérifier s'il y a déjà un utilisateur pour cette carte
+        const usersForCard = await prisma.$queryRaw<any[]>`
+          SELECT * FROM "PFE"."utilisateur" WHERE card_id = ${card.id} LIMIT 1
+        `;
+        if (usersForCard && usersForCard.length > 0) {
+          user = usersForCard[0];
+        } else {
+          // Créer automatiquement un utilisateur client pour cette carte
+          user = await userService.createUser(
+            email, // nom du restaurant ou e-mail saisi
+            'ClientPass123!',
+            'CLIENT',
+            card.id
+          );
+        }
+      }
+    } catch (e) {
+      console.error('Error during fallback restaurant name authentication:', e);
+    }
+  }
+
   if (!user) {
     return { success: false, error: 'Identifiants de connexion incorrects.' };
   }
