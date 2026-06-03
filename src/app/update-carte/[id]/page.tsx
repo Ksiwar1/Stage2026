@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import styles from "../../page.module.css";
 import { cardService } from "../../../services/cardService";
+import { cookies } from 'next/headers';
+import { decrypt } from '../../../lib/session';
+import { logoutAction } from '../../actions/auth';
 
 export default async function CarteEditorDashboard(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
@@ -8,6 +11,23 @@ export default async function CarteEditorDashboard(props: { params: Promise<{ id
   // Clean up ID if it comes with .json from old links
   const cardId = params.id.endsWith('.json') ? params.id.replace('.json', '') : params.id;
   
+  // Vérification de la session et des rôles
+  const cookieStore = await cookies();
+  const sessionCookie = cookieStore.get('session')?.value;
+  const session = sessionCookie ? await decrypt(sessionCookie) : null;
+  const isClientRole = session?.role === 'CLIENT';
+
+  // Si client, valider qu'il s'agit bien de sa carte
+  if (isClientRole && cardId !== session.cardId) {
+    return (
+      <main className={styles.main} style={{ padding: '10rem 2rem 4rem 2rem', background: '#f8fafc', minHeight: '100vh' }}>
+        <div style={{ background: '#fee2e2', border: '1px solid #ef4444', color: '#991b1b', padding: '1.5rem', borderRadius: '12px', maxWidth: '600px', margin: '0 auto' }}>
+          Accès refusé. Vous n'avez pas l'autorisation d'accéder à cette carte.
+        </div>
+      </main>
+    );
+  }
+
   let data: any = null;
   let error = null;
 
@@ -34,9 +54,17 @@ export default async function CarteEditorDashboard(props: { params: Promise<{ id
       <div style={{ maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
         
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '3rem', gap: '1.5rem' }}>
-           <Link href="/update-carte" style={{ padding: '0.5rem 1rem', background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px', textDecoration: 'none', color: '#0f172a', fontWeight: 600, boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>
-             &larr; Retour
-           </Link>
+           {isClientRole ? (
+             <form action={logoutAction}>
+               <button type="submit" style={{ padding: '0.5rem 1rem', background: '#fee2e2', border: '1px solid #fca5a5', borderRadius: '8px', color: '#991b1b', fontWeight: 600, cursor: 'pointer', boxShadow: '0 1px 2px rgba(0,0,0,0.05)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                 🚪 Déconnexion
+               </button>
+             </form>
+           ) : (
+             <Link href="/update-carte" style={{ padding: '0.5rem 1rem', background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px', textDecoration: 'none', color: '#0f172a', fontWeight: 600, boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>
+               &larr; Retour
+             </Link>
+           )}
            <div>
              <h1 style={{ margin: 0, fontSize: '2rem', color: '#0f172a', letterSpacing: '-0.02em' }}>{title}</h1>
              <div style={{ color: '#64748b', fontSize: '0.9rem', marginTop: '0.2rem' }}>ID: {cardId}</div>
@@ -123,11 +151,14 @@ export default async function CarteEditorDashboard(props: { params: Promise<{ id
                   <span>📱</span> Simuler sur Borne
                 </Link>
                 
-                <div style={{ height: '1px', background: '#e2e8f0', margin: '1.5rem 0' }}></div>
-                
-                <button style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', width: '100%', padding: '1rem', background: 'transparent', color: '#ef4444', border: '1px solid #ef4444', borderRadius: '12px', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s' }}>
-                  🗑️ Supprimer la carte
-                </button>
+                {!isClientRole && (
+                  <>
+                    <div style={{ height: '1px', background: '#e2e8f0', margin: '1.5rem 0' }}></div>
+                    <button style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', width: '100%', padding: '1rem', background: 'transparent', color: '#ef4444', border: '1px solid #ef4444', borderRadius: '12px', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s' }}>
+                      🗑️ Supprimer la carte
+                    </button>
+                  </>
+                )}
               </div>
 
               <div style={{ background: 'linear-gradient(135deg, #f0fdf4, #dcfce7)', padding: '2rem', borderRadius: '24px', border: '1px solid #bbf7d0' }}>
