@@ -343,7 +343,15 @@ function parseLegacyETK360Hierarchy(data: any): ParsedCategory[] {
    }
 
    for (const category of rawCategories) {
-      const parentItems = itemsByParent[category.id] || [];
+      const collectLegacyItems = (catId: string): any[] => {
+         let items = [...(itemsByParent[catId] || [])];
+         const subCats = Object.keys(data.categories).filter(k => data.categories[k].parent === catId);
+         for (const subCatId of subCats) {
+            items = items.concat(collectLegacyItems(subCatId));
+         }
+         return items;
+      };
+      const parentItems = collectLegacyItems(category.id);
       if (parentItems.length === 0) continue;
 
       parentItems.sort((a, b) => (a.rank || 0) - (b.rank || 0));
@@ -399,6 +407,22 @@ function parseLegacyETK360Hierarchy(data: any): ParsedCategory[] {
 /**
  * Parseur Séquentiel Pur basé exclusivement sur l'Arbre de Syntaxe Abstrait (data.workflow) !
  */
+function getDeepItemNodes(contentObj: any): { id: string; rank: number; type?: string; content?: any }[] {
+  if (!contentObj || typeof contentObj !== 'object') return [];
+  let itemNodes: { id: string; rank: number; type?: string; content?: any }[] = [];
+  
+  for (const [key, node] of Object.entries<any>(contentObj)) {
+    if (node.type === 'items' || !node.type) {
+      itemNodes.push({ id: key, rank: node.rank || 0, type: node.type, content: node.content });
+    } else if (node.type === 'categories') {
+      if (node.content) {
+        itemNodes = itemNodes.concat(getDeepItemNodes(node.content));
+      }
+    }
+  }
+  return itemNodes;
+}
+
 export function parseETK360Hierarchy(data: any): ParsedCategory[] {
   if (!data || !data.categories || !data.items || typeof data.items !== 'object') return [];
 
@@ -435,8 +459,7 @@ export function parseETK360Hierarchy(data: any): ParsedCategory[] {
       };
 
       // Étape 2 : Explorer le content pour trouver les Articles inclus (Tolérance IA if type missing)
-      const contentKeys = Object.keys(wNode.content || {});
-      const itemNodes = contentKeys.map(k => ({ id: k, ...wNode.content[k] })).filter(n => n.type === 'items' || !n.type);
+      const itemNodes = getDeepItemNodes(wNode.content);
       
       // Tri par le rank du workflow AST
       itemNodes.sort((a, b) => (a.rank || 0) - (b.rank || 0));

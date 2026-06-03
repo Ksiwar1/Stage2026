@@ -53,10 +53,13 @@ export async function genererArchitectureAction(data: FormData) {
 
   const themeMap: Record<string, string> = {
       'fastfood': '99773850-1456-4bf6-af1f-69231487d3e3',
-      'pizzeria': '2b018cc3-78b9-438c-bc3a-e2b01bb8bc0b',
+      'pizzeria': '982c3771-bcf8-4060-a8d9-6a1135185809',
       'tacos': '98acd276-9546-4804-8f4f-bd34eef9474d',
       'gastronomique': 'c38c7fea-072a-4030-8338-6d36685af11c',
-      'standard': '3c21ebb8-68d8-4b04-a112-1a01c1510653'
+      'standard': 'dd8f4ee1-281b-4588-8c66-59da4d033182',
+      'sushi': '255d6391-bfb8-483d-bbea-ec184a7373c7',
+      'oriental': '37032fb2-fdfd-424a-9e30-bf474564deee',
+      'thai': 'e0aef6ec-2335-4b37-9c6d-62722f6f0e75'
   };
   let activeSourceInspiration = sourceInspiration;
   if (activeSourceInspiration && themeMap[activeSourceInspiration]) {
@@ -209,10 +212,13 @@ export async function enrichirCarteAction(
   
   const themeMap: Record<string, string> = {
       'fastfood': '99773850-1456-4bf6-af1f-69231487d3e3', // carte1_smash_up
-      'pizzeria': '2b018cc3-78b9-438c-bc3a-e2b01bb8bc0b', // Pizza (from DB)
+      'pizzeria': '982c3771-bcf8-4060-a8d9-6a1135185809', // carte3_grill_station
       'tacos': '98acd276-9546-4804-8f4f-bd34eef9474d', // carte4_bsb_franchise
       'gastronomique': 'c38c7fea-072a-4030-8338-6d36685af11c', // carte5_etoile_orientale
-      'standard': '3c21ebb8-68d8-4b04-a112-1a01c1510653' // carte2_o3k
+      'standard': 'dd8f4ee1-281b-4588-8c66-59da4d033182', // carte2_o3k
+      'sushi': '255d6391-bfb8-483d-bbea-ec184a7373c7', // carte6_seven_sushi
+      'oriental': '37032fb2-fdfd-424a-9e30-bf474564deee', // carte7_boraq
+      'thai': 'e0aef6ec-2335-4b37-9c6d-62722f6f0e75' // carte12_coco_thai
   };
   let sourceInspiration = sourceInspirationRaw;
   if (sourceInspiration && themeMap[sourceInspiration]) {

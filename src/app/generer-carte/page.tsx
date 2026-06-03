@@ -350,6 +350,9 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                         { label: 'Pizzeria / Grill', icon: '🍕', c: 'pizzeria', gradient: 'linear-gradient(135deg, #ef4444, #b91c1c)' },
                         { label: 'Tacos / Kebab', icon: '🌯', c: 'tacos', gradient: 'linear-gradient(135deg, #10b981, #047857)' },
                         { label: 'Gastronomique', icon: '🍷', c: 'gastronomique', gradient: 'linear-gradient(135deg, #6366f1, #4338ca)' },
+                        { label: 'Sushi / Japonais', icon: '🍣', c: 'sushi', gradient: 'linear-gradient(135deg, #ec4899, #be185d)' },
+                        { label: 'Asiatique / Thaï', icon: '🥢', c: 'thai', gradient: 'linear-gradient(135deg, #06b6d4, #0891b2)' },
+                        { label: 'Oriental / Halal', icon: '🥙', c: 'oriental', gradient: 'linear-gradient(135deg, #f59e0b, #d97706)' },
                         { label: 'Coffee Shop / Café', icon: '☕', c: 'coffeeshop', gradient: 'linear-gradient(135deg, #d97706, #78350f)' },
                         { label: 'Standard ETK360', icon: '📱', c: 'standard', gradient: 'linear-gradient(135deg, #64748b, #475569)' },
                         { label: 'Sur Mesure...', icon: '✨', c: 'custom', gradient: 'linear-gradient(135deg, #1e293b, #0f172a)' }
