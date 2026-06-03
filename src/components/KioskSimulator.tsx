@@ -590,7 +590,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
           zIndex: 100, display: 'flex', justifyContent: 'center', alignItems: 'center', backdropFilter: 'blur(5px)'
         }}>
           <div style={{
-            background: 'var(--color-surface)', width: '90%', maxWidth: '1000px', height: '90vh', borderRadius: '24px',
+            background: 'var(--color-surface)', width: '90%', maxWidth: '1000px', height: '90%', borderRadius: '24px',
             display: 'flex', flexDirection: 'column', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
             position: 'relative'
           }}>
