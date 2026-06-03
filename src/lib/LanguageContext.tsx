@@ -72,6 +72,7 @@ const dictionary: Record<string, Record<SupportedLang, string>> = {
   "modal_next": { FR: "Suivant →", EN: "Next →" },
   "modal_finish": { FR: "Terminer", EN: "Done" },
   "modal_validate": { FR: "Valider mon menu", EN: "Validate menu" },
+  "modal_add_to_cart": { FR: "Ajouter au panier", EN: "Add to cart" },
   
   // Kiosk Cart Bar
   "cart_your_order": { FR: "Votre Commande", EN: "Your Order" },

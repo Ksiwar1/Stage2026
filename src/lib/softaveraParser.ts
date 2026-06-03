@@ -40,21 +40,39 @@ export interface ParsedCategory {
  * Extrait le prix TTC le plus pertinent de l'objet Item d'ETK360
  */
 function extractBestPrice(rawItem: any): number | null {
-  if (!rawItem || !rawItem.price || !rawItem.price.dflt) return null;
-  return rawItem.price.dflt.ttc !== undefined ? rawItem.price.dflt.ttc : null;
+  const price = rawItem?.price;
+  if (!price) return null;
+  // Prix faisant autorité sur la borne = canal KIOSK dans price.advanced.
+  // Indispensable pour les menus/offres dont price.dflt vaut 0 alors que le TTC
+  // réel (ex. MENU DOUBLE 16,90 €) n'existe que dans advanced.
+  const adv = price.advanced ? Object.values<any>(price.advanced) : [];
+  const kiosk = adv.find((a) => a?.orgKeys?.includes('KIOSK')) || adv[0];
+  if (kiosk && typeof kiosk.ttc === 'number') return kiosk.ttc;
+  // Replis (cartes sans advanced) : price.dflt nombre, puis price.dflt.ttc.
+  if (typeof price.dflt === 'number') return price.dflt;
+  if (price.dflt && typeof price.dflt.ttc === 'number') return price.dflt.ttc;
+  return null;
 }
 
 /**
  * Extrait le nom formel destiné au public
  */
 function extractBestName(obj: any, fallback: string = "Inconnu"): string {
-  // Le nouveau format normalise tout dans 'title'
+  // Nom public prioritaire (ce que la borne affiche réellement) :
+  // displayName.dflt.nameDef. Le `title` ETK360 est souvent un code écran
+  // tronqué (ex. "ENTRESS" pour "NOS ENTREES", "BURG SIG S" pour
+  // "BURGERS SIGNATURES"). On ne retombe sur `title` que faute de displayName.
+  const nameDef = obj?.displayName?.dflt?.nameDef;
+  if (typeof nameDef === 'string' && nameDef.trim() !== '') return nameDef;
+  if (typeof obj?.displayName === 'string' && obj.displayName.trim() !== '') return obj.displayName;
   if (obj?.title) return obj.title;
-  // Les fallbacks conservés temporairement si des objets non mappés filtrent
-  if (obj?.displayName?.dflt?.nameDef) return obj.displayName.dflt.nameDef;
-  if (typeof obj?.displayName === 'string') return obj.displayName;
   if (obj?.name) return obj.name;
   return fallback;
+}
+
+/** Une étape « Composition de base » (ingrédients pré-cochés et retirables). */
+function isCompositionStep(step: ParsedStep): boolean {
+  return step.title.trim().toLowerCase() === 'composition';
 }
 
 function extractBasicCompStep(productId: string, itemObj: any, data: any): ParsedStep | null {
@@ -391,6 +409,11 @@ function parseLegacyETK360Hierarchy(data: any): ParsedCategory[] {
              productNode.steps.unshift(compStep);
          }
 
+         // Produit « Composition seule » : voir explication dans parseETK360Hierarchy.
+         if (productNode.steps.some(isCompositionStep)) {
+            productNode.steps = productNode.steps.filter(s => isCompositionStep(s) || s.semanticType === 'OPTION_GLOBALE');
+         }
+
          categoryNode.products.push(productNode);
       }
 
@@ -423,6 +446,52 @@ function getDeepItemNodes(contentObj: any): { id: string; rank: number; type?: s
   return itemNodes;
 }
 
+/**
+ * Détermine le nom du restaurant affiché sur la borne à partir du JSON ETK360.
+ * Ordre de priorité identique à l'affichage borne :
+ *   shoplist[].Company > shoplist[].name > opt.restaurantName > data.title
+ *   > nom de franchise déduit des anciennes URL d'images > id de carte « titré ».
+ */
+export function extractRestaurantName(data: any, cardId: string): string {
+  let jsonRestaurantName: string | null = null;
+
+  if (data?.shoplist && typeof data.shoplist === 'object') {
+    const firstShop = Object.values(data.shoplist)[0] as any;
+    if (firstShop && firstShop.name) jsonRestaurantName = firstShop.name;
+    if (firstShop && firstShop.Company) jsonRestaurantName = firstShop.Company;
+  }
+  if (!jsonRestaurantName && data?.opt && data.opt.restaurantName) {
+    jsonRestaurantName = data.opt.restaurantName;
+  }
+  if (!jsonRestaurantName && data?.title) {
+    jsonRestaurantName = data.title;
+  }
+
+  // Extraire le nom de la franchise depuis les vieilles URL d'images ETK360
+  if (!jsonRestaurantName && data?.items) {
+    const firstItem = Object.values(data.items).find(
+      (item: any) => item?.img?.dflt?.img?.includes('franchise_')
+    ) as any;
+    if (firstItem) {
+      const match = firstItem.img.dflt.img.match(/franchise_\d+_([a-zA-Z0-9_]+)/);
+      if (match && match[1]) {
+        jsonRestaurantName = match[1].replace(/_/g, ' ');
+      }
+    }
+  }
+
+  if (jsonRestaurantName) return jsonRestaurantName;
+
+  let rawTitle = cardId.replace(/^ia_*/, '').replace(/_/g, ' ').trim();
+  if (rawTitle === '' || rawTitle.startsWith('INSTRUCTIONS STRUCT')) {
+    rawTitle = 'Restaurant IA';
+  }
+  return rawTitle
+    .split(' ')
+    .map((w: string) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+}
+
 export function parseETK360Hierarchy(data: any): ParsedCategory[] {
   if (!data || !data.categories || !data.items || typeof data.items !== 'object') return [];
 
@@ -446,7 +515,7 @@ export function parseETK360Hierarchy(data: any): ParsedCategory[] {
       if (catObj.archive === true || catObj.isVisible === false) continue;
       if (catObj.visibilityInfo?.isVisible === false) continue;
 
-      let title = catObj.title || "";
+      let title = extractBestName(catObj, catObj.title || "");
       let image = catObj.img?.dflt?.img;
       if (image === "https://dev-catalogue.softavera.com/no-pictures.svg" || image === "no-pictures.svg") image = null;
 
@@ -509,7 +578,16 @@ export function parseETK360Hierarchy(data: any): ParsedCategory[] {
              productNode.steps.unshift(...globalOptSteps);
           }
 
-
+          // Produit « Composition seule » : un article doté d'une Composition de
+          // base (ingrédients retirables, ex. HOT DOGS) n'est PAS un menu à étapes.
+          // On retire les étapes héritées d'un modifier partagé (ex. l'upsell
+          // « PETIT FAIM ? » dont les options sont d'autres produits vendables),
+          // pour ne conserver que la Composition (et les éventuelles options
+          // globales obligatoires comme la Taille). Le tunnel se résume alors au
+          // retrait d'ingrédients puis à l'ajout au panier.
+          if (productNode.steps.some(isCompositionStep)) {
+             productNode.steps = productNode.steps.filter(s => isCompositionStep(s) || s.semanticType === 'OPTION_GLOBALE');
+          }
 
           // Strict Read-Only: Aucun raccommodage de prix par le front-end
           // Si le prix est à 0€ sur le backend, il reste à 0€ visuellement.
