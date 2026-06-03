@@ -20,9 +20,9 @@ Aujourd'hui, la création et la mise à jour de ces cartes numériques sont effe
 
 L'objectif principal est de développer une **application web interne** simple et intuitive qui automatise et sécurise la création, la modification et la gestion de ces cartes de restaurants grâce à un assistant intelligent, éliminant ainsi toute saisie manuelle technique.
 
-### Objectifs Quantitatifs et Qualitatifs :
-* **Gain de temps** : Diviser par 5 le temps nécessaire pour configurer un nouveau restaurant (passer de plusieurs heures à moins de 5 minutes).
-* **Fiabilité des données** : Éliminer à 100% les bugs de fonctionnement des bornes causés par des erreurs manuelles de configuration.
+### Objectifs Métiers et Qualitatifs :
+* **Gain de temps** : Réduire de manière extrêmement significative le temps nécessaire pour configurer un nouveau restaurant (passer de plusieurs heures à seulement quelques instants).
+* **Fiabilité des données** : Éliminer complètement les dysfonctionnements des bornes causés par des erreurs manuelles de configuration.
 * **Simplicité d'usage** : Permettre à n'importe quel collaborateur d'éditer une carte sans compétences techniques.
 * **Validation immédiate** : Permettre de tester instantanément le rendu final sur une borne virtuelle avant envoi en production.
 
@@ -30,22 +30,22 @@ L'objectif principal est de développer une **application web interne** simple e
 
 ## 3. Description des Fonctionnalités Clés de l'Application
 
-L'application s'articule autour de quatre grands modules fonctionnels :
+L'application s'articule autour de plusieurs modules fonctionnels :
 
 ```mermaid
 graph TD
     A[Saisie Formulaire IA ou Photo Menu] --> B(Générateur de Cartes Intelligent)
     B --> C{Validation / Test}
     C -->|Simulateur de Borne Virtuelle| D[Visualisation et Validation]
-    C -->|Tableau de Bord Centralisé| E[Gestion et Modifications en 1 Clic]
+    C -->|Tableau de Bord Centralisé| E[Gestion et Modifications en un Clic]
 ```
 
 ### A. L'Assistant de Génération par Intelligence Artificielle
 L'utilisateur n'a plus besoin d'écrire de fichiers informatiques. Il utilise un parcours guidé (assistant) :
 1. Il saisit le nom du restaurant et choisit un concept culinaire (Burger, Pizza, Tacos, Asiatique, Café, etc.).
-2. Il définit les options par défaut des formules (ex: supplément de 2,50 € pour la formule avec boisson et frites).
+2. Il définit les options par défaut des formules (ex: supplément tarifaire pour les formules avec boisson et accompagnement).
 3. Il sélectionne les catégories de produits qu'il souhaite vendre.
-4. L'outil génère en quelques secondes une carte de restaurant complète, cohérente et réaliste (avec des descriptions attractives et des prix logiques).
+4. L'outil génère presque instantanément une carte de restaurant complète, cohérente et réaliste (avec des descriptions attractives et des prix logiques).
 
 ### B. Le Générateur à partir d'une simple Photo de Menu
 Pour aller encore plus vite, l'utilisateur peut importer la photo d'un menu papier physique (ou une carte de restaurant au format image). 
@@ -67,7 +67,7 @@ Un espace centralisé permet de gérer le parc de cartes numériques :
 
 ## 4. Profil des Utilisateurs Cibles
 
-L'application s'adresse à trois types de profils au sein de Softavera :
+L'application s'adresse à différents profils au sein de Softavera :
 1. **L'Équipe de Production et Déploiement** : Pour configurer rapidement les cartes numériques des nouveaux clients et déployer des franchises en quelques clics.
 2. **L'Équipe Support Technique** : Pour modifier en urgence le prix d'un produit, ajouter une option ou ajuster une carte à la demande d'un restaurateur sans risque d'erreur.
 3. **L'Équipe Commerciale** : Pour créer instantanément une borne de démonstration personnalisée aux couleurs et aux plats d'un prospect lors d'un rendez-vous de vente.
