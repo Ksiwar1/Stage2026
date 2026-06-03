@@ -792,9 +792,9 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
 
       {/* MODAL SIMULATEUR */}
       {isVisualizing && (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 100, background: 'rgba(15, 23, 42, 0.95)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(10px)' }}>
+        <div style={{ position: 'fixed', inset: 0, zIndex: 2000, background: 'rgba(15, 23, 42, 0.95)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(10px)' }}>
            
-           <div style={{ position: 'absolute', top: '2rem', right: '2rem', zIndex: 110 }}>
+           <div style={{ position: 'absolute', top: '2rem', right: '2rem', zIndex: 2010 }}>
               <button 
                 onClick={() => setIsVisualizing(false)}
                 style={{ padding: '0.75rem 1.5rem', background: '#ef4444', color: 'white', border: 'none', borderRadius: '99px', fontWeight: 700, cursor: 'pointer', boxShadow: '0 10px 20px rgba(239,68,68,0.3)', display: 'flex', alignItems: 'center', gap: '0.5rem', transition: 'transform 0.2s' }}
