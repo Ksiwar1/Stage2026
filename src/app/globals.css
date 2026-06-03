@@ -182,7 +182,7 @@ h1, h2, h3, h4, h5, h6 {
   height: 100vh;
   overflow: hidden;
   background: #f1f5f9;
-  padding: 6.5rem 2rem 3rem 2rem;
+  padding: 8rem 2rem 3rem 2rem;
 }
 
 .kioskFrame {
@@ -198,18 +198,9 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-height: 900px) {
   .kioskFrame {
-    height: calc(100vh - 11rem);
-    width: calc((100vh - 11rem) * 0.5625);
+    height: calc(100vh - 12rem);
+    width: calc((100vh - 12rem) * 0.5625);
   }
 }
 
-@media (max-height: 768px) {
-  .kioskWrapper {
-    padding: 5.5rem 1rem 2rem 1rem;
-  }
-  .kioskFrame {
-    height: calc(100vh - 8.5rem);
-    width: calc((100vh - 8.5rem) * 0.5625);
-  }
-}
 
