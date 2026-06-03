@@ -807,14 +807,8 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
            </div>
            
            {/* Cadre de la Borne Physique */}
-           <div style={{ 
-              width: '420px', 
-              height: '740px', 
-              background: 'white',
-              borderRadius: '24px',
+           <div className="kioskFrame" style={{ 
               boxShadow: '0 30px 60px -12px rgba(0, 0, 0, 0.6), 0 0 0 16px #0f172a, 0 0 0 18px rgba(255,255,255,0.1)', // Gros cadre plastique noir avec reflet
-              overflow: 'hidden', 
-              position: 'relative',
               animation: 'fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
            }}>
               <KioskSimulator 

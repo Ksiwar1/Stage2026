@@ -225,25 +225,8 @@ export default async function BornePage({ params }: { params: Promise<{ id: stri
   }
 
   return (
-    <div style={{ 
-      display: 'flex', 
-      flexDirection: 'column',
-      justifyContent: 'flex-start',
-      alignItems: 'center', 
-      height: '100vh', 
-      overflow: 'hidden',
-      background: '#f1f5f9', // Fond gris clair derrière la borne
-      padding: '6.5rem 2rem 3rem 2rem' 
-    }}>
-      <div style={{ 
-        width: 'min(420px, calc((100vh - 11rem) * 0.5625))', 
-        height: 'min(740px, calc(100vh - 11rem))',
-        background: 'white',
-        borderRadius: '24px',
-        boxShadow: '0 30px 60px -12px rgba(0, 0, 0, 0.4), 0 0 0 16px #0f172a', // Gros cadre plastique noir
-        overflow: 'hidden', // Empêche le simulateur de déborder
-        position: 'relative'
-      }}>
+    <div className="kioskWrapper">
+      <div className="kioskFrame">
         <KioskSimulator restaurantName={restaurantName} tree={tree} themePalette={themePalette} catalogData={data} />
       </div>
     </div>
