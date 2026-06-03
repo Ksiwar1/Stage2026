@@ -233,7 +233,7 @@ export default async function BornePage({ params }: { params: Promise<{ id: stri
       alignItems: 'center', 
       minHeight: '100vh', 
       background: '#f1f5f9', // Fond gris clair derrière la borne
-      padding: '8.5rem 2rem 4rem 2rem' 
+      padding: '16rem 2rem 4rem 2rem' 
     }}>
       <div style={{ 
         width: '480px', // Taille fixe pour être bien "rapproché" et lisible
