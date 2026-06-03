@@ -697,7 +697,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ marginBottom: '1rem', opacity: 0.5 }}>
                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                        </svg>
-                       <h3 style={{ fontSize: '1.2rem', fontWeight: 600, margin: '0 0 0.5rem 0' }}>Aucune option disponible</h3>
+                       <h3 style={{ fontSize: '1.2rem', fontWeight: 600, margin: '0 0 0.5rem 0', color: '#475569' }}>Aucune option disponible</h3>
                        <p style={{ margin: 0, fontSize: '0.95rem', opacity: 0.8 }}>Veuillez passer à l'étape suivante.</p>
                     </div>
                   ) : (
@@ -729,7 +729,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                 <div style={{ textAlign: 'center', padding: '2rem 0' }}>
                   <h2 style={{ fontSize: '2.5rem', color: 'var(--color-text)', marginTop: '1rem' }}>✨ RÉCAPITULATIF</h2>
                   <div style={{ display: 'inline-block', textAlign: 'left', background: 'white', padding: '2rem', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', minWidth: '400px' }}>
-                     <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.4rem' }}>{selectedProduct.name} - {selectedProduct.priceTTC !== null ? `${selectedProduct.priceTTC.toFixed(2)}€` : '—'}</h3>
+                     <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.4rem', color: '#111827' }}>{selectedProduct.name} - {selectedProduct.priceTTC !== null ? `${selectedProduct.priceTTC.toFixed(2)}€` : '—'}</h3>
                      <ul style={{ paddingLeft: '1.5rem', color: '#4b5563', fontSize: '1.1rem' }}>
                         {(() => {
                            const renderRecapNode = (node: ProductTreeNode, depth = 0, visited = new Set<string>()): React.ReactElement[] => {
@@ -856,7 +856,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                  <line x1="3" y1="9" x2="9" y2="9" />
                  <line x1="3" y1="15" x2="9" y2="15" />
                </svg>
-               <h3 style={{ fontSize: '1.5rem', fontWeight: 600, margin: '0 0 0.5rem 0' }}>Aucun produit disponible</h3>
+               <h3 style={{ fontSize: '1.5rem', fontWeight: 600, margin: '0 0 0.5rem 0', color: '#475569' }}>Aucun produit disponible</h3>
                <p style={{ margin: 0, fontSize: '1.1rem', opacity: 0.8 }}>Cette catégorie ne contient actuellement aucun article.</p>
             </div>
           ) : (
