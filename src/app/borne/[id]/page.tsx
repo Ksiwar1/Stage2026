@@ -224,7 +224,6 @@ export default async function BornePage({ params }: { params: Promise<{ id: stri
     themePalette.secondary = hslToHex(h2, s2, l2);
   }
 
-  // Renvoi de la "Base Propre" vers le composant Visuel avec un cadre "Borne" (Device Frame)
   return (
     <div style={{ 
       display: 'flex', 
@@ -233,11 +232,11 @@ export default async function BornePage({ params }: { params: Promise<{ id: stri
       alignItems: 'center', 
       minHeight: '100vh', 
       background: '#f1f5f9', // Fond gris clair derrière la borne
-      padding: '16rem 2rem 4rem 2rem' 
+      padding: '7.5rem 2rem 4rem 2rem' 
     }}>
       <div style={{ 
-        width: '480px', // Taille fixe pour être bien "rapproché" et lisible
-        height: '820px', // Hauteur fixe proportionnelle
+        width: '420px', // Taille proportionnelle pour s'adapter à tous les écrans
+        height: '740px', // Hauteur optimale 9:16 pour éviter le défilement vertical
         background: 'white',
         borderRadius: '24px',
         boxShadow: '0 30px 60px -12px rgba(0, 0, 0, 0.4), 0 0 0 16px #0f172a', // Gros cadre plastique noir

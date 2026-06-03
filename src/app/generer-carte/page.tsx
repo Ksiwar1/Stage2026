@@ -808,8 +808,8 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
            
            {/* Cadre de la Borne Physique */}
            <div style={{ 
-              width: '480px', 
-              height: '820px', 
+              width: '420px', 
+              height: '740px', 
               background: 'white',
               borderRadius: '24px',
               boxShadow: '0 30px 60px -12px rgba(0, 0, 0, 0.6), 0 0 0 16px #0f172a, 0 0 0 18px rgba(255,255,255,0.1)', // Gros cadre plastique noir avec reflet

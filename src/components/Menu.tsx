@@ -64,13 +64,8 @@ export default function Menu() {
       .catch(e => console.error("Failed to load site settings from DB", e));
   }, [setAllowedLanguages]);
 
-  const isBornePage = pathname?.startsWith('/borne/');
-
   return (
-    <nav 
-      className={styles.nav}
-      style={isBornePage ? { position: 'absolute' } : {}}
-    >
+    <nav className={styles.nav}>
       <div className={styles.container}>
 
         {/* Le Logo Officiel Softavera */}
