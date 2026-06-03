@@ -28,9 +28,12 @@ export async function loginAction(formData: FormData): Promise<ActionResponse> {
   if (!user) {
     // Si l'utilisateur n'est pas trouvé, vérifier si l'identifiant est un nom de restaurant
     const storeNameQuery = email.includes('@') ? email.split('@')[0] : email;
+    const normalizedInput = storeNameQuery.toLowerCase().replace(/[^a-z0-9]/g, '');
     try {
       const cards = await prisma.$queryRaw<any[]>`
-        SELECT id, store_name FROM "PFE"."carte" WHERE store_name = ${storeNameQuery} LIMIT 1
+        SELECT id, store_name FROM "PFE"."carte" 
+        WHERE LOWER(REGEXP_REPLACE(store_name, '[^a-zA-Z0-9]', '', 'g')) = ${normalizedInput} 
+        LIMIT 1
       `;
       if (cards && cards.length > 0) {
         const card = cards[0];
