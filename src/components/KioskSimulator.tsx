@@ -33,11 +33,19 @@ export interface ParsedProduct {
   modifierId?: string | null;
 }
 
+export interface ParsedSubCategory {
+  id: string;
+  title: string;
+  products: ParsedProduct[];
+  workflowRank?: number;
+}
+
 export interface ParsedCategory {
   id: string;
   title: string;
   image?: string | null;
   products: ParsedProduct[];
+  subCategories?: ParsedSubCategory[];
   workflowRank?: number;
   isVisible?: boolean;
 }
@@ -866,7 +874,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
         </div>
 
         {/* ZONE PRINCIPALE (Grid produits) */}
-        <div style={{ flex: '1', display: 'flex', flexDirection: 'column', overflowY: 'auto', position: 'relative', minHeight: 0 }}>
+        <div style={{ flex: '1', display: 'flex', flexDirection: 'column', overflowY: 'auto', position: 'relative', minHeight: 0, padding: '1.5rem' }}>
           
           {(!activeCategory?.products || activeCategory.products.length === 0) ? (
             <div style={{ padding: '4rem 2rem', textAlign: 'center', color: '#64748b', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', opacity: 0.8 }}>
@@ -880,18 +888,60 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                <p style={{ margin: 0, fontSize: '1.1rem', opacity: 0.8 }}>Cette catégorie ne contient actuellement aucun article.</p>
             </div>
           ) : (
-            <div style={{ padding: '1rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem', alignContent: 'start', marginTop: '10px' }}>
-              {activeCategory?.products.map((p, pIndex) => {
-                const isDataFault = !p.name || p.name.trim() === "";
-                
-                return (
-                  <ProductGridCard 
-                     key={`${p.id}-${pIndex}`} 
-                     p={p} 
-                     startOrder={startOrder} 
-                  />
-                );
-              })}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+               {activeCategory.subCategories && activeCategory.subCategories.length > 0 ? (
+                 activeCategory.subCategories.map((subCat) => {
+                   if (!subCat.products || subCat.products.length === 0) return null;
+                   
+                   const showHeader = activeCategory.subCategories!.length > 1 && subCat.title.trim().toUpperCase() !== activeCategory.title.trim().toUpperCase();
+                   
+                   return (
+                     <div key={subCat.id} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                       {showHeader && (
+                         <div style={{ 
+                           display: 'flex', 
+                           alignItems: 'center', 
+                           gap: '10px', 
+                           paddingBottom: '0.5rem', 
+                           borderBottom: '2px solid #e2e8f0',
+                           marginTop: '0.5rem'
+                         }}>
+                           <div style={{ width: '6px', height: '24px', background: 'var(--color-primary)', borderRadius: '3px' }} />
+                           <h2 style={{ 
+                             fontSize: '1.3rem', 
+                             fontWeight: 800, 
+                             color: 'var(--color-text)', 
+                             textTransform: 'uppercase', 
+                             margin: 0,
+                             letterSpacing: '0.5px'
+                           }}>
+                             {subCat.title}
+                           </h2>
+                         </div>
+                       )}
+                       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem', alignContent: 'start' }}>
+                         {subCat.products.map((p, pIndex) => (
+                           <ProductGridCard 
+                              key={`${p.id}-${pIndex}`} 
+                              p={p} 
+                              startOrder={startOrder} 
+                           />
+                         ))}
+                       </div>
+                     </div>
+                   );
+                 })
+               ) : (
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem', alignContent: 'start' }}>
+                    {activeCategory.products.map((p, pIndex) => (
+                      <ProductGridCard 
+                         key={`${p.id}-${pIndex}`} 
+                         p={p} 
+                         startOrder={startOrder} 
+                      />
+                    ))}
+                  </div>
+               )}
             </div>
           )}
         </div>

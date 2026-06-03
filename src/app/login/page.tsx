@@ -110,14 +110,14 @@ export default function LoginPage() {
                 letterSpacing: '0.05em'
               }}
             >
-              Adresse e-mail
+              Identifiant (E-mail ou Nom du Restaurant)
             </label>
             <input 
-              type="email" 
+              type="text" 
               id="email" 
               name="email" 
               required 
-              placeholder="votre.nom@softavera.fr"
+              placeholder="votre.nom@softavera.fr ou carte11_big_farmer"
               style={{
                 width: '100%',
                 padding: '1rem',

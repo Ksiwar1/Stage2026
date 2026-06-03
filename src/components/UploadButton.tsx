@@ -9,6 +9,7 @@ export default function UploadButton() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisReport, setAnalysisReport] = useState<string | null>(null);
   const [urlInput, setUrlInput] = useState('');
+  const [importMode, setImportMode] = useState<'both' | 'json' | 'excel'>('both');
 
   const handleUrlImport = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,27 +75,63 @@ export default function UploadButton() {
     setStatus(null);
     setIsUploading(true);
 
-    const reader = new FileReader();
-    reader.onload = async (event) => {
-      try {
-        const contenuTexte = event.target?.result as string;
-        
+    const isJson = file.name.endsWith('.json');
+    const isExcel = file.name.endsWith('.xlsx') || file.name.endsWith('.xls');
+
+    if (isJson) {
+      const reader = new FileReader();
+      reader.onload = async (event) => {
         try {
-          JSON.parse(contenuTexte); 
-        } catch (parseError) {
-          setStatus({ message: "❌ Le fichier sélectionné n'est pas un JSON valide (Crash syntaxe).", success: false });
+          const contenuTexte = event.target?.result as string;
+          
+          try {
+            JSON.parse(contenuTexte); 
+          } catch (parseError) {
+            setStatus({ message: "❌ Le fichier sélectionné n'est pas un JSON valide (Crash syntaxe).", success: false });
+            setIsUploading(false);
+            if (fileInputRef.current) fileInputRef.current.value = "";
+            return;
+          }
+
+          const res = await fetch('/api/upload-json?name=' + encodeURIComponent(file.name), {
+              method: 'POST',
+              body: contenuTexte,
+              headers: { 'Content-Type': 'text/plain' }
+          });
+
+          const contentType = res.headers.get('content-type');
+          let result;
+          if (contentType && contentType.includes('application/json')) {
+            result = await res.json();
+          } else {
+            throw new TypeError('Oops, we haven\'t got JSON!');
+          }
+          setStatus({ message: result.message, success: result.success });
+
+        } catch (err) {
+          console.error("Erreur réseau Fetch", err);
+          setStatus({ message: "Erreur réseau lors de la communication de l'API.", success: false });
+        } finally {
           setIsUploading(false);
           if (fileInputRef.current) fileInputRef.current.value = "";
-          return;
         }
+      };
 
-        // On bypass les Server Actions de Next.js et on attaque l'API pure !
-        const res = await fetch('/api/upload-json?name=' + encodeURIComponent(file.name), {
-            method: 'POST',
-            body: contenuTexte,
-            headers: { 'Content-Type': 'text/plain' } // C'est juste du gros texte innocent
-        });
+      reader.onerror = () => {
+        setStatus({ message: "Échec de lecture.", success: false });
+        setIsUploading(false);
+      };
 
+      reader.readAsText(file);
+    } else if (isExcel) {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      fetch('/api/upload-excel', {
+        method: 'POST',
+        body: formData
+      })
+      .then(async (res) => {
         const contentType = res.headers.get('content-type');
         let result;
         if (contentType && contentType.includes('application/json')) {
@@ -103,22 +140,33 @@ export default function UploadButton() {
           throw new TypeError('Oops, we haven\'t got JSON!');
         }
         setStatus({ message: result.message, success: result.success });
-
-      } catch (err) {
-        console.error("Erreur réseau Fetch", err);
-        setStatus({ message: "Erreur réseau lors de la communication de l'API.", success: false });
-      } finally {
+      })
+      .catch((err) => {
+        console.error("Erreur upload Excel", err);
+        setStatus({ message: "Erreur lors de la communication avec le serveur pour le fichier Excel.", success: false });
+      })
+      .finally(() => {
         setIsUploading(false);
         if (fileInputRef.current) fileInputRef.current.value = "";
-      }
-    };
-
-    reader.onerror = () => {
-      setStatus({ message: "Échec de lecture.", success: false });
+      });
+    } else {
+      setStatus({ message: "Format de fichier non pris en charge.", success: false });
       setIsUploading(false);
-    };
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
 
-    reader.readAsText(file);
+  const getAcceptAttribute = () => {
+    if (importMode === 'json') return '.json,application/json';
+    if (importMode === 'excel') return '.xlsx,.xls';
+    return '.json,application/json,.xlsx,.xls';
+  };
+
+  const getButtonText = () => {
+    if (isUploading) return 'Importation en cours...';
+    if (importMode === 'json') return 'Sélectionner un fichier JSON';
+    if (importMode === 'excel') return 'Sélectionner un fichier Excel (XLSX / XLS)';
+    return 'Sélectionner un fichier JSON ou Excel';
   };
 
   return (
@@ -127,7 +175,7 @@ export default function UploadButton() {
         type="file" 
         ref={fileInputRef} 
         onChange={handleFileChange} 
-        accept=".json,application/json" 
+        accept={getAcceptAttribute()} 
         style={{ display: 'none' }} 
       />
 
@@ -150,9 +198,70 @@ export default function UploadButton() {
           <p style={{ margin: 0, fontSize: '0.95rem', color: '#64748b' }}>Liez un catalogue externe ou importez un fichier local.</p>
         </div>
 
+        {/* Choix du mode d'importation */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+          <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Formats autorisés</label>
+          <div style={{ display: 'flex', background: 'rgba(255, 255, 255, 0.05)', padding: '4px', borderRadius: '12px', gap: '4px', border: '1px solid var(--card-border)' }}>
+            <button
+              type="button"
+              onClick={() => setImportMode('both')}
+              style={{
+                flex: 1,
+                padding: '0.6rem',
+                borderRadius: '8px',
+                border: 'none',
+                background: importMode === 'both' ? 'var(--foreground)' : 'transparent',
+                color: importMode === 'both' ? 'var(--background)' : 'var(--text-muted)',
+                fontWeight: '600',
+                fontSize: '0.85rem',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease-in-out'
+              }}
+            >
+              JSON & Excel
+            </button>
+            <button
+              type="button"
+              onClick={() => setImportMode('json')}
+              style={{
+                flex: 1,
+                padding: '0.6rem',
+                borderRadius: '8px',
+                border: 'none',
+                background: importMode === 'json' ? 'var(--foreground)' : 'transparent',
+                color: importMode === 'json' ? 'var(--background)' : 'var(--text-muted)',
+                fontWeight: '600',
+                fontSize: '0.85rem',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease-in-out'
+              }}
+            >
+              JSON
+            </button>
+            <button
+              type="button"
+              onClick={() => setImportMode('excel')}
+              style={{
+                flex: 1,
+                padding: '0.6rem',
+                borderRadius: '8px',
+                border: 'none',
+                background: importMode === 'excel' ? 'var(--foreground)' : 'transparent',
+                color: importMode === 'excel' ? 'var(--background)' : 'var(--text-muted)',
+                fontWeight: '600',
+                fontSize: '0.85rem',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease-in-out'
+              }}
+            >
+              Excel
+            </button>
+          </div>
+        </div>
+
         {/* Import par URL */}
         <form onSubmit={handleUrlImport} style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-          <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Lien HTTPS distant</label>
+          <label style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Lien HTTPS distant (JSON seulement)</label>
           <div style={{ display: 'flex', gap: '0.5rem', position: 'relative' }}>
             <div style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)', display: 'flex' }}>
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
@@ -242,7 +351,7 @@ export default function UploadButton() {
           }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-          {isUploading ? 'Importation en cours...' : 'Sélectionner un fichier JSON'}
+          {getButtonText()}
         </button>
 
         {status && (

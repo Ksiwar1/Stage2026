@@ -28,11 +28,19 @@ export interface ParsedProduct {
   modifierId?: string | null;
 }
 
+export interface ParsedSubCategory {
+  id: string;
+  title: string;
+  products: ParsedProduct[];
+  workflowRank?: number;
+}
+
 export interface ParsedCategory {
   id: string;
   title: string;
   image?: string | null;
   products: ParsedProduct[];
+  subCategories: ParsedSubCategory[];
   workflowRank?: number;
 }
 
@@ -342,19 +350,72 @@ function parseLegacyETK360Hierarchy(data: any): ParsedCategory[] {
       }
    }
 
-   for (const category of rawCategories) {
-      const collectLegacyItems = (catId: string): any[] => {
-         let items = [...(itemsByParent[catId] || [])];
-         const subCats = Object.keys(data.categories).filter(k => data.categories[k].parent === catId);
-         for (const subCatId of subCats) {
-            items = items.concat(collectLegacyItems(subCatId));
-         }
-         return items;
-      };
-      const parentItems = collectLegacyItems(category.id);
-      if (parentItems.length === 0) continue;
+   const parseLegacyProduct = (item: any): ParsedProduct => {
+      let desc = typeof item.description === 'string' ? item.description : (item.description?.dflt?.nameDef || item.desc || "");
+      if (desc === "[object Object]") desc = "";
+      let imageUrl = item.img?.dflt?.img || item.img?.url || null;
+      if (imageUrl === "https://beta-catalogue.etk360.com/no-pictures.svg") imageUrl = null;
 
-      parentItems.sort((a, b) => (a.rank || 0) - (b.rank || 0));
+      const productNode: ParsedProduct = {
+         id: item.id,
+         name: extractBestName(item, "Produit").trim(),
+         priceTTC: extractBestPrice(item),
+         image: imageUrl,
+         description: desc,
+         steps: [],
+         modifierId: item.modifier || null
+      };
+
+      if (item.modifier) productNode.steps = buildRecursiveSteps(item.modifier, data);
+      else if (item.steps && Array.isArray(item.steps)) productNode.steps = parseLegacySteps(item, data);
+
+      const compStep = extractBasicCompStep(item.id, item, data);
+      if (compStep) {
+          productNode.steps.unshift(compStep);
+      }
+      return productNode;
+   };
+
+   for (const category of rawCategories) {
+      const subCategories: ParsedSubCategory[] = [];
+      const directProducts: ParsedProduct[] = [];
+      const directItems = [...(itemsByParent[category.id] || [])];
+      directItems.sort((a, b) => (a.rank || 0) - (b.rank || 0));
+
+      for (const item of directItems) {
+         if (item.archive === true || item.isVisible === false) continue;
+         directProducts.push(parseLegacyProduct(item));
+      }
+
+      if (directProducts.length > 0) {
+         subCategories.push({
+            id: `${category.id}_direct`,
+            title: extractBestName(category, "Catégorie"),
+            products: directProducts,
+            workflowRank: -1
+         });
+      }
+
+      const subCats = Object.keys(data.categories)
+         .map(k => ({ ...data.categories[k], id: k }))
+         .filter(c => c.parent === category.id && c.title && c.visibilityInfo?.isVisible !== false && c.isVisible !== false);
+      subCats.sort((a, b) => (a.rank || 0) - (b.rank || 0));
+
+      for (const subCat of subCats) {
+         const subProducts: ParsedProduct[] = [];
+         const subItems = [...(itemsByParent[subCat.id] || [])];
+         subItems.sort((a, b) => (a.rank || 0) - (b.rank || 0));
+         for (const item of subItems) {
+            if (item.archive === true || item.isVisible === false) continue;
+            subProducts.push(parseLegacyProduct(item));
+         }
+         subCategories.push({
+            id: subCat.id,
+            title: extractBestName(subCat, "Catégorie"),
+            products: subProducts,
+            workflowRank: subCat.rank || 0
+         });
+      }
 
       let catImg = category.img?.dflt?.img || category.img?.url || null;
       if (catImg === "https://beta-catalogue.etk360.com/no-pictures.svg") catImg = null;
@@ -363,42 +424,20 @@ function parseLegacyETK360Hierarchy(data: any): ParsedCategory[] {
          id: category.id,
          title: extractBestName(category, "Catégorie"),
          image: catImg,
-         products: []
+         products: [],
+         subCategories: subCategories
       };
 
-      for (const item of parentItems) {
-         if (item.archive === true || item.isVisible === false) continue;
-         let desc = typeof item.description === 'string' ? item.description : (item.description?.dflt?.nameDef || item.desc || "");
-         if (desc === "[object Object]") desc = "";
-         let imageUrl = item.img?.dflt?.img || item.img?.url || null;
-         if (imageUrl === "https://beta-catalogue.etk360.com/no-pictures.svg") imageUrl = null;
-
-         const productNode: ParsedProduct = {
-            id: item.id,
-            name: extractBestName(item, "Produit").trim(),
-            priceTTC: extractBestPrice(item),
-            image: imageUrl,
-            description: desc,
-            steps: [],
-            modifierId: item.modifier || null
-         };
-
-         if (item.modifier) productNode.steps = buildRecursiveSteps(item.modifier, data);
-         else if (item.steps && Array.isArray(item.steps)) productNode.steps = parseLegacySteps(item, data);
-
-         const compStep = extractBasicCompStep(item.id, item, data);
-         if (compStep) {
-             productNode.steps.unshift(compStep);
-         }
-
-         categoryNode.products.push(productNode);
+      const allProducts: ParsedProduct[] = [];
+      for (const sub of subCategories) {
+         allProducts.push(...sub.products);
       }
+      categoryNode.products = allProducts;
 
       if (!categoryNode.image && categoryNode.products.length > 0) {
          const firstImg = categoryNode.products.find(p => p.image);
          if (firstImg) categoryNode.image = firstImg.image;
       }
-      // Laisse la catégorie même si 0 produit pour permettre l'affichage du fallback UI
       tree.push(categoryNode);
    }
    return tree;
@@ -407,20 +446,48 @@ function parseLegacyETK360Hierarchy(data: any): ParsedCategory[] {
 /**
  * Parseur Séquentiel Pur basé exclusivement sur l'Arbre de Syntaxe Abstrait (data.workflow) !
  */
-function getDeepItemNodes(contentObj: any): { id: string; rank: number; type?: string; content?: any }[] {
-  if (!contentObj || typeof contentObj !== 'object') return [];
-  let itemNodes: { id: string; rank: number; type?: string; content?: any }[] = [];
-  
-  for (const [key, node] of Object.entries<any>(contentObj)) {
-    if (node.type === 'items' || !node.type) {
-      itemNodes.push({ id: key, rank: node.rank || 0, type: node.type, content: node.content });
-    } else if (node.type === 'categories') {
-      if (node.content) {
-        itemNodes = itemNodes.concat(getDeepItemNodes(node.content));
-      }
-    }
+function parseProduct(iNodeId: string, iNodeContent: any, data: any): ParsedProduct | null {
+  const itemObj = data.items[iNodeId];
+  if (!itemObj) return null;
+  if (itemObj.archive === true || itemObj.isVisible === false) return null;
+
+  let desc = typeof itemObj.description === 'string' ? itemObj.description : (itemObj.description?.dflt?.nameDef || itemObj.desc || "");
+  if (desc === "[object Object]") desc = "";
+
+  let imgUrl = itemObj.img?.dflt?.img;
+  if (imgUrl === "https://dev-catalogue.softavera.com/no-pictures.svg" || imgUrl === "no-pictures.svg" || imgUrl === "https://beta-catalogue.etk360.com/no-pictures.svg") imgUrl = null;
+
+  const itemContentKeys = Object.keys(iNodeContent || {});
+  const modNodes = itemContentKeys.map(k => ({ id: k, ...iNodeContent[k] })).filter(n => n.type === 'modifier');
+  let startModifierId = modNodes.length > 0 ? modNodes[0].id : itemObj.modifier;
+
+  const productNode: ParsedProduct = {
+      id: iNodeId,
+      name: extractBestName(itemObj, "Produit").trim(),
+      priceTTC: extractBestPrice(itemObj),
+      image: imgUrl,
+      description: desc,
+      steps: [],
+      modifierId: startModifierId || null,
+  };
+
+  if (startModifierId) {
+     productNode.steps = buildRecursiveSteps(startModifierId, data);
+  } else if (itemObj.steps && Array.isArray(itemObj.steps) && itemObj.steps.length > 0) {
+     productNode.steps = parseLegacySteps(itemObj, data);
   }
-  return itemNodes;
+
+  const compStep = extractBasicCompStep(iNodeId, itemObj, data);
+  if (compStep) {
+     productNode.steps.unshift(compStep);
+  }
+
+  const globalOptSteps = extractGlobalOptionsStep(iNodeId, itemObj, data);
+  if (globalOptSteps.length > 0) {
+     productNode.steps.unshift(...globalOptSteps);
+  }
+
+  return productNode;
 }
 
 export function parseETK360Hierarchy(data: any): ParsedCategory[] {
@@ -450,80 +517,79 @@ export function parseETK360Hierarchy(data: any): ParsedCategory[] {
       let image = catObj.img?.dflt?.img;
       if (image === "https://dev-catalogue.softavera.com/no-pictures.svg" || image === "no-pictures.svg") image = null;
 
+      const subCategories: ParsedSubCategory[] = [];
+      const directProducts: ParsedProduct[] = [];
+
+      const contentObj = wNode.content || {};
+      const sortedEntries = Object.entries(contentObj)
+        .map(([key, val]: [string, any]) => ({ id: key, ...val }))
+        .sort((a, b) => (a.rank || 0) - (b.rank || 0));
+
+      for (const entry of sortedEntries) {
+        if (entry.type === 'categories') {
+          const subCatId = entry.id;
+          const subCatObj = data.categories[subCatId];
+          if (!subCatObj) continue;
+          if (subCatObj.archive === true || subCatObj.isVisible === false) continue;
+          if (subCatObj.visibilityInfo?.isVisible === false) continue;
+
+          const subCatTitle = subCatObj.title || "";
+          const subProducts: ParsedProduct[] = [];
+          
+          const subItems = Object.entries(entry.content || {})
+            .map(([k, v]: [string, any]) => ({ id: k, ...v }))
+            .sort((a, b) => (a.rank || 0) - (b.rank || 0));
+
+          for (const subItem of subItems) {
+            const product = parseProduct(subItem.id, subItem.content, data);
+            if (product) {
+              subProducts.push(product);
+            }
+          }
+
+          subCategories.push({
+            id: subCatId,
+            title: subCatTitle,
+            products: subProducts,
+            workflowRank: entry.rank || 0
+          });
+        } else if (entry.type === 'items' || !entry.type) {
+          const product = parseProduct(entry.id, entry.content, data);
+          if (product) {
+            directProducts.push(product);
+          }
+        }
+      }
+
+      if (directProducts.length > 0) {
+        subCategories.unshift({
+          id: `${wNodeId}_direct`,
+          title: title,
+          products: directProducts,
+          workflowRank: -1
+        });
+      }
+
       const categoryNode: ParsedCategory = {
           id: wNodeId,
           title,
           image,
           products: [],
+          subCategories,
           workflowRank: wNode.rank !== undefined ? wNode.rank : (catObj.rank || 0)
       };
 
-      // Étape 2 : Explorer le content pour trouver les Articles inclus (Tolérance IA if type missing)
-      const itemNodes = getDeepItemNodes(wNode.content);
-      
-      // Tri par le rank du workflow AST
-      itemNodes.sort((a, b) => (a.rank || 0) - (b.rank || 0));
-
-      for (const iNode of itemNodes) {
-          const itemObj = data.items[iNode.id];
-          if (!itemObj) continue;
-          if (itemObj.archive === true || itemObj.isVisible === false) continue;
-
-          let desc = typeof itemObj.description === 'string' ? itemObj.description : (itemObj.description?.dflt?.nameDef || itemObj.desc || "");
-          if (desc === "[object Object]") desc = "";
-
-          let imgUrl = itemObj.img?.dflt?.img;
-          if (imgUrl === "https://dev-catalogue.softavera.com/no-pictures.svg" || imgUrl === "no-pictures.svg") imgUrl = null;
-
-          // Étape 3 : S'enfoncer dans le content de l'Article pour extraire le sous-parcours (Le Modifier) !
-          const itemContentKeys = Object.keys(iNode.content || {});
-          const modNodes = itemContentKeys.map(k => ({ id: k, ...iNode.content[k] })).filter(n => n.type === 'modifier');
-          
-          let startModifierId = modNodes.length > 0 ? modNodes[0].id : itemObj.modifier;
-
-          const productNode: ParsedProduct = {
-              id: iNode.id,
-              name: extractBestName(itemObj, "Produit").trim(),
-              priceTTC: extractBestPrice(itemObj),
-              image: imgUrl,
-              description: desc,
-              steps: [],
-              modifierId: startModifierId || null,
-          };
-
-          // Lancement récursif pour les options 
-          if (startModifierId) {
-             productNode.steps = buildRecursiveSteps(startModifierId, data);
-          } else if (itemObj.steps && Array.isArray(itemObj.steps) && itemObj.steps.length > 0) {
-             productNode.steps = parseLegacySteps(itemObj, data);
-          }
-
-          const compStep = extractBasicCompStep(iNode.id, itemObj, data);
-          if (compStep) {
-             productNode.steps.unshift(compStep);
-          }
-
-          // Options globales isolées AVANT tout (Taille de la pizza, etc.)
-          const globalOptSteps = extractGlobalOptionsStep(iNode.id, itemObj, data);
-          if (globalOptSteps.length > 0) {
-             productNode.steps.unshift(...globalOptSteps);
-          }
-
-
-
-          // Strict Read-Only: Aucun raccommodage de prix par le front-end
-          // Si le prix est à 0€ sur le backend, il reste à 0€ visuellement.
-
-          categoryNode.products.push(productNode);
+      const allProducts: ParsedProduct[] = [];
+      for (const sub of subCategories) {
+        allProducts.push(...sub.products);
       }
+      categoryNode.products = allProducts;
 
       if (!categoryNode.image && categoryNode.products.length > 0) {
          const firstImgProduct = categoryNode.products.find(p => p.image);
          if (firstImgProduct) categoryNode.image = firstImgProduct.image;
       }
 
-      // On autorise désormais les catégories vides à exister dans l'arbre final
-      // pour que l'interface (KioskSimulator) puisse afficher le Empty State "Aucun produit disponible".
       tree.push(categoryNode);
   }
 

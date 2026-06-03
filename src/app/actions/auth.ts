@@ -15,11 +15,14 @@ export type ActionResponse = {
  * Action serveur de connexion
  */
 export async function loginAction(formData: FormData): Promise<ActionResponse> {
-  const email = formData.get('email') as string;
-  const password = formData.get('password') as string;
+  const emailRaw = formData.get('email') as string;
+  const passwordRaw = formData.get('password') as string;
+  
+  const email = emailRaw ? emailRaw.trim() : '';
+  const password = passwordRaw ? passwordRaw.trim() : '';
 
   if (!email || !password) {
-    return { success: false, error: 'Veuillez saisir votre e-mail et votre mot de passe.' };
+    return { success: false, error: 'Veuillez saisir votre e-mail (ou nom de restaurant) et votre mot de passe.' };
   }
 
   // 1. Rechercher l'utilisateur par e-mail
