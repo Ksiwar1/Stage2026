@@ -333,6 +333,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
   const [cartCount, setCartCount] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
   const [showToast, setShowToast] = useState<{name: string, visible: boolean} | null>(null);
+  const [errorToast, setErrorToast] = useState<{ message: string, visible: boolean } | null>(null);
 
   // -- MODALE D'INFORMATION PRODUIT (bouton « i ») --
   const [infoProduct, setInfoProduct] = useState<ParsedProduct | null>(null);
@@ -563,7 +564,8 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
           setCurrentStepIndex(nextIndex);
        }
     } else {
-       alert("Veuillez faire les choix obligatoires pour continuer.");
+       setErrorToast({ message: "Veuillez faire les choix obligatoires pour continuer.", visible: true });
+       setTimeout(() => setErrorToast(e => e ? { ...e, visible: false } : null), 2800);
     }
   };
 
@@ -1051,6 +1053,16 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
          display: 'flex', alignItems: 'center', gap: '10px'
       }}>
          <span style={{ fontSize: '1.3rem' }}>✅</span> {showToast?.name} {t('toast_added')}
+      </div>
+
+      {/* Toast d'erreur (choix obligatoire manquant) */}
+      <div style={{
+         position: 'absolute', top: errorToast?.visible ? '30px' : '-100px', left: '50%', transform: 'translateX(-50%)',
+         background: '#ef4444', color: 'white', padding: '12px 24px', borderRadius: '50px', fontWeight: 800, fontSize: '1rem',
+         boxShadow: '0 10px 25px rgba(239, 68, 68, 0.4)', transition: 'top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)', zIndex: 1001,
+         display: 'flex', alignItems: 'center', gap: '10px', maxWidth: '90%', textAlign: 'center'
+      }}>
+         <span style={{ fontSize: '1.3rem' }}>⚠️</span> {errorToast?.message}
       </div>
 
       {/* MODALE D'INFORMATION PRODUIT (déclenchée par le bouton « i ») */}
