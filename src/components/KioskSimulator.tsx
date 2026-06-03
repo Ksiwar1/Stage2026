@@ -171,7 +171,27 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
     let finalLangs = ['FR', 'EN'];
     let finalPrimary = themePalette.primary;
     let finalSecondary = themePalette.secondary;
-    let finalCategories = [...tree];
+    const sortCategories = (categories: ParsedCategory[]) => {
+      const getCategoryPriority = (title: string): number => {
+        const t = title.toLowerCase();
+        if (t.includes('burger')) return 1;
+        if (t.includes('sandwich') || t.includes('panini') || t.includes('tacos') || t.includes('salade')) return 2;
+        if (t.includes('boisson') || t.includes('drink')) return 998;
+        if (t.includes('dessert') || t.includes('tiramisu') || t.includes('cookie') || t.includes('glace') || t.includes('milkshake')) return 999;
+        return 10;
+      };
+
+      return [...categories].sort((a, b) => {
+        const prioA = getCategoryPriority(a.title);
+        const prioB = getCategoryPriority(b.title);
+        if (prioA !== prioB) {
+          return prioA - prioB;
+        }
+        return (a.workflowRank || 0) - (b.workflowRank || 0);
+      });
+    };
+
+    let finalCategories = sortCategories(tree);
 
     // Read from catalog JSON
     if (catalogData?.opt?.languages && Array.isArray(catalogData.opt.languages)) {
