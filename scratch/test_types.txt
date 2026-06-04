@@ -1,0 +1,823 @@
+ {                                                              +| {                                                  +| {                                            +| [       +
+     "05b5be6d-659f-45cd-b3d3-a17528841a9b": {                  +|     "c40ceedc-1274-4b58-b6d7-cc96f506810f": {      +|     "f1504395-39c9-4c72-ae71-e50b9d527bb2": {+|     0,  +
+         "id": 18,                                              +|         "icon": "",                                +|         "cp": "24100",                       +|     1,  +
+         "icon": "63e67239-28c0-4f28-af82-579b0442a736.webp",   +|         "title": "FRUITS A COQUES",                +|         "img": "no-pictures.svg",            +|     2,  +
+         "group": "c40ceedc-1274-4b58-b6d7-cc96f506810f",       +|         "allergens": [                             +|         "town": "BERGERAC",                  +|     3   +
+         "title": "Amandes",                                    +|             "05b5be6d-659f-45cd-b3d3-a17528841a9b",+|         "Nature": "boutique",                +| ]
+         "archive": false,                                      +|             "27afa216-9d9e-4d6a-8a0e-a0a49c6465f1",+|         "shopid": 2,                         +| 
+         "displayName": {                                       +|             "c82e6919-e90e-4f56-9020-584fef1b5d6c",+|         "Address": "2 RUE DES CARMES",       +| 
+             "dflt": {                                          +|             "61a520e6-2edb-4eee-ad19-c416950791b7",+|         "Company": "BURGER SHOP",            +| 
+                 "imp": [                                       +|             "b3f32662-c217-4408-918c-d065a01cc203",+|         "Country": "FRANCE",                 +| 
+                 ],                                             +|             "293d3d67-2201-4158-a722-142b8deb4f96",+|         "Responsible": ""                    +| 
+                 "nameDef": "Amandes",                          +|             "5a816b8a-f54d-4c76-9e51-7bc2ebbb68c3",+|     }                                        +| 
+                 "salesSupport": {                              +|             "169df83c-ab12-4682-96f0-0d6cf7ee9f84" +| }                                             | 
+                     "1": {                                     +|         ]                                          +|                                               | 
+                         "en": "Almonds",                       +|     },                                             +|                                               | 
+                         "fr": "Amandes"                        +|     "de689e98-9b81-4471-b2e6-60cdd5a4aa14": {      +|                                               | 
+                     },                                         +|         "icon": "",                                +|                                               | 
+                     "2": {                                     +|         "title": "GLUTIN",                         +|                                               | 
+                         "en": "Almonds",                       +|         "allergens": [                             +|                                               | 
+                         "fr": "Amandes"                        +|             "a3db6cd5-0b44-4bee-84c0-f2dbf1471ed4",+|                                               | 
+                     },                                         +|             "8aaba0fd-56b8-431c-8d25-d1345f592c52",+|                                               | 
+                     "4": {                                     +|             "340171f9-e7f0-4883-9550-7c1e195b251d",+|                                               | 
+                         "en": "Almonds",                       +|             "1deb0c9c-fc52-42d7-966b-9a021755865c",+|                                               | 
+                         "fr": "Amandes"                        +|             "aa8ad49e-0904-447b-8bd4-934866f912f4",+|                                               | 
+                     },                                         +|             "2f38b5f7-db0c-40ce-ae17-d6ce5b5da71f" +|                                               | 
+                     "5": {                                     +|         ]                                          +|                                               | 
+                         "en": "Almonds",                       +|     }                                              +|                                               | 
+                         "fr": "Amandes"                        +| }                                                   |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "6": {                                     +|                                                     |                                               | 
+                         "en": "Almonds",                       +|                                                     |                                               | 
+                         "fr": "Amandes"                        +|                                                     |                                               | 
+                     }                                          +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "0bf4180a-eaf1-4319-8fb1-70e6838d35d7": {                  +|                                                     |                                               | 
+         "id": 9,                                               +|                                                     |                                               | 
+         "icon": "b83983db-062f-46d1-acdc-aea1c29da2a1.webp",   +|                                                     |                                               | 
+         "group": "",                                           +|                                                     |                                               | 
+         "title": "Lupin",                                      +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Lupin",                            +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "169df83c-ab12-4682-96f0-0d6cf7ee9f84": {                  +|                                                     |                                               | 
+         "id": 25,                                              +|                                                     |                                               | 
+         "icon": "acecd808-51e4-4f73-90a3-7a04eedcc7d7.webp",   +|                                                     |                                               | 
+         "group": "c40ceedc-1274-4b58-b6d7-cc96f506810f",       +|                                                     |                                               | 
+         "title": "Cajou",                                      +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Cajou",                            +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                     "1": {                                     +|                                                     |                                               | 
+                         "en": "Cashew",                        +|                                                     |                                               | 
+                         "fr": "Cajou"                          +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "2": {                                     +|                                                     |                                               | 
+                         "en": "Cashew",                        +|                                                     |                                               | 
+                         "fr": "Cajou"                          +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "4": {                                     +|                                                     |                                               | 
+                         "en": "Cashew",                        +|                                                     |                                               | 
+                         "fr": "Cajou"                          +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "5": {                                     +|                                                     |                                               | 
+                         "en": "Cashew",                        +|                                                     |                                               | 
+                         "fr": "Cajou"                          +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "6": {                                     +|                                                     |                                               | 
+                         "en": "Cashew",                        +|                                                     |                                               | 
+                         "fr": "Cajou"                          +|                                                     |                                               | 
+                     }                                          +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "1deb0c9c-fc52-42d7-966b-9a021755865c": {                  +|                                                     |                                               | 
+         "id": 15,                                              +|                                                     |                                               | 
+         "icon": "d9356947-32cf-474f-982e-fa7215cd79c3.webp",   +|                                                     |                                               | 
+         "group": "de689e98-9b81-4471-b2e6-60cdd5a4aa14",       +|                                                     |                                               | 
+         "title": "Avoine",                                     +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Avoine",                           +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                     "1": {                                     +|                                                     |                                               | 
+                         "en": "Oats",                          +|                                                     |                                               | 
+                         "fr": "Avoine"                         +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "2": {                                     +|                                                     |                                               | 
+                         "en": "Oats",                          +|                                                     |                                               | 
+                         "fr": "Avoine"                         +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "4": {                                     +|                                                     |                                               | 
+                         "en": "Oats",                          +|                                                     |                                               | 
+                         "fr": "Avoine"                         +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "5": {                                     +|                                                     |                                               | 
+                         "en": "Oats",                          +|                                                     |                                               | 
+                         "fr": "Avoine"                         +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "6": {                                     +|                                                     |                                               | 
+                         "en": "Oats",                          +|                                                     |                                               | 
+                         "fr": "Avoine"                         +|                                                     |                                               | 
+                     }                                          +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "27afa216-9d9e-4d6a-8a0e-a0a49c6465f1": {                  +|                                                     |                                               | 
+         "id": 19,                                              +|                                                     |                                               | 
+         "icon": "5741bcfc-b8df-4cab-a3ed-284c74be7972.webp",   +|                                                     |                                               | 
+         "group": "c40ceedc-1274-4b58-b6d7-cc96f506810f",       +|                                                     |                                               | 
+         "title": "Noisettes",                                  +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Noisettes",                        +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                     "1": {                                     +|                                                     |                                               | 
+                         "en": "Hazelnut",                      +|                                                     |                                               | 
+                         "fr": "Noisettes"                      +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "2": {                                     +|                                                     |                                               | 
+                         "en": "Hazelnut",                      +|                                                     |                                               | 
+                         "fr": "Noisettes"                      +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "4": {                                     +|                                                     |                                               | 
+                         "en": "Hazelnut",                      +|                                                     |                                               | 
+                         "fr": "Noisettes"                      +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "5": {                                     +|                                                     |                                               | 
+                         "en": "Hazelnut",                      +|                                                     |                                               | 
+                         "fr": "Noisettes"                      +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "6": {                                     +|                                                     |                                               | 
+                         "en": "Hazelnut",                      +|                                                     |                                               | 
+                         "fr": "Noisettes"                      +|                                                     |                                               | 
+                     }                                          +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "293d3d67-2201-4158-a722-142b8deb4f96": {                  +|                                                     |                                               | 
+         "id": 23,                                              +|                                                     |                                               | 
+         "icon": "7f5445e6-c83d-483b-8d03-9aec026a27a3.webp",   +|                                                     |                                               | 
+         "group": "c40ceedc-1274-4b58-b6d7-cc96f506810f",       +|                                                     |                                               | 
+         "title": "Noix de Pécan",                              +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Noix de Pécan",                    +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                     "1": {                                     +|                                                     |                                               | 
+                         "en": "Pecan nuts",                    +|                                                     |                                               | 
+                         "fr": "Noix de Pécan"                  +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "2": {                                     +|                                                     |                                               | 
+                         "en": "Pecan nuts",                    +|                                                     |                                               | 
+                         "fr": "Noix de Pécan"                  +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "4": {                                     +|                                                     |                                               | 
+                         "en": "Pecan nuts",                    +|                                                     |                                               | 
+                         "fr": "Noix de Pécan"                  +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "5": {                                     +|                                                     |                                               | 
+                         "en": "Pecan nuts",                    +|                                                     |                                               | 
+                         "fr": "Noix de Pécan"                  +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "6": {                                     +|                                                     |                                               | 
+                         "en": "Pecan nuts",                    +|                                                     |                                               | 
+                         "fr": "Noix de Pécan"                  +|                                                     |                                               | 
+                     }                                          +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "2f38b5f7-db0c-40ce-ae17-d6ce5b5da71f": {                  +|                                                     |                                               | 
+         "id": 17,                                              +|                                                     |                                               | 
+         "icon": "92c6e6bf-006b-4a71-aaae-53d8d3baebee.webp",   +|                                                     |                                               | 
+         "group": "de689e98-9b81-4471-b2e6-60cdd5a4aa14",       +|                                                     |                                               | 
+         "title": "Kamut",                                      +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Kamut",                            +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                     "1": {                                     +|                                                     |                                               | 
+                         "en": "Hand",                          +|                                                     |                                               | 
+                         "fr": "Main"                           +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "2": {                                     +|                                                     |                                               | 
+                         "en": "Hand",                          +|                                                     |                                               | 
+                         "fr": "Main"                           +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "4": {                                     +|                                                     |                                               | 
+                         "en": "Hand",                          +|                                                     |                                               | 
+                         "fr": "Main"                           +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "5": {                                     +|                                                     |                                               | 
+                         "en": "Hand",                          +|                                                     |                                               | 
+                         "fr": "Main"                           +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "6": {                                     +|                                                     |                                               | 
+                         "en": "Hand",                          +|                                                     |                                               | 
+                         "fr": "Main"                           +|                                                     |                                               | 
+                     }                                          +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "340171f9-e7f0-4883-9550-7c1e195b251d": {                  +|                                                     |                                               | 
+         "id": 14,                                              +|                                                     |                                               | 
+         "icon": "2919c422-ebc5-407f-b773-2d22aeda4d79.webp",   +|                                                     |                                               | 
+         "group": "de689e98-9b81-4471-b2e6-60cdd5a4aa14",       +|                                                     |                                               | 
+         "title": "Orge",                                       +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Orge",                             +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                     "1": {                                     +|                                                     |                                               | 
+                         "en": "Barley",                        +|                                                     |                                               | 
+                         "fr": "Orge"                           +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "2": {                                     +|                                                     |                                               | 
+                         "en": "Barley",                        +|                                                     |                                               | 
+                         "fr": "Orge"                           +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "4": {                                     +|                                                     |                                               | 
+                         "en": "Barley",                        +|                                                     |                                               | 
+                         "fr": "Orge"                           +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "5": {                                     +|                                                     |                                               | 
+                         "en": "Barley",                        +|                                                     |                                               | 
+                         "fr": "Orge"                           +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "6": {                                     +|                                                     |                                               | 
+                         "en": "Barley",                        +|                                                     |                                               | 
+                         "fr": "Orge"                           +|                                                     |                                               | 
+                     }                                          +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "56394b3f-1902-44a3-a8b6-8c07b7b4062f": {                  +|                                                     |                                               | 
+         "id": 4,                                               +|                                                     |                                               | 
+         "icon": "42fedf76-bcbe-42fb-a421-3e950d641122.webp",   +|                                                     |                                               | 
+         "group": "",                                           +|                                                     |                                               | 
+         "title": "Soja",                                       +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Soja",                             +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "5931590a-4b59-47cc-a6e7-32a64ea917b0": {                  +|                                                     |                                               | 
+         "id": 8,                                               +|                                                     |                                               | 
+         "icon": "f0218d27-7bb4-47e4-99fa-9ed912ed71c1.webp",   +|                                                     |                                               | 
+         "group": "",                                           +|                                                     |                                               | 
+         "title": "Graines",                                    +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Graines",                          +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "5a816b8a-f54d-4c76-9e51-7bc2ebbb68c3": {                  +|                                                     |                                               | 
+         "id": 24,                                              +|                                                     |                                               | 
+         "icon": "4fd3a76f-639b-41de-ae16-145669ded098.webp",   +|                                                     |                                               | 
+         "group": "c40ceedc-1274-4b58-b6d7-cc96f506810f",       +|                                                     |                                               | 
+         "title": "Pistaches",                                  +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Pistaches",                        +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                     "1": {                                     +|                                                     |                                               | 
+                         "en": "Pistachios",                    +|                                                     |                                               | 
+                         "fr": "Pistaches"                      +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "2": {                                     +|                                                     |                                               | 
+                         "en": "Pistachios",                    +|                                                     |                                               | 
+                         "fr": "Pistaches"                      +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "4": {                                     +|                                                     |                                               | 
+                         "en": "Pistachios",                    +|                                                     |                                               | 
+                         "fr": "Pistaches"                      +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "5": {                                     +|                                                     |                                               | 
+                         "en": "Pistachios",                    +|                                                     |                                               | 
+                         "fr": "Pistaches"                      +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "6": {                                     +|                                                     |                                               | 
+                         "en": "Pistachios",                    +|                                                     |                                               | 
+                         "fr": "Pistaches"                      +|                                                     |                                               | 
+                     }                                          +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "61a520e6-2edb-4eee-ad19-c416950791b7": {                  +|                                                     |                                               | 
+         "id": 21,                                              +|                                                     |                                               | 
+         "icon": "1cbbc129-1d3e-444b-9e3b-528f65f25a6f.webp",   +|                                                     |                                               | 
+         "group": "c40ceedc-1274-4b58-b6d7-cc96f506810f",       +|                                                     |                                               | 
+         "title": "Noix",                                       +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Noix",                             +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "8aaba0fd-56b8-431c-8d25-d1345f592c52": {                  +|                                                     |                                               | 
+         "id": 13,                                              +|                                                     |                                               | 
+         "icon": "94509c0a-3437-498a-9ca5-80da61cd5881.webp",   +|                                                     |                                               | 
+         "group": "de689e98-9b81-4471-b2e6-60cdd5a4aa14",       +|                                                     |                                               | 
+         "title": "Seigle",                                     +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Seigle",                           +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                     "1": {                                     +|                                                     |                                               | 
+                         "en": "Rye",                           +|                                                     |                                               | 
+                         "fr": "Seigle"                         +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "2": {                                     +|                                                     |                                               | 
+                         "en": "Rye",                           +|                                                     |                                               | 
+                         "fr": "Seigle"                         +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "4": {                                     +|                                                     |                                               | 
+                         "en": "Rye",                           +|                                                     |                                               | 
+                         "fr": "Seigle"                         +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "5": {                                     +|                                                     |                                               | 
+                         "en": "Rye",                           +|                                                     |                                               | 
+                         "fr": "Seigle"                         +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "6": {                                     +|                                                     |                                               | 
+                         "en": "Rye",                           +|                                                     |                                               | 
+                         "fr": "Seigle"                         +|                                                     |                                               | 
+                     }                                          +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "964e8dec-2304-4e0d-b65b-4c7af5904ace": {                  +|                                                     |                                               | 
+         "id": 3,                                               +|                                                     |                                               | 
+         "icon": "1b57b356-4a16-41b4-8f91-56983607b00c.webp",   +|                                                     |                                               | 
+         "group": "",                                           +|                                                     |                                               | 
+         "title": "Arachides",                                  +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Arachides",                        +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                     "1": {                                     +|                                                     |                                               | 
+                         "en": "Peanuts",                       +|                                                     |                                               | 
+                         "fr": "Arachides"                      +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "2": {                                     +|                                                     |                                               | 
+                         "en": "Peanuts",                       +|                                                     |                                               | 
+                         "fr": "Arachides"                      +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "4": {                                     +|                                                     |                                               | 
+                         "en": "Peanuts",                       +|                                                     |                                               | 
+                         "fr": "Arachides"                      +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "5": {                                     +|                                                     |                                               | 
+                         "en": "Peanuts",                       +|                                                     |                                               | 
+                         "fr": "Arachides"                      +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "6": {                                     +|                                                     |                                               | 
+                         "en": "Peanuts",                       +|                                                     |                                               | 
+                         "fr": "Arachides"                      +|                                                     |                                               | 
+                     }                                          +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "a3db6cd5-0b44-4bee-84c0-f2dbf1471ed4": {                  +|                                                     |                                               | 
+         "id": 12,                                              +|                                                     |                                               | 
+         "icon": "e8b3170e-2fa3-4fad-abae-162cfcf4a162.webp",   +|                                                     |                                               | 
+         "group": "de689e98-9b81-4471-b2e6-60cdd5a4aa14",       +|                                                     |                                               | 
+         "title": "Blé",                                        +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Blé",                              +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                     "1": {                                     +|                                                     |                                               | 
+                         "en": "Wheat",                         +|                                                     |                                               | 
+                         "fr": "Blé"                            +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "2": {                                     +|                                                     |                                               | 
+                         "en": "Wheat",                         +|                                                     |                                               | 
+                         "fr": "Blé"                            +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "4": {                                     +|                                                     |                                               | 
+                         "en": "Wheat",                         +|                                                     |                                               | 
+                         "fr": "Blé"                            +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "5": {                                     +|                                                     |                                               | 
+                         "en": "Wheat",                         +|                                                     |                                               | 
+                         "fr": "Blé"                            +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "6": {                                     +|                                                     |                                               | 
+                         "en": "Wheat",                         +|                                                     |                                               | 
+                         "fr": "Blé"                            +|                                                     |                                               | 
+                     }                                          +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "aa8ad49e-0904-447b-8bd4-934866f912f4": {                  +|                                                     |                                               | 
+         "id": 16,                                              +|                                                     |                                               | 
+         "icon": "4145df5d-7c95-432e-af71-8042ad22bebc.webp",   +|                                                     |                                               | 
+         "group": "de689e98-9b81-4471-b2e6-60cdd5a4aa14",       +|                                                     |                                               | 
+         "title": "Epeautre",                                   +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Epeautre",                         +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                     "1": {                                     +|                                                     |                                               | 
+                         "en": "Spelled",                       +|                                                     |                                               | 
+                         "fr": "Epeautre"                       +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "2": {                                     +|                                                     |                                               | 
+                         "en": "Spelled",                       +|                                                     |                                               | 
+                         "fr": "Epeautre"                       +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "4": {                                     +|                                                     |                                               | 
+                         "en": "Spelled",                       +|                                                     |                                               | 
+                         "fr": "Epeautre"                       +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "5": {                                     +|                                                     |                                               | 
+                         "en": "Spelled",                       +|                                                     |                                               | 
+                         "fr": "Epeautre"                       +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "6": {                                     +|                                                     |                                               | 
+                         "en": "Spelled",                       +|                                                     |                                               | 
+                         "fr": "Epeautre"                       +|                                                     |                                               | 
+                     }                                          +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "b381de95-10ac-4b44-8928-b074908a1df0": {                  +|                                                     |                                               | 
+         "id": 7,                                               +|                                                     |                                               | 
+         "icon": "70248343-b00b-4d9e-9f43-3d44f7740a7e.webp",   +|                                                     |                                               | 
+         "group": "",                                           +|                                                     |                                               | 
+         "title": "Moutarde",                                   +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Moutarde",                         +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                     "1": {                                     +|                                                     |                                               | 
+                         "en": "Mustard",                       +|                                                     |                                               | 
+                         "fr": "Moutarde"                       +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "2": {                                     +|                                                     |                                               | 
+                         "en": "Mustard",                       +|                                                     |                                               | 
+                         "fr": "Moutarde"                       +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "4": {                                     +|                                                     |                                               | 
+                         "en": "Mustard",                       +|                                                     |                                               | 
+                         "fr": "Moutarde"                       +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "5": {                                     +|                                                     |                                               | 
+                         "en": "Mustard",                       +|                                                     |                                               | 
+                         "fr": "Moutarde"                       +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "6": {                                     +|                                                     |                                               | 
+                         "en": "Mustard",                       +|                                                     |                                               | 
+                         "fr": "Moutarde"                       +|                                                     |                                               | 
+                     }                                          +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "b3f32662-c217-4408-918c-d065a01cc203": {                  +|                                                     |                                               | 
+         "id": 22,                                              +|                                                     |                                               | 
+         "icon": "a5b9d2a0-b7da-4b40-913a-c8f9237286c8.webp",   +|                                                     |                                               | 
+         "group": "c40ceedc-1274-4b58-b6d7-cc96f506810f",       +|                                                     |                                               | 
+         "title": "Noix de Macadamia",                          +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Noix de Macadamia",                +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                     "1": {                                     +|                                                     |                                               | 
+                         "en": "Macadamia nuts",                +|                                                     |                                               | 
+                         "fr": "Noix de Macadamia"              +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "2": {                                     +|                                                     |                                               | 
+                         "en": "Macadamia nuts",                +|                                                     |                                               | 
+                         "fr": "Noix de Macadamia"              +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "4": {                                     +|                                                     |                                               | 
+                         "en": "Macadamia nuts",                +|                                                     |                                               | 
+                         "fr": "Noix de Macadamia"              +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "5": {                                     +|                                                     |                                               | 
+                         "en": "Macadamia nuts",                +|                                                     |                                               | 
+                         "fr": "Noix de Macadamia"              +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "6": {                                     +|                                                     |                                               | 
+                         "en": "Macadamia nuts",                +|                                                     |                                               | 
+                         "fr": "Noix de Macadamia"              +|                                                     |                                               | 
+                     }                                          +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "c4a3012a-2ec0-4f08-8369-e553d7831575": {                  +|                                                     |                                               | 
+         "id": 5,                                               +|                                                     |                                               | 
+         "icon": "e6650e01-88aa-4521-8185-e02a5534e988.webp",   +|                                                     |                                               | 
+         "group": "",                                           +|                                                     |                                               | 
+         "title": "Lait",                                       +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Lait",                             +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                     "1": {                                     +|                                                     |                                               | 
+                         "en": "Milk",                          +|                                                     |                                               | 
+                         "fr": "Lait"                           +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "2": {                                     +|                                                     |                                               | 
+                         "en": "Milk",                          +|                                                     |                                               | 
+                         "fr": "Lait"                           +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "4": {                                     +|                                                     |                                               | 
+                         "en": "Milk",                          +|                                                     |                                               | 
+                         "fr": "Lait"                           +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "5": {                                     +|                                                     |                                               | 
+                         "en": "Milk",                          +|                                                     |                                               | 
+                         "fr": "Lait"                           +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "6": {                                     +|                                                     |                                               | 
+                         "en": "Milk",                          +|                                                     |                                               | 
+                         "fr": "Lait"                           +|                                                     |                                               | 
+                     }                                          +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "c80e3184-6fae-4cee-8286-c7bb0682b62a": {                  +|                                                     |                                               | 
+         "id": 6,                                               +|                                                     |                                               | 
+         "icon": "03bab5cd-b166-4902-a6a9-0d4e9b2e4e6e.webp",   +|                                                     |                                               | 
+         "group": "",                                           +|                                                     |                                               | 
+         "title": "Céleri",                                     +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Céleri",                           +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                     "1": {                                     +|                                                     |                                               | 
+                         "en": "Celery",                        +|                                                     |                                               | 
+                         "fr": "Céleri"                         +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "2": {                                     +|                                                     |                                               | 
+                         "en": "Celery",                        +|                                                     |                                               | 
+                         "fr": "Céleri"                         +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "4": {                                     +|                                                     |                                               | 
+                         "en": "Celery",                        +|                                                     |                                               | 
+                         "fr": "Céleri"                         +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "5": {                                     +|                                                     |                                               | 
+                         "en": "Celery",                        +|                                                     |                                               | 
+                         "fr": "Céleri"                         +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "6": {                                     +|                                                     |                                               | 
+                         "en": "Celery",                        +|                                                     |                                               | 
+                         "fr": "Céleri"                         +|                                                     |                                               | 
+                     }                                          +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "c82e6919-e90e-4f56-9020-584fef1b5d6c": {                  +|                                                     |                                               | 
+         "id": 20,                                              +|                                                     |                                               | 
+         "icon": "0535a2b6-8141-4cfb-ad46-4e878da29a07.webp",   +|                                                     |                                               | 
+         "group": "c40ceedc-1274-4b58-b6d7-cc96f506810f",       +|                                                     |                                               | 
+         "title": "Noix du Brésil",                             +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Noix du Brésil",                   +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                     "1": {                                     +|                                                     |                                               | 
+                         "en": "Brazil nut",                    +|                                                     |                                               | 
+                         "fr": "Noix du Brésil"                 +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "2": {                                     +|                                                     |                                               | 
+                         "en": "Brazil nut",                    +|                                                     |                                               | 
+                         "fr": "Noix du Brésil"                 +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "4": {                                     +|                                                     |                                               | 
+                         "en": "Brazil nut",                    +|                                                     |                                               | 
+                         "fr": "Noix du Brésil"                 +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "5": {                                     +|                                                     |                                               | 
+                         "en": "Brazil nut",                    +|                                                     |                                               | 
+                         "fr": "Noix du Brésil"                 +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "6": {                                     +|                                                     |                                               | 
+                         "en": "Brazil nut",                    +|                                                     |                                               | 
+                         "fr": "Noix du Brésil"                 +|                                                     |                                               | 
+                     }                                          +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "d10cfcc0-3214-45fb-9d47-d9fb4dd37538": {                  +|                                                     |                                               | 
+         "id": 2,                                               +|                                                     |                                               | 
+         "icon": "1dcbc500-2de9-497e-84cb-26d291030fda.webp",   +|                                                     |                                               | 
+         "group": "",                                           +|                                                     |                                               | 
+         "title": "Poissons",                                   +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Poissons",                         +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                     "1": {                                     +|                                                     |                                               | 
+                         "en": "Pisces",                        +|                                                     |                                               | 
+                         "fr": "Poissons"                       +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "2": {                                     +|                                                     |                                               | 
+                         "en": "Pisces",                        +|                                                     |                                               | 
+                         "fr": "Poissons"                       +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "4": {                                     +|                                                     |                                               | 
+                         "en": "Pisces",                        +|                                                     |                                               | 
+                         "fr": "Poissons"                       +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "5": {                                     +|                                                     |                                               | 
+                         "en": "Pisces",                        +|                                                     |                                               | 
+                         "fr": "Poissons"                       +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "6": {                                     +|                                                     |                                               | 
+                         "en": "Pisces",                        +|                                                     |                                               | 
+                         "fr": "Poissons"                       +|                                                     |                                               | 
+                     }                                          +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "de504707-31ed-4d71-a854-1348d2012271": {                  +|                                                     |                                               | 
+         "id": 10,                                              +|                                                     |                                               | 
+         "icon": "6d2a98ef-0c0c-459a-81b4-495f17d57cc7.webp",   +|                                                     |                                               | 
+         "group": "",                                           +|                                                     |                                               | 
+         "title": "Mollusques",                                 +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Mollusques",                       +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                     "1": {                                     +|                                                     |                                               | 
+                         "en": "Molluscs",                      +|                                                     |                                               | 
+                         "fr": "Mollusques"                     +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "2": {                                     +|                                                     |                                               | 
+                         "en": "Molluscs",                      +|                                                     |                                               | 
+                         "fr": "Mollusques"                     +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "4": {                                     +|                                                     |                                               | 
+                         "en": "Molluscs",                      +|                                                     |                                               | 
+                         "fr": "Mollusques"                     +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "5": {                                     +|                                                     |                                               | 
+                         "en": "Molluscs",                      +|                                                     |                                               | 
+                         "fr": "Mollusques"                     +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "6": {                                     +|                                                     |                                               | 
+                         "en": "Molluscs",                      +|                                                     |                                               | 
+                         "fr": "Mollusques"                     +|                                                     |                                               | 
+                     }                                          +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "f0d23d3a-f58d-4128-9387-cbf92b7402ae": {                  +|                                                     |                                               | 
+         "id": 1,                                               +|                                                     |                                               | 
+         "icon": "a4f3a2c0-90df-4e84-95aa-bb604d683d7b.webp",   +|                                                     |                                               | 
+         "group": "",                                           +|                                                     |                                               | 
+         "title": "Oeufs",                                      +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Oeufs",                            +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                     "1": {                                     +|                                                     |                                               | 
+                         "en": "Eggs",                          +|                                                     |                                               | 
+                         "fr": "Oeufs"                          +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "2": {                                     +|                                                     |                                               | 
+                         "en": "Eggs",                          +|                                                     |                                               | 
+                         "fr": "Oeufs"                          +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "4": {                                     +|                                                     |                                               | 
+                         "en": "Eggs",                          +|                                                     |                                               | 
+                         "fr": "Oeufs"                          +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "5": {                                     +|                                                     |                                               | 
+                         "en": "Eggs",                          +|                                                     |                                               | 
+                         "fr": "Oeufs"                          +|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "6": {                                     +|                                                     |                                               | 
+                         "en": "Eggs",                          +|                                                     |                                               | 
+                         "fr": "Oeufs"                          +|                                                     |                                               | 
+                     }                                          +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     },                                                         +|                                                     |                                               | 
+     "f52c2ffc-5194-423c-9c74-60ec098d9c92": {                  +|                                                     |                                               | 
+         "id": 11,                                              +|                                                     |                                               | 
+         "icon": "3a7f5bf9-7816-4a66-9d2c-ce19fb9fa8c9.webp",   +|                                                     |                                               | 
+         "group": "",                                           +|                                                     |                                               | 
+         "title": "Anhydride sulfureux et sulfites",            +|                                                     |                                               | 
+         "archive": false,                                      +|                                                     |                                               | 
+         "displayName": {                                       +|                                                     |                                               | 
+             "dflt": {                                          +|                                                     |                                               | 
+                 "imp": [                                       +|                                                     |                                               | 
+                 ],                                             +|                                                     |                                               | 
+                 "nameDef": "Anhydride sulfureux et sulfites",  +|                                                     |                                               | 
+                 "salesSupport": {                              +|                                                     |                                               | 
+                     "1": {                                     +|                                                     |                                               | 
+                         "en": "Sulfur dioxide and sulphites",  +|                                                     |                                               | 
+                         "fr": "Anhydride sulfureux et sulfites"+|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "2": {                                     +|                                                     |                                               | 
+                         "en": "Sulfur dioxide and sulphites",  +|                                                     |                                               | 
+                         "fr": "Anhydride sulfureux et sulfites"+|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "4": {                                     +|                                                     |                                               | 
+                         "en": "Sulfur dioxide and sulphites",  +|                                                     |                                               | 
+                         "fr": "Anhydride sulfureux et sulfites"+|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "5": {                                     +|                                                     |                                               | 
+                         "en": "Sulfur dioxide and sulphites",  +|                                                     |                                               | 
+                         "fr": "Anhydride sulfureux et sulfites"+|                                                     |                                               | 
+                     },                                         +|                                                     |                                               | 
+                     "6": {                                     +|                                                     |                                               | 
+                         "en": "Sulfur dioxide and sulphites",  +|                                                     |                                               | 
+                         "fr": "Anhydride sulfureux et sulfites"+|                                                     |                                               | 
+                     }                                          +|                                                     |                                               | 
+                 }                                              +|                                                     |                                               | 
+             }                                                  +|                                                     |                                               | 
+         }                                                      +|                                                     |                                               | 
+     }                                                          +|                                                     |                                               | 
+ }                                                               |                                                     |                                               | 
+

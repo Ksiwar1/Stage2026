@@ -9,6 +9,21 @@ import path from "path";
 import { addLog } from "../../lib/logger";
 import { cardService } from "../../services/cardService";
 
+/**
+ * Fonction Serveur (Server Action) exécutée lors de l'appel "Générer la carte".
+ * Cette fonction agit comme un Cerveau (Chef d'orchestre) :
+ * 
+ * 1. Elle récupère une carte existante dans la base de données PostgreSQL.
+ * 2. Elle fusionne toutes les données en un dictionnaire (memoryItems) pour comprendre ce qui existe déjà.
+ * 3. Elle envoie le texte (prompt de l'utilisateur ou OCR) à Gemini pour générer un nouveau menu.
+ * 4. (Étape Cruciale) Elle parse la réponse de l'IA et tente de FUSIONNER intelligemment
+ *    les nouveaux items avec ceux existants (pour conserver les prix, les T.V.A, les compositions, etc.).
+ * 5. Elle sauvegarde la nouvelle structure "hybride" dans la base de données.
+ * 
+ * @param {string} prompt - Les consignes de l'utilisateur (ou texte OCR extrait d'une image)
+ * @param {string} sourceStoreId - L'ID de la carte PostgreSQL d'origine
+ * @param {boolean} debugMode - Si vrai, génère des logs de debugging
+ */
 export async function genererArchitectureAction(data: FormData) {
   let sujetDemande = (data.get("sujet") as string) || "Générer une carte à partir de l'image";
   const restaurantName = data.get("restaurantName") as string | null;
@@ -291,10 +306,22 @@ export async function enrichirCarteAction(
 
     // === 1. BUILD MEMORY POOLS (MULTI-MAP SPLICING) ===
     let memoryWorkflow: any = {};
-    let memoryCategories: any = {};
+    /**
+     * Nettoie et collecte toutes les catégories existantes de l'ancienne carte.
+     * Ignore les catégories orphelines, archivées, ou sans items.
+     * Cette mémoire permet à l'IA de ne pas repartir de zéro.
+     */
+    let memoryCategories: Record<string, any> = {};
     let memoryModifiers: any = {};
     let memorySteps: any = {};
-    let memoryItems: any = {};
+    /**
+     * Dictionnaire Plat (Flat Map) contenant absolument TOUS les produits,
+     * modificateurs, et options de la base de données source.
+     * C'est la pierre angulaire de l'algorithme de fusion : chaque fois que l'IA
+     * évoque un nom (ex: "Coca Cola"), l'algorithme fouillera ici pour cloner le vrai item
+     * avec ses prix et taxes.
+     */
+    let memoryItems: Record<string, any> = {};
     let memoryWorkflowMeta: any[] = []; // To easily scan for modifiers
 
     const allInspirations = [];
@@ -414,9 +441,21 @@ export async function enrichirCarteAction(
         return Array.from(found);
     };
 
+    /**
+     * Fonction utilitaire : Crée un objet Item 100% natif au format strict ETK360
+     * à partir d'un objet halluciné ou partiel renvoyé par l'IA.
+     * 
+     * @param {string} rId - UUID à assigner à l'item
+     * @param {any} found - Objet brut (provenant de l'IA ou de la mémoire)
+     */
     const buildBaseETK360Item = (rId: string, found: any) => {
         // Source de vérité : title en premier, sinon nameDef, sinon name
-        const extractedTitle = found.title || found.t || found.displayName?.dflt?.nameDef || found.name || rId;
+        let extractedTitle = rId;
+        if (typeof found === 'string') {
+            extractedTitle = found;
+        } else if (found) {
+            extractedTitle = found.title || found.t || found.displayName?.dflt?.nameDef || found.name || found.nom || rId;
+        }
         const extractedDesc = typeof found.description === 'string' ? found.description : (found.description?.dflt?.nameDef || "");
 
         // Parsing Allergènes
@@ -516,7 +555,7 @@ export async function enrichirCarteAction(
             ht: rawTtc ? Number((rawTtc / 1.1).toFixed(2)) : 0, 
             ovr: [], 
             tva: 10, 
-            dflt: rawTtc || 0, 
+            dflt: { ttc: rawTtc || 0, tx: 10 }, 
             advanced: {}, 
             saleModeVAT: masterSaleModeVAT 
         };
@@ -683,6 +722,16 @@ export async function enrichirCarteAction(
     };
 
     // Nouveau Moteur de Rendu : Transformateur natif (AI 'steps' array -> ETK360 nested dictionary)
+    /**
+     * ALGORITHME DE FUSION AVANCÉ (Graph Cloning)
+     * Convertit les Modifiers et Options "IA" en objets stricts ETK360.
+     * C'est ici que s'exécute le clonage des étapes de personnalisation (ex: choix sauce).
+     * 
+     * @param {any[]} aiSteps - Les étapes inventées ou copiées par l'IA
+     * @param {string} parentItemId - L'ID de l'item parent (utile pour la vérification tarifaire)
+     * @param {any} fData - Le dictionnaire global finalData.items
+     * @returns {string | null} L'UUID du nouveau Modifier ETK360 généré
+     */
     const buildNativeModifierFromAiSteps = (aiSteps: any[], parentItemId: string, fData: any): string => {
         const { randomUUID } = require("crypto");
         const newModId = randomUUID();
@@ -731,17 +780,47 @@ export async function enrichirCarteAction(
                        const foundKey = Object.keys(memoryItems).find(k => {
                            const mItm = memoryItems[k];
                            const title = mItm.displayName?.dflt?.nameDef || mItm.title || mItm.name;
-                           const optTitle = opt.name || opt.title;
+                           const optTitle = typeof opt === 'string' ? opt : (opt.name || opt.title || opt.nom);
                            return title && optTitle && title.toLowerCase() === optTitle.toLowerCase();
                        });
                        optId = (foundKey && isUUID(foundKey)) ? foundKey : (optId && isUUID(optId) ? optId : randomUUID());
                     }
                     
+                    let pStep = typeof opt === 'object' ? (opt.priceDelta || opt.price || 0) : 0;
+                    
+                    // Fallback tarifaire : si l'IA n'a pas mis de prix et que le parent est une catégorie abstraite (0€)
+                    if (pStep === 0 && memoryItems[optId]) {
+                        const parentItem = fData.items[parentId];
+                        let parentPrice = parentItem?.price?.dflt?.ttc ?? parentItem?.price?.dflt ?? 0;
+                        if ((parentPrice === 0 || parentPrice === null) && parentItem?.price?.advanced) {
+                            for (const k of Object.keys(parentItem.price.advanced)) {
+                                if (parentItem.price.advanced[k]?.ttc > 0) {
+                                    parentPrice = parentItem.price.advanced[k].ttc;
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        if (parentPrice === 0) {
+                            const optMemPriceObj = memoryItems[optId].price;
+                            let optMemPrice = optMemPriceObj?.dflt?.ttc ?? optMemPriceObj?.dflt ?? 0;
+                            if ((optMemPrice === 0 || optMemPrice === null) && optMemPriceObj?.advanced) {
+                                for (const k of Object.keys(optMemPriceObj.advanced)) {
+                                    if (optMemPriceObj.advanced[k]?.ttc > 0) {
+                                        optMemPrice = optMemPriceObj.advanced[k].ttc;
+                                        break;
+                                    }
+                                }
+                            }
+                            pStep = optMemPrice;
+                        }
+                    }
+
                     fData.steps[newStepId].stepItems[optId] = {
                         rank: oIndex + 1,
                         price: 0,
                         itemPrice: { price: {}, isVisible: false },
-                        priceStep: opt.priceDelta || opt.price || 0,
+                        priceStep: pStep,
                         nbrWithPrice: null,
                         specialPrice: 0,
                         minChoices: 0,
@@ -1069,6 +1148,22 @@ export async function enrichirCarteAction(
                 if (finalData.workflow[cId]) {
                     delete finalData.workflow[cId];
                 }
+            }
+        });
+    }
+
+    // === 2.5 BASIC COMPOSITION INGREDIENTS RECOVERY ===
+    // S'assurer que tous les ingrédients listés dans basicComp existent dans finalData.items
+    if (finalData.items) {
+        const itemsToProcess = Object.keys(finalData.items);
+        itemsToProcess.forEach(itemId => {
+            const item = finalData.items[itemId];
+            if (item.basicComp && typeof item.basicComp === 'object') {
+                Object.keys(item.basicComp).forEach(ingId => {
+                    if (!finalData.items[ingId] && memoryItems[ingId]) {
+                        finalData.items[ingId] = buildBaseETK360Item(ingId, memoryItems[ingId]);
+                    }
+                });
             }
         });
     }

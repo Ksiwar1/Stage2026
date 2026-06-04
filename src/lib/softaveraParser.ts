@@ -45,11 +45,39 @@ export interface ParsedCategory {
 }
 
 /**
- * Extrait le prix TTC le plus pertinent de l'objet Item d'ETK360
+ * Extrait le prix TTC le plus pertinent de l'objet Item d'ETK360.
+ * Gère plusieurs formats de données :
+ * - Le format strict ETK360 (objet complexe avec dflt.ttc)
+ * - Le format hérité ou simplifié (dflt comme simple nombre)
+ * - Le format avancé (mode de vente spécifique) utile pour les Menus (dont le prix de base est 0)
+ * 
+ * @param {any} rawItem - L'item brut provenant de la base de données
+ * @returns {number | null} Le prix extrait ou null si introuvable
  */
 function extractBestPrice(rawItem: any): number | null {
-  if (!rawItem || !rawItem.price || !rawItem.price.dflt) return null;
-  return rawItem.price.dflt.ttc !== undefined ? rawItem.price.dflt.ttc : null;
+  if (!rawItem || !rawItem.price) return null;
+  
+  let bestPrice: number | null = null;
+  
+  if (rawItem.price.dflt !== undefined) {
+    if (typeof rawItem.price.dflt === 'number') {
+      bestPrice = rawItem.price.dflt;
+    } else if (typeof rawItem.price.dflt === 'object' && rawItem.price.dflt !== null) {
+      bestPrice = rawItem.price.dflt.ttc !== undefined ? rawItem.price.dflt.ttc : null;
+    }
+  }
+
+  // Fallback si le prix par défaut est de 0 (cas fréquent pour les menus où le prix est stocké dans les tarifs avancés/saleModes)
+  if ((bestPrice === null || bestPrice === 0) && rawItem.price.advanced && typeof rawItem.price.advanced === 'object') {
+    for (const key of Object.keys(rawItem.price.advanced)) {
+      const adv = rawItem.price.advanced[key];
+      if (adv && typeof adv.ttc === 'number' && adv.ttc > 0) {
+        return adv.ttc;
+      }
+    }
+  }
+  
+  return bestPrice;
 }
 
 /**
@@ -490,6 +518,15 @@ function parseProduct(iNodeId: string, iNodeContent: any, data: any): ParsedProd
   return productNode;
 }
 
+/**
+ * Transforme les données brutes d'une carte ETK360 (PostgreSQL)
+ * en un AST (Abstract Syntax Tree) compréhensible par l'interface de la borne (KioskSimulator).
+ * C'est le traducteur principal entre la base de données et l'UI.
+ * 
+ * @param {any} data - Le JSON brut complet de la carte
+ * @param {boolean} enforceActiveWorkflow - Si vrai, filtre uniquement les catégories présentes dans le workflow (menu principal)
+ * @returns {ParsedCategory[]} Une liste hiérarchique propre de catégories contenant des sous-catégories et des produits
+ */
 export function parseETK360Hierarchy(data: any): ParsedCategory[] {
   if (!data || !data.categories || !data.items || typeof data.items !== 'object') return [];
 

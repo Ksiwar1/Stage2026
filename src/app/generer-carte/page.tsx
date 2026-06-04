@@ -21,6 +21,10 @@ const GLOBAL_DRINKS_LIST = [
   "Coca-Cola", "Coca-Cola Zéro", "Fanta", "Sprite", "Ice Tea", "Oasis", "Perrier", "Eau Plate", "Jus d'orange", "Jus de pomme"
 ];
 
+const GLOBAL_ACCOMPANIMENTS_LIST = [
+  "Frites", "Potatoes", "Patate douce", "Pâtes", "Riz", "Purée", "Légumes sautés", "Gratin dauphinois", "Salade"
+];
+
 
 export default function GenererCarte() {
   const { t } = useLanguage();
@@ -65,7 +69,7 @@ export default function GenererCarte() {
     palette: "",
     compositions: { defaultIngredients: "", cookingOptions: false, customSupplements: [] as {name: string, price: number}[], fastSupplementName: "", fastSupplementPrice: "" },
     formulas: { isSeul: true, isMenu: true, menuPrice: 2.50, isMaxi: true, maxiPrice: 3.50 },
-    accompaniments: { list: "Frites, Potatoes", hasSizes: false, sizeS: 0, sizeM: 1.0, sizeL: 1.50 },
+    accompaniments: { list: "Frites, Potatoes", selectedGlobal: ["Frites", "Potatoes"], customList: "", hasSizes: false, sizeS: 0, sizeM: 1.0, sizeL: 1.50 },
     drinks: { list: "Coca-Cola, Eau Plate", selectedGlobal: ["Coca-Cola", "Eau Plate"], customList: "", hasSizes: false, sizeS: 0, sizeM: 0.5, sizeL: 1.0 },
     desserts: { list: "", hasSizes: false, sizeS: 0, sizeM: 0.5, sizeL: 1.0 },
     forcedItems: {} as Record<string, string>
@@ -188,6 +192,9 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
       // Stockage préventif
       if (data.success && data.json) {
          try {
+           // Debug: dump json to scratch
+           fetch('/api/debug-dump', { method: 'POST', body: data.json }).catch(e => {});
+
            const parsedJson = JSON.parse(data.json);
            setRawData(parsedJson);
            setParsedTree(parseETK360Hierarchy(parsedJson));
@@ -329,7 +336,7 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
           <div style={{ display: 'flex', width: '500%', transform: `translateX(-${(wizardStep - 1) * 20}%)`, transition: 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)' }}>
             
             {/* ETAPE 1 : CONCEPT DU RESTAURANT */}
-            <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 1 ? 1 : 0.4, transition: 'opacity 0.5s' }}>
+            <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 1 ? 1 : 0, pointerEvents: wizardStep === 1 ? 'auto' : 'none', height: wizardStep === 1 ? 'auto' : 0, overflow: wizardStep === 1 ? 'visible' : 'hidden', transition: 'opacity 0.3s' }}>
                <div style={{ background: 'var(--panel-bg)', backdropFilter: 'blur(20px)', borderRadius: '24px', padding: '2.5rem', boxShadow: 'var(--panel-shadow)', border: '1px solid var(--panel-border)' }}>
                    <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--foreground)', fontSize: '1.2rem' }}>Nom de l'enseigne <span style={{color: '#fb7185'}}>*</span></label>
                    <input type="text" name="restaurantName" required={true} value={wizardData.restaurantName} onChange={(e) => setWizardData({...wizardData, restaurantName: e.target.value})} placeholder="Ex: L'Atelier du Burger..." style={{ width: '100%', padding: '1.2rem', borderRadius: '12px', border: '2px solid #cbd5e1', fontSize: '1.2rem', fontWeight: 600, color: 'var(--foreground)', background: 'var(--input-bg)', outline: 'none', transition: 'border 0.2s', marginBottom: '1.5rem' }} />
@@ -361,7 +368,23 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                         return (
                         <div 
                           key={t.c} 
-                          onClick={() => setWizardData({...wizardData, typeLabel: t.c === 'custom' ? '' : t.label, theme: t.c})} 
+                          onClick={() => {
+                              let prefilledCats = [...wizardData.categories];
+                              if (t.c === 'fastfood') prefilledCats = ['Burgers', 'Extras', 'Boissons', 'Desserts', 'Menus Enfants'];
+                              else if (t.c === 'pizzeria') prefilledCats = ['Pizzas', 'Pâtes', 'Grillades', 'Salades', 'Boissons', 'Desserts'];
+                              else if (t.c === 'sushi') prefilledCats = ['Entrées', 'Sushis / Makis', 'Plats Chauds', 'Salades', 'Boissons', 'Desserts'];
+                              else if (t.c === 'tacos' || t.c === 'oriental') prefilledCats = ['Tacos', 'Kebabs', 'Sandwichs', 'Couscous / Tajines', 'Grillades', 'Boissons', 'Desserts', 'Extras'];
+                              else if (t.c === 'gastronomique') prefilledCats = ['Entrées', 'Plats', 'Poissons', 'Viandes', 'Salades', 'Boissons', 'Desserts'];
+                              else if (t.c === 'coffeeshop') prefilledCats = ['Boissons', 'Viennoiseries', 'Pâtisseries', 'Sandwichs'];
+                              else if (t.c === 'thai') prefilledCats = ['Entrées', 'Nems / Rouleaux', 'Woks', 'Plats Chauds', 'Salades', 'Boissons', 'Desserts'];
+                              
+                              setWizardData({
+                                ...wizardData, 
+                                typeLabel: t.c === 'custom' ? '' : t.label, 
+                                theme: t.c,
+                                categories: prefilledCats.length > 0 ? Array.from(new Set([...wizardData.categories, ...prefilledCats])) : wizardData.categories
+                              });
+                          }} 
                           style={{ 
                              position: 'relative',
                              padding: '1.2rem 1rem', 
@@ -444,74 +467,13 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                </div>
             </div>
 
-            {/* ETAPE 2 : LOGIQUE DE VENTE */}
-            <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 2 ? 1 : 0.4, transition: 'opacity 0.5s' }}>
-                <div style={{ background: 'var(--panel-bg)', backdropFilter: 'blur(20px)', borderRadius: '24px', padding: '2.5rem', boxShadow: 'var(--panel-shadow)', border: '1px solid var(--panel-border)' }}>
-                   <label style={{ display: 'block', fontWeight: 800, marginBottom: '1rem', color: 'var(--foreground)', fontSize: '1.2rem' }}>Formules Automatiques</label>
-                   <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
-                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'var(--input-bg)', padding: '0.8rem 1.2rem', borderRadius: '8px', border: '1px solid #e2e8f0', cursor: 'pointer', flex: 1 }}>
-                          <input type="checkbox" checked={wizardData.formulas.isMenu} onChange={e => setWizardData({...wizardData, formulas: {...wizardData.formulas, isMenu: e.target.checked}})} style={{ width: '20px', height: '20px', accentColor: '#4f46e5' }} />
-                          <span style={{ fontWeight: 600 }}>Taille Standard (+ <input type="number" step="0.1" value={wizardData.formulas.menuPrice} onChange={e => setWizardData({...wizardData, formulas: {...wizardData.formulas, menuPrice: parseFloat(e.target.value)||0}})} style={{ width: '50px', padding: '0.2rem', borderRadius: '4px', border: '1px solid #cbd5e1' }} /> €)</span>
-                      </label>
-                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'var(--input-bg)', padding: '0.8rem 1.2rem', borderRadius: '8px', border: '1px solid #e2e8f0', cursor: 'pointer', flex: 1 }}>
-                          <input type="checkbox" checked={wizardData.formulas.isMaxi} onChange={e => setWizardData({...wizardData, formulas: {...wizardData.formulas, isMaxi: e.target.checked}})} style={{ width: '20px', height: '20px', accentColor: '#4f46e5' }} />
-                          <span style={{ fontWeight: 600 }}>Taille Maxi (+ <input type="number" step="0.1" value={wizardData.formulas.maxiPrice} onChange={e => setWizardData({...wizardData, formulas: {...wizardData.formulas, maxiPrice: parseFloat(e.target.value)||0}})} style={{ width: '50px', padding: '0.2rem', borderRadius: '4px', border: '1px solid #cbd5e1' }} /> €)</span>
-                      </label>
-                   </div>
-
-                   <label style={{ display: 'block', fontWeight: 800, margin: '2rem 0 1rem 0', color: 'var(--foreground)', fontSize: '1.2rem' }}>Accompagnements (Pour les formules)</label>
-                   <input type="text" value={wizardData.accompaniments.list} onChange={e => setWizardData({...wizardData, accompaniments: {...wizardData.accompaniments, list: e.target.value}})} placeholder="Ex: Frites, Potatoes, Salade (séparés par virgule)" style={{ width: '100%', padding: '1rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '1rem' }} />
-                   
-                   <label style={{ display: 'block', fontWeight: 800, margin: '2rem 0 1rem 0', color: 'var(--foreground)', fontSize: '1.2rem' }}>Boissons</label>
-                   
-                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '0.8rem', marginBottom: '1.5rem' }}>
-                      {GLOBAL_DRINKS_LIST.map(boisson => {
-                         const isSelected = wizardData.drinks.selectedGlobal?.includes(boisson);
-                         return (
-                            <label key={boisson} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: isSelected ? '#eef2ff' : 'rgba(255,255,255,0.05)', padding: '0.8rem 1rem', borderRadius: '8px', border: isSelected ? '1px solid #4f46e5' : '1px solid #e2e8f0', cursor: 'pointer', transition: 'all 0.2s' }}>
-                                <input type="checkbox" checked={isSelected || false} onChange={e => {
-                                    const checked = e.target.checked;
-                                    let newSelected = [...(wizardData.drinks.selectedGlobal || [])];
-                                    if (checked) newSelected.push(boisson);
-                                    else newSelected = newSelected.filter(b => b !== boisson);
-                                    
-                                    const customList = wizardData.drinks.customList || "";
-                                    const newList = [...newSelected, customList].filter(Boolean).join(", ");
-                                    
-                                    setWizardData({...wizardData, drinks: {...wizardData.drinks, selectedGlobal: newSelected, list: newList}});
-                                }} style={{ width: '18px', height: '18px', accentColor: '#4f46e5' }} />
-                                <span style={{ fontWeight: 600, fontSize: '0.9rem', color: isSelected ? '#4f46e5' : 'var(--foreground)' }}>{boisson}</span>
-                            </label>
-                         );
-                      })}
-                   </div>
-                   
-                   <label style={{ display: 'block', fontWeight: 600, margin: '0 0 0.5rem 0', color: 'var(--button-secondary-text)', fontSize: '0.95rem' }}>Boissons supplémentaires (séparées par une virgule)</label>
-                   <input type="text" value={wizardData.drinks.customList || ""} onChange={e => {
-                       const customList = e.target.value;
-                       const newSelected = wizardData.drinks.selectedGlobal || [];
-                       const newList = [...newSelected, customList].filter(Boolean).join(", ");
-                       setWizardData({...wizardData, drinks: {...wizardData.drinks, customList, list: newList}});
-                   }} placeholder="Ex: Bière Pression, Limonade Maison..." style={{ width: '100%', padding: '1rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '1rem' }} />
-
-                   <label style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', marginTop: '2rem', background: 'var(--input-bg)', padding: '1.2rem', borderRadius: '12px', border: '1px solid #e2e8f0', cursor: 'pointer' }}>
-                        <input type="checkbox" checked={wizardData.compositions.cookingOptions} onChange={e => setWizardData({...wizardData, compositions: {...wizardData.compositions, cookingOptions: e.target.checked}})} style={{ width: '20px', height: '20px', accentColor: '#4f46e5' }} />
-                        <span style={{ fontWeight: 600, color: 'var(--foreground)' }}>Forcer les choix de cuisson si applicable</span>
-                   </label>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem' }}>
-                   <button type="button" onClick={() => setWizardStep(1)} style={{ padding: '1rem 2rem', background: 'var(--button-secondary-bg)', color: 'var(--button-secondary-text)', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}>{t('gen_back')}</button>
-                   <button type="button" onClick={() => setWizardStep(3)} style={{ padding: '1rem 2rem', background: '#4f46e5', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 15px rgba(79, 70, 229, 0.3)' }}>{t('gen_continue')}</button>
-               </div>
-            </div>
-
-            {/* ETAPE 3 : STRUCTURE */}
-            <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 3 ? 1 : 0.4, transition: 'opacity 0.5s' }}>
+            {/* ETAPE 2 : L'OFFRE (STRUCTURE) */}
+            <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 2 ? 1 : 0, pointerEvents: wizardStep === 2 ? 'auto' : 'none', height: wizardStep === 2 ? 'auto' : 0, overflow: wizardStep === 2 ? 'visible' : 'hidden', transition: 'opacity 0.3s' }}>
                 <div style={{ background: 'var(--panel-bg)', backdropFilter: 'blur(20px)', borderRadius: '24px', padding: '2.5rem', boxShadow: 'var(--panel-shadow)', border: '1px solid var(--panel-border)' }}>
                    <label style={{ display: 'block', fontWeight: 800, marginBottom: '1rem', color: 'var(--foreground)', fontSize: '1.2rem' }}>Que vendez-vous ? <span style={{color: '#fb7185'}}>*</span></label>
                    
                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', marginBottom: '1.5rem' }}>
-                      {['Entrées', 'Burgers', 'Pizzas', 'Tacos', 'Kebabs', 'Sandwichs', 'Salades', 'Boissons', 'Desserts', 'Extras', 'Menus Enfants'].map(c => {
+                      {['Entrées', 'Tapas / Bouchées', 'Salades', 'Burgers', 'Pizzas', 'Tacos', 'Kebabs', 'Sandwichs', 'Sushis / Makis', 'Plats', 'Pâtes', 'Woks', 'Couscous / Tajines', 'Nems / Rouleaux', 'Grillades', 'Viandes', 'Poissons', 'Plats Chauds', 'Desserts', 'Pâtisseries', 'Viennoiseries', 'Boissons', 'Menus Enfants', 'Extras'].map(c => {
                           const isSelected = wizardData.categories.includes(c);
                           return (
                              <button type="button" key={c} onClick={() => {
@@ -527,7 +489,7 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                    </div>
 
                    <label style={{ display: 'block', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--foreground)', fontSize: '1.2rem' }}>Taille (par catégorie)</label>
-                   <select value={wizardData.productCountLimit} onChange={(e) => setWizardData({...wizardData, productCountLimit: e.target.value})} style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '1rem', marginBottom: '1.5rem', color: 'var(--foreground)' }}>
+                   <select value={wizardData.productCountLimit} onChange={(e) => setWizardData({...wizardData, productCountLimit: e.target.value})} style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '1rem', marginBottom: '1.5rem', color: 'var(--foreground)', background: 'rgba(15, 23, 42, 0.9)' }}>
                        <option>3-5 produits</option>
                        <option>6-10 produits</option>
                        <option>10+ produits (Long format)</option>
@@ -537,20 +499,120 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', background: 'var(--input-bg)', padding: '1rem', borderRadius: '8px', maxHeight: '150px', overflowY: 'auto' }}>
                       {wizardData.categories.length === 0 ? <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.9rem', fontStyle: 'italic' }}>Sélectionnez des catégories d'abord.</div> : wizardData.categories.map((c) => (
                           <div key={c} style={{ display: 'flex', flexDirection: 'column', background: 'white', padding: '0.6rem 1rem', borderRadius: '6px', border: '1px solid #e2e8f0' }}>
-                                <span style={{ fontWeight: 600, fontSize: '0.85rem' }}>{c} :</span>
-                                <input type="text" placeholder="Produits exacts imposés..." value={wizardData.forcedItems[c] || ""} onChange={e => setWizardData({...wizardData, forcedItems: {...wizardData.forcedItems, [c]: e.target.value}})} style={{ width: '100%', padding: '0.4rem', borderRadius: '4px', border: 'none', borderBottom: '1px solid #cbd5e1', fontSize: '0.85rem', outline: 'none' }} />
+                                <span style={{ fontWeight: 600, fontSize: '0.85rem', color: '#333' }}>{c} :</span>
+                                <input type="text" placeholder="Produits exacts imposés..." value={wizardData.forcedItems[c] || ""} onChange={e => setWizardData({...wizardData, forcedItems: {...wizardData.forcedItems, [c]: e.target.value}})} style={{ width: '100%', padding: '0.4rem', borderRadius: '4px', border: 'none', borderBottom: '1px solid #cbd5e1', fontSize: '0.85rem', outline: 'none', color: '#333' }} />
                           </div>
                       ))}
                    </div>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem' }}>
+                   <button type="button" onClick={() => setWizardStep(1)} style={{ padding: '1rem 2rem', background: 'var(--button-secondary-bg)', color: 'var(--button-secondary-text)', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}>{t('gen_back')}</button>
+                   <button type="button" onClick={() => setWizardStep(3)} disabled={wizardData.categories.length === 0} style={{ padding: '1rem 2rem', background: '#4f46e5', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', opacity: wizardData.categories.length === 0 ? 0.5 : 1 }}>{t('gen_continue')}</button>
+               </div>
+            </div>
+
+            {/* ETAPE 3 : LE CONTENU ET LES FORMULES */}
+            <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 3 ? 1 : 0, pointerEvents: wizardStep === 3 ? 'auto' : 'none', height: wizardStep === 3 ? 'auto' : 0, overflow: wizardStep === 3 ? 'visible' : 'hidden', transition: 'opacity 0.3s' }}>
+                <div style={{ background: 'var(--panel-bg)', backdropFilter: 'blur(20px)', borderRadius: '24px', padding: '2.5rem', boxShadow: 'var(--panel-shadow)', border: '1px solid var(--panel-border)' }}>
+                   
+                   {wizardData.categories.includes('Boissons') && (
+                     <>
+                       <label style={{ display: 'block', fontWeight: 800, marginBottom: '1rem', color: 'var(--foreground)', fontSize: '1.2rem' }}>Vos Boissons</label>
+                       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '0.8rem', marginBottom: '1.5rem' }}>
+                          {GLOBAL_DRINKS_LIST.map(boisson => {
+                             const isSelected = wizardData.drinks.selectedGlobal?.includes(boisson);
+                             return (
+                                <label key={boisson} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: isSelected ? '#eef2ff' : 'rgba(255,255,255,0.05)', padding: '0.8rem 1rem', borderRadius: '8px', border: isSelected ? '1px solid #4f46e5' : '1px solid #e2e8f0', cursor: 'pointer', transition: 'all 0.2s' }}>
+                                    <input type="checkbox" checked={isSelected || false} onChange={e => {
+                                        const checked = e.target.checked;
+                                        let newSelected = [...(wizardData.drinks.selectedGlobal || [])];
+                                        if (checked) newSelected.push(boisson);
+                                        else newSelected = newSelected.filter(b => b !== boisson);
+                                        
+                                        const customList = wizardData.drinks.customList || "";
+                                        const newList = [...newSelected, customList].filter(Boolean).join(", ");
+                                        
+                                        setWizardData({...wizardData, drinks: {...wizardData.drinks, selectedGlobal: newSelected, list: newList}});
+                                    }} style={{ width: '18px', height: '18px', accentColor: '#4f46e5' }} />
+                                    <span style={{ fontWeight: 600, fontSize: '0.9rem', color: isSelected ? '#4f46e5' : 'var(--foreground)' }}>{boisson}</span>
+                                </label>
+                             );
+                          })}
+                       </div>
+                       
+                       <label style={{ display: 'block', fontWeight: 600, margin: '0 0 0.5rem 0', color: 'var(--button-secondary-text)', fontSize: '0.95rem' }}>Boissons supplémentaires (séparées par une virgule)</label>
+                       <input type="text" value={wizardData.drinks.customList || ""} onChange={e => {
+                           const customList = e.target.value;
+                           const newSelected = wizardData.drinks.selectedGlobal || [];
+                           const newList = [...newSelected, customList].filter(Boolean).join(", ");
+                           setWizardData({...wizardData, drinks: {...wizardData.drinks, customList, list: newList}});
+                       }} placeholder="Ex: Bière Pression, Limonade Maison..." style={{ width: '100%', padding: '1rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '1rem', marginBottom: '2rem', color: 'var(--foreground)', background: 'var(--input-bg)' }} />
+                     </>
+                   )}
+
+                   <label style={{ display: 'block', fontWeight: 800, marginBottom: '1rem', color: 'var(--foreground)', fontSize: '1.2rem' }}>Formules Automatiques</label>
+                   <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'var(--input-bg)', padding: '0.8rem 1.2rem', borderRadius: '8px', border: '1px solid #e2e8f0', cursor: 'pointer', flex: 1 }}>
+                          <input type="checkbox" checked={wizardData.formulas.isMenu} onChange={e => setWizardData({...wizardData, formulas: {...wizardData.formulas, isMenu: e.target.checked}})} style={{ width: '20px', height: '20px', accentColor: '#4f46e5' }} />
+                          <span style={{ fontWeight: 600, color: 'var(--foreground)' }}>Taille Standard (+ <input type="number" step="0.1" value={wizardData.formulas.menuPrice} onChange={e => setWizardData({...wizardData, formulas: {...wizardData.formulas, menuPrice: parseFloat(e.target.value)||0}})} style={{ width: '50px', padding: '0.2rem', borderRadius: '4px', border: '1px solid #cbd5e1', color: '#333' }} /> €)</span>
+                      </label>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'var(--input-bg)', padding: '0.8rem 1.2rem', borderRadius: '8px', border: '1px solid #e2e8f0', cursor: 'pointer', flex: 1 }}>
+                          <input type="checkbox" checked={wizardData.formulas.isMaxi} onChange={e => setWizardData({...wizardData, formulas: {...wizardData.formulas, isMaxi: e.target.checked}})} style={{ width: '20px', height: '20px', accentColor: '#4f46e5' }} />
+                          <span style={{ fontWeight: 600, color: 'var(--foreground)' }}>Taille Maxi (+ <input type="number" step="0.1" value={wizardData.formulas.maxiPrice} onChange={e => setWizardData({...wizardData, formulas: {...wizardData.formulas, maxiPrice: parseFloat(e.target.value)||0}})} style={{ width: '50px', padding: '0.2rem', borderRadius: '4px', border: '1px solid #cbd5e1', color: '#333' }} /> €)</span>
+                      </label>
+                   </div>
+
+                   <label style={{ display: 'block', fontWeight: 800, margin: '2rem 0 1rem 0', color: 'var(--foreground)', fontSize: '1.2rem' }}>Accompagnements (Pour les formules)</label>
+                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '0.8rem', marginBottom: '1.5rem' }}>
+                      {GLOBAL_ACCOMPANIMENTS_LIST.map(accomp => {
+                         const isSelected = wizardData.accompaniments.selectedGlobal?.includes(accomp);
+                         return (
+                            <label key={accomp} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: isSelected ? '#eef2ff' : 'rgba(255,255,255,0.05)', padding: '0.8rem 1rem', borderRadius: '8px', border: isSelected ? '1px solid #4f46e5' : '1px solid #e2e8f0', cursor: 'pointer', transition: 'all 0.2s' }}>
+                                <input type="checkbox" checked={isSelected || false} onChange={e => {
+                                    const checked = e.target.checked;
+                                    let newSelected = [...(wizardData.accompaniments.selectedGlobal || [])];
+                                    if (checked) newSelected.push(accomp);
+                                    else newSelected = newSelected.filter(a => a !== accomp);
+                                    
+                                    const customList = wizardData.accompaniments.customList || "";
+                                    const newList = [...newSelected, customList].filter(Boolean).join(", ");
+                                    
+                                    setWizardData({...wizardData, accompaniments: {...wizardData.accompaniments, selectedGlobal: newSelected, list: newList}});
+                                }} style={{ width: '18px', height: '18px', accentColor: '#4f46e5' }} />
+                                <span style={{ fontWeight: 600, fontSize: '0.9rem', color: isSelected ? '#4f46e5' : 'var(--foreground)' }}>{accomp}</span>
+                            </label>
+                         );
+                      })}
+                   </div>
+                   <label style={{ display: 'block', fontWeight: 600, margin: '0 0 0.5rem 0', color: 'var(--button-secondary-text)', fontSize: '0.95rem' }}>Accompagnements supplémentaires (séparés par une virgule)</label>
+                   <input type="text" value={wizardData.accompaniments.customList || ""} onChange={e => {
+                       const customList = e.target.value;
+                       const newSelected = wizardData.accompaniments.selectedGlobal || [];
+                       const newList = [...newSelected, customList].filter(Boolean).join(", ");
+                       setWizardData({...wizardData, accompaniments: {...wizardData.accompaniments, customList, list: newList}});
+                   }} placeholder="Ex: Galette de pomme de terre, Haricots verts..." style={{ width: '100%', padding: '1rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '1rem', color: 'var(--foreground)', background: 'var(--input-bg)' }} />
+                   
+                   <label style={{ display: 'block', fontWeight: 800, margin: '2rem 0 1rem 0', color: 'var(--foreground)', fontSize: '1.2rem' }}>Règles Métiers</label>
+                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                       <label style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', background: 'var(--input-bg)', padding: '1.2rem', borderRadius: '12px', border: '1px solid #e2e8f0', cursor: 'pointer' }}>
+                            <input type="checkbox" checked={wizardData.compositions.cookingOptions} onChange={e => setWizardData({...wizardData, compositions: {...wizardData.compositions, cookingOptions: e.target.checked}})} style={{ width: '20px', height: '20px', accentColor: '#4f46e5' }} />
+                            <span style={{ fontWeight: 600, color: 'var(--foreground)' }}>Forcer les choix de cuisson si applicable (ex: Viandes)</span>
+                       </label>
+
+                       <label style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', background: 'var(--input-bg)', padding: '1.2rem', borderRadius: '12px', border: '1px solid #e2e8f0', cursor: 'pointer' }}>
+                            <input type="checkbox" checked={wizardData.showAllergens} onChange={e => setWizardData({...wizardData, showAllergens: e.target.checked})} style={{ width: '20px', height: '20px', accentColor: '#4f46e5' }} />
+                            <span style={{ fontWeight: 600, color: 'var(--foreground)' }}>Placer des pastilles allergènes automatiquement</span>
+                       </label>
+                   </div>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem' }}>
                    <button type="button" onClick={() => setWizardStep(2)} style={{ padding: '1rem 2rem', background: 'var(--button-secondary-bg)', color: 'var(--button-secondary-text)', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer' }}>{t('gen_back')}</button>
-                   <button type="button" onClick={() => setWizardStep(4)} disabled={wizardData.categories.length === 0} style={{ padding: '1rem 2rem', background: '#4f46e5', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', opacity: wizardData.categories.length === 0 ? 0.5 : 1 }}>{t('gen_continue')}</button>
+                   <button type="button" onClick={() => setWizardStep(4)} style={{ padding: '1rem 2rem', background: '#4f46e5', color: 'white', borderRadius: '12px', border: 'none', fontSize: '1.1rem', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 15px rgba(79, 70, 229, 0.3)' }}>{t('gen_continue')}</button>
                </div>
             </div>
 
                         {/* ETAPE 4 : TECHNIQUE & DESIGN */}
-            <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 4 ? 1 : 0.4, transition: 'opacity 0.5s' }}>
+            <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 4 ? 1 : 0, pointerEvents: wizardStep === 4 ? 'auto' : 'none', height: wizardStep === 4 ? 'auto' : 0, overflow: wizardStep === 4 ? 'visible' : 'hidden', transition: 'opacity 0.3s' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '1.5rem' }}>
                    {/* Col Gauche : FormControls */}
                    <div style={{ background: 'var(--panel-bg)', backdropFilter: 'blur(20px)', borderRadius: '24px', padding: '2.5rem', boxShadow: 'var(--panel-shadow)', border: '1px solid var(--panel-border)' }}>
@@ -657,13 +719,9 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                           </div>
                       </div>
 
-                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', background: 'var(--input-bg)', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0', cursor: 'pointer', marginBottom: '0.5rem' }}>
-                           <input type="checkbox" checked={wizardData.showAllergens} onChange={e => setWizardData({...wizardData, showAllergens: e.target.checked})} style={{ width: '20px', height: '20px', accentColor: '#4f46e5' }} />
-                           <span style={{ fontWeight: 600, color: 'var(--foreground)' }}>Placer des pastilles allergènes automatiquement</span>
-                      </label>
                       
                       <label style={{ display: 'block', fontWeight: 800, margin: '1rem 0 0.5rem 0', color: 'var(--foreground)', fontSize: '1rem' }}>Sémantique Promotionnelle (Badges)</label>
-                      <input type="text" value={wizardData.productBadges.join(', ')} onChange={e => setWizardData({...wizardData, productBadges: e.target.value.split(',').map(s=>s.trim())})} placeholder="Ex: NOUVEAU, OFFRE SPECIALE, BEST-SELLER" style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.9rem' }} />
+                      <input type="text" value={wizardData.productBadges.join(', ')} onChange={e => setWizardData({...wizardData, productBadges: e.target.value.split(',').map(s=>s.trim())})} placeholder="Ex: NOUVEAU, OFFRE SPECIALE, BEST-SELLER" style={{ width: '100%', padding: '0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.9rem', color: 'var(--foreground)', background: 'var(--input-bg)' }} />
                    </div>
 
                    {/* Col Droite : Live Preview */}
@@ -694,7 +752,7 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
             </div>
 
 {/* ETAPE 5 : GENERATION (Recap) */}
-            <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 5 ? 1 : 0.4, transition: 'opacity 0.5s' }}>
+            <div style={{ width: '20%', padding: '0 1rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', opacity: wizardStep === 5 ? 1 : 0, pointerEvents: wizardStep === 5 ? 'auto' : 'none', height: wizardStep === 5 ? 'auto' : 0, overflow: wizardStep === 5 ? 'visible' : 'hidden', transition: 'opacity 0.3s' }}>
                <div style={{ background: 'var(--panel-bg)', backdropFilter: 'blur(20px)', borderRadius: '24px', padding: '2.5rem', boxShadow: 'var(--panel-shadow)', border: '1px solid var(--panel-border)', textAlign: 'center' }}>
                    <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🚀</div>
                    <h2 style={{ margin: '0 0 1rem 0', color: 'var(--foreground)', fontSize: '1.8rem' }}>{t('gen_ready')}</h2>

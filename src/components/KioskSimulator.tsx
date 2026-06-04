@@ -106,7 +106,7 @@ const ProductGridCard = React.memo(({ p, startOrder }: { p: ParsedProduct, start
         </h3>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
            <div style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--color-text)' }}>
-              {p.priceTTC !== null && p.priceTTC !== undefined ? `${p.priceTTC.toFixed(2)} €` : '—'}
+              {p.priceTTC !== null && p.priceTTC !== undefined && p.priceTTC > 0 ? `${p.priceTTC.toFixed(2)} €` : null}
            </div>
            {(!p.steps || p.steps.length === 0) && !isDataFault && (
                <div style={{ background: '#10b981', color: 'white', padding: '4px 10px', borderRadius: '15px', fontSize: '0.8rem', fontWeight: 800, boxShadow: '0 4px 6px rgba(16, 185, 129, 0.2)' }}>+ AJOUTER</div>
@@ -179,6 +179,18 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
     let finalLangs = ['FR', 'EN'];
     let finalPrimary = themePalette.primary;
     let finalSecondary = themePalette.secondary;
+    /**
+     * KioskSimulator - Interface Visuelle de Borne de Commande.
+     * 
+     * Ce composant React simule l'écran d'une borne tactile de restaurant.
+     * Il gère :
+     * - L'affichage des catégories principales et sous-catégories
+     * - La sélection des produits
+     * - Le flux de modificateurs (Workflow : "Choisissez votre boisson", "Sauces", etc.)
+     * - Le panier et le calcul dynamique des prix (Total)
+     * 
+     * @param {KioskSimulatorProps} props - Contient la hiérarchie des catégories générée par softaveraParser
+     */
     const sortCategories = (categories: ParsedCategory[]) => {
       const getCategoryPriority = (title: string): number => {
         const t = title.toLowerCase();
@@ -379,6 +391,13 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
     };
   };
 
+  /**
+   * Action déclenchée quand un utilisateur clique sur un produit final.
+   * Si le produit possède des étapes de personnalisation (modifiers), il
+   * initialise le flux de personnalisation (workflow). Sinon, il l'ajoute direct.
+   * 
+   * @param {ParsedProduct} product - Le produit cliqué
+   */
   const startOrder = React.useCallback((product: ParsedProduct) => {
     
     const rootTree = mapParsedProductToNode(product);
@@ -478,6 +497,11 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
      return total;
   };
 
+  /**
+   * Moteur du Workflow de Modificateurs.
+   * Analyse récursivement l'arbre de modificateurs du produit.
+   * Gère la navigation "Étape suivante" (Next Step) une fois qu'un choix est validé.
+   */
   const goNextStep = () => {
     const valid = currentStep ? ((stepSelections[currentStep.stepId] || []).length >= getContextualMinChoices(currentStep)) : true;
     if (valid) {
@@ -632,7 +656,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
             }}>
                 <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, top: 0, background: 'linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 100%)', padding: '1.5rem 2.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                     <h2 style={{ color: 'white', margin: 0, fontSize: '2.2rem', fontWeight: 900, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>{selectedProduct?.name}</h2>
-                    <p style={{ color: 'var(--color-primary)', margin: '0.2rem 0 0', fontSize: '1.4rem', fontWeight: 800 }}>{selectedProduct?.priceTTC != null ? `${selectedProduct.priceTTC.toFixed(2)} €` : '—'}</p>
+                    {selectedProduct?.priceTTC != null && selectedProduct.priceTTC > 0 && <p style={{ color: 'var(--color-primary)', margin: '0.2rem 0 0', fontSize: '1.4rem', fontWeight: 800 }}>{`${selectedProduct.priceTTC.toFixed(2)} €`}</p>}
                 </div>
                <div style={{ position: 'absolute', top: '15px', right: '15px' }}>
                   <button onClick={() => setSelectedProduct(null)} style={{ background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', color: 'white', border: 'none', borderRadius: '50%', width: '45px', height: '45px', fontSize: '20px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>✕</button>
@@ -757,7 +781,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                 <div style={{ textAlign: 'center', padding: '2rem 0' }}>
                   <h2 style={{ fontSize: '2.5rem', color: 'var(--color-text)', marginTop: '1rem' }}>✨ RÉCAPITULATIF</h2>
                   <div style={{ display: 'inline-block', textAlign: 'left', background: 'white', padding: '2rem', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', minWidth: '400px' }}>
-                     <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.4rem', color: '#111827' }}>{selectedProduct.name} - {selectedProduct.priceTTC !== null ? `${selectedProduct.priceTTC.toFixed(2)}€` : '—'}</h3>
+                     <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.4rem', color: '#111827' }}>{selectedProduct.name} {selectedProduct.priceTTC !== null && selectedProduct.priceTTC > 0 ? `- ${selectedProduct.priceTTC.toFixed(2)}€` : ''}</h3>
                      <ul style={{ paddingLeft: '1.5rem', color: '#4b5563', fontSize: '1.1rem' }}>
                         {(() => {
                            const renderRecapNode = (node: ProductTreeNode, depth = 0, visited = new Set<string>()): React.ReactElement[] => {
