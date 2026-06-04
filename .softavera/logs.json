@@ -336,16 +336,9 @@
     "details": "Carte générée avec succès par l'IA."
   },
   {
-    "id": "035a0b41-4797-40cb-8130-7095a69f18f6",
-    "timestamp": "2026-06-03T15:14:35.101Z",
-    "nomFichier": "6c0a4fec-1cd2-4df7-9c44-0a614652b771",
-    "actionType": "CREATE",
-    "details": "Carte générée avec succès par l'IA."
-  },
-  {
-    "id": "52fc0aca-810e-41af-bd49-e9f317e2ac64",
-    "timestamp": "2026-06-03T15:56:42.645Z",
-    "nomFichier": "0ee0a833-1672-4c39-a79a-58c973c62c36",
+    "id": "787d84dd-edc8-4511-b2a3-9a7bacd6917d",
+    "timestamp": "2026-06-04T13:01:03.480Z",
+    "nomFichier": "5f607710-657b-4bef-9d79-12676402d8b9",
     "actionType": "CREATE",
     "details": "Carte générée avec succès par l'IA."
   }
