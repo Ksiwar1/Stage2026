@@ -9,6 +9,63 @@ import path from "path";
 import { addLog } from "../../lib/logger";
 import { cardService } from "../../services/cardService";
 
+// === GÉNÉRATION AUTOMATIQUE D'IMAGES (familles & produits) ===
+// L'IA ne fournit pas toujours d'image : on en génère une à la volée à partir
+// du nom, pour que les cartes ne restent pas vides. On utilise LoremFlickr
+// (images réelles par mots-clés, gratuit et sans authentification).
+const isPlaceholderImg = (v: any): boolean => {
+  if (!v || typeof v !== 'string') return true;
+  const low = v.toLowerCase();
+  return low === '' || low.includes('no-pictures') || low.includes('nopicture');
+};
+
+const slugifyForImage = (text: string): string => {
+  return String(text || 'plat')
+    .normalize('NFD').replace(new RegExp('[\\u0300-\\u036f]', 'g'), '') // retire les accents
+    .replace(/[^a-zA-Z0-9\s]/g, ' ')                  // retire emojis / symboles
+    .trim()
+    .replace(/\s+/g, ' ');
+};
+
+// Mot-clé alimentaire FIABLE déduit d'une famille (toujours beaucoup de photos
+// sur Flickr -> évite les 404 des combinaisons de tags trop spécifiques).
+const foodKeywordForCategory = (catName: string): string => {
+  const n = slugifyForImage(catName).toLowerCase();
+  if (/pizza/.test(n)) return 'pizza';
+  if (/burger|hamburger/.test(n)) return 'burger';
+  if (/sandwich|panini|bagel/.test(n)) return 'sandwich';
+  if (/tacos|wrap|kebab|burrito/.test(n)) return 'tacos';
+  if (/boisson|soft|drink|soda|jus|limonade|biere/.test(n)) return 'drink';
+  if (/dessert|glace|sucre|patiss|cake|tiramisu|crepe/.test(n)) return 'dessert';
+  if (/salade|bowl|poke/.test(n)) return 'salad';
+  if (/frite|accompagn|side|potato|nuggets/.test(n)) return 'fries';
+  if (/sushi|maki|sashimi|japon/.test(n)) return 'sushi';
+  if (/pasta|pate|spaghetti|lasagne|nouille/.test(n)) return 'pasta';
+  if (/cafe|coffee|espresso|cappuccino/.test(n)) return 'coffee';
+  if (/entree|antipasti|starter|tapas|bruschetta/.test(n)) return 'appetizer';
+  if (/enfant|kids|menu/.test(n)) return 'meal';
+  return 'food';
+};
+
+// Hash déterministe -> sert de "lock" LoremFlickr pour varier l'image par produit
+// tout en restant reproductible (pas de Math.random, indispo côté workflow).
+const hashNum = (s: string): number => {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  return h % 100000;
+};
+
+// Construit une URL d'image (LoremFlickr). On combine le mot-clé alimentaire
+// fiable AVEC le tag "food" (deux tags courants -> photos réellement
+// alimentaires et pertinentes, sans 404), plus un "lock" déterministe dérivé
+// du nom pour obtenir une image différente et reproductible par item.
+const buildAutoImage = (name: string, keyword = 'food'): string => {
+  const kw = (keyword || 'food').toLowerCase();
+  const tags = kw === 'food' ? 'food' : `${encodeURIComponent(kw)},food`;
+  const lock = hashNum(slugifyForImage(name).toLowerCase() || kw);
+  return `https://loremflickr.com/512/512/${tags}?lock=${lock}`;
+};
+
 export async function genererArchitectureAction(data: FormData) {
   let sujetDemande = (data.get("sujet") as string) || "Générer une carte à partir de l'image";
   const restaurantName = data.get("restaurantName") as string | null;
@@ -108,30 +165,48 @@ RÈGLES D'AUTOMATISATION ABSOLUES :
 1. Cohérence stricte : Une catégorie 'PIZZAS' ne doit contenir QUE des pizzas. Si le client réclame un thème absent, INVENTE LES PRODUITS, ne renvoie jamais la catégorie vide ("items": []).
 2. INTERDICTION D'INVENTER DES CATÉGORIES : Ne crée JAMAIS de catégories qui n'ont pas été explicitement demandées par l'utilisateur ou trouvées sur l'image (ex: ne génère pas de "Desserts" si on ne te le demande pas).
 3. INTERDICTION D'INVENTER DES PRODUITS : Tu DOIS te limiter strictement aux produits présents dans la base locale (AVAILABLE_ITEMS) pour une catégorie donnée. N'ajoute pas de produits "fictifs" (ex: Pizza Ananas) si cette catégorie existe déjà dans la base.
-4. Composition des Menus : Si tu crées ou assignes un produit de type "Menu" ou multichoix, tu DOIS obligatoirement générer sa composition détaillée ("steps") qui guide le client.
+4. TYPOLOGIE OBLIGATOIRE DES PRODUITS (MÉLANGE EXIGÉ) : Chaque produit doit porter un champ "type" valant "simple" ou "compose".
+   - "simple" : produit vendu tel quel, SANS aucun choix. C'est OBLIGATOIRE pour TOUTES les boissons, TOUS les desserts et les accompagnements seuls. Un produit simple n'a que id, name, price, description, type. Il NE DOIT PAS contenir de "steps".
+   - "compose" : produit qui implique des choix client (menus, formules, et plats principaux comme burgers/pizzas/tacos/sandwichs quand c'est pertinent). Il DOIT contenir un tableau "steps" NON VIDE.
+   Tu dois impérativement produire un VRAI MÉLANGE des deux types dans la carte.
+5. Composition des produits "compose" : chaque "steps" doit contenir au moins 2 options réelles (ex: choix de la boisson, de l'accompagnement, de la sauce, de la cuisson). N'invente jamais une étape vide.
 
 
 Format attendu:
 {
   "categories": [
     {
-      "name": "Catégorie 1",
+      "name": "Burgers",
       "items": [
          {
             "id": "550e8400-e29b-41d4-a716-446655440000",
-            "name": "Menu Burger",
+            "name": "Menu Cheese Burger",
             "price": 10.50,
             "description": "Un super menu",
+            "type": "compose",
             "steps": [
                {
                   "title": "Choix de la Boisson",
                   "minChoices": 1,
                   "maxChoices": 1,
                   "options": [
-                     { "id": "123e4567-e89b-12d3-a456-426614174000", "name": "Coca Cola", "priceDelta": 0 }
+                     { "id": "123e4567-e89b-12d3-a456-426614174000", "name": "Coca Cola", "priceDelta": 0 },
+                     { "id": "123e4567-e89b-12d3-a456-426614174001", "name": "Eau Plate", "priceDelta": 0 }
                   ]
                }
             ]
+         }
+      ]
+    },
+    {
+      "name": "Boissons",
+      "items": [
+         {
+            "id": "550e8400-e29b-41d4-a716-446655440010",
+            "name": "Coca-Cola 33cl",
+            "price": 2.50,
+            "description": "Canette 33cl",
+            "type": "simple"
          }
       ]
     }
@@ -178,6 +253,8 @@ export async function enrichirCarteAction(
   if (configJsonRaw) {
       try { systemConfig = JSON.parse(configJsonRaw); } catch(e) {}
   }
+  // Configuration des formules (Taille Standard/Maxi) saisie dans le formulaire (étape "Composition")
+  const formulas: any = systemConfig?.formulas || {};
 
   sujetDemande += `\n\n=== RÈGLES IMPORTANTES ET OBLIGATOIRES ===\n`;
   if (restaurantName) {
@@ -838,6 +915,86 @@ export async function enrichirCarteAction(
         return null; // Pas de modifier sûr détecté
     };
 
+    // === CLASSIFICATION PRODUIT SIMPLE vs COMPOSÉ ===
+    // Boissons / desserts / accompagnements => produits SIMPLES (jamais de menu/option).
+    // Le reste (burgers, pizzas, tacos, sandwichs, salades, menus...) => COMPOSÉ (éligible aux formules).
+    const getProductType = (aiCatName: string, aiItem: any): "simple" | "compose" => {
+        const n = normalizeCategory(aiCatName || "");
+
+        // 1. Déduction métier PRIORITAIRE par catégorie. La famille est plus fiable
+        //    que le champ "type" souvent mal deviné par l'IA (qui classe régulièrement
+        //    une pizza/un burger en "simple" car le menu source n'affiche pas d'options).
+        //    - Boissons / desserts / accompagnements => toujours SIMPLES (aucun choix).
+        if (["boisson", "dessert", "accompagnement"].includes(n)) return 'simple';
+        //    - Plats principaux (pizzas, burgers, tacos, sandwichs, salades, menus, enfant)
+        //      => toujours COMPOSÉS : éligibles aux formules (Menu/Maxi) et aux options.
+        if (["pizza", "burger", "tacos", "salade", "menu", "enfant"].includes(n)) return 'compose';
+
+        // 2. Catégorie ambiguë : on respecte le type explicite fourni par l'IA.
+        const explicit = typeof aiItem === 'object' ? (aiItem.type || aiItem.kind) : null;
+        if (explicit === 'simple') return 'simple';
+        if (explicit === 'compose' || explicit === 'composed' || explicit === 'menu') return 'compose';
+
+        // 3. Par défaut : composé.
+        return 'compose';
+    };
+
+    // === CONSTRUCTION DU STEP "FORMULE" (Taille Standard / Maxi) ===
+    // Transforme les formules du formulaire en une vraie étape de choix visible et tarifée.
+    // Retourne le stepId créé, ou null si aucune déclinaison pertinente n'est active.
+    const buildSizeOptionStep = (fData: any, sizeConfig: any): string | null => {
+        const { randomUUID } = require("crypto");
+        const choices: { name: string; delta: number; fav: boolean }[] = [];
+        // "À l'unité" sert de base (delta 0) dès qu'au moins une formule payante existe.
+        const hasMenu = !!sizeConfig?.isMenu;
+        const hasMaxi = !!sizeConfig?.isMaxi;
+        if (!hasMenu && !hasMaxi) return null;
+
+        choices.push({ name: "À l'unité", delta: 0, fav: true });
+        if (hasMenu) choices.push({ name: "Menu", delta: Number(sizeConfig.menuPrice) || 0, fav: false });
+        if (hasMaxi) choices.push({ name: "Menu Maxi", delta: Number(sizeConfig.maxiPrice) || 0, fav: false });
+        if (choices.length < 2) return null;
+
+        const stepId = randomUUID();
+        fData.steps[stepId] = {
+            ref: `STEP_SIZE_${stepId.substring(0, 6)}`,
+            title: "📏 Choisissez votre formule",
+            archive: false,
+            isBasic: false,
+            isComment: false,
+            stepItems: {},
+            maxChoices: 1,
+            minChoices: 1,
+            displayName: { dflt: { imp: [], nameDef: "Choisissez votre formule", salesSupport: {} } },
+            isModifiable: true,
+            img: "",
+            req: true,
+            nbrWithPrice: 0,
+            nbrWithspecialPrice: 0,
+            specificOpts: { isNext: true, noButton: false, nextButton: false, zeroPrice: false, isCheapest: false, isExpensive: false }
+        };
+
+        choices.forEach((c, i) => {
+            const optItemId = randomUUID();
+            // Item marqueur (non rattaché à une catégorie : invisible hors de l'étape)
+            fData.items[optItemId] = buildBaseETK360Item(optItemId, { title: c.name, price: 0, description: "" });
+            fData.steps[stepId].stepItems[optItemId] = {
+                rank: i + 1,
+                price: 0,
+                itemPrice: { price: {}, isVisible: false },
+                priceStep: c.delta,
+                nbrWithPrice: null,
+                specialPrice: 0,
+                minChoices: 0,
+                maxChoices: null,
+                basicCompVisibility: true,
+                nbrWithspecialPrice: null
+            };
+        });
+
+        return stepId;
+    };
+
     // === 2. HYBRID WORKFLOW GENERATION ===
     if (Object.keys(memoryWorkflow).length > 0) {
         finalData.workflow = memoryWorkflow; // Base Workflow Skeleton Preserved
@@ -927,6 +1084,15 @@ export async function enrichirCarteAction(
             finalData.categories[targetCatId].rank = currentCatRank;
             finalData.categories[targetCatId].title = aiCatName;
             finalData.categories[targetCatId].archive = false;
+
+            // IMAGE FAMILLE : si aucune vraie image, on en génère une automatiquement (IA).
+            const curCatImg = finalData.categories[targetCatId].img?.dflt?.img;
+            if (isPlaceholderImg(curCatImg)) {
+                finalData.categories[targetCatId].img = {
+                    dflt: { img: buildAutoImage(aiCatName, foodKeywordForCategory(aiCatName)), salesSupport: {} }
+                };
+            }
+
             if (finalData.categories[targetCatId].visibilityInfo) {
                 finalData.categories[targetCatId].visibilityInfo.isVisible = true;
             } else {
@@ -991,8 +1157,19 @@ export async function enrichirCarteAction(
                     const newItemId = randomUUID();
                     finalData.items[newItemId] = JSON.parse(JSON.stringify(sourceItem));
                     // FIX 1: Assurer que l'item pointe bien sur sa catégorie visuelle parente
-                    finalData.items[newItemId].parent = targetCatId; 
-                    
+                    finalData.items[newItemId].parent = targetCatId;
+
+                    // IMAGE PRODUIT : si aucune vraie image, on en génère une automatiquement (IA).
+                    const curItemImg = finalData.items[newItemId].img?.dflt?.img;
+                    if (isPlaceholderImg(curItemImg)) {
+                        const itTitle = finalData.items[newItemId].title
+                            || finalData.items[newItemId].displayName?.dflt?.nameDef
+                            || "plat";
+                        finalData.items[newItemId].img = {
+                            dflt: { img: buildAutoImage(itTitle, foodKeywordForCategory(aiCatName)), salesSupport: {} }
+                        };
+                    }
+
                     // Injection des Steps OCR (Intelligence Artificielle pure)
                     if (sourceItem.steps && Array.isArray(sourceItem.steps) && sourceItem.steps.length > 0) {
                         const newModId = buildNativeModifierFromAiSteps(sourceItem.steps, newItemId, finalData);
@@ -1008,6 +1185,36 @@ export async function enrichirCarteAction(
                                 const scavCloneMod = cloneGeneticModifier(scavengedModId, newItemId, finalData);
                                 if (scavCloneMod) finalData.items[newItemId].modifier = scavCloneMod;
                             }
+                        }
+                    }
+
+                    // === TYPOLOGIE : produit SIMPLE vs COMPOSÉ + injection de la formule (Taille Standard/Maxi) ===
+                    const prodType = getProductType(aiCatName, aiItemId);
+                    if (prodType === 'simple') {
+                        // Produit simple (boisson, dessert, accompagnement) : aucun choix.
+                        // On retire tout modifier hérité ou scavengé pour le rendre réellement "à l'unité".
+                        const orphanModId = finalData.items[newItemId].modifier;
+                        if (orphanModId && finalData.modifier[orphanModId]) {
+                            delete finalData.modifier[orphanModId];
+                        }
+                        delete finalData.items[newItemId].modifier;
+                    } else if (formulas && (formulas.isMenu || formulas.isMaxi)) {
+                        // Produit composé : on garantit un modifier, puis on injecte l'étape "Formule".
+                        let modId = finalData.items[newItemId].modifier;
+                        if (!modId || !finalData.modifier[modId]) {
+                            modId = randomUUID();
+                            finalData.modifier[modId] = buildBaseETK360Modifier(newItemId);
+                            finalData.items[newItemId].modifier = modId;
+                        }
+                        const sizeStepId = buildSizeOptionStep(finalData, formulas);
+                        if (sizeStepId) {
+                            // rank 0 => la formule (Taille) est proposée en premier choix.
+                            finalData.modifier[modId].steps[sizeStepId] = {
+                                ovr: {},
+                                rank: 0,
+                                items: {},
+                                msg: { "0": { fr: "Choisissez votre formule", en: "" }, "1": { fr: "" } }
+                            };
                         }
                     }
 
@@ -1260,15 +1467,31 @@ export async function enrichirCarteAction(
       const storeName = safeNameRaw.slice(0, 30);
       
       // import moved to top
-      const newCard = await cardService.createCard({
-          store_name: storeName,
-          content: orderedFinalData
-      });
+      // La génération IA a déjà réussi : si la sauvegarde en base échoue
+      // (DB injoignable, timeout...), on ne jette PAS le travail. On renvoie
+      // quand même le JSON généré pour que l'utilisateur puisse le visualiser
+      // et le télécharger, avec un avertissement explicite.
+      try {
+        const newCard = await cardService.createCard({
+            store_name: storeName,
+            content: orderedFinalData
+        });
 
-      // Ajouter le log de création
-      addLog(newCard.id, 'CREATE', 'Carte générée avec succès par l\'IA.');
+        // Ajouter le log de création
+        if (newCard?.id) {
+          addLog(newCard.id, 'CREATE', 'Carte générée avec succès par l\'IA.');
+        }
 
-      return JSON.stringify({ success: true, json: jsonResponse, savedPath: newCard.id });
+        return JSON.stringify({ success: true, json: jsonResponse, savedPath: newCard?.id || null });
+      } catch (dbErr: any) {
+        console.error("Sauvegarde DB échouée (carte générée conservée) :", dbErr?.message);
+        return JSON.stringify({
+          success: true,
+          json: jsonResponse,
+          savedPath: null,
+          dbWarning: `La carte a bien été générée, mais elle n'a pas pu être enregistrée en base de données (${dbErr?.message || 'erreur inconnue'}). Vous pouvez la visualiser et la télécharger ci-dessous.`
+        });
+      }
     }
 
     return JSON.stringify({ success: true, json: jsonResponse, savedPath: null });

@@ -4,7 +4,14 @@ import { PrismaPg } from '@prisma/adapter-pg';
 
 const prismaClientSingleton = () => {
   const connectionString = process.env.DATABASE_URL;
-  const pool = new Pool({ connectionString });
+  // Fail fast when the Postgres host is unreachable instead of hanging on the
+  // default (very long) timeout. Keeps the UI responsive when the DB is down.
+  const pool = new Pool({
+    connectionString,
+    connectionTimeoutMillis: 8000,
+    query_timeout: 12000,
+    statement_timeout: 12000,
+  });
   const adapter = new PrismaPg(pool);
   return new PrismaClient({ adapter });
 };
