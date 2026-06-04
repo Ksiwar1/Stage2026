@@ -439,5 +439,12 @@
     "nomFichier": "69993e02-c4a5-4a80-a265-eb697696ce1d",
     "actionType": "CREATE",
     "details": "Carte générée avec succès par l'IA."
+  },
+  {
+    "id": "d2795b53-79f5-4fae-8e9a-7a194c960542",
+    "timestamp": "2026-06-04T14:09:31.459Z",
+    "nomFichier": "0d821444-fe35-4bb8-abde-e5db4e02ad9f",
+    "actionType": "CREATE",
+    "details": "Carte générée avec succès par l'IA."
   }
 ]

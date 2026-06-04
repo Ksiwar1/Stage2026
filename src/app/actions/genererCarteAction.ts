@@ -790,7 +790,7 @@ export async function enrichirCarteAction(
                     
                     // Fallback tarifaire : si l'IA n'a pas mis de prix et que le parent est une catégorie abstraite (0€)
                     if (pStep === 0 && memoryItems[optId]) {
-                        const parentItem = fData.items[parentId];
+                        const parentItem = fData.items[parentItemId];
                         let parentPrice = parentItem?.price?.dflt?.ttc ?? parentItem?.price?.dflt ?? 0;
                         if ((parentPrice === 0 || parentPrice === null) && parentItem?.price?.advanced) {
                             for (const k of Object.keys(parentItem.price.advanced)) {

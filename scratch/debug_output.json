@@ -1,0 +1,4016 @@
+{
+  "opt": {
+    "0831d9a4-0657-4266-ae40-0504459a7ac6": {
+      "title": "Taille _MOZZA STICKS_000031",
+      "values": {
+        "1e2c2273-f067-42c3-bf08-0f37a52ca65d": {
+          "rank": 3,
+          "items": [],
+          "title": " X8",
+          "indice": 3,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "e801a609-1020-4e01-a6d2-892db23bd717": {
+          "rank": 1,
+          "items": [],
+          "title": " X4",
+          "indice": 1,
+          "isFavorite": true,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "fa5faa89-ba7c-4ee4-b16c-ba4d154d39f6": {
+          "rank": 2,
+          "items": [],
+          "title": " X6",
+          "indice": 2,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        }
+      },
+      "archive": false,
+      "isConsumed": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Taille",
+          "salesSupport": {}
+        }
+      },
+      "defaultValue": " X4"
+    },
+    "4e1d8e50-0475-4718-a2ce-7fa273539b7f": {
+      "title": "Taille _DYNAMITE CHICKEN_000036",
+      "values": {
+        "90c7f08e-7521-42de-9f71-a97e7643c88d": {
+          "rank": 2,
+          "items": [],
+          "title": " X6",
+          "indice": 2,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "dc30bbdb-8706-42f2-b883-25c80d424628": {
+          "rank": 1,
+          "items": [],
+          "title": " X4",
+          "indice": 1,
+          "isFavorite": true,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        }
+      },
+      "archive": false,
+      "isConsumed": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Taille",
+          "salesSupport": {}
+        }
+      },
+      "defaultValue": " X4"
+    },
+    "51e3f1db-3ae0-4d58-8703-1f7c8f838447": {
+      "title": "Taille _JALAPENOS CHEDDAR_000033",
+      "values": {
+        "0b4ebbb7-781c-4d25-9c7b-2005f7fc077b": {
+          "rank": 3,
+          "items": [],
+          "title": " X8",
+          "indice": 3,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "4fa32812-66e8-4497-b204-2e144c49c666": {
+          "rank": 1,
+          "items": [],
+          "title": " X4",
+          "indice": 1,
+          "isFavorite": true,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "504a64ee-8e27-4057-8d1c-5f92d4e8249e": {
+          "rank": 2,
+          "items": [],
+          "title": " X6",
+          "indice": 2,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        }
+      },
+      "archive": false,
+      "isConsumed": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Taille",
+          "salesSupport": {}
+        }
+      },
+      "defaultValue": " X4"
+    },
+    "60c8ae78-b38d-4200-a0da-5998acc17c90": {
+      "title": "TAILLE",
+      "values": {
+        "2dfea223-3e96-4ab4-b4e3-689b7a5ddee3": {
+          "rank": 1,
+          "items": [],
+          "title": "X4",
+          "indice": 1,
+          "isFavorite": true,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "8712f8db-cbc9-4598-a77c-d2e09c9313f7": {
+          "rank": 3,
+          "items": [],
+          "title": "X8",
+          "indice": 3,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "f5241ead-40c3-4d96-833f-2b51a3a6a5a6": {
+          "rank": 2,
+          "items": [],
+          "title": "X6",
+          "indice": 2,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        }
+      },
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "TAILLE",
+          "salesSupport": {}
+        }
+      },
+      "defaultValue": "X4",
+      "isUniqueTitle": false
+    },
+    "7ab38e8a-ded9-497f-a80d-41a2d76a1bc8": {
+      "title": "Taille _NUGGETS_000030",
+      "values": {
+        "34a2ef22-b81a-46d3-84b1-430a17f03ee7": {
+          "rank": 3,
+          "items": [],
+          "title": " X8",
+          "indice": 3,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "4edda851-0095-4e37-9e27-a82b731eaf46": {
+          "rank": 2,
+          "items": [],
+          "title": " X6",
+          "indice": 2,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "59579f5e-e6f3-445e-978c-56fece432329": {
+          "rank": 1,
+          "items": [],
+          "title": " X4",
+          "indice": 1,
+          "isFavorite": true,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        }
+      },
+      "archive": false,
+      "isConsumed": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Taille",
+          "salesSupport": {}
+        }
+      },
+      "defaultValue": " X4"
+    },
+    "835cee83-f752-4ca9-b8cf-49b568c9f0ae": {
+      "title": "Taille _CHURROS_000026",
+      "values": {
+        "bc3c939e-cd80-464b-9c66-d7a0bb35220a": {
+          "rank": 1,
+          "items": [],
+          "title": " X5",
+          "indice": 1,
+          "isFavorite": true,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "e94a9e32-814c-4047-9bb5-68ecd37db77d": {
+          "rank": 2,
+          "items": [],
+          "title": " X8",
+          "indice": 2,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        }
+      },
+      "archive": false,
+      "isConsumed": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Taille",
+          "salesSupport": {}
+        }
+      },
+      "defaultValue": " X5"
+    },
+    "c96bd8f1-e7e4-4881-9ee3-981206b0f9cf": {
+      "title": "Taille _TOMATO MOZZA_000032",
+      "values": {
+        "01e2a14a-79b5-45a5-9daf-8ed66c228c5f": {
+          "rank": 2,
+          "items": [],
+          "title": " X6",
+          "indice": 2,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "6d7846b3-0066-43f4-b10d-8a397bb88d57": {
+          "rank": 1,
+          "items": [],
+          "title": " X4",
+          "indice": 1,
+          "isFavorite": true,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "d86ae9d2-a238-4d31-8dbb-9f8d00d41218": {
+          "rank": 3,
+          "items": [],
+          "title": " X8",
+          "indice": 3,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        }
+      },
+      "archive": false,
+      "isConsumed": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Taille",
+          "salesSupport": {}
+        }
+      },
+      "defaultValue": " X4"
+    },
+    "cf2296c6-f785-4eb0-90e6-c6d7a599ceae": {
+      "title": "SMASH BURGER",
+      "values": {
+        "2d3623da-65f8-4080-b63c-c98519bcded7": {
+          "rank": 3,
+          "items": [],
+          "title": "LARGE",
+          "indice": 3,
+          "isFavorite": false,
+          "advancedName": {}
+        },
+        "52d432c6-2414-424e-ad58-41907a4929a9": {
+          "rank": 1,
+          "items": [],
+          "title": "SMALL",
+          "indice": 1,
+          "isFavorite": true,
+          "advancedName": {}
+        },
+        "60426cd0-328e-475c-a90e-7076c22bbdd7": {
+          "rank": 2,
+          "items": [],
+          "title": "MEDUIM",
+          "indice": 2,
+          "isFavorite": false,
+          "advancedName": {}
+        }
+      },
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "defaultValue": "SMALL",
+      "isUniqueTitle": false
+    },
+    "d6f5d64f-6fa3-4034-b624-b89947e18be4": {
+      "title": "Taille _TENDERS MAISON_000034",
+      "values": {
+        "5e6ada5b-4b1c-427f-ac85-2365068f5bf9": {
+          "rank": 1,
+          "items": [],
+          "title": " X4",
+          "indice": 1,
+          "isFavorite": true,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "8fd98811-52cf-432b-89d4-f5449d0aaa83": {
+          "rank": 2,
+          "items": [],
+          "title": " X6",
+          "indice": 2,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        }
+      },
+      "archive": false,
+      "isConsumed": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Taille",
+          "salesSupport": {}
+        }
+      },
+      "defaultValue": " X4"
+    },
+    "fec842c3-95a9-4d1d-a65c-7d20d45e2671": {
+      "title": "NUGGETS",
+      "values": {
+        "142dcc25-b874-4a9b-9579-48e77405f2dc": {
+          "rank": 1,
+          "items": [],
+          "title": "X4",
+          "indice": 1,
+          "isFavorite": true,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "880d7de7-28d3-45be-add3-028dec86ce1f": {
+          "rank": 3,
+          "items": [],
+          "title": "X8",
+          "indice": 3,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        },
+        "9a07d98f-7e1f-4c1a-9111-5d857eef23ba": {
+          "rank": 2,
+          "items": [],
+          "title": "X6",
+          "indice": 2,
+          "isFavorite": false,
+          "advancedName": {
+            "dflt": {
+              "imp": [],
+              "salesSupport": {}
+            }
+          }
+        }
+      },
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "TAILLE",
+          "salesSupport": {}
+        }
+      },
+      "defaultValue": "X4",
+      "isUniqueTitle": false
+    }
+  },
+  "etat": "En attente",
+  "tags": {},
+  "color": "",
+  "items": {
+    "92a8489f-ae92-48eb-8c95-c3f0452cc8cb": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_550e8400",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "unity": "",
+      "qty": "0",
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 8.17,
+        "ovr": [],
+        "tva": 10,
+        "dflt": {
+          "ttc": 8.99,
+          "tx": 10
+        },
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Burger Royal",
+      "parent": "476076e5-4467-4c61-b380-3c480810a8e5",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [
+        "a1000000-0000-0000-0000-000000000007"
+      ],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Un burger classique avec du fromage et des légumes.",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Burger Royal",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "allergènes": "Lait"
+    },
+    "86c50840-1abf-4788-98c5-8aaa987e5705": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_123e4567",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "unity": "",
+      "qty": "0",
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 7.26,
+        "ovr": [],
+        "tva": 10,
+        "dflt": {
+          "ttc": 7.99,
+          "tx": 10
+        },
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Burger Végétarien",
+      "parent": "476076e5-4467-4c61-b380-3c480810a8e5",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [
+        "a1000000-0000-0000-0000-000000000007"
+      ],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Un burger sans viande avec des légumes et du fromage.",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Burger Végétarien",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "allergènes": "Lait"
+    },
+    "813effbf-a1b7-4e1e-865b-bebc6cd69164": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_456e7890",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "unity": "",
+      "qty": "0",
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 9.99,
+        "ovr": [],
+        "tva": 10,
+        "dflt": {
+          "ttc": 10.99,
+          "tx": 10
+        },
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Burger Spécial",
+      "parent": "476076e5-4467-4c61-b380-3c480810a8e5",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Un burger avec des tranches de bacon et des dés de poulet.",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Burger Spécial",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "allergènes": "Porc"
+    },
+    "d1796c5a-a86b-477f-9881-473991931037": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_934aaa14",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "unity": "",
+      "qty": "0",
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 7.26,
+        "ovr": [],
+        "tva": 10,
+        "dflt": {
+          "ttc": 7.99,
+          "tx": 10
+        },
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Burger sans Fromage",
+      "parent": "476076e5-4467-4c61-b380-3c480810a8e5",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [
+        "a1000000-0000-0000-0000-000000000007"
+      ],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Un burger sans fromage mais avec des légumes et de la viande.",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Burger sans Fromage",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "allergènes": ""
+    },
+    "358999e2-f903-49ba-b04e-071b93c394d0": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_8cd0d27a",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "unity": "",
+      "qty": "0",
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 11.81,
+        "ovr": [],
+        "tva": 10,
+        "dflt": {
+          "ttc": 12.99,
+          "tx": 10
+        },
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Burger Double",
+      "parent": "476076e5-4467-4c61-b380-3c480810a8e5",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Un burger avec deux steaks et des légumes.",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Burger Double",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "allergènes": ""
+    },
+    "d6db006d-4557-4054-aa22-14a8796a4940": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_fbfab092",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "unity": "",
+      "qty": "0",
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 9.08,
+        "ovr": [],
+        "tva": 10,
+        "dflt": {
+          "ttc": 9.99,
+          "tx": 10
+        },
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Burger Végétalien",
+      "parent": "476076e5-4467-4c61-b380-3c480810a8e5",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [
+        "a1000000-0000-0000-0000-000000000007"
+      ],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Un burger végétalien avec des légumes et du fromage végétalien.",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Burger Végétalien",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "allergènes": ""
+    },
+    "d0029786-2a67-47e0-8702-acaedbe7852a": {
+      "id": 216,
+      "fid": 12,
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_030075_smash_up/Items/1746627933686fritescheddarbacon.webp",
+          "salesSupport": {}
+        }
+      },
+      "opt": {},
+      "qty": "0",
+      "ref": "000417",
+      "rank": 8,
+      "color": "#FDFD96",
+      "price": {
+        "ht": 3.64,
+        "ovr": [],
+        "tva": 1,
+        "dflt": 4,
+        "advanced": {
+          "2f1b476c-a679-5229-bf04-6ef158a2ed64": {
+            "ht": 3.64,
+            "ttc": 4,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "3a1d097d-dfe2-5918-9f9a-c22b5051bdf2": {
+            "ht": 3.64,
+            "ttc": 4,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5af245c0-a348-5ec2-9e5b-54dca28d537b": {
+            "ht": 3.64,
+            "ttc": 4,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5b9fd2d0-dd15-520e-bdd3-6a16ec12a687": {
+            "ht": 3.64,
+            "ttc": 4,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9424063b-4937-515d-8ddf-d8e1cb149b06": {
+            "ht": 3.64,
+            "ttc": 4,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9dee0ea2-fdcf-54f1-b698-62d69ee1794a": {
+            "ht": 3.64,
+            "ttc": 4,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a2bd69ab-5597-5af6-846a-3c178d3824ee": {
+            "ht": 3.64,
+            "ttc": 4,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a4591a7f-c902-53ba-bda4-a9ec1d8c04d7": {
+            "ht": 3.64,
+            "ttc": 4,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          }
+        },
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [
+        "6d781f04-0979-44f1-a9ca-04a043fb5861",
+        "1ddbfabd-70cb-4077-89a3-ff1e2bd38e30"
+      ],
+      "title": "PET FRITES CHED BAC",
+      "unity": "",
+      "parent": "38dd2843-e6e9-40af-9fde-6ac0271fe596",
+      "prSize": "0",
+      "archive": false,
+      "barCode": "",
+      "liaison": [],
+      "calories": null,
+      "outStock": false,
+      "printers": [],
+      "sizeList": "0",
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {
+        "label": "",
+        "value": ""
+      },
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "PETITE FRITES CHEDDAR BACON",
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "modifier": "2a3341fd-7185-47bb-bd1a-30343ec62c4f"
+    },
+    "ea0ab8c0-e792-4c77-a21b-3a35d3a717b6": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_030075_smash_up/Items/20251102_163105712.webp",
+          "salesSupport": {}
+        }
+      },
+      "opt": {},
+      "ref": "000173",
+      "rank": 30,
+      "color": "#FFFFFF",
+      "price": {
+        "ht": 0,
+        "ovr": [],
+        "tva": 0,
+        "dflt": 0,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "SALADE",
+      "parent": "38dd2843-e6e9-40af-9fde-6ac0271fe596",
+      "prSize": 0,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {
+        "label": "",
+        "value": ""
+      },
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "SALADE",
+          "salesSupport": {
+            "1": {
+              "en": "WITHOUT EXQUISITE SALAD",
+              "fr": ""
+            },
+            "2": {
+              "en": "WITHOUT EXQUISITE SALAD",
+              "fr": ""
+            },
+            "4": {
+              "en": "WITHOUT EXQUISITE SALAD",
+              "fr": ""
+            }
+          }
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
+    },
+    "4cae0534-9335-4721-9f63-c7ddd2088431": {
+      "id": 266,
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_030075_smash_up/Items/20251030_165416002.webp",
+          "salesSupport": {}
+        }
+      },
+      "opt": {},
+      "qty": "0",
+      "ref": "*00037",
+      "rank": 60,
+      "color": "#FFCCFF",
+      "price": {
+        "ht": 0,
+        "ovr": [],
+        "tva": 1,
+        "dflt": 0,
+        "advanced": {
+          "2f1b476c-a679-5229-bf04-6ef158a2ed64": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "3a1d097d-dfe2-5918-9f9a-c22b5051bdf2": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5af245c0-a348-5ec2-9e5b-54dca28d537b": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5b9fd2d0-dd15-520e-bdd3-6a16ec12a687": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9424063b-4937-515d-8ddf-d8e1cb149b06": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9dee0ea2-fdcf-54f1-b698-62d69ee1794a": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a2bd69ab-5597-5af6-846a-3c178d3824ee": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a4591a7f-c902-53ba-bda4-a9ec1d8c04d7": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          }
+        },
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "MAYONNAISE",
+      "unity": "",
+      "parent": "38dd2843-e6e9-40af-9fde-6ac0271fe596",
+      "prSize": "0",
+      "archive": false,
+      "barCode": "",
+      "liaison": [],
+      "calories": null,
+      "outStock": false,
+      "printers": [],
+      "sizeList": "0",
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {
+        "label": "",
+        "value": ""
+      },
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "MAYONNAISE",
+          "salesSupport": {
+            "1": {
+              "en": "WITHOUT MAYONNAISE",
+              "fr": ""
+            },
+            "2": {
+              "en": "WITHOUT MAYONNAISE",
+              "fr": ""
+            },
+            "4": {
+              "en": "WITHOUT MAYONNAISE",
+              "fr": ""
+            }
+          }
+        }
+      },
+      "isTitleShow": true,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
+    },
+    "3fc3f10e-a3f5-4335-b623-7a5ad2923e12": {
+      "id": 261,
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_030075_smash_up/Items/20251030_165447180.webp",
+          "salesSupport": {}
+        }
+      },
+      "opt": {},
+      "qty": "0",
+      "ref": "*00010",
+      "rank": 53,
+      "color": "#FFCCFF",
+      "price": {
+        "ht": 0,
+        "ovr": [],
+        "tva": 1,
+        "dflt": 0,
+        "advanced": {
+          "2f1b476c-a679-5229-bf04-6ef158a2ed64": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "3a1d097d-dfe2-5918-9f9a-c22b5051bdf2": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5af245c0-a348-5ec2-9e5b-54dca28d537b": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "5b9fd2d0-dd15-520e-bdd3-6a16ec12a687": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9424063b-4937-515d-8ddf-d8e1cb149b06": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "APP"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "9dee0ea2-fdcf-54f1-b698-62d69ee1794a": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a2bd69ab-5597-5af6-846a-3c178d3824ee": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "d99758ef-0049-4513-90fe-ca44bd069aac",
+              "POS"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          },
+          "a4591a7f-c902-53ba-bda4-a9ec1d8c04d7": {
+            "ht": 0,
+            "ttc": 0,
+            "tva": 10,
+            "orgKeys": [
+              "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+              "KIOSK"
+            ],
+            "schedule": [],
+            "methodePrice": ""
+          }
+        },
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "KETCHUP",
+      "unity": "",
+      "parent": "38dd2843-e6e9-40af-9fde-6ac0271fe596",
+      "prSize": "0",
+      "archive": false,
+      "barCode": "",
+      "liaison": [],
+      "calories": null,
+      "outStock": false,
+      "printers": [],
+      "sizeList": "0",
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {
+        "label": "",
+        "value": ""
+      },
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "KETCHUP",
+          "salesSupport": {
+            "1": {
+              "en": "WITHOUT KETCHUP",
+              "fr": ""
+            },
+            "2": {
+              "en": "WITHOUT KETCHUP",
+              "fr": ""
+            },
+            "4": {
+              "en": "WITHOUT KETCHUP",
+              "fr": ""
+            }
+          }
+        }
+      },
+      "isTitleShow": true,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "2": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "3": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ],
+          "4": [
+            2,
+            1,
+            5,
+            6,
+            4,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
+    },
+    "3034735a-ae30-4106-813a-d570b28da79b": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_76ef0ccd",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "unity": "",
+      "qty": "0",
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 2.72,
+        "ovr": [],
+        "tva": 10,
+        "dflt": {
+          "ttc": 2.99,
+          "tx": 10
+        },
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Sauce BBQ",
+      "parent": "38dd2843-e6e9-40af-9fde-6ac0271fe596",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Une sauce BBQ maison pour garnir votre burger.",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Sauce BBQ",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "allergènes": ""
+    },
+    "b2282be4-78e3-4dba-949b-ddc80d44dc3a": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_3244b605",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "unity": "",
+      "qty": "0",
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 4.54,
+        "ovr": [],
+        "tva": 10,
+        "dflt": {
+          "ttc": 4.99,
+          "tx": 10
+        },
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Chips",
+      "parent": "38dd2843-e6e9-40af-9fde-6ac0271fe596",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Des chips naturees pour accompagner votre burger.",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Chips",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "allergènes": ""
+    },
+    "b8c2c7ae-c2ef-4b2a-82b5-315d247dccb9": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "REF_ece67af4",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "unity": "",
+      "qty": "0",
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 2.72,
+        "ovr": [],
+        "tva": 10,
+        "dflt": {
+          "ttc": 2.99,
+          "tx": 10
+        },
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [],
+      "title": "Coca-Cola",
+      "parent": "140c43e7-0f17-486b-a922-29631d2c9102",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {},
+      "description": {
+        "dflt": {
+          "nameDef": "Une bouteille de Coca-Cola pour accompagner votre repas.",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "Coca-Cola",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "allergènes": "",
+      "modifier": "dc752494-f136-484c-a52e-12fafda817a7"
+    },
+    "1ef3cd2f-e55e-47b2-9909-d37b95ec7918": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_030075_smash_up/Items/20260515_154119044.webp",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "000524",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "unity": "",
+      "qty": "0",
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 4.09,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 4.5,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [
+        "d202efc9-ae8e-4fc7-8225-28a087ad5cc6",
+        "171429dc-87b9-4714-867d-a0623c0c0ae3",
+        "306c7bc0-92b6-4ff4-9cef-dc28d536c0bb",
+        "36c72016-11da-42e6-9b51-32a5da3849dd",
+        "560ec737-8abc-4bd6-ba1c-92b6daada7cc",
+        "5d67d52d-ce76-48f2-acfc-ee7d29266e80",
+        "6a8b3554-5eb0-4f93-b009-e0ff989c1837",
+        "6b39b84a-2b8b-4408-9d37-667d65ed3422",
+        "88990494-63b8-42f8-b729-21364ea5e29b",
+        "a7c4decc-5f1c-44de-b915-8a095bbde24c",
+        "d1218cd5-d33d-4f77-8d1c-3865ae71f90e",
+        "fb8429b9-649c-45cf-9009-60932fc6a3be"
+      ],
+      "title": "LIMONADE FRAISE ICE",
+      "parent": "fca17f5d-291f-49ed-a8b0-9369254f0ff1",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {
+        "label": "",
+        "value": ""
+      },
+      "description": {
+        "dflt": {
+          "nameDef": "",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "LIMONADE FRAISE ICE",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
+    },
+    "6035815b-0ce5-4523-91cb-5e80a75ed328": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_030075_smash_up/Items/20260515_155018467.webp",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "000526",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "unity": "",
+      "qty": "0",
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 4.09,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 4.5,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [
+        "d202efc9-ae8e-4fc7-8225-28a087ad5cc6",
+        "171429dc-87b9-4714-867d-a0623c0c0ae3",
+        "306c7bc0-92b6-4ff4-9cef-dc28d536c0bb",
+        "36c72016-11da-42e6-9b51-32a5da3849dd",
+        "560ec737-8abc-4bd6-ba1c-92b6daada7cc",
+        "5d67d52d-ce76-48f2-acfc-ee7d29266e80",
+        "6a8b3554-5eb0-4f93-b009-e0ff989c1837",
+        "6b39b84a-2b8b-4408-9d37-667d65ed3422",
+        "88990494-63b8-42f8-b729-21364ea5e29b",
+        "a7c4decc-5f1c-44de-b915-8a095bbde24c",
+        "d1218cd5-d33d-4f77-8d1c-3865ae71f90e",
+        "fb8429b9-649c-45cf-9009-60932fc6a3be"
+      ],
+      "title": "LIMONADE PECHE ICE",
+      "parent": "fca17f5d-291f-49ed-a8b0-9369254f0ff1",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {
+        "label": "",
+        "value": ""
+      },
+      "description": {
+        "dflt": {
+          "nameDef": "",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "LIMONADE PECHE ICE",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
+    },
+    "627cbc64-1e0e-4e68-b1f3-94c1a335241b": {
+      "fid": 0,
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue-api.etk360.com/franchise_030075_smash_up/Items/20260515_155042469.webp",
+          "salesSupport": {}
+        }
+      },
+      "ing": {},
+      "opt": {},
+      "ref": "000525",
+      "menu": {
+        "img": {
+          "dflt": {
+            "img": "",
+            "salesSupport": {}
+          }
+        },
+        "list": [],
+        "title": {},
+        "isAfter": true,
+        "isActive": false
+      },
+      "rank": 0,
+      "unit": {
+        "P": "",
+        "isActive": false
+      },
+      "unity": "",
+      "qty": "0",
+      "color": "#FFFFFF",
+      "offer": {
+        "x": 0,
+        "y": 0,
+        "type": 1,
+        "isMax": false,
+        "isEnabled": false,
+        "serviceType": 1
+      },
+      "price": {
+        "ht": 4.09,
+        "ovr": [],
+        "tva": 10,
+        "dflt": 4.5,
+        "advanced": {},
+        "saleModeVAT": [
+          {
+            "uuid": "3cb893e8-0f3a-4dcf-aab7-9545e97dfda7",
+            "value": 10
+          },
+          {
+            "uuid": "8185fa67-f472-4173-a9b8-ec3dc79cd697",
+            "value": 10
+          },
+          {
+            "uuid": "d99758ef-0049-4513-90fe-ca44bd069aac",
+            "value": 10
+          }
+        ]
+      },
+      "steps": [
+        "d202efc9-ae8e-4fc7-8225-28a087ad5cc6",
+        "171429dc-87b9-4714-867d-a0623c0c0ae3",
+        "306c7bc0-92b6-4ff4-9cef-dc28d536c0bb",
+        "36c72016-11da-42e6-9b51-32a5da3849dd",
+        "560ec737-8abc-4bd6-ba1c-92b6daada7cc",
+        "5d67d52d-ce76-48f2-acfc-ee7d29266e80",
+        "6a8b3554-5eb0-4f93-b009-e0ff989c1837",
+        "6b39b84a-2b8b-4408-9d37-667d65ed3422",
+        "88990494-63b8-42f8-b729-21364ea5e29b",
+        "a7c4decc-5f1c-44de-b915-8a095bbde24c",
+        "d1218cd5-d33d-4f77-8d1c-3865ae71f90e",
+        "fb8429b9-649c-45cf-9009-60932fc6a3be"
+      ],
+      "title": "LIMONADE PASTEQUE ICE",
+      "parent": "fca17f5d-291f-49ed-a8b0-9369254f0ff1",
+      "prSize": 0,
+      "showBc": true,
+      "archive": false,
+      "barCode": "",
+      "extrRef": "",
+      "liaison": [],
+      "calories": 0,
+      "outStock": false,
+      "printers": [],
+      "sizeList": [],
+      "suspSale": [],
+      "variants": [],
+      "allergens": [],
+      "basicComp": {},
+      "isComment": false,
+      "active_qty": false,
+      "isRedirect": false,
+      "linkedTags": [],
+      "nutriScore": {
+        "label": "",
+        "value": ""
+      },
+      "description": {
+        "dflt": {
+          "nameDef": "",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "nameDef": "LIMONADE PASTEQUE ICE",
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "isTitleShow": true,
+      "creationType": "catalogue",
+      "hideZeroPrice": false,
+      "isOptionChoice": false,
+      "stepVisibility": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      }
+    }
+  },
+  "steps": {
+    "5cb119dd-8bf1-4dea-a081-9826d0348aa5": {
+      "img": "20260423_155055439.webp",
+      "ref": "*000117",
+      "req": false,
+      "title": "LIMONADE M",
+      "archive": false,
+      "isBasic": false,
+      "maxChoices": 1,
+      "minChoices": 0,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "LIMONADES MAISON",
+          "salesSupport": {}
+        }
+      },
+      "isModifiable": false,
+      "nbrWithPrice": 0,
+      "specificOpts": {
+        "isNext": false,
+        "noButton": false,
+        "zeroPrice": false,
+        "isCheapest": false,
+        "nextButton": false,
+        "isExpensive": false,
+        "withoutStep": false
+      },
+      "nbrWithspecialPrice": 0,
+      "id": "5cb119dd-8bf1-4dea-a081-9826d0348aa5",
+      "isComment": false,
+      "stepItems": {
+        "1ef3cd2f-e55e-47b2-9909-d37b95ec7918": {
+          "rank": 1,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": null,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": null
+        },
+        "6035815b-0ce5-4523-91cb-5e80a75ed328": {
+          "rank": 3,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": null,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": null
+        },
+        "627cbc64-1e0e-4e68-b1f3-94c1a335241b": {
+          "rank": 2,
+          "itemPrice": {
+            "price": {},
+            "isVisible": false
+          },
+          "priceStep": 0,
+          "nbrWithPrice": null,
+          "specialPrice": 0,
+          "basicCompVisibility": true,
+          "nbrWithspecialPrice": null
+        }
+      },
+      "msg": {
+        "dflt": {
+          "imp": [],
+          "salesSupport": {}
+        }
+      },
+      "rank": 0
+    }
+  },
+  "title": "dd",
+  "remark": "",
+  "status": "En attente",
+  "Planning": "",
+  "idEntite": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "modifier": {
+    "2a3341fd-7185-47bb-bd1a-30343ec62c4f": {
+      "uuid-item": "d0029786-2a67-47e0-8702-acaedbe7852a",
+      "add": {},
+      "category": {},
+      "typeAdd": false,
+      "typeCateg": false,
+      "typeSteps": true,
+      "steps": {}
+    },
+    "dc752494-f136-484c-a52e-12fafda817a7": {
+      "uuid-item": "b8c2c7ae-c2ef-4b2a-82b5-315d247dccb9",
+      "add": {},
+      "category": {},
+      "typeAdd": false,
+      "typeCateg": false,
+      "typeSteps": true,
+      "steps": {
+        "5cb119dd-8bf1-4dea-a081-9826d0348aa5": {
+          "ovr": {},
+          "rank": 1,
+          "items": {}
+        }
+      }
+    }
+  },
+  "operator": "Administrateur",
+  "shoplist": {
+    "e6bda7fe-2879-4246-9c8c-6337de28145b": {
+      "cp": "9411A",
+      "img": "no-pictures.svg",
+      "town": "RCUEIL",
+      "Nature": "boutique",
+      "shopid": 2,
+      "Address": "PL DE LA VACHE NOIRE",
+      "Company": "dd",
+      "Country": "France",
+      "Responsible": ""
+    }
+  },
+  "workflow": {
+    "140c43e7-0f17-486b-a922-29631d2c9102": {
+      "ovr": {},
+      "rank": 3,
+      "type": "categories",
+      "content": {
+        "b8c2c7ae-c2ef-4b2a-82b5-315d247dccb9": {
+          "type": "items",
+          "rank": 1,
+          "ovr": {},
+          "content": {}
+        }
+      }
+    },
+    "476076e5-4467-4c61-b380-3c480810a8e5": {
+      "ovr": {},
+      "rank": 1,
+      "type": "categories",
+      "content": {
+        "92a8489f-ae92-48eb-8c95-c3f0452cc8cb": {
+          "type": "items",
+          "rank": 1,
+          "ovr": {},
+          "content": {}
+        },
+        "86c50840-1abf-4788-98c5-8aaa987e5705": {
+          "type": "items",
+          "rank": 2,
+          "ovr": {},
+          "content": {}
+        },
+        "813effbf-a1b7-4e1e-865b-bebc6cd69164": {
+          "type": "items",
+          "rank": 3,
+          "ovr": {},
+          "content": {}
+        },
+        "d1796c5a-a86b-477f-9881-473991931037": {
+          "type": "items",
+          "rank": 4,
+          "ovr": {},
+          "content": {}
+        },
+        "358999e2-f903-49ba-b04e-071b93c394d0": {
+          "type": "items",
+          "rank": 5,
+          "ovr": {},
+          "content": {}
+        },
+        "d6db006d-4557-4054-aa22-14a8796a4940": {
+          "type": "items",
+          "rank": 6,
+          "ovr": {},
+          "content": {}
+        }
+      }
+    },
+    "38dd2843-e6e9-40af-9fde-6ac0271fe596": {
+      "type": "categories",
+      "rank": 2,
+      "content": {
+        "d0029786-2a67-47e0-8702-acaedbe7852a": {
+          "type": "items",
+          "rank": 1,
+          "ovr": {},
+          "content": {}
+        },
+        "ea0ab8c0-e792-4c77-a21b-3a35d3a717b6": {
+          "type": "items",
+          "rank": 2,
+          "ovr": {},
+          "content": {}
+        },
+        "4cae0534-9335-4721-9f63-c7ddd2088431": {
+          "type": "items",
+          "rank": 3,
+          "ovr": {},
+          "content": {}
+        },
+        "3fc3f10e-a3f5-4335-b623-7a5ad2923e12": {
+          "type": "items",
+          "rank": 4,
+          "ovr": {},
+          "content": {}
+        },
+        "3034735a-ae30-4106-813a-d570b28da79b": {
+          "type": "items",
+          "rank": 5,
+          "ovr": {},
+          "content": {}
+        },
+        "b2282be4-78e3-4dba-949b-ddc80d44dc3a": {
+          "type": "items",
+          "rank": 6,
+          "ovr": {},
+          "content": {}
+        }
+      }
+    }
+  },
+  "allergens": {
+    "04577396-1eab-4ac1-b51e-22b943ab1976": {
+      "id": 23,
+      "icon": "46ed8680-89f2-4253-b174-424bbae19c1f.webp",
+      "group": "7f70acf3-6ab8-419a-94f1-6fbd5882c67e",
+      "title": "Noix de Pécan",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Noix de Pécan",
+          "salesSupport": {}
+        }
+      }
+    },
+    "05d84345-c9ab-4849-8b6f-549e6c9841ad": {
+      "id": 19,
+      "icon": "afa5c101-6f4c-4114-a730-3f5c0c5a6678.webp",
+      "group": "7f70acf3-6ab8-419a-94f1-6fbd5882c67e",
+      "title": "Noisettes",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Noisettes",
+          "salesSupport": {}
+        }
+      }
+    },
+    "1acabd99-6fcc-45f0-8513-b94525ba1353": {
+      "id": 3,
+      "icon": "c02d906e-7146-42d4-b6ca-400ca6bdab5c.webp",
+      "group": "",
+      "title": "Arachides",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Arachides",
+          "salesSupport": {}
+        }
+      }
+    },
+    "1dd98c5b-ab3a-4d72-8b43-f3f6f065bb6c": {
+      "id": 16,
+      "icon": "0e39da4d-e614-4eab-bf51-093f56e77fbb.webp",
+      "group": "50c4943e-3d0c-494f-b452-52dda99af6da",
+      "title": "Epeautre",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Epeautre",
+          "salesSupport": {}
+        }
+      }
+    },
+    "1eedb305-12a3-403d-a97a-d3a2d6815b45": {
+      "id": 1,
+      "icon": "cace7a0d-82d3-457a-acc3-76aed40d37c7.webp",
+      "group": "",
+      "title": "Oeufs",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Oeufs",
+          "salesSupport": {}
+        }
+      }
+    },
+    "32be995c-1dd7-4cc2-989c-ba5427647ada": {
+      "id": 12,
+      "icon": "bd01e838-6eb4-49a1-9613-a3d6f2864cc8.webp",
+      "group": "50c4943e-3d0c-494f-b452-52dda99af6da",
+      "title": "Blé",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Blé",
+          "salesSupport": {}
+        }
+      }
+    },
+    "3a0232c2-1675-4817-8fc8-86f44a3d621b": {
+      "id": 24,
+      "icon": "bb6bb95b-15d3-4aec-9453-ee74ba2741eb.webp",
+      "group": "7f70acf3-6ab8-419a-94f1-6fbd5882c67e",
+      "title": "Pistaches",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Pistaches",
+          "salesSupport": {}
+        }
+      }
+    },
+    "3c4b75cd-3cc9-493b-9766-9002fb7f505c": {
+      "id": 18,
+      "icon": "dd7fb182-700f-4fa7-9e51-f3f7c3fa539c.webp",
+      "group": "7f70acf3-6ab8-419a-94f1-6fbd5882c67e",
+      "title": "Amandes",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Amandes",
+          "salesSupport": {}
+        }
+      }
+    },
+    "557180e7-0474-4af6-b845-011457ed484d": {
+      "id": 10,
+      "icon": "561f5aef-65e9-45ce-985a-5774e9119042.webp",
+      "group": "",
+      "title": "Mollusques",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Mollusques",
+          "salesSupport": {}
+        }
+      }
+    },
+    "6f4e1618-e113-4fb6-b6e1-4ced392e396f": {
+      "id": 15,
+      "icon": "11c35ff9-c2a5-4aca-8ce5-6478d222bb69.webp",
+      "group": "50c4943e-3d0c-494f-b452-52dda99af6da",
+      "title": "Avoine",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Avoine",
+          "salesSupport": {}
+        }
+      }
+    },
+    "790d674c-c6b5-4fc6-817a-d9da3fd63449": {
+      "id": 2,
+      "icon": "c0ec9310-57f0-4e80-acbe-647106c78835.webp",
+      "group": "",
+      "title": "Poissons",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Poissons",
+          "salesSupport": {}
+        }
+      }
+    },
+    "821a8d22-84a1-480f-a343-62d3543c5398": {
+      "id": 7,
+      "icon": "4c2afa54-8465-4ab3-ac29-d3dcdf2178b6.webp",
+      "group": "",
+      "title": "Moutarde",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Moutarde",
+          "salesSupport": {}
+        }
+      }
+    },
+    "86b1c413-dcee-45b2-9f30-d10e473314b6": {
+      "id": 8,
+      "icon": "079c17d1-c729-45d3-a781-e88d2c433ed2.webp",
+      "group": "",
+      "title": "Graines",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Graines",
+          "salesSupport": {}
+        }
+      }
+    },
+    "89df758f-9bf4-4041-811f-1dfdd87de15e": {
+      "id": 25,
+      "icon": "e428c153-a0ef-4103-999c-398bb251e052.webp",
+      "group": "7f70acf3-6ab8-419a-94f1-6fbd5882c67e",
+      "title": "Cajou",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Cajou",
+          "salesSupport": {}
+        }
+      }
+    },
+    "931cdaa1-4cb4-4654-8310-6e376df6248b": {
+      "id": 5,
+      "icon": "5bc51a72-c636-467a-b261-96dd2ab82594.webp",
+      "group": "",
+      "title": "Lait",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Lait",
+          "salesSupport": {}
+        }
+      }
+    },
+    "96ac815c-c8c9-4f74-bd23-9debf4f5a8bc": {
+      "id": 20,
+      "icon": "7c7eff69-66af-4aa0-851b-a565a0cb8ede.webp",
+      "group": "7f70acf3-6ab8-419a-94f1-6fbd5882c67e",
+      "title": "Noix du Brésil",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Noix du Brésil",
+          "salesSupport": {}
+        }
+      }
+    },
+    "9df34a0d-9b06-490e-8961-c12485406e5b": {
+      "id": 9,
+      "icon": "26a2c9ff-2077-48ee-b215-f3a8484cdbbf.webp",
+      "group": "",
+      "title": "Lupin",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Lupin",
+          "salesSupport": {}
+        }
+      }
+    },
+    "a17941b1-0009-4ebd-99df-8e2114c1275c": {
+      "id": 17,
+      "icon": "a4b644d3-99b9-4f91-b897-8bd00cda588c.webp",
+      "group": "50c4943e-3d0c-494f-b452-52dda99af6da",
+      "title": "Kamut",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Kamut",
+          "salesSupport": {}
+        }
+      }
+    },
+    "a74ef0c7-a945-4554-ad5c-fc5dd16c8c04": {
+      "id": 21,
+      "icon": "391a347b-87c4-437a-8c47-901704635d10.webp",
+      "group": "7f70acf3-6ab8-419a-94f1-6fbd5882c67e",
+      "title": "Noix",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Noix",
+          "salesSupport": {}
+        }
+      }
+    },
+    "ad34e5a4-20fe-4de9-8845-fbe91f8060e6": {
+      "id": 6,
+      "icon": "1d59bea5-474c-4ec5-ac22-e9fcf4aa14bb.webp",
+      "group": "",
+      "title": "Céleri",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Céleri",
+          "salesSupport": {}
+        }
+      }
+    },
+    "c40b704e-396f-4fc4-9f22-85f50fbbf7b9": {
+      "id": 4,
+      "icon": "0d4be479-50f1-4126-baed-ca9b9e41ce9e.webp",
+      "group": "",
+      "title": "Soja",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Soja",
+          "salesSupport": {}
+        }
+      }
+    },
+    "c7086413-1e76-450d-b710-7bf930d427a1": {
+      "id": 22,
+      "icon": "67617e8f-fef1-4a5e-b315-d6b68714c039.webp",
+      "group": "7f70acf3-6ab8-419a-94f1-6fbd5882c67e",
+      "title": "Noix de Macadamia",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Noix de Macadamia",
+          "salesSupport": {}
+        }
+      }
+    },
+    "cc0cd6a9-ea49-45b4-8ea9-47acd3203f06": {
+      "id": 14,
+      "icon": "2dd69847-9b4e-4607-a63c-96ec7670d0d6.webp",
+      "group": "50c4943e-3d0c-494f-b452-52dda99af6da",
+      "title": "Orge",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Orge",
+          "salesSupport": {}
+        }
+      }
+    },
+    "cc5dc23f-cead-4e60-ae4c-d128aef5380a": {
+      "id": 11,
+      "icon": "380e71c8-bac0-4575-a6b5-9e8126f945a4.webp",
+      "group": "",
+      "title": "Anhydride sulfureux et sulfites",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Anhydride sulfureux et sulfites",
+          "salesSupport": {}
+        }
+      }
+    },
+    "fc60414b-0f19-404a-9147-7bff709dc88c": {
+      "id": 13,
+      "icon": "c79641ca-25b4-463c-a2de-6b5635b9470f.webp",
+      "group": "50c4943e-3d0c-494f-b452-52dda99af6da",
+      "title": "Seigle",
+      "archive": false,
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Seigle",
+          "salesSupport": {}
+        }
+      }
+    }
+  },
+  "isAutoRef": false,
+  "categories": {
+    "140c43e7-0f17-486b-a922-29631d2c9102": {
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "00058",
+      "rank": 3,
+      "child": [],
+      "color": "#FF9900",
+      "items": [
+        "b8c2c7ae-c2ef-4b2a-82b5-315d247dccb9"
+      ],
+      "title": "Boissons",
+      "video": {
+        "url": "1736959883689top10.webp",
+        "type": "image"
+      },
+      "idCard": [],
+      "parent": "",
+      "archive": false,
+      "liaison": [],
+      "isNameShow": true,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "BOISSONS CHAUDES",
+          "salesSupport": {
+            "1": {
+              "en": "HOT DRINKS",
+              "fr": ""
+            },
+            "2": {
+              "en": "HOT DRINKS",
+              "fr": ""
+            },
+            "4": {
+              "en": "HOT DRINKS",
+              "fr": ""
+            }
+          }
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [],
+          "2": [],
+          "3": [],
+          "4": []
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "isInfoModeActive": true,
+      "extrRef": ""
+    },
+    "476076e5-4467-4c61-b380-3c480810a8e5": {
+      "img": {
+        "dflt": {
+          "img": "https://beta-catalogue.etk360.com/no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "000079",
+      "rank": 1,
+      "child": [],
+      "color": "#FFFFFF",
+      "items": [
+        "92a8489f-ae92-48eb-8c95-c3f0452cc8cb",
+        "86c50840-1abf-4788-98c5-8aaa987e5705",
+        "813effbf-a1b7-4e1e-865b-bebc6cd69164",
+        "d1796c5a-a86b-477f-9881-473991931037",
+        "358999e2-f903-49ba-b04e-071b93c394d0",
+        "d6db006d-4557-4054-aa22-14a8796a4940"
+      ],
+      "title": "Burgers",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": [],
+      "parent": "",
+      "archive": false,
+      "liaison": [],
+      "isNameShow": true,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": [],
+      "linkedItems": [],
+      "visibilityInfo": {
+        "dflt": {
+          "1": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "2": [
+            1,
+            2,
+            4,
+            0
+          ],
+          "3": [
+            1,
+            2,
+            0
+          ]
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "isInfoModeActive": true,
+      "extrRef": ""
+    },
+    "38dd2843-e6e9-40af-9fde-6ac0271fe596": {
+      "img": {
+        "dflt": {
+          "img": "no-pictures.svg",
+          "salesSupport": {}
+        }
+      },
+      "ref": "CAT_38dd28",
+      "rank": 2,
+      "child": [],
+      "color": "#4f46e5",
+      "items": [
+        "d0029786-2a67-47e0-8702-acaedbe7852a",
+        "ea0ab8c0-e792-4c77-a21b-3a35d3a717b6",
+        "4cae0534-9335-4721-9f63-c7ddd2088431",
+        "3fc3f10e-a3f5-4335-b623-7a5ad2923e12",
+        "3034735a-ae30-4106-813a-d570b28da79b",
+        "b2282be4-78e3-4dba-949b-ddc80d44dc3a"
+      ],
+      "title": "Extras",
+      "video": {
+        "url": "",
+        "type": ""
+      },
+      "idCard": [],
+      "parent": "",
+      "archive": false,
+      "extrRef": "",
+      "liaison": [],
+      "isNameShow": true,
+      "linkedTags": [],
+      "description": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "",
+          "salesSupport": {}
+        }
+      },
+      "displayName": {
+        "dflt": {
+          "imp": [],
+          "nameDef": "Extras",
+          "salesSupport": {}
+        }
+      },
+      "linkedChild": {},
+      "linkedItems": {},
+      "visibilityInfo": {
+        "dflt": {
+          "1": [],
+          "2": [],
+          "3": [],
+          "4": []
+        },
+        "isVisible": true,
+        "basicCompVisibility": true
+      },
+      "isInfoModeActive": true
+    }
+  },
+  "workflowList": {},
+  "isUniqueTitle": false,
+  "allergenGroups": {
+    "50c4943e-3d0c-494f-b452-52dda99af6da": {
+      "icon": "",
+      "title": "GLUTIN",
+      "allergens": [
+        "32be995c-1dd7-4cc2-989c-ba5427647ada",
+        "fc60414b-0f19-404a-9147-7bff709dc88c",
+        "cc0cd6a9-ea49-45b4-8ea9-47acd3203f06",
+        "6f4e1618-e113-4fb6-b6e1-4ced392e396f",
+        "1dd98c5b-ab3a-4d72-8b43-f3f6f065bb6c",
+        "a17941b1-0009-4ebd-99df-8e2114c1275c"
+      ]
+    },
+    "7f70acf3-6ab8-419a-94f1-6fbd5882c67e": {
+      "icon": "",
+      "title": "FRUITS A COQUES",
+      "allergens": [
+        "3c4b75cd-3cc9-493b-9766-9002fb7f505c",
+        "05d84345-c9ab-4849-8b6f-549e6c9841ad",
+        "96ac815c-c8c9-4f74-bd23-9debf4f5a8bc",
+        "a74ef0c7-a945-4554-ad5c-fc5dd16c8c04",
+        "c7086413-1e76-450d-b710-7bf930d427a1",
+        "04577396-1eab-4ac1-b51e-22b943ab1976",
+        "3a0232c2-1675-4817-8fc8-86f44a3d621b",
+        "89df758f-9bf4-4041-811f-1dfdd87de15e"
+      ]
+    }
+  },
+  "dateModification": "Le 15/01/2025 à 10:35",
+  "iuudCardReference": 0
+}
