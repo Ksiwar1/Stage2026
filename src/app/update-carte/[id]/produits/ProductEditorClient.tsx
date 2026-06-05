@@ -5,10 +5,11 @@ import { updateProduitAction } from '../../../actions/updateProduitAction';
 
 interface ProductEditorClientProps {
   items: any;
+  parsedHierarchy?: any[];
   nomFichier: string;
 }
 
-export default function ProductEditorClient({ items, nomFichier }: ProductEditorClientProps) {
+export default function ProductEditorClient({ items, parsedHierarchy = [], nomFichier }: ProductEditorClientProps) {
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   
@@ -28,6 +29,56 @@ export default function ProductEditorClient({ items, nomFichier }: ProductEditor
   const filteredItems = itemsArray.filter(item => {
     const name = item.displayName?.dflt?.nameDef || item.title || item.t || item._key;
     return name.toLowerCase().includes(searchTerm.toLowerCase());
+  });
+
+  // Construction du dictionnaire des catégories depuis l'AST (Arbre des catégories)
+  const itemToCategory: Record<string, string> = {};
+  if (parsedHierarchy && Array.isArray(parsedHierarchy)) {
+    parsedHierarchy.forEach(cat => {
+      const catTitle = cat.title || "Catégorie inconnue";
+      
+      // 1. Produits directement dans la catégorie
+      if (cat.directProducts && Array.isArray(cat.directProducts)) {
+        cat.directProducts.forEach((p: any) => {
+          if (p.id) itemToCategory[p.id] = catTitle;
+        });
+      }
+      
+      // 2. Produits dans les sous-catégories
+      if (cat.subCategories && Array.isArray(cat.subCategories)) {
+        cat.subCategories.forEach((subCat: any) => {
+          if (subCat.products && Array.isArray(subCat.products)) {
+            subCat.products.forEach((p: any) => {
+              if (p.id) itemToCategory[p.id] = catTitle;
+            });
+          }
+        });
+      }
+    });
+  }
+
+  // Regroupement
+  const groupedItems: Record<string, typeof itemsArray> = {};
+  filteredItems.forEach(item => {
+    const catName = itemToCategory[item._key] || 'Options & Sous-produits';
+    if (!groupedItems[catName]) groupedItems[catName] = [];
+    groupedItems[catName].push(item);
+  });
+
+  // Trier les catégories (mettre 'Options & Sous-produits' à la fin)
+  const sortedCategories = Object.keys(groupedItems).sort((a, b) => {
+    if (a === 'Options & Sous-produits') return 1;
+    if (b === 'Options & Sous-produits') return -1;
+    return a.localeCompare(b);
+  });
+
+  // Tri alphabétique des produits à l'intérieur de chaque catégorie
+  Object.keys(groupedItems).forEach(cat => {
+    groupedItems[cat].sort((a, b) => {
+      const nameA = (a.displayName?.dflt?.nameDef || a.title || a.t || a._key).toLowerCase();
+      const nameB = (b.displayName?.dflt?.nameDef || b.title || b.t || b._key).toLowerCase();
+      return nameA.localeCompare(nameB);
+    });
   });
 
   const handleSelectProduct = (itemKey: string) => {
@@ -79,60 +130,69 @@ export default function ProductEditorClient({ items, nomFichier }: ProductEditor
     <div style={{ display: 'grid', gridTemplateColumns: '350px 1fr', gap: '2rem', height: 'calc(100vh - 200px)' }}>
       
       {/* Colonne de gauche : Liste des produits */}
-      <div style={{ background: 'white', borderRadius: '16px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-        <div style={{ padding: '1.5rem', borderBottom: '1px solid #e2e8f0' }}>
+      <div style={{ background: 'var(--card-bg)', borderRadius: '16px', boxShadow: 'var(--shadow-md)', display: 'flex', flexDirection: 'column', overflow: 'hidden', border: '1px solid var(--card-border)' }}>
+        <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--card-border)' }}>
           <input 
             type="text" 
             placeholder="Rechercher un produit..." 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none' }}
+            style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid var(--input-border)', background: 'var(--input-bg)', color: 'var(--foreground)', outline: 'none' }}
           />
         </div>
         
         <div style={{ flex: 1, overflowY: 'auto', padding: '1rem' }}>
           {filteredItems.length === 0 ? (
-            <p style={{ textAlign: 'center', color: '#94a3b8' }}>Aucun produit trouvé.</p>
+            <p style={{ textAlign: 'center', color: 'var(--text-muted)' }}>Aucun produit trouvé.</p>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              {filteredItems.map((item, index) => {
-                const name = item.displayName?.dflt?.nameDef || item.title || item.t || item._key;
-                const isSelected = item._key === selectedItemId;
-                return (
-                  <button 
-                    key={`${item._key}-${index}`}
-                    onClick={() => handleSelectProduct(item._key)}
-                    style={{ 
-                      padding: '1rem', 
-                      textAlign: 'left', 
-                      background: isSelected ? '#eff6ff' : 'white', 
-                      border: isSelected ? '1px solid #bfdbfe' : '1px solid #f1f5f9',
-                      borderRadius: '12px',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s',
-                      fontWeight: isSelected ? 600 : 400,
-                      color: isSelected ? '#1d4ed8' : '#334155'
-                    }}
-                  >
-                    <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{name}</div>
-                  </button>
-                );
-              })}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              {sortedCategories.map(catName => (
+                <div key={catName}>
+                  <h3 style={{ margin: '0 0 0.75rem 0', fontSize: '0.9rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700, paddingLeft: '0.5rem' }}>
+                    {catName} <span style={{ fontWeight: 400, opacity: 0.7 }}>({groupedItems[catName].length})</span>
+                  </h3>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    {groupedItems[catName].map((item, index) => {
+                      const name = item.displayName?.dflt?.nameDef || item.title || item.t || item._key;
+                      const isSelected = item._key === selectedItemId;
+                      return (
+                        <button 
+                          key={`${item._key}-${index}`}
+                          onClick={() => handleSelectProduct(item._key)}
+                          style={{ 
+                            padding: '1rem', 
+                            textAlign: 'left', 
+                            background: isSelected ? 'var(--primary-glow)' : 'var(--glass-bg)', 
+                            border: isSelected ? '1px solid var(--primary)' : '1px solid var(--glass-border)',
+                            borderRadius: '12px',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s',
+                            fontWeight: isSelected ? 600 : 400,
+                            color: isSelected ? 'var(--primary)' : 'var(--foreground)'
+                          }}
+                        >
+                          <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{name}</div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
             </div>
           )}
         </div>
       </div>
 
       {/* Colonne de droite : Éditeur */}
-      <div style={{ background: 'white', borderRadius: '16px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)', padding: '2.5rem', overflowY: 'auto' }}>
+      <div style={{ background: 'var(--card-bg)', borderRadius: '16px', boxShadow: 'var(--shadow-md)', border: '1px solid var(--card-border)', padding: '2.5rem', overflowY: 'auto' }}>
         {!selectedItemId ? (
-          <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#94a3b8' }}>
+          <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)' }}>
             <span style={{ fontSize: '3rem', marginBottom: '1rem' }}>👈</span>
             <p style={{ fontSize: '1.2rem' }}>Sélectionnez un produit dans la liste pour le modifier.</p>
           </div>
         ) : (
           <div style={{ maxWidth: '600px' }}>
-            <h2 style={{ marginTop: 0, color: '#0f172a', marginBottom: '2rem' }}>Éditer le produit</h2>
+            <h2 style={{ marginTop: 0, color: 'var(--foreground)', marginBottom: '2rem' }}>Éditer le produit</h2>
             
             {message && (
               <div style={{ 
@@ -149,37 +209,37 @@ export default function ProductEditorClient({ items, nomFichier }: ProductEditor
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#475569' }}>Nom du produit</label>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-muted)' }}>Nom du produit</label>
                 <input 
                   type="text" 
                   value={editName}
                   onChange={(e) => setEditName(e.target.value)}
-                  style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '1rem' }}
+                  style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid var(--input-border)', background: 'var(--input-bg)', color: 'var(--foreground)', fontSize: '1rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#475569' }}>Prix TTC (€)</label>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-muted)' }}>Prix TTC (€)</label>
                 <input 
                   type="number" 
                   step="0.01"
                   value={editPrice}
                   onChange={(e) => setEditPrice(e.target.value === '' ? '' : parseFloat(e.target.value))}
-                  style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '1rem' }}
+                  style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid var(--input-border)', background: 'var(--input-bg)', color: 'var(--foreground)', fontSize: '1rem' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: '#475569' }}>URL de l'image</label>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600, color: 'var(--text-muted)' }}>URL de l'image</label>
                 <input 
                   type="text" 
                   value={editImg}
                   onChange={(e) => setEditImg(e.target.value)}
                   placeholder="https://..."
-                  style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '1rem' }}
+                  style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid var(--input-border)', background: 'var(--input-bg)', color: 'var(--foreground)', fontSize: '1rem' }}
                 />
                 {editImg && (
-                  <div style={{ marginTop: '1rem', width: '150px', height: '150px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0', background: '#f8fafc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <div style={{ marginTop: '1rem', width: '150px', height: '150px', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--card-border)', background: 'var(--glass-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={editImg} alt="Preview" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} onError={(e) => (e.currentTarget.style.display = 'none')} />
                   </div>

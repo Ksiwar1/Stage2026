@@ -446,5 +446,19 @@
     "nomFichier": "0d821444-fe35-4bb8-abde-e5db4e02ad9f",
     "actionType": "CREATE",
     "details": "Carte générée avec succès par l'IA."
+  },
+  {
+    "id": "69c4f444-1596-426a-bc00-e1ae99552494",
+    "timestamp": "2026-06-04T14:28:22.944Z",
+    "nomFichier": "e48365eb-10e7-4452-a359-4771b59c7ab2",
+    "actionType": "CREATE",
+    "details": "Carte générée avec succès par l'IA."
+  },
+  {
+    "id": "bc3c0c93-e3f4-4628-820f-259244524a27",
+    "timestamp": "2026-06-05T14:56:10.919Z",
+    "nomFichier": "33b25bd1-9240-4a3d-b28e-f7aa6e52b173",
+    "actionType": "CREATE",
+    "details": "Carte générée avec succès par l'IA."
   }
 ]
