@@ -46,13 +46,24 @@ export interface ParsedCategory {
 
 export type AppStep = Omit<ParsedStep, 'semanticType'> & { semanticType: string };
 
-const CategoryButton = React.memo(({ cat, isActive, onClick }: { cat: ParsedCategory, isActive: boolean, onClick: (id: string) => void }) => {
-  let finalImgUrl = cat.image;
-  if (finalImgUrl && !finalImgUrl.startsWith('http')) {
-     if (finalImgUrl.toLowerCase() === 'no-pictures.svg') finalImgUrl = null;
-     else finalImgUrl = `https://beta-catalogue-api.etk360.com/images/${finalImgUrl}`;
+export const getCleanImageUrl = (url: string | null | undefined): string | null => {
+  if (!url) return null;
+  if (url.includes('loremflickr.com')) {
+     const match = url.match(/\/512\/512\/([^,\?]+)/);
+     if (match && match[1]) {
+        const kw = match[1];
+        const availableImages = ['burger', 'dessert', 'drink', 'food', 'fries', 'pizza', 'salad', 'sandwich', 'sushi', 'tacos'];
+        return availableImages.includes(kw) ? `/food/${kw}.png` : `/food/food.png`;
+     }
+  } else if (!url.startsWith('http') && !url.startsWith('/food/')) {
+     if (url.toLowerCase() === 'no-pictures.svg') return null;
+     return `https://beta-catalogue-api.etk360.com/images/${url}`;
   }
-  if (!finalImgUrl) finalImgUrl = 'https://recette-setting.softavera.com/nopicture.png';
+  return url;
+};
+
+const CategoryButton = React.memo(({ cat, isActive, onClick }: { cat: ParsedCategory, isActive: boolean, onClick: (id: string) => void }) => {
+  let finalImgUrl = getCleanImageUrl(cat.image) || 'https://recette-setting.softavera.com/nopicture.png';
 
   return (
     <button onClick={() => onClick(cat.id)}
@@ -115,7 +126,7 @@ const ProductGridCard = React.memo(({ p, startOrder, onInfo }: { p: ParsedProduc
       )}
       <div style={{ width: '100%', height: '120px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '0.25rem', padding: '0.25rem' }}>
          {/* eslint-disable-next-line @next/next/no-img-element */}
-         <img loading="lazy" decoding="async" src={p.image || 'https://recette-setting.softavera.com/nopicture.png'} alt={p.name} 
+         <img loading="lazy" decoding="async" src={getCleanImageUrl(p.image) || 'https://recette-setting.softavera.com/nopicture.png'} alt={p.name} 
               onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://recette-setting.softavera.com/nopicture.png'; }}
               style={{ width: '100%', height: '100%', objectFit: 'contain', filter: p.image && !isDataFault ? 'drop-shadow(0 15px 15px rgba(0,0,0,0.15))' : 'none' }} />
       </div>
@@ -214,13 +225,11 @@ const ModifierOptionCard = React.memo(({ opt, isComp, isIncluded, isSelected, is
          i
        </div>
 
-       {opt.image && (
-         <div style={{ height: '120px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '1rem' }}>
-           {/* eslint-disable-next-line @next/next/no-img-element */}
-           <img loading="lazy" decoding="async" src={opt.image} alt={opt.name} onError={(e) => { e.currentTarget.style.display = 'none'; }}
-             style={{ width: '100%', height: '100%', objectFit: 'contain', filter: isComp && !isIncluded ? 'grayscale(1)' : 'none' }} />
-         </div>
-       )}
+       <div style={{ height: '120px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '1rem' }}>
+         {/* eslint-disable-next-line @next/next/no-img-element */}
+         <img loading="lazy" decoding="async" src={getCleanImageUrl(opt.image) || '/food/food.png'} alt={opt.name} onError={(e) => { e.currentTarget.style.display = 'none'; }}
+           style={{ width: '100%', height: '100%', objectFit: 'contain', filter: isComp && !isIncluded ? 'grayscale(1)' : 'none' }} />
+       </div>
        <div style={{ textAlign: 'center' }}>
          <strong style={{ fontSize: '1.1rem', textTransform: 'uppercase', display: 'block', marginBottom: '0.5rem',
            color: isComp && !isIncluded ? '#9ca3af' : 'var(--color-text)',
@@ -243,6 +252,36 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
     let finalSecondary = themePalette.secondary;
     let finalCategories = [...tree];
 
+    // Fonction utilitaire pour garantir un contraste lisible (YIQ ratio)
+    const getYIQ = (hex: string) => {
+      if (!hex || typeof hex !== 'string' || !hex.startsWith('#')) return 0;
+      let color = hex.replace('#', '');
+      if (color.length === 3) color = color.split('').map(c => c + c).join('');
+      if (color.length !== 6) return 0;
+      const r = parseInt(color.substring(0, 2), 16);
+      const g = parseInt(color.substring(2, 2), 16);
+      const b = parseInt(color.substring(4, 2), 16);
+      return ((r * 299) + (g * 587) + (b * 114)) / 1000;
+    };
+
+    let safeSecondary = finalSecondary;
+    if (getYIQ(safeSecondary) > 200) {
+      safeSecondary = '#374151'; // Si le secondaire généré est trop clair, on force un gris foncé lisible
+    }
+    
+    let safeOnPrimary = 'white';
+    if (getYIQ(finalPrimary) > 180) {
+      safeOnPrimary = '#111827'; // Si la couleur primaire (fond des boutons) est très claire, le texte dessus doit être foncé
+    }
+
+    const safePalette = {
+      ...themePalette,
+      primary: finalPrimary,
+      secondary: safeSecondary,
+      text: themePalette.text || '#111827', // Fix bug: ne jamais écraser le texte avec la couleur primaire
+      onPrimary: safeOnPrimary
+    };
+
     // Read from catalog JSON
     if (catalogData?.opt?.languages && Array.isArray(catalogData.opt.languages)) {
       finalLangs = catalogData.opt.languages;
@@ -263,9 +302,14 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
         }
         if (parsed.overridePrimaryColor) {
           finalPrimary = parsed.overridePrimaryColor;
+          if (getYIQ(finalPrimary) > 180) safeOnPrimary = '#111827'; else safeOnPrimary = 'white';
+          safePalette.primary = finalPrimary;
+          safePalette.onPrimary = safeOnPrimary;
         }
         if (parsed.overrideSecondaryColor) {
-          finalSecondary = parsed.overrideSecondaryColor;
+          safeSecondary = parsed.overrideSecondaryColor;
+          if (getYIQ(safeSecondary) > 200) safeSecondary = '#374151';
+          safePalette.secondary = safeSecondary;
         }
         if (parsed.overrideCategoryPriority) {
           const priorities: string[] = parsed.overrideCategoryPriority.split(',').map((s: string) => s.trim().toLowerCase());
@@ -286,12 +330,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
         if (finalLangs.join(',') !== allowedLanguages.join(',')) {
           setAllowedLanguages(finalLangs as any);
         }
-        setActiveThemePalette({
-          ...themePalette,
-          primary: finalPrimary,
-          secondary: finalSecondary,
-          text: finalPrimary
-        });
+        setActiveThemePalette(safePalette);
         setActiveCategoriesTree(finalCategories);
       })
       .catch(e => {
@@ -299,12 +338,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
         if (finalLangs.join(',') !== allowedLanguages.join(',')) {
           setAllowedLanguages(finalLangs as any);
         }
-        setActiveThemePalette({
-          ...themePalette,
-          primary: finalPrimary,
-          secondary: finalSecondary,
-          text: finalPrimary
-        });
+        setActiveThemePalette(safePalette);
         setActiveCategoriesTree(finalCategories);
       });
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -675,15 +709,34 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
     );
   }
 
+  const syncYIQ = (hex: string) => {
+    if (!hex || typeof hex !== 'string' || !hex.startsWith('#')) return 0;
+    let color = hex.replace('#', '');
+    if (color.length === 3) color = color.split('').map(c => c + c).join('');
+    if (color.length !== 6) return 0;
+    const r = parseInt(color.substring(0, 2), 16);
+    const g = parseInt(color.substring(2, 2), 16);
+    const b = parseInt(color.substring(4, 2), 16);
+    return ((r * 299) + (g * 587) + (b * 114)) / 1000;
+  };
+
+  const computedPrimary = activeThemePalette.primary;
+  let computedSecondary = activeThemePalette.secondary;
+  if (syncYIQ(computedSecondary) > 200) computedSecondary = '#374151';
+  let computedOnPrimary = 'white';
+  if (syncYIQ(computedPrimary) > 150) computedOnPrimary = '#111827';
+  
+  const textShadowStyle = computedOnPrimary === '#111827' ? 'none' : '0 2px 8px rgba(0,0,0,0.4)';
+
   return (
     <div style={{ 
       height: '100%', width: '100%',
-      '--color-primary': activeThemePalette.primary, 
-      '--color-secondary': activeThemePalette.secondary, 
+      '--color-primary': computedPrimary, 
+      '--color-secondary': computedSecondary, 
       '--color-background': activeThemePalette.background, 
       '--color-surface': activeThemePalette.surface, 
       '--color-text': activeThemePalette.text, 
-      '--color-on-primary': activeThemePalette.onPrimary 
+      '--color-on-primary': computedOnPrimary 
     } as React.CSSProperties}>
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%', background: 'var(--color-background)', fontFamily: catalogData?.themeMetadata?.typeLabel?.toLowerCase().includes('pizza') ? "'Playfair Display', serif" : catalogData?.themeMetadata?.typeLabel?.toLowerCase().includes('gastronomique') ? "'Cinzel', serif" : "'Inter', sans-serif", overflow: 'hidden' }}>
       
@@ -694,7 +747,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
           zIndex: 100, display: 'flex', justifyContent: 'center', alignItems: 'center', backdropFilter: 'blur(5px)'
         }}>
           <div style={{
-            background: 'var(--color-surface)', width: '90%', maxWidth: '1000px', height: '90vh', borderRadius: '24px',
+            background: 'var(--color-surface)', width: '90%', maxWidth: '1000px', height: '90%', borderRadius: '24px',
             display: 'flex', flexDirection: 'column', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
             position: 'relative'
           }}>
@@ -709,8 +762,8 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                 <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, top: 0, background: 'linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 100%)', padding: '1.5rem 2.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                     <h2 style={{ color: 'white', margin: 0, fontSize: '2.2rem', fontWeight: 900, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>{selectedProduct?.name}</h2>
                 </div>
-               <div style={{ position: 'absolute', top: '15px', right: '15px' }}>
-                  <button onClick={() => setSelectedProduct(null)} style={{ background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', color: 'white', border: 'none', borderRadius: '50%', width: '45px', height: '45px', fontSize: '20px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>✕</button>
+               <div style={{ position: 'absolute', top: '15px', right: '15px', zIndex: 50 }}>
+                  <button onClick={() => setSelectedProduct(null)} style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(10px)', color: 'white', border: 'none', borderRadius: '50%', width: '45px', height: '45px', fontSize: '20px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center', boxShadow: '0 4px 10px rgba(0,0,0,0.3)' }}>✕</button>
                </div>
             </div>
             
@@ -952,11 +1005,11 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
       <div style={{ height: '90px', display: 'flex', flexShrink: 0, background: 'var(--color-primary)', width: '100%', zIndex: 20 }}>
         {/* Partie Gauche alignée avec la colonne Menu */}
         <div style={{ width: '38%', minWidth: '150px', maxWidth: '220px', display: 'flex', alignItems: 'center', padding: '0 1rem' }}>
-          <h2 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', textShadow: '0 2px 8px rgba(0,0,0,0.4)', color: 'var(--color-on-primary)' }}>Menu</h2>
+          <h2 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '1px', textShadow: textShadowStyle, color: 'var(--color-on-primary)' }}>Menu</h2>
         </div>
         {/* Partie Droite alignée avec les articles */}
         <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-start', padding: '0 1.5rem', overflow: 'hidden' }}>
-           <h1 style={{ color: 'white', margin: 0, fontSize: '1.6rem', fontWeight: 900, textTransform: 'uppercase', textShadow: '0 2px 8px rgba(0,0,0,0.4)', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+           <h1 style={{ color: 'var(--color-on-primary)', margin: 0, fontSize: '1.6rem', fontWeight: 900, textTransform: 'uppercase', textShadow: textShadowStyle, whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
               {restaurantName}
            </h1>
         </div>

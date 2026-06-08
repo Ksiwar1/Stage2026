@@ -55,15 +55,17 @@ const hashNum = (s: string): number => {
   return h % 100000;
 };
 
-// Construit une URL d'image (LoremFlickr). On combine le mot-clé alimentaire
-// fiable AVEC le tag "food" (deux tags courants -> photos réellement
-// alimentaires et pertinentes, sans 404), plus un "lock" déterministe dérivé
-// du nom pour obtenir une image différente et reproductible par item.
+// Utilise la banque d'images locales premium générée
 const buildAutoImage = (name: string, keyword = 'food'): string => {
-  const kw = (keyword || 'food').toLowerCase();
-  const tags = kw === 'food' ? 'food' : `${encodeURIComponent(kw)},food`;
-  const lock = hashNum(slugifyForImage(name).toLowerCase() || kw);
-  return `https://loremflickr.com/512/512/${tags}?lock=${lock}`;
+  let kw = (keyword || 'food').toLowerCase();
+  
+  // Liste des images locales disponibles
+  const availableImages = ['burger', 'dessert', 'drink', 'food', 'fries', 'pizza', 'salad', 'sandwich', 'sushi', 'tacos'];
+  if (!availableImages.includes(kw)) {
+    kw = 'food';
+  }
+  
+  return `/food/${kw}.png`;
 };
 
 export async function genererArchitectureAction(data: FormData) {
@@ -458,6 +460,11 @@ export async function enrichirCarteAction(
             }
         } catch(e) {}
     }
+
+    // L'utilisateur veut CONSERVER toute la base d'inspiration dans la carte générée.
+    finalData.items = JSON.parse(JSON.stringify(memoryItems));
+    finalData.steps = JSON.parse(JSON.stringify(memorySteps));
+    finalData.modifier = JSON.parse(JSON.stringify(memoryModifiers));
 
     const ALLERGENS_REGISTRY: Record<string, string> = {
         'gluten': 'a1000000-0000-0000-0000-000000000001',
@@ -1004,25 +1011,12 @@ export async function enrichirCarteAction(
             finalData.categories[cId].id = cId;
             finalData.categories[cId].rank = finalData.workflow[cId]?.rank || 0;
             
-            // Il faut absolument purger les items et child hérités du catalogue global. 
-            // Ce catalogue IA est un sous-ensemble : on ne garde pas les vieux UUIDs fantômes.
-            if (Array.isArray(finalData.categories[cId].items)) {
-                finalData.categories[cId].items = [];
-            } else {
-                finalData.categories[cId].items = []; // Force Array per ETK360 specs
+            // L'utilisateur exige de CONSERVER la base source. On ne purge PLUS les catégories ni le workflow.
+            if (!Array.isArray(finalData.categories[cId].items)) {
+                finalData.categories[cId].items = []; // S'assurer que c'est un tableau
             }
-            
-            if (Array.isArray(finalData.categories[cId].child)) {
+            if (!Array.isArray(finalData.categories[cId].child)) {
                 finalData.categories[cId].child = [];
-            } else {
-                finalData.categories[cId].child = []; // Force Array per ETK360 specs
-            }
-        });
-
-        // We clean the content of the workflow to insert our brand new AI items
-        Object.keys(finalData.workflow).forEach(k => {
-            if (finalData.workflow[k].content) {
-                finalData.workflow[k].content = {};
             }
         });
     }
@@ -1279,7 +1273,7 @@ export async function enrichirCarteAction(
             }
         });
     }
-
+    
     // === 3. GRAPH INTEGRITY GARBAGE COLLECTOR (Safety Net) ===
     
     // Niveau 1: Nettoyage des items fantômes au sein des stepItems
@@ -1329,6 +1323,9 @@ export async function enrichirCarteAction(
         theme: systemConfig?.visualTheme || "Classique",
         style: systemConfig?.visualStyle || "Moderne"
     };
+
+    // Appliquer le Healer (Patchs anti-hallucinations, failsafes et padding 1000 articles)
+    patchETK360Structure(finalData);
 
     // === 4. SINGLE SOURCE OF TRUTH VALIDATION WALL ===
     const verifySchemaIntegrity = (data: any) => {

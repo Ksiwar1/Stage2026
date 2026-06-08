@@ -69,6 +69,8 @@ function extractBestName(obj: any, fallback: string = "Inconnu"): string {
   if (typeof obj?.displayName === 'string' && obj.displayName.trim() !== '') return obj.displayName;
   if (obj?.title) return obj.title;
   if (obj?.name) return obj.name;
+  if (obj?.t) return obj.t;
+  if (obj?.n) return obj.n;
   return fallback;
 }
 
@@ -96,7 +98,9 @@ function extractBasicCompStep(productId: string, itemObj: any, data: any): Parse
 
       for (const [ingId, ingMeta] of ingEntries as [string, any][]) {
         const ingRef = data.items?.[ingId];
-        const ingName = ingRef ? extractBestName(ingRef, `Item ${ingId}`).trim() : `Item ${ingId}`;
+        if (!ingRef) continue; // IGNORE LA COMPOSITION INVALIDE/FANTÔME
+        const ingName = extractBestName(ingRef, "").trim();
+        if (!ingName) continue; // IGNORE SI LE NOM EST VIDE
 
         let ingImg = ingRef?.img?.dflt?.img || ingRef?.img?.url || null;
         if (ingImg === "https://beta-catalogue.etk360.com/no-pictures.svg" || ingImg === "https://dev-catalogue.softavera.com/no-pictures.svg") {
@@ -140,9 +144,12 @@ function extractGlobalOptionsStep(productId: string, itemObj: any, data: any): P
      for (const valId of allowedValues) {
         const valDef = dimDef.values && dimDef.values[valId];
         if (valDef) {
+           const valName = extractBestName(valDef, "").trim();
+           if (!valName) continue; // IGNORE SI LE NOM EST VIDE
+           
            options.push({
              id: valId,
-             name: valDef.title || valId,
+             name: valName,
              priceDelta: 0, // MVP
              image: null
            });
@@ -247,7 +254,8 @@ function buildRecursiveSteps(modifierId: string, data: any, visitedModifierIds: 
            const itemVal = itemsMap[productId];
            
            const optProductRef = data.items?.[productId];
-           const optName = optProductRef ? extractBestName(optProductRef, "Option").trim() : `Item ${productId}`;
+           if (!optProductRef) continue; // IGNORE L'OPTION SI ELLE N'EXISTE PAS DANS ITEMS (Sécurité contre l'affichage d'IDs bruts)
+           const optName = extractBestName(optProductRef, "Option").trim();
            
            let optImg = optProductRef?.img?.dflt?.img || optProductRef?.img?.url || null;
            if (optImg === "https://beta-catalogue.etk360.com/no-pictures.svg") optImg = null;
@@ -255,10 +263,17 @@ function buildRecursiveSteps(modifierId: string, data: any, visitedModifierIds: 
            // Résolution du prix delta
            let priceDelta = 0;
            const legacyValObj = stepInfos.values?.[productId] || stepInfos.items?.[productId] || stepInfos.stepItems?.[productId];
-           if (legacyValObj && legacyValObj.priceStep !== undefined) {
-              priceDelta = Number(legacyValObj.priceStep) || 0;
+           
+           if (legacyValObj) {
+               if (legacyValObj.itemPrice?.isVisible && legacyValObj.itemPrice?.price?.dflt?.ttc !== undefined) {
+                   priceDelta = Number(legacyValObj.itemPrice.price.dflt.ttc) || 0;
+               } else if (legacyValObj.priceStep) {
+                   priceDelta = Number(legacyValObj.priceStep) || 0;
+               } else if (optProductRef) {
+                   priceDelta = Number(extractBestPrice(optProductRef)) || 0;
+               }
            } else if (optProductRef) {
-              priceDelta = Number(extractBestPrice(optProductRef)) || 0;
+               priceDelta = Number(extractBestPrice(optProductRef)) || 0;
            }
 
            const option: ParsedModifier = {
@@ -290,7 +305,9 @@ function buildRecursiveSteps(modifierId: string, data: any, visitedModifierIds: 
         }
      }
 
-     parsedSteps.push(step);
+     if (step.options.length > 0) {
+        parsedSteps.push(step);
+     }
   }
   
   return parsedSteps;
@@ -328,17 +345,20 @@ function parseLegacySteps(itemObj: any, data: any): ParsedStep[] {
 
       for (const valObj of rawValues) {
          const optProductRef = data.items[valObj.id];
+         if (!optProductRef) continue; // IGNORE L'OPTION INVALIDE
          let optImg = optProductRef?.img?.dflt?.img || optProductRef?.img?.url || null;
          if (optImg === "https://beta-catalogue.etk360.com/no-pictures.svg") optImg = null;
 
          stepNode.options.push({
             id: valObj.id,
-            name: optProductRef ? extractBestName(optProductRef, "Option").trim() : `Item ${valObj.id}`,
+            name: extractBestName(optProductRef, "Option").trim(),
             priceDelta: Number(valObj.priceStep) || 0,
             image: optImg
          });
       }
-      steps.push(stepNode);
+      if (stepNode.options.length > 0) {
+         steps.push(stepNode);
+      }
    }
    return steps;
 }

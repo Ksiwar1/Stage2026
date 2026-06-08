@@ -125,10 +125,10 @@ RÈGLES D'OR STRUCTURELLES:
 Contraintes :
 - Ne génère JAMAIS de "opt" ou une autre structure personnalisée.
 - On change uniquement les noms (produits, catégories) et le contenu (prix), mais JAMAIS la structure générale du référencement croisé.
-- PERFORMANCES (TRÈS IMPORTANT) : Génère MAXIMUM 3 à 5 items par catégorie. Ne crée jamais de listes de 20 produits. Reste concis.
-- PERFORMANCES : Génère MAXIMUM 2 à 3 options par 'steps' (ex: juste 2 tailles, 2 sauces, etc).
+- RICHESSE DU CATALOGUE (TRÈS IMPORTANT) : L'utilisateur exige un menu EXTRÊMEMENT RICHE ET COMPLET. Tu DOIS générer entre 10 et 20 items par catégorie. Ne fais jamais de catégories incomplètes ou à moitié vides. Ton but absolu est de pousser ta capacité de génération au maximum pour offrir un vrai menu complet !
+- PERFORMANCES : Génère MAXIMUM 3 à 4 options par 'steps' (ex: juste 3 tailles, 3 sauces, etc).
 - Chaque catégorie doit pointer vers le dictionnaire items.
-- Un maximum d'items doit contenir au moins un modifier pour suivre la logique imposée.
+- OBLIGATION MÉTIER (TRÈS IMPORTANT) : L'utilisateur veut toujours avoir le choix entre prendre le produit en Menu (avec parcours) ou Seul. Pour CHAQUE produit principal (ex: Burger, Pizza, Plat, Entrée), tu DOIS créer 2 entrées distinctes dans 'items' : une entrée "Menu [Nom du Plat]" (qui DOIT pointer vers un 'modifier' avec des choix de boissons/accompagnements) ET une entrée "[Nom du Plat] Seul" (SANS modifier).
 - Chaque modifier doit pointer vers des steps.
 - Chaque step doit lister ses options minimalistes (déclarées dans le dictionnaire "items" à la racine).
 - REGLE D'IMAGE INTELLIGENTE : Pour tout objet, ajoute la propriété "img": { "dflt": { "img": "https://image.pollinations.ai/prompt/[NOM_DU_PRODUIT_TRADUIT_EN_ANGLAIS_SANS_ESPACE]" } }. Exemple pour "Frites Cheddar" : '.../prompt/cheddar_fries'. Pour "Burger Poulet" : '.../prompt/chicken_burger'. L'image sera hautement réaliste.
