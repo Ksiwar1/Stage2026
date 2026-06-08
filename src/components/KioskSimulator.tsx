@@ -33,21 +33,15 @@ export interface ParsedProduct {
   modifierId?: string | null;
 }
 
-export interface ParsedSubCategory {
-  id: string;
-  title: string;
-  products: ParsedProduct[];
-  workflowRank?: number;
-}
-
 export interface ParsedCategory {
   id: string;
   title: string;
   image?: string | null;
   products: ParsedProduct[];
-  subCategories?: ParsedSubCategory[];
   workflowRank?: number;
   isVisible?: boolean;
+  /** Titre de la famille parente, présent uniquement pour une sous-famille partagée (« # »). */
+  parentTitle?: string;
 }
 
 export type AppStep = Omit<ParsedStep, 'semanticType'> & { semanticType: string };
@@ -63,61 +57,129 @@ const CategoryButton = React.memo(({ cat, isActive, onClick }: { cat: ParsedCate
   return (
     <button onClick={() => onClick(cat.id)}
       style={{
-        width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start',
+        width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start',
         padding: '1rem 0.5rem', border: 'none', borderBottom: '1px solid #f1f5f9',
-        borderLeft: isActive ? '6px solid var(--color-primary)' : '6px solid transparent',
         background: isActive ? '#fffbeb' : 'white',
-        color: isActive ? '#111827' : '#475569', cursor: 'pointer', transition: 'all 0.2s ease-in-out',
+        cursor: 'pointer', transition: 'all 0.2s ease-in-out', gap: '0.5rem',
       }}
     >
-      <div style={{ width: '40px', height: '40px', flexShrink: 0, marginRight: '0.5rem', borderRadius: '10px', overflow: 'hidden', background: '#f8fafc', boxShadow: isActive ? '0 4px 10px rgba(230,126,34,0.2)' : 'none', border: '1px solid #e2e8f0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img loading="lazy" decoding="async" src={finalImgUrl} alt={cat.title} onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://recette-setting.softavera.com/nopicture.png'; }} style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '4px' }} />
-      </div>
-      <strong style={{ fontSize: '0.85rem', textTransform: 'uppercase', textAlign: 'left', lineHeight: '1.2', fontWeight: isActive ? 800 : 600, overflowWrap: 'break-word', wordBreak: 'normal' }}>
+      {cat.parentTitle && (
+        <span style={{ fontSize: '0.6rem', fontWeight: 700, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.3px', textAlign: 'center', lineHeight: 1.1 }}>
+          {cat.parentTitle} ›
+        </span>
+      )}
+      <strong style={{ fontSize: '0.8rem', textTransform: 'uppercase', textAlign: 'center', lineHeight: '1.15', fontWeight: 900, color: 'var(--color-primary)', overflowWrap: 'break-word', wordBreak: 'normal' }}>
         {cat.title}
       </strong>
+      <div style={{ width: '70%', height: '3px', borderRadius: '3px', background: isActive ? 'var(--color-primary)' : 'transparent', transition: 'all 0.2s ease-in-out' }} />
+      <div style={{ width: '100%', height: '64px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img loading="lazy" decoding="async" src={finalImgUrl} alt={cat.title} onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://recette-setting.softavera.com/nopicture.png'; }} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', filter: isActive ? 'drop-shadow(0 6px 8px rgba(0,0,0,0.18))' : 'none', transform: isActive ? 'scale(1.05)' : 'scale(1)', transition: 'all 0.2s ease-in-out' }} />
+      </div>
     </button>
   );
 });
 CategoryButton.displayName = 'CategoryButton';
 
-const ProductGridCard = React.memo(({ p, startOrder }: { p: ParsedProduct, startOrder: (p: ParsedProduct) => void }) => {
+const ProductGridCard = React.memo(({ p, startOrder, onInfo }: { p: ParsedProduct, startOrder: (p: ParsedProduct) => void, onInfo: (p: ParsedProduct) => void }) => {
   const isDataFault = !p.name || p.name.trim() === "";
+  // Produit composé = avec au moins une vraie étape de choix (hors « Composition »
+  // seule, qui est un simple retrait d'ingrédients pré-cochés). Pour un composé,
+  // le prix dépend des choix → on ne l'affiche pas dans la liste.
+  const isComposed = !!(p.steps && p.steps.some(s => s.title.toLowerCase() !== 'composition'));
   return (
     <div onClick={() => !isDataFault && startOrder(p)}
-      style={{ 
-        background: 'var(--color-surface)', borderRadius: '16px', position: 'relative', overflow: 'hidden', 
-        boxShadow: '0 8px 20px rgba(0,0,0,0.06)', display: 'flex', flexDirection: 'column', 
-        padding: '1.5rem', cursor: isDataFault ? 'not-allowed' : 'pointer', transition: 'transform 0.2s', zIndex: 10,
+      style={{
+        background: 'var(--color-surface)', borderRadius: '16px', position: 'relative', overflow: 'hidden',
+        boxShadow: '0 8px 20px rgba(0,0,0,0.06)', display: 'flex', flexDirection: 'column',
+        padding: '0.75rem', cursor: isDataFault ? 'not-allowed' : 'pointer', transition: 'transform 0.2s', zIndex: 10,
         opacity: isDataFault ? 0.6 : 1
       }}
     >
-      <div style={{ width: '100%', height: '220px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '1rem', padding: '1rem' }}>
+      {!isDataFault && (
+        <button
+          type="button"
+          aria-label="Informations"
+          onClick={(e) => { e.stopPropagation(); onInfo(p); }}
+          style={{
+            position: 'absolute', top: '8px', right: '8px', zIndex: 20,
+            width: '30px', height: '30px', borderRadius: '50%', border: 'none', cursor: 'pointer',
+            background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(4px)',
+            color: 'var(--color-primary)', fontWeight: 900, fontSize: '1rem', fontStyle: 'italic',
+            fontFamily: 'Georgia, serif', boxShadow: '0 2px 6px rgba(0,0,0,0.15)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1
+          }}
+        >
+          i
+        </button>
+      )}
+      <div style={{ width: '100%', height: '120px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '0.25rem', padding: '0.25rem' }}>
          {/* eslint-disable-next-line @next/next/no-img-element */}
          <img loading="lazy" decoding="async" src={p.image || 'https://recette-setting.softavera.com/nopicture.png'} alt={p.name} 
               onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://recette-setting.softavera.com/nopicture.png'; }}
               style={{ width: '100%', height: '100%', objectFit: 'contain', filter: p.image && !isDataFault ? 'drop-shadow(0 15px 15px rgba(0,0,0,0.15))' : 'none' }} />
       </div>
 
-      <div style={{ textAlign: 'center', marginTop: '1.5rem', flexGrow: 1, display: 'flex', flexDirection: 'column', paddingBottom: '0.5rem' }}>
-        <h3 style={{ margin: '0 0 0.8rem 0', fontSize: '1.25rem', fontWeight: 900, color: 'var(--color-text)', textTransform: 'uppercase', minHeight: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-           {isDataFault ? <span style={{ color: '#ef4444', border: '1px solid #ef4444', padding: '4px 8px', borderRadius: '4px', fontSize: '0.9rem' }}>INDISPONIBLE</span> : p.name}
+      <div style={{ textAlign: 'center', marginTop: '0.75rem', flexGrow: 1, display: 'flex', flexDirection: 'column', paddingBottom: '0.25rem' }}>
+        <h3 style={{ margin: '0 0 0.5rem 0', fontSize: '0.95rem', fontWeight: 900, color: 'var(--color-text)', textTransform: 'uppercase', minHeight: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1.15 }}>
+           {isDataFault ? <span style={{ color: '#ef4444', border: '1px solid #ef4444', padding: '4px 8px', borderRadius: '4px', fontSize: '0.8rem' }}>INDISPONIBLE</span> : p.name}
         </h3>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-           <div style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--color-text)' }}>
-              {p.priceTTC !== null && p.priceTTC !== undefined && p.priceTTC > 0 ? `${p.priceTTC.toFixed(2)} €` : null}
-           </div>
-           {(!p.steps || p.steps.length === 0) && !isDataFault && (
-               <div style={{ background: '#10b981', color: 'white', padding: '4px 10px', borderRadius: '15px', fontSize: '0.8rem', fontWeight: 800, boxShadow: '0 4px 6px rgba(16, 185, 129, 0.2)' }}>+ AJOUTER</div>
-           )}
-        </div>
-        {p.description && !isDataFault && <p style={{ margin: '0.8rem 0 0 0', fontSize: '0.85rem', color: '#6b7280', lineHeight: 1.4, opacity: 0.8 }}>{p.description}</p>}
+        {!isComposed && (
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+             <div style={{ fontSize: '1.1rem', fontWeight: 900, color: 'var(--color-text)' }}>
+                {p.priceTTC !== null && p.priceTTC !== undefined ? `${p.priceTTC.toFixed(2)} €` : '—'}
+             </div>
+          </div>
+        )}
       </div>
     </div>
   );
 });
 ProductGridCard.displayName = 'ProductGridCard';
+
+/** Liste récursive des étapes/options d'un produit, pour la modale d'information. */
+const ProductInfoSteps = ({ steps, depth = 0 }: { steps: ParsedStep[], depth?: number }) => {
+  if (!steps || steps.length === 0) return null;
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: depth > 0 ? '0.5rem' : '0.75rem', marginTop: depth > 0 ? '0.5rem' : 0 }}>
+      {steps.map((step) => (
+        <div
+          key={step.id}
+          style={{
+            background: depth > 0 ? 'transparent' : '#f8fafc',
+            borderRadius: '14px',
+            padding: depth > 0 ? '0 0 0 0.9rem' : '0.9rem 1rem',
+            borderLeft: depth > 0 ? '2px solid var(--color-primary)' : 'none',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+            <span style={{ fontWeight: 800, fontSize: '0.85rem', color: 'var(--color-text)', textTransform: 'uppercase', letterSpacing: '0.3px' }}>
+              {step.title}
+            </span>
+            <span style={{ fontSize: '0.65rem', fontWeight: 700, color: 'var(--color-primary)', background: 'color-mix(in srgb, var(--color-primary) 12%, white)', padding: '2px 8px', borderRadius: '999px' }}>
+              {step.minChoices === step.maxChoices ? `${step.maxChoices}` : `${step.minChoices}–${step.maxChoices}`}
+            </span>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+            {step.options.map((opt) => (
+              <div key={opt.id}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem' }}>
+                  <span style={{ fontSize: '0.85rem', color: '#374151', display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                    <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#cbd5e1', flexShrink: 0 }} />
+                    {opt.name}
+                    {opt.isObligatory ? <span style={{ color: '#9ca3af', fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase' }}>obligatoire</span> : null}
+                  </span>
+                  {opt.priceDelta ? <span style={{ color: 'var(--color-primary)', fontWeight: 800, fontSize: '0.8rem', whiteSpace: 'nowrap' }}>+{opt.priceDelta.toFixed(2)} €</span> : null}
+                </div>
+                {opt.subSteps && opt.subSteps.length > 0 && <ProductInfoSteps steps={opt.subSteps} depth={depth + 1} />}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
 
 const ModifierOptionCard = React.memo(({ opt, isComp, isIncluded, isSelected, isLocked, currentStep, handleOptionClick }: any) => {
   const borderColor = isComp ? (isIncluded ? 'var(--color-primary)' : '#ef4444') : (isSelected ? 'var(--color-primary)' : '#e5e7eb');
@@ -179,39 +241,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
     let finalLangs = ['FR', 'EN'];
     let finalPrimary = themePalette.primary;
     let finalSecondary = themePalette.secondary;
-    /**
-     * KioskSimulator - Interface Visuelle de Borne de Commande.
-     * 
-     * Ce composant React simule l'écran d'une borne tactile de restaurant.
-     * Il gère :
-     * - L'affichage des catégories principales et sous-catégories
-     * - La sélection des produits
-     * - Le flux de modificateurs (Workflow : "Choisissez votre boisson", "Sauces", etc.)
-     * - Le panier et le calcul dynamique des prix (Total)
-     * 
-     * @param {KioskSimulatorProps} props - Contient la hiérarchie des catégories générée par softaveraParser
-     */
-    const sortCategories = (categories: ParsedCategory[]) => {
-      const getCategoryPriority = (title: string): number => {
-        const t = title.toLowerCase();
-        if (t.includes('burger')) return 1;
-        if (t.includes('sandwich') || t.includes('panini') || t.includes('tacos') || t.includes('salade')) return 2;
-        if (t.includes('boisson') || t.includes('drink')) return 998;
-        if (t.includes('dessert') || t.includes('tiramisu') || t.includes('cookie') || t.includes('glace') || t.includes('milkshake')) return 999;
-        return 10;
-      };
-
-      return [...categories].sort((a, b) => {
-        const prioA = getCategoryPriority(a.title);
-        const prioB = getCategoryPriority(b.title);
-        if (prioA !== prioB) {
-          return prioA - prioB;
-        }
-        return (a.workflowRank || 0) - (b.workflowRank || 0);
-      });
-    };
-
-    let finalCategories = sortCategories(tree);
+    let finalCategories = [...tree];
 
     // Read from catalog JSON
     if (catalogData?.opt?.languages && Array.isArray(catalogData.opt.languages)) {
@@ -303,6 +333,10 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
   const [cartCount, setCartCount] = useState(0);
   const [cartTotal, setCartTotal] = useState(0);
   const [showToast, setShowToast] = useState<{name: string, visible: boolean} | null>(null);
+  const [errorToast, setErrorToast] = useState<{ message: string, visible: boolean } | null>(null);
+
+  // -- MODALE D'INFORMATION PRODUIT (bouton « i ») --
+  const [infoProduct, setInfoProduct] = useState<ParsedProduct | null>(null);
 
   // -- TUNNEL DE COMMANDE (chaque produit a son propre parcours) --
   const [selectedProduct, setSelectedProduct] = useState<ParsedProduct | null>(null);
@@ -314,6 +348,32 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
   const funnelSteps = activeWorkflow ? activeWorkflow.node.steps : [];
   const currentStep = funnelSteps[currentStepIndex];
   const isGlobalOptionPhase = currentStep?.semanticType === 'OPTION_GLOBALE';
+
+  // Produit « Composition seule » au niveau racine (ex. HOT DOGS) : l'unique
+  // parcours est le retrait d'ingrédients. Sur sa dernière (et seule) étape, le
+  // bouton d'action ajoute directement au panier au lieu d'enchaîner sur un
+  // récapitulatif vide — il n'y a pas d'« étape suivante ».
+  const isCompositionOnlyRoot = workflowStack.length === 1
+    && funnelSteps.length > 0
+    && funnelSteps.every(s => s.title.trim().toLowerCase() === 'composition');
+  const showAddToCartAction = isCompositionOnlyRoot && currentStepIndex === funnelSteps.length - 1;
+
+  // Vignette représentative d'une étape pour le stepper : l'option déjà choisie,
+  // sinon la première option disponible.
+  const stepThumb = (step: StepTreeNode): string | null => {
+    const selectedId = (stepSelections[step.stepId] || [])[0];
+    const selectedOpt = selectedId ? step.children.find(c => c.productId === selectedId) : null;
+    return selectedOpt?.image || step.image || step.children?.[0]?.image || null;
+  };
+
+  // Retour à l'étape précédente (ou remontée d'un cran dans le parcours imbriqué).
+  const goPrevStep = () => {
+    if (currentStepIndex > 0) {
+      setCurrentStepIndex(c => (c as number) - 1);
+    } else if (workflowStack.length > 1) {
+      setWorkflowStack(prev => prev.slice(0, -1));
+    }
+  };
 
   // Derive breadcrumb array from workflowStack
   const breadcrumb = workflowStack.flatMap((level, index) => {
@@ -391,18 +451,14 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
     };
   };
 
-  /**
-   * Action déclenchée quand un utilisateur clique sur un produit final.
-   * Si le produit possède des étapes de personnalisation (modifiers), il
-   * initialise le flux de personnalisation (workflow). Sinon, il l'ajoute direct.
-   * 
-   * @param {ParsedProduct} product - Le produit cliqué
-   */
   const startOrder = React.useCallback((product: ParsedProduct) => {
     
     const rootTree = mapParsedProductToNode(product);
 
-    // FIX UX 1: Achat direct si pas d'options
+    // Achat direct uniquement si le produit n'a AUCUNE étape (prix ferme, rien à
+    // configurer). Un produit « Composition seule » (ex. HOT DOGS) ouvre la
+    // modale afin de permettre le retrait d'ingrédients, puis l'ajout via le
+    // bouton « Ajouter au panier » — il n'y a pas d'étape suivante ni de récap.
     if ((!rootTree.steps || rootTree.steps.length === 0) && product.priceTTC !== null) {
       setCartCount(prev => prev + 1);
       setCartTotal(prev => prev + product.priceTTC!);
@@ -497,11 +553,6 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
      return total;
   };
 
-  /**
-   * Moteur du Workflow de Modificateurs.
-   * Analyse récursivement l'arbre de modificateurs du produit.
-   * Gère la navigation "Étape suivante" (Next Step) une fois qu'un choix est validé.
-   */
   const goNextStep = () => {
     const valid = currentStep ? ((stepSelections[currentStep.stepId] || []).length >= getContextualMinChoices(currentStep)) : true;
     if (valid) {
@@ -513,7 +564,8 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
           setCurrentStepIndex(nextIndex);
        }
     } else {
-       alert("Veuillez faire les choix obligatoires pour continuer.");
+       setErrorToast({ message: "Veuillez faire les choix obligatoires pour continuer.", visible: true });
+       setTimeout(() => setErrorToast(e => e ? { ...e, visible: false } : null), 2800);
     }
   };
 
@@ -642,7 +694,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
           zIndex: 100, display: 'flex', justifyContent: 'center', alignItems: 'center', backdropFilter: 'blur(5px)'
         }}>
           <div style={{
-            background: 'var(--color-surface)', width: '90%', maxWidth: '1000px', height: '90%', borderRadius: '24px',
+            background: 'var(--color-surface)', width: '90%', maxWidth: '1000px', height: '90vh', borderRadius: '24px',
             display: 'flex', flexDirection: 'column', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
             position: 'relative'
           }}>
@@ -656,56 +708,97 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
             }}>
                 <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, top: 0, background: 'linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 100%)', padding: '1.5rem 2.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                     <h2 style={{ color: 'white', margin: 0, fontSize: '2.2rem', fontWeight: 900, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>{selectedProduct?.name}</h2>
-                    {selectedProduct?.priceTTC != null && selectedProduct.priceTTC > 0 && <p style={{ color: 'var(--color-primary)', margin: '0.2rem 0 0', fontSize: '1.4rem', fontWeight: 800 }}>{`${selectedProduct.priceTTC.toFixed(2)} €`}</p>}
                 </div>
                <div style={{ position: 'absolute', top: '15px', right: '15px' }}>
                   <button onClick={() => setSelectedProduct(null)} style={{ background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', color: 'white', border: 'none', borderRadius: '50%', width: '45px', height: '45px', fontSize: '20px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>✕</button>
                </div>
             </div>
             
-            <div style={{ padding: '2rem 1.5rem 0', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-
-               {!isGlobalOptionPhase && (
-                 <>
-                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', maxWidth: '400px', marginBottom: '2rem' }}>
-                 {funnelSteps.map((s, i) => {
+            {/* Stepper visuel : liste des étapes du parcours courant (icône + nom)
+                + progression numérotée et flèches de navigation. */}
+            {!isGlobalOptionPhase && currentStepIndex < funnelSteps.length && funnelSteps.length > 1 && (
+              <div style={{ flexShrink: 0, background: 'linear-gradient(180deg, color-mix(in srgb, var(--color-primary) 10%, white), white)', borderBottom: '1px solid #f3f4f6', paddingTop: '0.75rem' }}>
+                {/* Rangée des étapes (vignette + label) */}
+                <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'flex-start', gap: '0.4rem', padding: '0 1.5rem' }}>
+                  {funnelSteps.map((step, i) => {
                     const isActive = i === currentStepIndex;
-                    const isPast = i < currentStepIndex;
-                    const isComp = s.title.toLowerCase().includes('composition');
+                    const isDone = i < currentStepIndex;
+                    const isReachable = i <= currentStepIndex;
+                    const thumb = stepThumb(step);
                     return (
-                      <div key={i} style={{ display: 'flex', alignItems: 'center', flex: i < funnelSteps.length - 1 ? 1 : 0 }}>
-                        {/* Circle */}
+                      <div
+                        key={step.stepId}
+                        onClick={() => { if (isReachable) setCurrentStepIndex(i); }}
+                        style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.4rem', flex: 1, minWidth: 0, cursor: isReachable ? 'pointer' : 'default' }}
+                      >
                         <div style={{
-                          width: '40px', height: '40px', borderRadius: '50%', 
-                          background: (isActive || isPast) ? '#111827' : 'white', 
-                          color: (isActive || isPast) ? 'white' : '#9ca3af',
-                          border: (isActive || isPast) ? '2px solid #111827' : '2px solid #d1d5db',
-                          display: 'flex', justifyContent: 'center', alignItems: 'center',
-                          fontWeight: 'bold', fontSize: '1.2rem', zIndex: 2,
-                          boxShadow: isActive ? '0 0 0 4px white, 0 0 0 8px rgba(79, 209, 197, 0.5)' : 'none'
+                          width: '72px', height: '72px', borderRadius: '50%', flexShrink: 0,
+                          border: `3px solid ${isActive || isDone ? 'var(--color-primary)' : '#e5e7eb'}`,
+                          background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          overflow: 'hidden', opacity: (isActive || isDone) ? 1 : 0.5,
+                          boxShadow: isActive ? '0 6px 16px color-mix(in srgb, var(--color-primary) 35%, transparent)' : 'none',
+                          transform: isActive ? 'scale(1.06)' : 'scale(1)', transition: 'all 0.2s'
                         }}>
-                          {isPast ? (
-                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                          {thumb ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img loading="lazy" decoding="async" src={thumb} alt={step.title}
+                              onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://recette-setting.softavera.com/nopicture.png'; }}
+                              style={{ width: '100%', height: '100%', objectFit: 'contain', filter: (isActive || isDone) ? 'none' : 'grayscale(1)' }} />
                           ) : (
-                             i + 1
+                            <span style={{ fontSize: '1.6rem' }}>🍴</span>
                           )}
                         </div>
-                        {/* Line */}
-                        {i < funnelSteps.length - 1 && (
-                          <div style={{
-                            flex: 1, height: '4px', background: isPast ? '#111827' : 'white',
-                            marginLeft: '-4px', marginRight: '-4px', zIndex: 1
-                          }} />
-                        )}
+                        <span style={{ fontSize: '0.62rem', fontWeight: 800, textTransform: 'uppercase', textAlign: 'center', lineHeight: 1.1, color: isActive ? 'var(--color-primary)' : '#6b7280', overflowWrap: 'break-word', wordBreak: 'normal', maxWidth: '90px' }}>
+                          {step.title}
+                        </span>
                       </div>
-                    )
-                 })}
-               </div>
-                 </>
-               )}
-            </div>
+                    );
+                  })}
+                </div>
 
-            {/* Breadcrumb Section */}
+                {/* Progression numérotée 1—N avec flèches */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.5rem 1.25rem 0.75rem' }}>
+                  <button
+                    onClick={goPrevStep}
+                    disabled={currentStepIndex === 0 && workflowStack.length <= 1}
+                    aria-label="Étape précédente"
+                    style={{ width: '34px', height: '34px', borderRadius: '50%', border: 'none', flexShrink: 0, background: 'rgba(0,0,0,0.04)', color: '#6b7280', fontSize: '1.3rem', fontWeight: 'bold', cursor: (currentStepIndex === 0 && workflowStack.length <= 1) ? 'not-allowed' : 'pointer', opacity: (currentStepIndex === 0 && workflowStack.length <= 1) ? 0.35 : 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  >‹</button>
+
+                  <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+                    {funnelSteps.map((step, i) => {
+                      const isActive = i === currentStepIndex;
+                      const isDone = i < currentStepIndex;
+                      const isReachable = i <= currentStepIndex;
+                      return (
+                        <React.Fragment key={step.stepId}>
+                          {i > 0 && <div style={{ flex: 1, height: '3px', borderRadius: '3px', background: isDone || isActive ? 'var(--color-primary)' : '#e5e7eb', transition: 'all 0.2s' }} />}
+                          <div
+                            onClick={() => { if (isReachable) setCurrentStepIndex(i); }}
+                            style={{
+                              width: '30px', height: '30px', borderRadius: '50%', flexShrink: 0,
+                              display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '0.85rem',
+                              cursor: isReachable ? 'pointer' : 'default', transition: 'all 0.2s',
+                              background: isDone ? 'var(--color-primary)' : '#fff',
+                              color: isDone ? 'var(--color-on-primary)' : isActive ? 'var(--color-primary)' : '#9ca3af',
+                              border: isActive ? '3px solid var(--color-primary)' : isDone ? 'none' : '2px solid #e5e7eb'
+                            }}
+                          >{i + 1}</div>
+                        </React.Fragment>
+                      );
+                    })}
+                  </div>
+
+                  <button
+                    onClick={goNextStep}
+                    aria-label="Étape suivante"
+                    style={{ width: '34px', height: '34px', borderRadius: '50%', border: 'none', flexShrink: 0, background: 'rgba(0,0,0,0.04)', color: '#6b7280', fontSize: '1.3rem', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  >›</button>
+                </div>
+              </div>
+            )}
+
+            {/* Fil d'Ariane (déplacé sous le stepper, juste avant la question) */}
             {!isGlobalOptionPhase && currentStepIndex < funnelSteps.length && (
               <div style={{ padding: '0.5rem 2rem', background: 'white', display: 'flex', gap: '0.5rem', alignItems: 'center', fontSize: '0.75rem', fontWeight: 700, color: '#6b7280', flexWrap: 'wrap', borderBottom: '1px solid #f3f4f6' }}>
                  {breadcrumb.map((bcItem, idx) => {
@@ -728,12 +821,12 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
             )}
 
             <div style={{ flex: 1, overflowY: 'auto', padding: '1rem 2rem', background: '#fff', position: 'relative' }}>
-              
+
 
               {currentStepIndex < funnelSteps.length ? (
-                <div style={{ animation: 'fadeIn 0.3s', marginTop: '2.5rem' }}>
-                  
-                  <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+                <div style={{ animation: 'fadeIn 0.3s' }}>
+
+                  <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
                      <h3 style={{ fontSize: '1.4rem', color: '#111827', margin: '0 0 0.5rem 0' }}>
                         {currentStep.title.toLowerCase().includes('composition') ? t('modal_composition_remove') : `${t('modal_composition_choose')} ${currentStep.title}`}
                      </h3>
@@ -749,7 +842,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ marginBottom: '1rem', opacity: 0.5 }}>
                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                        </svg>
-                       <h3 style={{ fontSize: '1.2rem', fontWeight: 600, margin: '0 0 0.5rem 0', color: '#475569' }}>Aucune option disponible</h3>
+                       <h3 style={{ fontSize: '1.2rem', fontWeight: 600, margin: '0 0 0.5rem 0' }}>Aucune option disponible</h3>
                        <p style={{ margin: 0, fontSize: '0.95rem', opacity: 0.8 }}>Veuillez passer à l'étape suivante.</p>
                     </div>
                   ) : (
@@ -781,7 +874,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                 <div style={{ textAlign: 'center', padding: '2rem 0' }}>
                   <h2 style={{ fontSize: '2.5rem', color: 'var(--color-text)', marginTop: '1rem' }}>✨ RÉCAPITULATIF</h2>
                   <div style={{ display: 'inline-block', textAlign: 'left', background: 'white', padding: '2rem', borderRadius: '16px', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', minWidth: '400px' }}>
-                     <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.4rem', color: '#111827' }}>{selectedProduct.name} {selectedProduct.priceTTC !== null && selectedProduct.priceTTC > 0 ? `- ${selectedProduct.priceTTC.toFixed(2)}€` : ''}</h3>
+                     <h3 style={{ margin: '0 0 1rem 0', fontSize: '1.4rem' }}>{selectedProduct.name} - {selectedProduct.priceTTC !== null ? `${selectedProduct.priceTTC.toFixed(2)}€` : '—'}</h3>
                      <ul style={{ paddingLeft: '1.5rem', color: '#4b5563', fontSize: '1.1rem' }}>
                         {(() => {
                            const renderRecapNode = (node: ProductTreeNode, depth = 0, visited = new Set<string>()): React.ReactElement[] => {
@@ -833,8 +926,10 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
               </div>
 
               {currentStepIndex < funnelSteps.length ? (
-                <button onClick={goNextStep} style={{ background: 'var(--color-primary)', color: 'var(--color-on-primary)', padding: '1rem 3rem', borderRadius: '8px', border: 'none', fontSize: '1.2rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)' }}>
-                  {getContextualMinChoices(currentStep) === 0 && (stepSelections[currentStep.stepId] || []).length === 0 ? t('modal_skip') : t('modal_next')}
+                <button onClick={showAddToCartAction ? confirmProduct : goNextStep} style={{ background: 'var(--color-primary)', color: 'var(--color-on-primary)', padding: '1rem 3rem', borderRadius: '8px', border: 'none', fontSize: '1.2rem', fontWeight: 'bold', cursor: 'pointer', boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)' }}>
+                  {showAddToCartAction
+                    ? t('modal_add_to_cart')
+                    : getContextualMinChoices(currentStep) === 0 && (stepSelections[currentStep.stepId] || []).length === 0 ? t('modal_skip') : t('modal_next')}
                 </button>
               ) : (
                 <button onClick={(e) => {
@@ -898,7 +993,7 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
         </div>
 
         {/* ZONE PRINCIPALE (Grid produits) */}
-        <div style={{ flex: '1', display: 'flex', flexDirection: 'column', overflowY: 'auto', position: 'relative', minHeight: 0, padding: '1.5rem' }}>
+        <div style={{ flex: '1', display: 'flex', flexDirection: 'column', overflowY: 'auto', position: 'relative', minHeight: 0 }}>
           
           {(!activeCategory?.products || activeCategory.products.length === 0) ? (
             <div style={{ padding: '4rem 2rem', textAlign: 'center', color: '#64748b', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', opacity: 0.8 }}>
@@ -908,64 +1003,23 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
                  <line x1="3" y1="9" x2="9" y2="9" />
                  <line x1="3" y1="15" x2="9" y2="15" />
                </svg>
-               <h3 style={{ fontSize: '1.5rem', fontWeight: 600, margin: '0 0 0.5rem 0', color: '#475569' }}>Aucun produit disponible</h3>
+               <h3 style={{ fontSize: '1.5rem', fontWeight: 600, margin: '0 0 0.5rem 0' }}>Aucun produit disponible</h3>
                <p style={{ margin: 0, fontSize: '1.1rem', opacity: 0.8 }}>Cette catégorie ne contient actuellement aucun article.</p>
             </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-               {activeCategory.subCategories && activeCategory.subCategories.length > 0 ? (
-                 activeCategory.subCategories.map((subCat) => {
-                   if (!subCat.products || subCat.products.length === 0) return null;
-                   
-                   const showHeader = activeCategory.subCategories!.length > 1 && subCat.title.trim().toUpperCase() !== activeCategory.title.trim().toUpperCase();
-                   
-                   return (
-                     <div key={subCat.id} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                       {showHeader && (
-                         <div style={{ 
-                           display: 'flex', 
-                           alignItems: 'center', 
-                           gap: '10px', 
-                           paddingBottom: '0.5rem', 
-                           borderBottom: '2px solid #e2e8f0',
-                           marginTop: '0.5rem'
-                         }}>
-                           <div style={{ width: '6px', height: '24px', background: 'var(--color-primary)', borderRadius: '3px' }} />
-                           <h2 style={{ 
-                             fontSize: '1.3rem', 
-                             fontWeight: 800, 
-                             color: 'var(--color-text)', 
-                             textTransform: 'uppercase', 
-                             margin: 0,
-                             letterSpacing: '0.5px'
-                           }}>
-                             {subCat.title}
-                           </h2>
-                         </div>
-                       )}
-                       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem', alignContent: 'start' }}>
-                         {subCat.products.map((p, pIndex) => (
-                           <ProductGridCard 
-                              key={`${p.id}-${pIndex}`} 
-                              p={p} 
-                              startOrder={startOrder} 
-                           />
-                         ))}
-                       </div>
-                     </div>
-                   );
-                 })
-               ) : (
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem', alignContent: 'start' }}>
-                    {activeCategory.products.map((p, pIndex) => (
-                      <ProductGridCard 
-                         key={`${p.id}-${pIndex}`} 
-                         p={p} 
-                         startOrder={startOrder} 
-                      />
-                    ))}
-                  </div>
-               )}
+            <div style={{ padding: '0.75rem', display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.75rem', alignContent: 'start', marginTop: '10px' }}>
+              {activeCategory?.products.map((p, pIndex) => {
+                const isDataFault = !p.name || p.name.trim() === "";
+                
+                return (
+                  <ProductGridCard
+                     key={`${p.id}-${pIndex}`}
+                     p={p}
+                     startOrder={startOrder}
+                     onInfo={setInfoProduct}
+                  />
+                );
+              })}
             </div>
           )}
         </div>
@@ -1000,6 +1054,90 @@ export default function KioskSimulator({ restaurantName, tree, themePalette = { 
       }}>
          <span style={{ fontSize: '1.3rem' }}>✅</span> {showToast?.name} {t('toast_added')}
       </div>
+
+      {/* Toast d'erreur (choix obligatoire manquant) */}
+      <div style={{
+         position: 'absolute', top: errorToast?.visible ? '30px' : '-100px', left: '50%', transform: 'translateX(-50%)',
+         background: '#ef4444', color: 'white', padding: '12px 24px', borderRadius: '50px', fontWeight: 800, fontSize: '1rem',
+         boxShadow: '0 10px 25px rgba(239, 68, 68, 0.4)', transition: 'top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)', zIndex: 1001,
+         display: 'flex', alignItems: 'center', gap: '10px', maxWidth: '90%', textAlign: 'center'
+      }}>
+         <span style={{ fontSize: '1.3rem' }}>⚠️</span> {errorToast?.message}
+      </div>
+
+      {/* MODALE D'INFORMATION PRODUIT (déclenchée par le bouton « i ») */}
+      {infoProduct && (
+        <div
+          onClick={() => setInfoProduct(null)}
+          style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}
+        >
+          {(() => {
+            const isComposed = !!(infoProduct.steps && infoProduct.steps.some(s => s.title.toLowerCase() !== 'composition'));
+            const hasPrice = infoProduct.priceTTC !== null && infoProduct.priceTTC !== undefined && infoProduct.priceTTC > 0;
+            return (
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{ background: 'white', borderRadius: '24px', width: '100%', maxWidth: '440px', maxHeight: '90%', overflowY: 'auto', boxShadow: '0 25px 60px rgba(0,0,0,0.4)', position: 'relative' }}
+          >
+            {/* HERO image sur fond teinté de la couleur de marque */}
+            <div style={{ position: 'relative', background: 'linear-gradient(160deg, color-mix(in srgb, var(--color-primary) 16%, white), color-mix(in srgb, var(--color-primary) 4%, white))', padding: '2rem 1.5rem 1.5rem', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '24px 24px 40px 40px' }}>
+              <button
+                type="button"
+                aria-label="Fermer"
+                onClick={() => setInfoProduct(null)}
+                style={{ position: 'absolute', top: '14px', right: '14px', width: '36px', height: '36px', borderRadius: '50%', border: 'none', background: 'rgba(255,255,255,0.9)', color: '#374151', fontSize: '1.3rem', fontWeight: 900, cursor: 'pointer', zIndex: 10, lineHeight: 1, boxShadow: '0 2px 8px rgba(0,0,0,0.12)' }}
+              >
+                ×
+              </button>
+              <div style={{ width: '100%', height: '170px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img loading="lazy" decoding="async" src={infoProduct.image || 'https://recette-setting.softavera.com/nopicture.png'} alt={infoProduct.name}
+                     onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = 'https://recette-setting.softavera.com/nopicture.png'; }}
+                     style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', filter: 'drop-shadow(0 16px 16px rgba(0,0,0,0.2))' }} />
+              </div>
+            </div>
+
+            <div style={{ padding: '1.25rem 1.5rem 1.5rem' }}>
+              <h2 style={{ margin: '0 0 0.6rem 0', fontSize: '1.5rem', fontWeight: 900, textTransform: 'uppercase', color: 'var(--color-text)', lineHeight: 1.1 }}>{infoProduct.name}</h2>
+
+              {/* Prix : caché si menu composé sans prix de base ; badge sinon */}
+              {isComposed ? (
+                <span style={{ display: 'inline-block', fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-primary)', background: 'color-mix(in srgb, var(--color-primary) 12%, white)', padding: '5px 12px', borderRadius: '999px', textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: '0.75rem' }}>
+                  {hasPrice ? `Menu dès ${infoProduct.priceTTC!.toFixed(2)} €` : 'Menu personnalisable'}
+                </span>
+              ) : (
+                <div style={{ fontSize: '1.4rem', fontWeight: 900, color: 'var(--color-primary)', marginBottom: '0.75rem' }}>
+                  {hasPrice ? `${infoProduct.priceTTC!.toFixed(2)} €` : '—'}
+                </div>
+              )}
+
+              {infoProduct.description && infoProduct.description.trim() !== '' && (
+                <p style={{ margin: '0 0 1rem 0', fontSize: '0.9rem', color: '#6b7280', lineHeight: 1.55, fontStyle: 'italic' }}>{infoProduct.description}</p>
+              )}
+
+              {isComposed && (
+                <>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', margin: '0.75rem 0 0.9rem' }}>
+                    <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.6px' }}>Personnalisation</span>
+                    <span style={{ flex: 1, height: '1px', background: '#f1f5f9' }} />
+                  </div>
+                  <ProductInfoSteps steps={infoProduct.steps} />
+                </>
+              )}
+
+              <button
+                type="button"
+                onClick={() => { const p = infoProduct; setInfoProduct(null); startOrder(p); }}
+                style={{ marginTop: '1.5rem', width: '100%', background: 'var(--color-primary)', color: 'var(--color-on-primary)', border: 'none', borderRadius: '14px', padding: '15px', fontSize: '1.1rem', fontWeight: 900, cursor: 'pointer', boxShadow: '0 10px 20px color-mix(in srgb, var(--color-primary) 35%, transparent)', textTransform: 'uppercase', letterSpacing: '0.5px' }}
+              >
+                {isComposed ? 'Composer' : '+ Ajouter'}
+              </button>
+            </div>
+          </div>
+            );
+          })()}
+        </div>
+      )}
 
     </div>
     </div>

@@ -149,6 +149,8 @@ export interface VisualCardSummary {
   statut?: string;
   logoUrl?: string;
   restaurantName?: string;
+  companyName?: string;
+  nature?: string;
 }
 
 export async function getCartesVisualSummary(): Promise<VisualCardSummary[]> {
@@ -175,9 +177,13 @@ export async function getCartesVisualSummary(): Promise<VisualCardSummary[]> {
 
         let logoUrl = null;
         let restaurantName = card.store_name || null;
+        let companyName: string | undefined;
+        let nature: string | undefined;
         if (data.shoplist && typeof data.shoplist === 'object') {
            const firstShop = Object.values(data.shoplist)[0] as any;
            if (firstShop) {
+              companyName = (firstShop.Company && firstShop.Company !== 'undefined') ? firstShop.Company : undefined;
+              nature = (firstShop.Nature && firstShop.Nature !== 'undefined') ? firstShop.Nature : undefined;
               if (!restaurantName) restaurantName = firstShop.Company || data.title;
               if (firstShop.img && firstShop.img !== 'no-pictures.svg' && firstShop.img !== 'undefined') {
                  logoUrl = firstShop.img.startsWith('http') ? firstShop.img : `https://beta-catalogue.etk360.com/${firstShop.img}`;
@@ -202,7 +208,9 @@ export async function getCartesVisualSummary(): Promise<VisualCardSummary[]> {
           itemCount: itemIds.length,
           previewImages: images,
           logoUrl: logoUrl || undefined,
-          restaurantName: restaurantName || data.title
+          restaurantName: restaurantName || data.title,
+          companyName,
+          nature
         });
       } 
       // Détecter Softavera standard

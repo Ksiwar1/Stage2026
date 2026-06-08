@@ -1,5 +1,5 @@
 import KioskSimulator from '../../../components/KioskSimulator';
-import { parseETK360Hierarchy } from '../../../lib/softaveraParser';
+import { parseETK360Hierarchy, extractRestaurantName } from '../../../lib/softaveraParser';
 import { cardService } from '../../../services/cardService';
 
 export default async function BornePage({ params }: { params: Promise<{ id: string }> }) {
@@ -32,38 +32,7 @@ export default async function BornePage({ params }: { params: Promise<{ id: stri
     );
   }
 
-  let jsonRestaurantName = null;
-  if (data.shoplist && typeof data.shoplist === 'object') {
-     const firstShop = Object.values(data.shoplist)[0] as any;
-     if (firstShop && firstShop.name) jsonRestaurantName = firstShop.name;
-     if (firstShop && firstShop.Company) jsonRestaurantName = firstShop.Company;
-  }
-  if (!jsonRestaurantName && data.opt && data.opt.restaurantName) {
-     jsonRestaurantName = data.opt.restaurantName;
-  }
-  if (!jsonRestaurantName && data.title) {
-     jsonRestaurantName = data.title;
-  }
-  
-  // Extraire le nom de la franchise depuis les vieilles URL d'images ETK360
-  if (!jsonRestaurantName && data.items) {
-      const firstItem = Object.values(data.items).find((item: any) => item?.img?.dflt?.img?.includes('franchise_')) as any;
-      if (firstItem) {
-          const match = firstItem.img.dflt.img.match(/franchise_\d+_([a-zA-Z0-9_]+)/);
-          if (match && match[1]) {
-              jsonRestaurantName = match[1].replace(/_/g, ' ');
-          }
-      }
-  }
-
-  let rawTitle = cardId.replace(/^ia_*/, '').replace(/_/g, ' ').trim();
-  if (rawTitle === '' || rawTitle.startsWith('INSTRUCTIONS STRUCT')) {
-      rawTitle = "Restaurant IA";
-  }
-
-  const restaurantName = jsonRestaurantName 
-    ? jsonRestaurantName 
-    : rawTitle.split(' ').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  const restaurantName = extractRestaurantName(data, cardId);
 
   let themePalette = { primary: '#F39C12', secondary: '#1A237E', background: '#F8FAFC', surface: '#FFFFFF', text: '#111827', onPrimary: 'white' };
   
@@ -224,9 +193,73 @@ export default async function BornePage({ params }: { params: Promise<{ id: stri
     themePalette.secondary = hslToHex(h2, s2, l2);
   }
 
+  // Renvoi de la "Base Propre" vers le composant Visuel avec un cadre "Borne" (Device Frame)
   return (
-    <div className="kioskWrapper">
-      <div className="kioskFrame">
+    <div style={{ 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      minHeight: '100vh', 
+      background: '#f1f5f9', // Fond gris clair derrière la borne
+      padding: '2rem',
+      position: 'relative'
+    }}>
+      <a
+        href="/borne"
+        style={{
+          position: 'absolute',
+          top: '1.5rem',
+          left: '1.5rem',
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '0.4rem',
+          padding: '0.55rem 1rem',
+          background: '#0f172a',
+          color: 'white',
+          borderRadius: '10px',
+          fontFamily: 'sans-serif',
+          fontSize: '0.85rem',
+          fontWeight: 600,
+          textDecoration: 'none',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+          zIndex: 10
+        }}
+      >
+        ← Retour
+      </a>
+      <a
+        href={`/api/borne/${cardId}/export`}
+        download
+        style={{
+          position: 'absolute',
+          top: '1.5rem',
+          right: '1.5rem',
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '0.4rem',
+          padding: '0.55rem 1rem',
+          background: '#0f172a',
+          color: 'white',
+          borderRadius: '10px',
+          fontFamily: 'sans-serif',
+          fontSize: '0.85rem',
+          fontWeight: 600,
+          textDecoration: 'none',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+        }}
+      >
+        ⬇ Exporter MD
+      </a>
+      <div style={{
+        width: '760px', // Cadre élargi (borne kiosk) pour aérer la grille 2 colonnes
+        height: '900px', // Hauteur proportionnelle
+        maxWidth: '95vw', // Reste visible sur petits écrans
+        background: 'white',
+        borderRadius: '24px',
+        boxShadow: '0 30px 60px -12px rgba(0, 0, 0, 0.4), 0 0 0 16px #0f172a', // Gros cadre plastique noir
+        overflow: 'hidden', // Empêche le simulateur de déborder
+        position: 'relative'
+      }}>
         <KioskSimulator restaurantName={restaurantName} tree={tree} themePalette={themePalette} catalogData={data} />
       </div>
     </div>

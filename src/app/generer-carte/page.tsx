@@ -28,7 +28,7 @@ const GLOBAL_ACCOMPANIMENTS_LIST = [
 
 export default function GenererCarte() {
   const { t } = useLanguage();
-  const [resultat, setResultat] = useState<{ success: boolean; json?: string; savedPath?: string | null; error?: string } | null>(null);
+  const [resultat, setResultat] = useState<{ success: boolean; json?: string; savedPath?: string | null; error?: string; dbWarning?: string } | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationStepText, setGenerationStepText] = useState<string>("");
   const [selectedAI, setSelectedAI] = useState("groq");
@@ -804,6 +804,11 @@ ${wizardData.drinks?.list ? `- RÈGLE ABSOLUE POUR LES BOISSONS : Si tu génère
                 {resultat.savedPath && (
                   <div style={{ background: '#dcfce7', color: '#166534', padding: '1rem', borderRadius: '8px', marginBottom: '1.5rem', fontWeight: '500' }}>
                     💾 Magnifique ! La carte a été sauvegardée dans : <code>.softavera/carte/{resultat.savedPath}</code>
+                  </div>
+                )}
+                {resultat.dbWarning && (
+                  <div style={{ background: '#fef3c7', color: '#92400e', padding: '1rem', borderRadius: '8px', marginBottom: '1.5rem', fontWeight: '500', border: '1px solid #fcd34d' }}>
+                    ⚠️ {resultat.dbWarning}
                   </div>
                 )}
                 

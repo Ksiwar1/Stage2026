@@ -119,11 +119,17 @@ export default function CarteVisuelle({ summary, baseRoute = '/borne/' }: { summ
           {/* Textes (Titre & Sous-titre) */}
           <div style={{ textAlign: 'center', width: '100%' }}>
             <h3 style={{ margin: '0 0 0.5rem 0', fontSize: '1.15rem', fontWeight: 800, color: 'var(--foreground)', textTransform: 'uppercase', letterSpacing: '-0.02em', wordBreak: 'break-word', lineHeight: 1.2 }}>
-              {displayName}
+              {summary.companyName || displayName}
             </h3>
-            <p style={{ margin: 0, fontSize: '0.85rem', color: '#64748b', fontWeight: 600 }}>
-              {summary.nomFichier.includes('franchise') ? 'Franchise ETK360' : 'Boutique ETK360'}
-            </p>
+            {summary.nature ? (
+              <span style={{ display: 'inline-block', padding: '0.25rem 0.7rem', borderRadius: '9999px', fontSize: '0.72rem', fontWeight: 700, color: '#1d4ed8', background: 'rgba(37, 99, 235, 0.1)', border: '1px solid rgba(37, 99, 235, 0.2)', textTransform: 'capitalize', letterSpacing: '0.02em' }}>
+                {summary.nature}
+              </span>
+            ) : (
+              <p style={{ margin: 0, fontSize: '0.85rem', color: '#64748b', fontWeight: 600 }}>
+                {summary.nomFichier.includes('franchise') ? 'Franchise ETK360' : 'Boutique ETK360'}
+              </p>
+            )}
           </div>
         </div>
       </Link>
