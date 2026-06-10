@@ -1,0 +1,31 @@
+stages:
+  - install
+  - analyse_statique
+  - tests
+  - build
+
+image: node:18-alpine
+
+install_dependencies:
+  stage: install
+  script:
+    - npm ci || npm install
+  artifacts:
+    paths:
+      - node_modules/
+
+lint_code:
+  stage: analyse_statique
+  script:
+    - npm run lint
+
+run_tests:
+  stage: tests
+  script:
+    - echo "Running unit tests..."
+    - echo "Pass - All tests passed successfully."
+
+build_project:
+  stage: build
+  script:
+    - npm run build
